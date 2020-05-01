@@ -23,3 +23,5 @@
 <p>You can change the default prefix (.) of TzeBot whatever you want.</p>
 <p><a href="https://imgur.com/X6cIsqd"><img src="https://i.imgur.com/X6cIsqd.png" title="source: imgur.com" width=25% height=25%/></a></p>
 </ul>
+
+<h2>How to use?</h2>
