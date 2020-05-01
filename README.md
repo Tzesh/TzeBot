@@ -25,3 +25,4 @@
 </ul>
 
 <h2>How to use?</h2>
+<p>You can always add some features or edit something in this bot, with using this repository but if you're looking for the latest .jar file of the TzeBot you can just download it and .env file from <b><a href="">here</a></b>.</p>
