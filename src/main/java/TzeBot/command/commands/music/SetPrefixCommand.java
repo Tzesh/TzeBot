@@ -45,8 +45,6 @@ public class SetPrefixCommand implements ICommand {
         final String newPrefix = String.join("", args);
         Config.PREFIXES.put(ctx.getGuild().getIdLong(), newPrefix);
 
-        channel.sendMessageFormat("New prefix has been set to `%s`", newPrefix).queue();
-
         EmbedBuilder succces = new EmbedBuilder();
         succces.setColor(0x00ff00);
         succces.setTitle("✅ New prefix has been set to `" + newPrefix + "`.");
