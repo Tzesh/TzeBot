@@ -25,8 +25,8 @@
 </ul>
 
 <h2>How to use?</h2>
-<p> You can always add some features or edit something in this bot, with using this repository but if you're looking for the latest .jar file of the TzeBot you can just download latest TzeBot and .env file with run.bat (for windows) from <b><a href="https://github.com/Tzesh/TzeBot/tree/master/latest">latest direction</a></b>.</p>
-<p>After extracting .env and TzeBot-X.X.jar to a folder, you have to add discord bot token, default prefix of bot, discord owner id, youtube api key into .env file.</p>
+<p> You can always add some features or edit something in this bot, with using this repository but if you're looking for the latest .jar file of the TzeBot you can just download latest TzeBot and .env.example (you have to rename it .env with addition of necessary keys) file with run.bat (for windows) from <b><a href="https://github.com/Tzesh/TzeBot/tree/master/latest">latest direction</a></b>.</p>
+<p>After extracting .env and TzeBot-X.X.jar to a folder, you have to add discord bot token, default prefix of bot, discord owner id, youtube api key into .env file or you can simply add all of these into .env.example then rename it as .env.</p>
 <p>And then, you may start the bot with using command "java -jar TzeBot-1.0.jar" in cmd or git bash or whatever you want to run.</p>
 <p><a href="https://imgur.com/hNNE5qj"><img src="https://i.imgur.com/hNNE5qj.png" title="source: imgur.com" /></a></p>
 <p>If you're planning to run this too many server you may set shard number of it. But I recommend you to set this shards number as less as possible to prevent resource leaks.</p>
