@@ -13,7 +13,12 @@ import com.sedmelluq.discord.lavaplayer.player.AudioPlayer;
 import com.sedmelluq.discord.lavaplayer.track.AudioTrackInfo;
 import me.duncte123.botcommons.messaging.EmbedUtils;
 import net.dv8tion.jda.api.EmbedBuilder;
+import net.dv8tion.jda.api.Permission;
+import net.dv8tion.jda.api.entities.GuildVoiceState;
+import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.TextChannel;
+import net.dv8tion.jda.api.entities.VoiceChannel;
+import net.dv8tion.jda.api.managers.AudioManager;
 
 import javax.annotation.Nullable;
 import java.net.MalformedURLException;
@@ -47,8 +52,13 @@ public class PlayCommand implements ICommand {
     public void handle(CommandContext ctx) {
 
         TextChannel channel = ctx.getChannel();
-
         String input = String.join(" ", ctx.getArgs());
+        GuildVoiceState memberVoiceState = ctx.getMember().getVoiceState();
+        VoiceChannel voiceChannel = memberVoiceState.getChannel();
+        Member selfmember = ctx.getGuild().getSelfMember();
+        AudioManager audioManager = ctx.getGuild().getAudioManager();
+        PlayerManager manager = PlayerManager.getInstance();
+
 
         if (!isUrl(input)) {
             String ytSearched = searchYoutube(input);
@@ -81,16 +91,51 @@ public class PlayCommand implements ICommand {
             return;
         }
 
-        PlayerManager manager = PlayerManager.getInstance();
+        if (!memberVoiceState.inVoiceChannel()) {
+            EmbedBuilder error = new EmbedBuilder();
+            error.setColor(0xff3923);
+            error.setTitle("❌ Please join a voice channel.");
+            error.setDescription("You have to be connected to a voice channel to play a song.");
+
+            channel.sendTyping().queue();
+            channel.sendMessage(error.build()).queue();
+            error.clear();
+            return;
+        }
+
+        if (!selfmember.hasPermission(voiceChannel, Permission.VOICE_CONNECT)) {
+            EmbedBuilder error = new EmbedBuilder();
+            error.setColor(0xff3923);
+            error.setTitle("❌ I cannot join.");
+            error.setDescription("Because I don't have the permission to join specified voice channel.");
+
+            channel.sendTyping().queue();
+            channel.sendMessage(error.build()).queue();
+            error.clear();
+            return;
+        }
+
+        if (!audioManager.isConnected()) {
+            audioManager.openAudioConnection(voiceChannel);
+            manager.getGuildMusicManager(ctx.getGuild()).player.setVolume(5);
+            EmbedBuilder succes = new EmbedBuilder();
+            succes.setColor(0x00ff00);
+            succes.setTitle("✅ Joining your voice channel.");
+
+            channel.sendTyping().queue();
+            channel.sendMessage(succes.build()).queue();
+            succes.clear();
+        }
+
         GuildMusicManager musicManager = manager.getGuildMusicManager(ctx.getGuild());
         AudioPlayer player = musicManager.player;
 
-        manager.loadAndPlay(ctx.getChannel(), input);
+        manager.loadAndPlay(ctx.getChannel(), input, ctx.getMember().getUser().getName(), ctx.getMember().getUser().getAvatarUrl());
 
         AudioTrackInfo info = player.getPlayingTrack().getInfo();
 
         channel.sendMessage(EmbedUtils.embedMessage(String.format(
-                "**Playing** [%s]{%s}\n%s %s - %s",
+                "**Now Playing** [%s]{%s}\n%s %s - %s",
                 info.title,
                 info.uri,
                 player.isPaused() ? "\u23F8" : "▶",

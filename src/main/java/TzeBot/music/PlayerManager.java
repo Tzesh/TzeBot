@@ -2,6 +2,8 @@ package TzeBot.music;
 
 import TzeBot.command.CommandContext;
 import TzeBot.command.ICommand;
+import TzeBot.command.commands.music.PlayCommand;
+import com.jagrosh.jdautilities.command.Command;
 import com.sedmelluq.discord.lavaplayer.player.AudioLoadResultHandler;
 import com.sedmelluq.discord.lavaplayer.player.AudioPlayerManager;
 import com.sedmelluq.discord.lavaplayer.player.DefaultAudioPlayerManager;
@@ -44,19 +46,21 @@ public class PlayerManager {
         return musicManager;
     }
 
-    public void loadAndPlay(TextChannel channel, String trackUrl) {
+    public void loadAndPlay(TextChannel channel, String trackUrl, String name, String avatarURL) {
         GuildMusicManager  musicManager = getGuildMusicManager(channel.getGuild());
 
         playerManager.loadItemOrdered(musicManager, trackUrl, new AudioLoadResultHandler() {
             @Override
             public void trackLoaded(AudioTrack track) {
-                EmbedBuilder succces = new EmbedBuilder();
-                succces.setColor(0x00ff00);
-                succces.setTitle("✅ Adding to queue " + track.getInfo().title);
+                EmbedBuilder succes = new EmbedBuilder();
+                succes.setColor(0x00ff00);
+                succes.setTitle("✅ Adding to queue " + track.getInfo().title);
+
+                succes.setFooter("By the command of " + name, avatarURL);
 
                 channel.sendTyping().queue();
-                channel.sendMessage(succces.build()).queue();
-                succces.clear();
+                channel.sendMessage(succes.build()).queue();
+                succes.clear();
 
                 play(musicManager, track);
 

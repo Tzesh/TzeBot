@@ -46,13 +46,15 @@ public class ClearCommand implements ICommand {
                 List<Message> messages = channel.getHistory().retrievePast(Integer.parseInt(String.join(" ", args))).complete();
                 channel.deleteMessages(messages).queue();
 
-                EmbedBuilder succces = new EmbedBuilder();
-                succces.setColor(0x00ff00);
-                succces.setTitle("✅ " + String.join("", args) + " message has been cleared.");
+                EmbedBuilder succes = new EmbedBuilder();
+                succes.setColor(0x00ff00);
+                succes.setTitle("✅ " + String.join("", args) + " message has been cleared.");
+                succes.setFooter("By the command of " + ctx.getMember().getUser().getName(), ctx.getMember().getUser().getAvatarUrl());
+
 
                 ctx.getChannel().sendTyping().queue();
-                channel.sendMessage(succces.build()).queue();
-                succces.clear();
+                channel.sendMessage(succes.build()).queue();
+                succes.clear();
             } catch (IllegalArgumentException exception) {
                 if (exception.toString().startsWith("java.lang.IllegalArgumentException")) {
                     EmbedBuilder error = new EmbedBuilder();

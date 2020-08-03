@@ -17,16 +17,19 @@ public class CommandManager {
 
     public CommandManager() {
         addCommand(new HelpCommand(this));
-        addCommand(new JoinCommand());
-        addCommand(new LeaveCommand());
-        addCommand(new PlayCommand());
-        addCommand(new StopCommand());
-        addCommand(new QueueCommand());
-        addCommand(new SkipCommand());
-        addCommand(new NowPlayingCommand());
-        addCommand(new VolumeCommand());
         addCommand(new SetPrefixCommand());
         addCommand(new ClearCommand());
+        addCommand(new PlayCommand());
+        addCommand(new PauseCommand());
+        addCommand(new ResumeCommand());
+        addCommand(new StopCommand());
+        addCommand(new SkipCommand());
+        addCommand(new QueueCommand());
+        addCommand(new JoinCommand());
+        addCommand(new LeaveCommand());
+        addCommand(new NowPlayingCommand());
+        addCommand(new VolumeCommand());
+        addCommand(new LoopCommand());
     }
 
     private void addCommand(ICommand cmd) {

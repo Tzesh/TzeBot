@@ -12,17 +12,32 @@ public class StopCommand implements ICommand {
         PlayerManager playerManager = PlayerManager.getInstance();
         GuildMusicManager musicManager = playerManager.getGuildMusicManager(ctx.getGuild());
 
-        musicManager.scheduler.getQueue().clear();
-        musicManager.player.stopTrack();
-        musicManager.player.setPaused(false);
+        if (!musicManager.player.isPaused()) {
+            musicManager.scheduler.getQueue().clear();
+            musicManager.player.stopTrack();
+            musicManager.player.setPaused(false);
 
-        EmbedBuilder succces = new EmbedBuilder();
-        succces.setColor(0x00ff00);
-        succces.setTitle("✅ Stopped and cleared the queue.");
+            EmbedBuilder succes = new EmbedBuilder();
+            succes.setColor(0x00ff00);
+            succes.setTitle("✅ Stopped and cleared the queue.");
+            succes.setFooter("By the command of " + ctx.getMember().getUser().getName(), ctx.getMember().getUser().getAvatarUrl());
 
-        ctx.getChannel().sendTyping().queue();
-        ctx.getChannel().sendMessage(succces.build()).queue();
-        succces.clear();
+
+            ctx.getChannel().sendTyping().queue();
+            ctx.getChannel().sendMessage(succes.build()).queue();
+            succes.clear();
+        } else {
+            EmbedBuilder error = new EmbedBuilder();
+            error.setColor(0xff3923);
+            error.setTitle("❌ Nothing is playing at this time.");
+            error.setDescription("Cannot stop the song and clear the queue.");
+
+            ctx.getChannel().sendTyping().queue();
+            ctx.getChannel().sendMessage(error.build()).queue();
+            error.clear();
+        }
+
+
 
     }
 
@@ -33,6 +48,6 @@ public class StopCommand implements ICommand {
 
     @Override
     public String getHelp() {
-        return "Stops the music player.";
+        return "Stops the music player and clears the queue.";
     }
 }

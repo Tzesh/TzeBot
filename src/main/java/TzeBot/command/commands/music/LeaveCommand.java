@@ -40,13 +40,15 @@ public class LeaveCommand implements ICommand {
         }
 
         audioManager.closeAudioConnection();
-        EmbedBuilder succces = new EmbedBuilder();
-        succces.setColor(0x00ff00);
-        succces.setTitle("✅ Leaving your voice channel.");
+        EmbedBuilder succes = new EmbedBuilder();
+        succes.setColor(0x00ff00);
+        succes.setTitle("✅ Leaving your voice channel.");
+        succes.setFooter("By the command of " + ctx.getMember().getUser().getName(), ctx.getMember().getUser().getAvatarUrl());
+
 
         channel.sendTyping().queue();
-        channel.sendMessage(succces.build()).queue();
-        succces.clear();
+        channel.sendMessage(succes.build()).queue();
+        succes.clear();
 
     }
 

@@ -24,14 +24,16 @@ public class VolumeCommand implements ICommand {
                 error.clear();
         }
         manager.getGuildMusicManager(ctx.getGuild()).player.setVolume(Integer.parseInt(input));
-        EmbedBuilder succces = new EmbedBuilder();
-        succces.setColor(0x00ff00);
-        succces.setTitle("✅ New volume is set to: " + manager.getGuildMusicManager(ctx.getGuild()).player.getVolume() + "%.");
+        EmbedBuilder succes = new EmbedBuilder();
+        succes.setColor(0x00ff00);
+        succes.setTitle("✅ New volume is set to: " + manager.getGuildMusicManager(ctx.getGuild()).player.getVolume() + "%.");
+        succes.setFooter("By the command of " + ctx.getMember().getUser().getName(), ctx.getMember().getUser().getAvatarUrl());
+
 
 
         channel.sendTyping().queue();
-        channel.sendMessage(succces.build()).queue();
-        succces.clear();
+        channel.sendMessage(succes.build()).queue();
+        succes.clear();
     }
 
     @Override

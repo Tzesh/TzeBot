@@ -31,7 +31,7 @@ public class HelpCommand implements ICommand {
             info.setTitle("TzeBOT BOT BOT BOT BOT BOT...");
             info.setDescription("Just a normal type bot which born in Java.");
             info.setColor(0x6699ff);
-            info.setFooter("Frankensteined by Tzesh.", ctx.getMember().getUser().getAvatarUrl());
+            info.setFooter("Frankensteined by Tzesh." + "https://cdn.discordapp.com/avatars/217668226845245440/8326b24c3961afa0b3727a771220719e.png");
 
             builder.append("List of commands:\n");
 

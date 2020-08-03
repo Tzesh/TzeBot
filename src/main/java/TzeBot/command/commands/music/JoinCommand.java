@@ -36,7 +36,7 @@ public class JoinCommand implements ICommand {
             EmbedBuilder error = new EmbedBuilder();
             error.setColor(0xff3923);
             error.setTitle("❌ Please join a voice channel.");
-            error.setDescription("You have to be connected a voice channel to request me to join you.");
+            error.setDescription("You have to be connected to a voice channel to request me to join you.");
 
             channel.sendTyping().queue();
             channel.sendMessage(error.build()).queue();
@@ -61,13 +61,14 @@ public class JoinCommand implements ICommand {
 
         audioManager.openAudioConnection(voiceChannel);
         manager.getGuildMusicManager(ctx.getGuild()).player.setVolume(5);
-        EmbedBuilder succces = new EmbedBuilder();
-        succces.setColor(0x00ff00);
-        succces.setTitle("✅ Joining your voice channel.");
+        EmbedBuilder succes = new EmbedBuilder();
+        succes.setColor(0x00ff00);
+        succes.setTitle("✅ Joining your voice channel.");
+        succes.setFooter("By the command of " + ctx.getMember().getUser().getName(), ctx.getMember().getUser().getAvatarUrl());
 
         channel.sendTyping().queue();
-        channel.sendMessage(succces.build()).queue();
-        succces.clear();
+        channel.sendMessage(succes.build()).queue();
+        succes.clear();
     }
 
     @Override

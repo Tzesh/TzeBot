@@ -44,7 +44,7 @@ public class QueueCommand implements ICommand {
             AudioTrackInfo info = track.getInfo();
 
             builder.appendDescription(String.format(
-                    "%s - %s\n",
+                    i+1 + ") " + "%s - %s\n",
                     info.title,
                     info.author
                     )); }

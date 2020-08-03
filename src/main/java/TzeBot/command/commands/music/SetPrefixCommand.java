@@ -45,13 +45,15 @@ public class SetPrefixCommand implements ICommand {
         final String newPrefix = String.join("", args);
         Config.PREFIXES.put(ctx.getGuild().getIdLong(), newPrefix);
 
-        EmbedBuilder succces = new EmbedBuilder();
-        succces.setColor(0x00ff00);
-        succces.setTitle("✅ New prefix has been set to `" + newPrefix + "`.");
+        EmbedBuilder succes = new EmbedBuilder();
+        succes.setColor(0x00ff00);
+        succes.setTitle("✅ New prefix has been set to `" + newPrefix + "`.");
+        succes.setFooter("By the command of " + ctx.getMember().getUser().getName(), ctx.getMember().getUser().getAvatarUrl());
+
 
         channel.sendTyping().queue();
-        channel.sendMessage(succces.build()).queue();
-        succces.clear();
+        channel.sendMessage(succes.build()).queue();
+        succes.clear();
     }
 
     @Override
