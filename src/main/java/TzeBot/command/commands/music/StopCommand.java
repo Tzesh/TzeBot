@@ -17,20 +17,19 @@ public class StopCommand implements ICommand {
             musicManager.player.stopTrack();
             musicManager.player.setPaused(false);
 
-            EmbedBuilder succes = new EmbedBuilder();
-            succes.setColor(0x00ff00);
-            succes.setTitle("✅ Stopped and cleared the queue.");
-            succes.setFooter("By the command of " + ctx.getMember().getUser().getName(), ctx.getMember().getUser().getAvatarUrl());
-
+            EmbedBuilder success = new EmbedBuilder();
+            success.setColor(0x00ff00);
+            success.setTitle(TzeBot.Languages.LanguageDetector.getMessage("general.icon.success") + TzeBot.Languages.LanguageDetector.getMessage("stopcommand.success.setTitle"));
+            success.setFooter(TzeBot.Languages.LanguageDetector.getMessage("general.bythecommand") + " " + ctx.getMember().getUser().getName(), ctx.getMember().getUser().getAvatarUrl());
 
             ctx.getChannel().sendTyping().queue();
-            ctx.getChannel().sendMessage(succes.build()).queue();
-            succes.clear();
+            ctx.getChannel().sendMessage(success.build()).queue();
+            success.clear();
         } else {
             EmbedBuilder error = new EmbedBuilder();
             error.setColor(0xff3923);
-            error.setTitle("❌ Nothing is playing at this time.");
-            error.setDescription("Cannot stop the song and clear the queue.");
+            error.setTitle(TzeBot.Languages.LanguageDetector.getMessage("general.icon.error") + TzeBot.Languages.LanguageDetector.getMessage("stopcommand.error.setTitle"));
+            error.setDescription(TzeBot.Languages.LanguageDetector.getMessage("stopcommand.error.setDescription"));
 
             ctx.getChannel().sendTyping().queue();
             ctx.getChannel().sendMessage(error.build()).queue();
@@ -43,11 +42,11 @@ public class StopCommand implements ICommand {
 
     @Override
     public String getName() {
-        return "stop";
+        return TzeBot.Languages.LanguageDetector.getMessage("stopcommand.name");
     }
 
     @Override
     public String getHelp() {
-        return "Stops the music player and clears the queue.";
+        return TzeBot.Languages.LanguageDetector.getMessage("stopcommand.gethelp");
     }
 }

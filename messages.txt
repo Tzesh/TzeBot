@@ -1,0 +1,286 @@
+// Language : English
+
+// General Errors
+en_en, general.404, Nothing found
+en_en, general.404.description, Are you sure looking for the right thing?
+en_en, general.403, None args specified
+en_en, general.403.description, Please retype command with its args
+en_en, general.not_authorized, Unauthorized person
+en_en, general.not_authorized.description, You must have manage server permission to use this command
+
+// General Stuff
+en_en, general.bythecommand, By the command of 
+en_en, general.icon.success, ✅ 
+en_en, general.icon.error, ❌ 
+
+// Help Command
+en_en, helpcommand.name, help
+en_en, helpcommand.gethelp1, Shows the list with the commands in the bot
+en_en, helpcommand.gethelp2, Usage: `
+en_en, helpcommand.gethelp3, help [commmand]`
+en_en, helpcommand.info.setTitle, TzeBOT BOT BOT BOT BOT BOT...
+en_en, helpcommand.info.setDescription, Just a normal type bot which born in java
+en_en, helpcommand.info.setFooter, Frankensteined by Tzesh
+en_en, helpcommand.builder.append, List of commands:
+en_en, helpcommand.further1, You may also use `
+en_en, helpcommand.further2, help [command]` to get further information
+
+// Language Command
+en_en, languagecommand.name, language
+en_en, languagecommand.gethelp, You can select the language of bot `English` or `Turkish`
+en_en, languagecommand.successful.setTitle, Language has been changed to English
+en_en, languagecommand.already.setTitle, Language is already been set to English
+en_en, languagecommand.already.setDescription, You can choose another language if you want to
+en_en, languagecommand.unsuitable.setTitle, Non-supported language
+en_en, languagecommand.unsuitable.setDescription, You may only choose either Turkish or English
+
+// Clear Command
+en_en, clearcommand.name, clear
+en_en, clearcommand.gethelp, Deletes the specified amounts of messages
+en_en, clearcommand.successful.setTitle, message has been cleared
+en_en, clearcommand.unsuitable.setTitle, Unsuitable amount of messages
+en_en, clearcommand.unsuitable.setDescription, You may only choose 2-100 messages at once
+en_en, clearcommand.older.setTitle, Selected messages are older than 2 weeks
+en_en, clearcommand.older.setDescription, Messages older than 2 weeks cannot be deleted
+
+**
+// Join Command
+en_en, joincommand.name, join
+en_en, joincommand.gethelp, Makes the bot join your channnel
+en_en, joincommand.alreadyconnected.setTitle, Already connected
+en_en, joincommand.alreadyconnected.setDescription, Already connected to a voice channel
+en_en, joincommand.joinchannel.setTitle, Please join a voice channel
+en_en, joincommand.joinchannel.setDescription, You have to be connected to a voice channel to request me to join you
+en_en, joincommand.cannotjoin.setTitle, I cannot join
+en_en, joincommand.cannotjoin.setDescription, Because I don't have the permission to join your voice channel
+en_en, joincommand.success.setTitle, Joining your channel
+
+// Leave Command
+en_en, leavecommand.name, leave
+en_en, leavecommand.gethelp, Makes the bot leave your channel
+en_en, leavecommand.cannotleave.setTitle, I cannot leave
+en_en, leavecommand.notconnected, That may be caused I even didn't join a voice channel
+en_en, leavecommand.notin, You have to be connected to the channel which I've connected
+en_en, leavecommand.success.setTitle, Leaving your channel
+
+// Loop Command
+en_en, loopcommand.name, loop
+en_en, loopcommand.gethelp, Loops the current queue
+en_en, loopcommand.error.setTitle, The queue is empty
+en_en, loopcommand.error.setDescription, You might wanna add some songs into it
+en_en, loopcommand.success.setTitle, Looped the current queue once
+
+// Nowplaying Command
+en_en, nowplayingcommand.name, nowplaying
+en_en, nowplayingcommand.gethelp, Shows the current song
+en_en, nowplayingcommand.error.setTitle, There is nothing
+en_en, nowplayingcommand.error.setDescription, Nothing is playing right now
+en_en, nowplayingcommand.nowplaying, Now Playing
+
+// Pause Command
+en_en, pausecommand.name, pause
+en_en, pausecommand.gethelp, Pauses the current playing song
+en_en, pausecommand.error.setTitle, Cannot paused
+en_en, pausecommand.error.setDescription, Because nothing is playing right now
+en_en, pausecommand.success.setTitle, Paused the current song : 
+
+// Play Command
+en_en, playcommand.name, play
+en_en, playcommand.gethelp1, Plays a song
+en_en, playcommand.gethelp2, Usage: `
+en_en, playcommand.gethelp3,  <song url>'
+en_en, playcommand.noresults.setTitle, YouTube returned no results
+en_en, playcommand.noresults.setDescription, Please be ensure what you are looking for
+en_en, playcommand.noargs.setDescription1, Please enter a url or song name as example: 
+en_en, playcommand.noargs.setDescription2, play [song name/url]
+en_en, playcommand.success.setTitle, Adding to queue 
+en_en, playcommand.error.setTitle, Could not play
+en_en, playcommand.error.setDescription, Could not play : 
+en_en, playcommand.nothing.setTitle, Nothing found
+en_en, playcommand.nothing.setDescription, Nothing found by 
+en_en, playcommand.playlist.setTitle1, Adding to queue 
+en_en, playcommand.playlist.setTitle2,  (first track of the playlist 
+
+// Queue Command
+en_en, queuecommand.name, queue
+en_en, queuecommand.gethelp, Shows the current queue
+en_en, queuecommand.setTitle, Current Queue (Total: 
+
+// Resume Command
+en_en, resumecommand.name, resume
+en_en, resumecommand.gethelp, Resumes the current song
+en_en, resumecommand.error.setDescription, There is nothing to be resumed
+en_en, resumecommand.nothingtoresumed.setDescription, You have to pause the current song
+en_en, resumecommand.success.setTitle, Resumed the current song: 
+
+// Setprefix Command
+en_en, setprefixcommand.name, prefix
+en_en, setprefixcommand.gethelp1, Sets the prefix for this server
+en_en, setprefixcommand.gethelp2, Usage: `
+en_en, setprefixcommand.gethelp3, prefix <prefix>`
+en_en, setprefixcommand.success.setTitle, New prefix has been set to
+
+// Skip Command
+en_en, skipcommand.name, skip
+en_en, skipcommand.gethelp, Skips the current song
+en_en, skipcommand.error.setTitle, Nothing is playing at this time
+en_en, skipcommand.error.setDescription, Cannot skip the unplayed song
+en_en, skipcommand.success.setTitle1, Current song `
+en_en, skipcommand.success.setTitle2, ` is skipped
+
+// Stop Command
+en_en, stopcommand.name, stop
+en_en, stopcommand.gethelp, Stops the music player and clears the queue
+en_en, stopcommand.success.setTitle, Stopped and cleared the queue
+en_en, stopcommand.error.setTitle, Nothing is playing at this time
+en_en, stopcommand.error.setDescription, Cannot stop the song and clear the queue
+
+// Volume Command
+en_en, volumecommand.name, volume
+en_en, volumecommand.gethelp, Sets the volume of player
+en_en, volumecommand.error.setTitle, You can arrange the volume between [1-100]%
+en_en, volumecommand.error.setDescription, Current volume is: 
+en_en, volumecommand.success.setTitle, New volume is set to: 
+
+// Dil : Türkçe
+
+// Genel Hatalar
+tr_tr, general.404, Hiçbir şey bulunamadı
+tr_tr, general.404.description, Doğru şeye baktığından emin misin?
+tr_tr, general.403, Argüman belirtilmedi
+tr_tr, general.403.description, Lütfen komutu argümanıyla tekrar yaz
+tr_tr, general.not_authorized, Yetkisiz kullanıcı
+tr_tr, general.not_authorized.description, Bu komutu kullanmak için sunucuyu yönetme yetkisine sahip olman gerek
+
+// Genel Şeyler
+tr_tr, general.bythecommand, Komutu veren 
+tr_tr, general.icon.success, ✅ 
+tr_tr, general.icon.error, ❌ 
+
+// Yardım Komutu
+tr_tr, helpcommand.name, yardım
+tr_tr, helpcommand.gethelp1, Komutların listesini gösterir
+tr_tr, helpcommand.gethelp2, Kullanım: `
+tr_tr, helpcommand.gethelp3, yardım [komut]`
+tr_tr, helpcommand.info.setTitle, TzeBOT BOT BOT BOT BOT BOT...
+tr_tr, helpcommand.info.setDescription, Sadece normal bir java discord botu
+tr_tr, helpcommand.info.setFooter, Tzesh tarafından Frankensteinlandı
+tr_tr, helpcommand.builder.append, Komutların listesi:
+tr_tr, helpcommand.further1, Ayrıca `
+tr_tr, helpcommand.further2, yardım [komut]` komutunu kullanıp ekstra bilgi edinebilirsiniz
+
+// Dil Komutu
+tr_tr, languagecommand.name, dil
+tr_tr, languagecommand.gethelp, Botun dilini 'İngilizce' ya da 'Türkçe' olarak seçebilirsiniz
+tr_tr, languagecommand.successful.setTitle, Dil Türkçe olarak değiştirildi
+tr_tr, languagecommand.already.setTitle, Dil zaten Türkçe olarak ayarlanmış
+tr_tr, languagecommand.already.setDescription, Eğer dilerseniz farklı bir dil de seçebilirsiniz
+tr_tr, languagecommand.unsuitable.setTitle, Desteklenmeyen dil
+tr_tr, languagecommand.unsuitable.setDescription, Sadece İngilizce veya Türkçe seçebilirsiniz
+
+// Temizle Komutu
+tr_tr, clearcommand.name, temizle
+tr_tr, clearcommand.gethelp, İstenilen miktarda mesajı temizler
+tr_tr, clearcommand.successful.setTitle, mesaj temizlendi
+tr_tr, clearcommand.unsuitable.setTitle, Kabul edilemez mesaj aralığı
+tr_tr, clearcommand.unsuitable.setDescription, Tek seferde 2-100 arası mesaj silebilirsiniz
+tr_tr, clearcommand.older.setTitle, Seçilen mesajlar 2 haftadan eski
+tr_tr, clearcommand.older.setDescription, 2 haftadan eski mesajlar silinemez
+
+// Katıl Komutu
+tr_tr, joincommand.name, katıl
+tr_tr, joincommand.gethelp, Bot kanalınıza katılır
+tr_tr, joincommand.alreadyconnected.setTitle, Zaten bağlı
+tr_tr, joincommand.alreadyconnected.setDescription, Halihazırda bir sesli kanala bağlı
+tr_tr, joincommand.joinchannel.setTitle, Lütfen bir sesli kanala geçin
+tr_tr, joincommand.joinchannel.setDescription, Katılmam için bir ses kanalına bağlı olmalısın
+tr_tr, joincommand.cannotjoin.setTitle, Katılamıyorum
+tr_tr, joincommand.cannotjoin.setDescription, Çünkü katılmak için gerekli izinlere sahip değilim
+tr_tr, joincommand.success.setTitle, Kanalına katılıyor
+
+// Ayrıl Komutu
+tr_tr, leavecommand.name, ayrıl
+tr_tr, leavecommand.gethelp, Bot kanalınızdan ayrılır
+tr_tr, leavecommand.cannotleave.setTitle, Ayrılamıyorum
+tr_tr, leavecommand.notconnected, Belki de bir sesli kanala bağlı olmadığımdandır
+tr_tr, leavecommand.notin, Bağlı olduğum kanala bağlı olman gerekiyor
+tr_tr, leavecommand.success.setTitle, Kanalından ayrılıyor
+
+// Döngü Komutu
+tr_tr, loopcommand.name, döngü
+tr_tr, loopcommand.gethelp, Mevcut kuyruğu döngüye alır
+tr_tr, loopcommand.error.setTitle, Kuyruk boş
+tr_tr, loopcommand.error.setDescription, Belki şarkı şarkı eklemek istersin
+tr_tr, loopcommand.success.setTitle, Kuyruk bir kereliğine döngüye alındı
+
+// Oynatılan komutu
+tr_tr, nowplayingcommand.name, oynatılan
+tr_tr, nowplayingcommand.gethelp, Şu anki şarkıyı gösterir
+tr_tr, nowplayingcommand.error.setTitle, Hiçbir şey yok
+tr_tr, nowplayingcommand.error.setDescription, Şu anda hiçbir şey oynatılmıyor
+tr_tr, nowplayingcommand.nowplaying, Oynatılıyor
+
+// Duraklat Komutu
+tr_tr, pausecommand.name, duraklat
+tr_tr, pausecommand.gethelp, Oynatılan şarkıyı duraklatır
+tr_tr, pausecommand.error.setTitle, Duraklatılamadı
+tr_tr, pausecommand.error.setDescription, Çünkü şu anda hiçbir şey oynatılmıyor
+tr_tr, pausecommand.success.setTitle, Oynatılan şarkı duraklatıldı : 
+
+// Oynat Komutu
+tr_tr, playcommand.name, oynat
+tr_tr, playcommand.gethelp1, Bir şarkı oynatır
+tr_tr, playcommand.gethelp2, Kullanım: `
+tr_tr, playcommand.gethelp3,  <şarkı urlsi>`
+tr_tr, playcommand.noresults.setTitle, YouTube sonuç bulamadı
+tr_tr, playcommand.noresults.setDescription, Ne aradığınızdan emin olun lütfen
+tr_tr, playcommand.noargs.setDescription1, Lütfen örnekteki gibi şarkı ismi veya urlsi veriniz : 
+tr_tr, playcommand.noargs.setDescription2, oynat [song name/url]
+tr_tr, playcommand.success.setTitle, Kuyruğa eklendi 
+tr_tr, playcommand.error.setTitle, Oynatılamadı
+tr_tr, playcommand.error.setDescription, Oynatılamadı : 
+tr_tr, playcommand.nothing.setTitle, Hiçbir şey bulunamadı
+tr_tr, playcommand.nothing.setDescription, Hiçbir şey bulunamadı 
+tr_tr, playcommand.playlist.setTitle1, Kuyruğa eklendi 
+tr_tr, playcommand.playlist.setTitle2,  (kuyruğun ilk şarkısı 
+
+// Kuyruk Komutu
+tr_tr, queuecommand.name, kuyruk
+tr_tr, queuecommand.gethelp, Mevcut kuyruğu gösterir
+tr_tr, queuecommand.setTitle, Mevcut Kuyruk (Toplam: 
+
+// Sürdür Komutu
+tr_tr, resumecommand.name, sürdür
+tr_tr, resumecommand.gethelp, Mevcut şarkıyı sürdürür
+tr_tr, resumecommand.error.setDescription, Sürdürülecek bir şey yok
+tr_tr, resumecommand.nothingtoresumed.setDescription, Şu anki şarkıyı durdurmanız gerek
+tr_tr, resumecommand.success.setTitle, Şarkı sürdürülüyor: 
+
+// Önek Komutu
+tr_tr, setprefixcommand.name, önek
+tr_tr, setprefixcommand.gethelp1, Bu sunucu için komutların öneklerini ayarlar
+tr_tr, setprefixcommand.gethelp2, Kullanım: `
+tr_tr, setprefixcommand.gethelp3, önek <önek>`
+tr_tr, setprefixcommand.success.setTitle, Yeni önek ayarlandı: 
+
+// Atla Komutu
+tr_tr, skipcommand.name, atla
+tr_tr, skipcommand.gethelp, Mevcut şarkıyı atlar
+tr_tr, skipcommand.error.setTitle, Şu anda hiçbir şey oynatılmıyor
+tr_tr, skipcommand.error.setDescription, Oynatılamayan bir şarkıyı atlayamam
+tr_tr, skipcommand.success.setTitle1, Mevcut şarkı `
+tr_tr, skipcommand.success.setTitle2, ` atlandı
+
+// Durdur Komutu
+tr_tr, stopcommand.name, durdur
+tr_tr, stopcommand.gethelp, Mevcut şarkıyı durdurur ve kuyruğu temizler
+tr_tr, stopcommand.success.setTitle, Durduruldu ve kuyruk temizlendi
+tr_tr, stopcommand.error.setTitle, Şu anda hiçbir şey oynatılmıyor
+tr_tr, stopcommand.error.setDescription, Şarkıyı durdurup kuyruğu temizleyemiyorum
+
+// Ses Komutu
+tr_tr, volumecommand.name, ses
+tr_tr, volumecommand.gethelp, Oynatıcının sesini ayarlar
+tr_tr, volumecommand.error.setTitle, Sesi [1-100]% arasında ayarlayabilirsiniz
+tr_tr, volumecommand.error.setDescription, Mevcut ses: 
+tr_tr, volumecommand.success.setTitle, Yeni ses şuna ayarlandı: 

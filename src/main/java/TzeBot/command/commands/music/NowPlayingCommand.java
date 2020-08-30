@@ -24,8 +24,8 @@ public class NowPlayingCommand implements ICommand {
         if (player.getPlayingTrack() == null) {
             EmbedBuilder error = new EmbedBuilder();
             error.setColor(0xff3923);
-            error.setTitle("❌ There is nothing.");
-            error.setDescription("Nothing is playing right now.");
+            error.setTitle(TzeBot.Languages.LanguageDetector.getMessage("general.icon.error") + TzeBot.Languages.LanguageDetector.getMessage("nowplayingcommand.error.setTitle"));
+            error.setDescription(TzeBot.Languages.LanguageDetector.getMessage("nowplayingcommand.error.setDescription"));
 
             channel.sendTyping().queue();
             channel.sendMessage(error.build()).queue();
@@ -36,7 +36,7 @@ public class NowPlayingCommand implements ICommand {
         AudioTrackInfo info = player.getPlayingTrack().getInfo();
 
         channel.sendMessage(EmbedUtils.embedMessage(String.format(
-                "**Now Playing** [%s]{%s}\n%s %s - %s",
+                "**" + TzeBot.Languages.LanguageDetector.getMessage("nowplayingcommand.nowplaying") + "** [%s]{%s}\n%s %s - %s",
                 info.title,
                 info.uri,
                 player.isPaused() ? "\u23F8" : "▶",
@@ -48,12 +48,12 @@ public class NowPlayingCommand implements ICommand {
 
     @Override
     public String getName() {
-        return "nowplaying";
+        return TzeBot.Languages.LanguageDetector.getMessage("nowplayingcommand.name");
     }
 
     @Override
     public String getHelp() {
-        return "Shows the current song.";
+        return TzeBot.Languages.LanguageDetector.getMessage("nowplayingcommand.gethelp");
     }
 
     private String formatTime(long timeInMilis) {

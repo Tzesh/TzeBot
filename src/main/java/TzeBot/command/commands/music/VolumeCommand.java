@@ -16,33 +16,32 @@ public class VolumeCommand implements ICommand {
         if (input.equals("")) {
                 EmbedBuilder error = new EmbedBuilder();
                 error.setColor(0xff3923);
-                error.setTitle("❌ You can arrange the volume between [1-100]%.");
-                error.setDescription("Current volume is: " + manager.getGuildMusicManager(ctx.getGuild()).player.getVolume() +"%.");
+                error.setTitle(TzeBot.Languages.LanguageDetector.getMessage("general.icon.error") + TzeBot.Languages.LanguageDetector.getMessage("volumecommand.error.setTitle"));
+                error.setDescription(TzeBot.Languages.LanguageDetector.getMessage("volumecommand.error.setDescription") + manager.getGuildMusicManager(ctx.getGuild()).player.getVolume() +"%");
 
                 channel.sendTyping().queue();
                 channel.sendMessage(error.build()).queue();
                 error.clear();
         }
+        
         manager.getGuildMusicManager(ctx.getGuild()).player.setVolume(Integer.parseInt(input));
-        EmbedBuilder succes = new EmbedBuilder();
-        succes.setColor(0x00ff00);
-        succes.setTitle("✅ New volume is set to: " + manager.getGuildMusicManager(ctx.getGuild()).player.getVolume() + "%.");
-        succes.setFooter("By the command of " + ctx.getMember().getUser().getName(), ctx.getMember().getUser().getAvatarUrl());
-
-
+        EmbedBuilder success = new EmbedBuilder();
+        success.setColor(0x00ff00);
+        success.setTitle(TzeBot.Languages.LanguageDetector.getMessage("general.icon.success") + TzeBot.Languages.LanguageDetector.getMessage("volumecommand.success.setTitle") + manager.getGuildMusicManager(ctx.getGuild()).player.getVolume() + "%");
+        success.setFooter(TzeBot.Languages.LanguageDetector.getMessage("general.bythecommand") + " " + ctx.getMember().getUser().getName(), ctx.getMember().getUser().getAvatarUrl());
 
         channel.sendTyping().queue();
-        channel.sendMessage(succes.build()).queue();
-        succes.clear();
+        channel.sendMessage(success.build()).queue();
+        success.clear();
     }
 
     @Override
     public String getName() {
-        return "volume";
+        return TzeBot.Languages.LanguageDetector.getMessage("volumecommand.name");
     }
 
     @Override
     public String getHelp() {
-        return "Sets the volume of player.";
+        return TzeBot.Languages.LanguageDetector.getMessage("volumecommand.gethelp");
     }
 }

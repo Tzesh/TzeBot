@@ -19,34 +19,34 @@ public class PauseCommand implements ICommand {
         if (player.getPlayingTrack() == null) {
             EmbedBuilder error = new EmbedBuilder();
             error.setColor(0xff3923);
-            error.setTitle("❌ There is nothing.");
-            error.setDescription("There is nothing to be paused.");
+            error.setTitle(TzeBot.Languages.LanguageDetector.getMessage("general.icon.error") + TzeBot.Languages.LanguageDetector.getMessage("pausecommand.error.setTitle"));
+            error.setDescription(TzeBot.Languages.LanguageDetector.getMessage("pausecommand.error.setDescription"));
 
             channel.sendTyping().queue();
             channel.sendMessage(error.build()).queue();
             error.clear();
         } else {
             player.setPaused(true);
-            EmbedBuilder succes = new EmbedBuilder();
-            succes.setColor(0x00ff00);
-            succes.setTitle("✅ Paused the current song : " + player.getPlayingTrack().getInfo().title);
-            succes.setFooter("By the command of " + ctx.getMember().getUser().getName(), ctx.getMember().getUser().getAvatarUrl());
+            EmbedBuilder success = new EmbedBuilder();
+            success.setColor(0x00ff00);
+            success.setTitle(TzeBot.Languages.LanguageDetector.getMessage("general.icon.success") + TzeBot.Languages.LanguageDetector.getMessage("pausecommand.success.setTitle") + player.getPlayingTrack().getInfo().title);
+            success.setFooter(TzeBot.Languages.LanguageDetector.getMessage("general.bythecommand") + ctx.getMember().getUser().getName(), ctx.getMember().getUser().getAvatarUrl());
 
 
             channel.sendTyping().queue();
-            channel.sendMessage(succes.build()).queue();
-            succes.clear();
+            channel.sendMessage(success.build()).queue();
+            success.clear();
         }
     }
 
     @Override
     public String getName() {
-        return "pause";
+        return TzeBot.Languages.LanguageDetector.getMessage("pausecommand.name");
     }
 
     @Override
     public String getHelp() {
-        return "Pauses the current playing song.";
+        return TzeBot.Languages.LanguageDetector.getMessage("pausecommand.gethelp");
     }
 
 

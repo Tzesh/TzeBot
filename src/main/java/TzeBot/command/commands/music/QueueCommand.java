@@ -25,8 +25,8 @@ public class QueueCommand implements ICommand {
         if (queue.isEmpty()) {
             EmbedBuilder error = new EmbedBuilder();
             error.setColor(0xff3923);
-            error.setTitle("❌ The queue is empty.");
-            error.setDescription("You might wanna add some songs into it.");
+            error.setTitle(TzeBot.Languages.LanguageDetector.getMessage("general.icon.error") + TzeBot.Languages.LanguageDetector.getMessage("loopcommand.error.setTitle"));
+            error.setDescription(TzeBot.Languages.LanguageDetector.getMessage("loopcommand.error.setDescription"));
 
             channel.sendTyping().queue();
             channel.sendMessage(error.build()).queue();
@@ -37,7 +37,7 @@ public class QueueCommand implements ICommand {
         int trackCount = Math.min(queue.size(), 20);
         List<AudioTrack> tracks = new ArrayList<>(queue);
         EmbedBuilder builder = EmbedUtils.defaultEmbed()
-                .setTitle("Current Queue (Total: " + queue.size() + ")");
+                .setTitle(TzeBot.Languages.LanguageDetector.getMessage("queuecommand.setTitle") + queue.size() + ")");
 
         for (int i = 0; i < trackCount; i++) {
             AudioTrack track = tracks.get(i);
@@ -53,11 +53,11 @@ public class QueueCommand implements ICommand {
 
     @Override
     public String getName() {
-        return "queue";
+        return TzeBot.Languages.LanguageDetector.getMessage("queuecommand.name");
     }
 
     @Override
     public String getHelp() {
-        return "Shows the current queue.";
+        return TzeBot.Languages.LanguageDetector.getMessage("queuecommand.gethelp");
     }
 }

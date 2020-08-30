@@ -20,20 +20,20 @@ public class HelpCommand implements ICommand {
 
     @Override
     public void handle(CommandContext ctx) {
-        List<String> args = ctx.getArgs();
-        TextChannel channel = ctx.getChannel();
+        final List<String> args = ctx.getArgs();
+        final TextChannel channel = ctx.getChannel();
 
         if (args.isEmpty()) {
             StringBuilder builder = new StringBuilder();
             String prefix = Config.PREFIXES.get(ctx.getGuild().getIdLong());
 
             EmbedBuilder info = new EmbedBuilder();
-            info.setTitle("TzeBOT BOT BOT BOT BOT BOT...");
-            info.setDescription("Just a normal type bot which born in Java.");
+            info.setTitle(TzeBot.Languages.LanguageDetector.getMessage("helpcommand.info.setTitle"));
+            info.setDescription(TzeBot.Languages.LanguageDetector.getMessage("helpcommand.info.setDescription"));
             info.setColor(0x6699ff);
-            info.setFooter("Frankensteined by Tzesh." + "https://cdn.discordapp.com/avatars/217668226845245440/8326b24c3961afa0b3727a771220719e.png");
+            info.setFooter(TzeBot.Languages.LanguageDetector.getMessage("helpcommand.info.setFooter"), "https://cdn.discordapp.com/avatars/217668226845245440/8326b24c3961afa0b3727a771220719e.png");
 
-            builder.append("List of commands:\n");
+            builder.append(TzeBot.Languages.LanguageDetector.getMessage("helpcommand.builder.append") + "\n");
 
             manager.getCommands().stream().map(ICommand::getName).forEach(
                     (it) -> builder.append('`')
@@ -45,7 +45,7 @@ public class HelpCommand implements ICommand {
             channel.sendTyping().queue();
             channel.sendMessage(info.build()).queue();
             channel.sendMessage(builder.toString()).queue();
-            channel.sendMessage("You may also use `" + prefix + "help [command]` to get further information.").queue();
+            channel.sendMessage(TzeBot.Languages.LanguageDetector.getMessage("helpcommand.further1") + prefix + TzeBot.Languages.LanguageDetector.getMessage("helpcommand.further2")).queue();
             info.clear();
             return;
         }
@@ -56,8 +56,8 @@ public class HelpCommand implements ICommand {
         if (command == null) {
             EmbedBuilder error = new EmbedBuilder();
             error.setColor(0xff3923);
-            error.setTitle("❌ Nothing found.");
-            error.setDescription("Are you sure looking for the right thing?");
+            error.setTitle(TzeBot.Languages.LanguageDetector.getMessage("general.icon.error") + TzeBot.Languages.LanguageDetector.getMessage("general.404"));
+            error.setDescription(TzeBot.Languages.LanguageDetector.getMessage("general.404.description"));
 
             channel.sendTyping().queue();
             channel.sendMessage(error.build()).queue();
@@ -71,12 +71,12 @@ public class HelpCommand implements ICommand {
 
     @Override
     public String getName() {
-        return "help";
+        return TzeBot.Languages.LanguageDetector.getMessage("helpcommand.name");
     }
 
     @Override
     public String getHelp() {
-        return "Shows the list with commands in the bot\n" +
-                "Usage: `" + Config.get("pre") + "help [command]`";
+        return TzeBot.Languages.LanguageDetector.getMessage("helpcommand.gethelp1") + "\n" + 
+                TzeBot.Languages.LanguageDetector.getMessage("helpcommand.gethelp2") + Config.get("pre") + TzeBot.Languages.LanguageDetector.getMessage("helpcommand.gethelp3");
     }
 }

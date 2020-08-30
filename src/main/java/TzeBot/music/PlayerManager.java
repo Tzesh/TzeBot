@@ -52,16 +52,16 @@ public class PlayerManager {
         playerManager.loadItemOrdered(musicManager, trackUrl, new AudioLoadResultHandler() {
             @Override
             public void trackLoaded(AudioTrack track) {
-                EmbedBuilder succes = new EmbedBuilder();
-                succes.setColor(0x00ff00);
-                succes.setTitle("✅ Adding to queue " + track.getInfo().title);
-
-                succes.setFooter("By the command of " + name, avatarURL);
+                EmbedBuilder success = new EmbedBuilder();
+                success.setColor(0x00ff00);
+                success.setTitle(TzeBot.Languages.LanguageDetector.getMessage("general.icon.success") + TzeBot.Languages.LanguageDetector.getMessage("playcommand.success.setTitle")  + track.getInfo().title);
+                success.setDescription(track.getInfo().uri);
+                success.setFooter(TzeBot.Languages.LanguageDetector.getMessage("general.bythecommand") + name, avatarURL);
 
                 channel.sendTyping().queue();
-                channel.sendMessage(succes.build()).queue();
-                succes.clear();
-
+                channel.sendMessage(success.build()).queue();
+                success.clear();
+                
                 play(musicManager, track);
 
             }
@@ -74,13 +74,14 @@ public class PlayerManager {
                     firstTrack = playlist.getTracks().remove(0);
                 }
 
-                EmbedBuilder succces = new EmbedBuilder();
-                succces.setColor(0x00ff00);
-                succces.setTitle("✅ Adding to queue " + firstTrack.getInfo().title + " (first track of the playlist " + playlist.getName() + ")");
-
+                EmbedBuilder success = new EmbedBuilder();
+                success.setColor(0x00ff00);
+                success.setTitle(TzeBot.Languages.LanguageDetector.getMessage("playcommand.playlist.setTitle1") + firstTrack.getInfo().title + TzeBot.Languages.LanguageDetector.getMessage("playcommand.playlist.setTitle2") + playlist.getName() + ")");
+                success.setFooter(TzeBot.Languages.LanguageDetector.getMessage("general.bythecommand") + name, avatarURL);
+                
                 channel.sendTyping().queue();
-                channel.sendMessage(succces.build()).queue();
-                succces.clear();
+                channel.sendMessage(success.build()).queue();
+                success.clear();
 
                 play(musicManager, firstTrack);
 
@@ -91,8 +92,8 @@ public class PlayerManager {
             public void noMatches() {
                 EmbedBuilder error = new EmbedBuilder();
                 error.setColor(0xff3923);
-                error.setTitle("❌ Nothing found");
-                error.setDescription("Nothing found by " + trackUrl);
+                error.setTitle(TzeBot.Languages.LanguageDetector.getMessage("general.icon.error") + TzeBot.Languages.LanguageDetector.getMessage("playcommand.nothing.setTitle"));
+                error.setDescription(TzeBot.Languages.LanguageDetector.getMessage("playcommand.nothing.setDescription") + trackUrl);
 
                 channel.sendTyping().queue();
                 channel.sendMessage(error.build()).queue();
@@ -104,8 +105,8 @@ public class PlayerManager {
             public void loadFailed(FriendlyException exception) {
                 EmbedBuilder error = new EmbedBuilder();
                 error.setColor(0xff3923);
-                error.setTitle("Could not play");
-                error.setDescription("Could not play: " + exception.getMessage());
+                error.setTitle(TzeBot.Languages.LanguageDetector.getMessage("general.icon.error") + TzeBot.Languages.LanguageDetector.getMessage("playcommand.error.setTitle"));
+                error.setDescription(TzeBot.Languages.LanguageDetector.getMessage("playcommand.error.setDescription") + exception.getMessage());
 
                 channel.sendTyping().queue();
                 channel.sendMessage(error.build()).queue();

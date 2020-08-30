@@ -4,9 +4,9 @@ import TzeBot.command.CommandContext;
 import TzeBot.command.ICommand;
 import TzeBot.command.ClearCommand;
 import TzeBot.command.commands.HelpCommand;
+import TzeBot.command.commands.LanguageCommand;
 import TzeBot.command.commands.music.*;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
-
 import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
@@ -17,6 +17,7 @@ public class CommandManager {
 
     public CommandManager() {
         addCommand(new HelpCommand(this));
+        addCommand(new LanguageCommand());
         addCommand(new SetPrefixCommand());
         addCommand(new ClearCommand());
         addCommand(new PlayCommand());

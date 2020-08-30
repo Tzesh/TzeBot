@@ -22,8 +22,8 @@ public class ClearCommand implements ICommand {
         if (!member.hasPermission(Permission.MANAGE_SERVER)) {
             EmbedBuilder error = new EmbedBuilder();
             error.setColor(0xff3923);
-            error.setTitle("❌ Unauthorized person.");
-            error.setDescription("You must have MANAGE_SERVER permission to use this command.");
+            error.setTitle(TzeBot.Languages.LanguageDetector.getMessage("general.icon.error") + TzeBot.Languages.LanguageDetector.getMessage("general.not_authorized"));
+            error.setDescription(TzeBot.Languages.LanguageDetector.getMessage("general.not_authorized.description"));
 
             channel.sendTyping().queue();
             channel.sendMessage(error.build()).queue();
@@ -33,8 +33,8 @@ public class ClearCommand implements ICommand {
         else if (args.isEmpty()) {
             EmbedBuilder error = new EmbedBuilder();
             error.setColor(0xff3923);
-            error.setTitle("❌ None args specified.");
-            error.setDescription("Please enter the number of messages that you want to delete.");
+            error.setTitle(TzeBot.Languages.LanguageDetector.getMessage("general.icon.error") + TzeBot.Languages.LanguageDetector.getMessage("general.403"));
+            error.setDescription(TzeBot.Languages.LanguageDetector.getMessage("general.403.description"));
 
             channel.sendTyping().queue();
             channel.sendMessage(error.build()).queue();
@@ -46,21 +46,21 @@ public class ClearCommand implements ICommand {
                 List<Message> messages = channel.getHistory().retrievePast(Integer.parseInt(String.join(" ", args))).complete();
                 channel.deleteMessages(messages).queue();
 
-                EmbedBuilder succes = new EmbedBuilder();
-                succes.setColor(0x00ff00);
-                succes.setTitle("✅ " + String.join("", args) + " message has been cleared.");
-                succes.setFooter("By the command of " + ctx.getMember().getUser().getName(), ctx.getMember().getUser().getAvatarUrl());
+                EmbedBuilder success = new EmbedBuilder();
+                success.setColor(0x00ff00);
+                success.setTitle(TzeBot.Languages.LanguageDetector.getMessage("general.icon.success") + String.join("", args) + " " + TzeBot.Languages.LanguageDetector.getMessage("clearcommand.successful.setTitle"));
+                success.setFooter(TzeBot.Languages.LanguageDetector.getMessage("general.bythecommand") + " " + ctx.getMember().getUser().getName(), ctx.getMember().getUser().getAvatarUrl());
 
 
                 ctx.getChannel().sendTyping().queue();
-                channel.sendMessage(succes.build()).queue();
-                succes.clear();
+                channel.sendMessage(success.build()).queue();
+                success.clear();
             } catch (IllegalArgumentException exception) {
                 if (exception.toString().startsWith("java.lang.IllegalArgumentException")) {
                     EmbedBuilder error = new EmbedBuilder();
                     error.setColor(0xff3923);
-                    error.setTitle("❌ Unsuitable amount of messages.");
-                    error.setDescription("You may only choose 2-100 messages at once.");
+                    error.setTitle(TzeBot.Languages.LanguageDetector.getMessage("general.icon.error") + TzeBot.Languages.LanguageDetector.getMessage("clearcommand.unsuitable.setTitle"));
+                    error.setDescription(TzeBot.Languages.LanguageDetector.getMessage("clearcommand.unsuitable.setDescription"));
 
                     channel.sendTyping().queue();
                     channel.sendMessage(error.build()).queue();
@@ -68,8 +68,8 @@ public class ClearCommand implements ICommand {
                 } else {
                     EmbedBuilder error = new EmbedBuilder();
                     error.setColor(0xff3923);
-                    error.setTitle("❌ Selected messages are older than 2 weeks.");
-                    error.setDescription("Messages older than 2 weeks cannot be deleted.");
+                    error.setTitle(TzeBot.Languages.LanguageDetector.getMessage("general.icon.error") + TzeBot.Languages.LanguageDetector.getMessage("clearcommand.older.setTitle"));
+                    error.setDescription(TzeBot.Languages.LanguageDetector.getMessage("clearcommand.older.setDescription"));
 
                     channel.sendTyping().queue();
                     channel.sendMessage(error.build()).queue();
@@ -81,11 +81,11 @@ public class ClearCommand implements ICommand {
 
     @Override
     public String getName() {
-        return "clear";
+        return TzeBot.Languages.LanguageDetector.getMessage("clearcommand.name");
     }
 
     @Override
     public String getHelp() {
-        return "Deletes the specified amount of messages.";
+        return TzeBot.Languages.LanguageDetector.getMessage("clearcommand.gethelp");
     }
 }

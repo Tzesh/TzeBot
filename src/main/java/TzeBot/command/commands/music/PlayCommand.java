@@ -19,7 +19,6 @@ import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.TextChannel;
 import net.dv8tion.jda.api.entities.VoiceChannel;
 import net.dv8tion.jda.api.managers.AudioManager;
-
 import javax.annotation.Nullable;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -31,7 +30,6 @@ public class PlayCommand implements ICommand {
 
     public PlayCommand () {
         YouTube temp = null;
-
         try {
             temp = new YouTube.Builder(
                     GoogleNetHttpTransport.newTrustedTransport(),
@@ -42,10 +40,7 @@ public class PlayCommand implements ICommand {
                     .build();
 
         } catch (Exception e) {
-            e.printStackTrace();
         }
-
-
         youTube = temp;
     }
     @Override
@@ -66,8 +61,8 @@ public class PlayCommand implements ICommand {
             if (ytSearched == null) {
                 EmbedBuilder error = new EmbedBuilder();
                 error.setColor(0xff3923);
-                error.setTitle("❌ YouTube returned no results.");
-                error.setDescription("Please be ensure what you're looking for.");
+            error.setTitle(TzeBot.Languages.LanguageDetector.getMessage("general.icon.error") + TzeBot.Languages.LanguageDetector.getMessage("playcommand.noresults.setTitle"));
+            error.setDescription(TzeBot.Languages.LanguageDetector.getMessage("playcommand.noresults.setDescription"));
 
                 channel.sendTyping().queue();
                 channel.sendMessage(error.build()).queue();
@@ -82,8 +77,8 @@ public class PlayCommand implements ICommand {
         if (ctx.getArgs().isEmpty()) {
             EmbedBuilder error = new EmbedBuilder();
             error.setColor(0xff3923);
-            error.setTitle("❌ None args specified.");
-            error.setDescription("Please enter a url or song name as example: " + Config.get("pre") + "play [song name/url]");
+            error.setTitle(TzeBot.Languages.LanguageDetector.getMessage("general.icon.error") + TzeBot.Languages.LanguageDetector.getMessage("general.403"));
+            error.setDescription(TzeBot.Languages.LanguageDetector.getMessage("playcommand.noargs.setDescription1") + Config.get("pre") + TzeBot.Languages.LanguageDetector.getMessage("playcommand.noargs.setDescription2"));
 
             channel.sendTyping().queue();
             channel.sendMessage(error.build()).queue();
@@ -94,8 +89,8 @@ public class PlayCommand implements ICommand {
         if (!memberVoiceState.inVoiceChannel()) {
             EmbedBuilder error = new EmbedBuilder();
             error.setColor(0xff3923);
-            error.setTitle("❌ Please join a voice channel.");
-            error.setDescription("You have to be connected to a voice channel to play a song.");
+            error.setTitle(TzeBot.Languages.LanguageDetector.getMessage("general.icon.error") + TzeBot.Languages.LanguageDetector.getMessage("joincommand.joinchannel.setTitle"));
+            error.setDescription(TzeBot.Languages.LanguageDetector.getMessage("joincommand.joinchannel.setDescription"));
 
             channel.sendTyping().queue();
             channel.sendMessage(error.build()).queue();
@@ -106,8 +101,8 @@ public class PlayCommand implements ICommand {
         if (!selfmember.hasPermission(voiceChannel, Permission.VOICE_CONNECT)) {
             EmbedBuilder error = new EmbedBuilder();
             error.setColor(0xff3923);
-            error.setTitle("❌ I cannot join.");
-            error.setDescription("Because I don't have the permission to join specified voice channel.");
+            error.setTitle(TzeBot.Languages.LanguageDetector.getMessage("general.icon.error") + TzeBot.Languages.LanguageDetector.getMessage("joincommand.cannotjoin.setTitle"));
+            error.setDescription(TzeBot.Languages.LanguageDetector.getMessage("joincommand.cannotjoin.setDescription"));
 
             channel.sendTyping().queue();
             channel.sendMessage(error.build()).queue();
@@ -120,7 +115,8 @@ public class PlayCommand implements ICommand {
             manager.getGuildMusicManager(ctx.getGuild()).player.setVolume(5);
             EmbedBuilder succes = new EmbedBuilder();
             succes.setColor(0x00ff00);
-            succes.setTitle("✅ Joining your voice channel.");
+            succes.setTitle(TzeBot.Languages.LanguageDetector.getMessage("general.icon.success") + TzeBot.Languages.LanguageDetector.getMessage("joincommand.success.setTitle"));
+            succes.setFooter(TzeBot.Languages.LanguageDetector.getMessage("general.bythecommand") + ctx.getMember().getUser().getName(), ctx.getMember().getUser().getAvatarUrl());
 
             channel.sendTyping().queue();
             channel.sendMessage(succes.build()).queue();
@@ -135,7 +131,7 @@ public class PlayCommand implements ICommand {
         AudioTrackInfo info = player.getPlayingTrack().getInfo();
 
         channel.sendMessage(EmbedUtils.embedMessage(String.format(
-                "**Now Playing** [%s]{%s}\n%s %s - %s",
+                "**" + TzeBot.Languages.LanguageDetector.getMessage("nowplayingcommand.nowplaying") + "** [%s]{%s}\n%s %s - %s",
                 info.title,
                 info.uri,
                 player.isPaused() ? "\u23F8" : "▶",
@@ -172,7 +168,6 @@ public class PlayCommand implements ICommand {
             }
 
         } catch (Exception e) {
-            e.printStackTrace();
         }
 
         return null;
@@ -180,13 +175,13 @@ public class PlayCommand implements ICommand {
 
     @Override
     public String getName() {
-        return "play";
+        return TzeBot.Languages.LanguageDetector.getMessage("playcommand.name");
     }
 
     @Override
     public String getHelp() {
-        return "Plays a song\n" +
-                "Usage: `" + Config.get("pre") + getName() + " <song url>`";
+        return TzeBot.Languages.LanguageDetector.getMessage("playcommand.gethelp1") + "\n" +
+                TzeBot.Languages.LanguageDetector.getMessage("playcommand.gethelp2") + Config.get("pre") + getName() + TzeBot.Languages.LanguageDetector.getMessage("playcommand.gethelp3");
     }
 
     private String formatTime(long timeInMilis) {

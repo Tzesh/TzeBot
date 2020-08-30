@@ -21,8 +21,8 @@ public class SetPrefixCommand implements ICommand {
         if (!member.hasPermission(Permission.MANAGE_SERVER)) {
             EmbedBuilder error = new EmbedBuilder();
             error.setColor(0xff3923);
-            error.setTitle("❌ Unauthorized person.");
-            error.setDescription("You must have MANAGE_SERVER permission to use this command.");
+            error.setTitle(TzeBot.Languages.LanguageDetector.getMessage("general.icon.error") + TzeBot.Languages.LanguageDetector.getMessage("general.not_authorized"));
+            error.setDescription(TzeBot.Languages.LanguageDetector.getMessage("general.not_authorized.description"));
 
             channel.sendTyping().queue();
             channel.sendMessage(error.build()).queue();
@@ -33,8 +33,8 @@ public class SetPrefixCommand implements ICommand {
         if (args.isEmpty()) {
             EmbedBuilder error = new EmbedBuilder();
             error.setColor(0xff3923);
-            error.setTitle("❌ None args specified.");
-            error.setDescription("Please specify an instance of prefix that you want to use for it.");
+            error.setTitle(TzeBot.Languages.LanguageDetector.getMessage("general.icon.error") + TzeBot.Languages.LanguageDetector.getMessage("general.403"));
+            error.setDescription(TzeBot.Languages.LanguageDetector.getMessage("general.403.description"));
 
             channel.sendTyping().queue();
             channel.sendMessage(error.build()).queue();
@@ -45,25 +45,25 @@ public class SetPrefixCommand implements ICommand {
         final String newPrefix = String.join("", args);
         Config.PREFIXES.put(ctx.getGuild().getIdLong(), newPrefix);
 
-        EmbedBuilder succes = new EmbedBuilder();
-        succes.setColor(0x00ff00);
-        succes.setTitle("✅ New prefix has been set to `" + newPrefix + "`.");
-        succes.setFooter("By the command of " + ctx.getMember().getUser().getName(), ctx.getMember().getUser().getAvatarUrl());
+        EmbedBuilder success = new EmbedBuilder();
+        success.setColor(0x00ff00);
+        success.setTitle(TzeBot.Languages.LanguageDetector.getMessage("general.icon.success") + " " + TzeBot.Languages.LanguageDetector.getMessage("setprefixcommand.success.setTitle") + "`" + newPrefix + "`");
+        success.setFooter(TzeBot.Languages.LanguageDetector.getMessage("general.bythecommand") + " " + ctx.getMember().getUser().getName(), ctx.getMember().getUser().getAvatarUrl());
 
 
         channel.sendTyping().queue();
-        channel.sendMessage(succes.build()).queue();
-        succes.clear();
+        channel.sendMessage(success.build()).queue();
+        success.clear();
     }
 
     @Override
     public String getName() {
-        return "prefix";
+        return TzeBot.Languages.LanguageDetector.getMessage("setprefixcommand.name");
     }
 
     @Override
     public String getHelp() {
-        return "Sets the prefix for this server\n" +
-                "Usage: `" + Config.get("pre") + "prefix <prefix>`";
+        return TzeBot.Languages.LanguageDetector.getMessage("setprefixcommand.gethelp1") +
+                "\n" + TzeBot.Languages.LanguageDetector.getMessage("setprefixcommand.gethelp2") + Config.get("pre") + TzeBot.Languages.LanguageDetector.getMessage("setprefixcommand.gethelp3");
     }
 }

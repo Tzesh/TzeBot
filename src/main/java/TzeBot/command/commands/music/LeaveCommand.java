@@ -16,8 +16,8 @@ public class LeaveCommand implements ICommand {
         if (!audioManager.isConnected()) {
             EmbedBuilder error = new EmbedBuilder();
             error.setColor(0xff3923);
-            error.setTitle("❌ I cannot leave.");
-            error.setDescription("That may be caused I even didn't join a voice channel.");
+            error.setTitle(TzeBot.Languages.LanguageDetector.getMessage("general.icon.error") + TzeBot.Languages.LanguageDetector.getMessage("leavecommand.cannotleave.setTitle"));
+            error.setDescription(TzeBot.Languages.LanguageDetector.getMessage("leavecommand.notconnected"));
 
             channel.sendTyping().queue();
             channel.sendMessage(error.build()).queue();
@@ -30,8 +30,8 @@ public class LeaveCommand implements ICommand {
         if (!voiceChannel.getMembers().contains(ctx.getMember())) {
             EmbedBuilder error = new EmbedBuilder();
             error.setColor(0xff3923);
-            error.setTitle("❌ I cannot leave.");
-            error.setDescription("You have to be connected to the channel which I've connected.");
+            error.setTitle(TzeBot.Languages.LanguageDetector.getMessage("general.icon.error") + TzeBot.Languages.LanguageDetector.getMessage("leavecommand.cannotleave.setTitle"));
+            error.setDescription(TzeBot.Languages.LanguageDetector.getMessage("leavecommand.notin"));
 
             channel.sendTyping().queue();
             channel.sendMessage(error.build()).queue();
@@ -40,25 +40,25 @@ public class LeaveCommand implements ICommand {
         }
 
         audioManager.closeAudioConnection();
-        EmbedBuilder succes = new EmbedBuilder();
-        succes.setColor(0x00ff00);
-        succes.setTitle("✅ Leaving your voice channel.");
-        succes.setFooter("By the command of " + ctx.getMember().getUser().getName(), ctx.getMember().getUser().getAvatarUrl());
+        EmbedBuilder success = new EmbedBuilder();
+        success.setColor(0x00ff00);
+        success.setTitle(TzeBot.Languages.LanguageDetector.getMessage("general.icon.success") + TzeBot.Languages.LanguageDetector.getMessage("leavecommand.success.setTitle"));
+        success.setFooter(TzeBot.Languages.LanguageDetector.getMessage("general.bythecommand") + ctx.getMember().getUser().getName(), ctx.getMember().getUser().getAvatarUrl());
 
 
         channel.sendTyping().queue();
-        channel.sendMessage(succes.build()).queue();
-        succes.clear();
+        channel.sendMessage(success.build()).queue();
+        success.clear();
 
     }
 
     @Override
     public String getName() {
-        return "leave";
+        return TzeBot.Languages.LanguageDetector.getMessage("leavecommand.name");
     }
 
     @Override
     public String getHelp() {
-        return "Makes the bot leave your channel.";
+        return TzeBot.Languages.LanguageDetector.getMessage("leavecommand.gethelp");
     }
 }
