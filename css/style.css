@@ -2,6 +2,8 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    font-family: 'Open-Sans', serif;
+    scroll-behavior: smooth;
 }
 
 .bg {
@@ -13,10 +15,24 @@
 
 .box {
     margin-bottom: 20px;
+    font-family: 'Open Sans', sans-serif;
 }
 
+.box p::first-letter {
+    font-size: 25px;
+}
+
+.box h2 {
+    text-align: center;
+    font-family: 'Cinzel', serif;
+
+}
 p {
     margin: 10px 0;
+}
+
+a {
+    text-decoration: none;
 }
 
 /* Header */
@@ -31,6 +47,7 @@ p {
     text-align: center;
     background-color: gray;
     color: white;
+    font-family: 'Raleway', sans-serif;
 }
 
 .navbar {
@@ -42,8 +59,9 @@ p {
 .navbar a {
     color: white;
     padding: 16px 20px;
-    text-decoration: none;
     text-align: center;
+    transition: color 0.5s ease-in;
+    font-family: 'Raleway', sans-serif;
 }
 
 .navbar a:hover {
@@ -51,34 +69,156 @@ p {
     color: #333;
 }
 
+/* Main */
+
 .main {
     display: flex;
 }
 
-#sidebar {
-    background-color: #f1f1f1;
-    flex-basis: 25%;
+#content {
+    flex: 100%;
     padding: 20px;
-    order: 1;
 }
 
-#content {
-    flex: 75%;
+#content h3 {
+    font-family: 'Cinzel', serif;
+}
+
+.feature {
+    display: flex;
+}
+
+.feature img {
+    width: 100%;
+    height: auto;
     padding: 20px;
 }
+
+.img {
+    flex-basis: 50%;
+}
+
+.text {
+    flex-basis: 50%;
+}
+
+.text h4 {
+    text-align: center;
+    font-family: 'Cinzel', serif;
+}
+
+.text li {
+    list-style: none;
+    margin: 10px;
+}
+
+.exp {
+    font-size: 12px;
+}
+
+.img-innerlay {
+    position: relative;
+    transition: all .5s ease-out;
+}
+
+.img-overlay  {
+    position: relative;
+    transition: all .5s ease-out;
+}
+
+.icon {
+    position: absolute;
+    color: #333;
+    font-size: 3rem;
+    margin: auto;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.img-innerlay:hover .img-overlay {
+    opacity: 0.85;
+}
+
+.icon {
+    transition: all .5s ease-out;
+}
+
+.icon:hover {
+    font-size: 75px;
+    color: white;
+}
+
+.download-button {
+    background: white;
+    text-align: center;
+    color: #3b3b3b;
+    border: 1px solid #3b3b3b;
+    transition: all .5s;
+    padding: 10px;
+}
+
+.download-button a {
+    color: #3b3b3b;
+}
+
+.download-button:hover {
+    border-color: white;
+    background-color: #3b3b3b;
+}
+
+.download-button:hover a {
+    color: white;
+}
+
+/* Footer */
 
 .footer {
-    background-color: #ddd;
+    background-color: #3b3b3b;
     padding: 20px;
     text-align: center;
+    color: white;
 }
 
-@media screen and (max-width: 700px) {
+.foot-text {
+    font-family: 'Raleway', sans-serif;
+}
+
+.social {
+    display: flex;
+    justify-content: center;
+    color: #333;
+    font-size: 4rem;
+}
+
+.social a {
+    font-size: 30px;
+    padding: 10px;
+    transition: all .5s;
+}
+
+.social a:hover {
+    font-size: 36px;
+}
+
+.steam {
+    color: black;
+}
+
+.github {
+    color: white;
+}
+
+.dc {
+    color: rgba(114, 137, 217);
+}
+
+.linkedin {
+    color: darkblue;
+}
+
+@media screen and (max-width: 1000px) {
     .main, .navbar {
         flex-direction: column;
-    }
-    
-    #sidebar {
-        order: -1;
     }
 }
