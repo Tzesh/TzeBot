@@ -88,7 +88,7 @@ en_en, pausecommand.success.setTitle, Paused the current song :
 en_en, playcommand.name, play
 en_en, playcommand.gethelp1, Plays a song
 en_en, playcommand.gethelp2, Usage: `
-en_en, playcommand.gethelp3,  <song url/name>'
+en_en, playcommand.gethelp3,  <song url>'
 en_en, playcommand.noresults.setTitle, YouTube returned no results
 en_en, playcommand.noresults.setDescription, Please be ensure what you are looking for
 en_en, playcommand.noargs.setDescription1, Please enter a url or song name as example: 
@@ -210,7 +210,7 @@ tr_tr, leavecommand.success.setTitle, Kanalından ayrılıyor
 tr_tr, loopcommand.name, döngü
 tr_tr, loopcommand.gethelp, Mevcut kuyruğu döngüye alır
 tr_tr, loopcommand.error.setTitle, Kuyruk boş
-tr_tr, loopcommand.error.setDescription, Belki biraz şarkı eklemek istersin
+tr_tr, loopcommand.error.setDescription, Belki şarkı şarkı eklemek istersin
 tr_tr, loopcommand.success.setTitle, Kuyruk bir kereliğine döngüye alındı
 
 // Oynatılan komutu
@@ -231,7 +231,7 @@ tr_tr, pausecommand.success.setTitle, Oynatılan şarkı duraklatıldı :
 tr_tr, playcommand.name, oynat
 tr_tr, playcommand.gethelp1, Bir şarkı oynatır
 tr_tr, playcommand.gethelp2, Kullanım: `
-tr_tr, playcommand.gethelp3,  <şarkı urlsi/şarkı adı>`
+tr_tr, playcommand.gethelp3,  <şarkı urlsi>`
 tr_tr, playcommand.noresults.setTitle, YouTube sonuç bulamadı
 tr_tr, playcommand.noresults.setDescription, Ne aradığınızdan emin olun lütfen
 tr_tr, playcommand.noargs.setDescription1, Lütfen örnekteki gibi şarkı ismi veya urlsi veriniz : 
