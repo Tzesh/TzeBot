@@ -218,7 +218,7 @@ a {
 }
 
 @media screen and (max-width: 1000px) {
-    .main, .navbar {
+    .main, .navbar, .feature {
         flex-direction: column;
     }
 }
