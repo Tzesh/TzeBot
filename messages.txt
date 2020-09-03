@@ -171,17 +171,24 @@ tr_tr, general.bythecommand, Komutu veren
 tr_tr, general.icon.success, ✅ 
 tr_tr, general.icon.error, ❌ 
 
+// Moderation Commands
+tr_tr, moderation.name, moderasyon
+
 // Yardım Komutu
 tr_tr, help.name, yardım
 tr_tr, help.gethelp1, Komutların listesini gösterir
 tr_tr, help.gethelp2, Kullanım: `
 tr_tr, help.gethelp3, yardım [komut]`
 tr_tr, help.info.setTitle, TzeBOT BOT BOT BOT BOT BOT...
-tr_tr, help.info.setDescription, Sadece normal bir java discord botu
-tr_tr, help.info.setFooter, Tzesh tarafından Frankensteinlandı
-tr_tr, help.builder.append, Komutların listesi:
-tr_tr, help.further1, Ayrıca `
-tr_tr, help.further2, yardım [komut]` komutunu kullanıp ekstra bilgi edinebilirsiniz
+tr_tr, help.info.setDescription, Ücretsiz gelişmiş discord bot altyapısı!
+tr_tr, help.info.setDescription1, ⚙️ moderasyon komutları: 
+tr_tr, help.info.setDescription2, 🎵 müzik komutları: 
+tr_tr, help.info.setDescription3, ℹ️ destek komutu: 
+tr_tr, help.info.setFooter, Tzesh tarafından frenkeisteinlandı
+tr_tr, help.music.info.setTitle, 🎵 Müzik Komutları
+tr_tr, help.music.info.setDescription, Bütün komutlar aşağıdaki gibidir: 
+tr_tr, help.moderation.info.setTitle, ⚙️ Moderasyon Komutları
+tr_tr, help.moderation.info.setDescription, Bütün komutlar aşağıdaki gibidir: 
 
 // Dil Komutu
 tr_tr, language.name, dil
@@ -200,6 +207,13 @@ tr_tr, clear.unsuitable.setTitle, Kabul edilemez mesaj aralığı
 tr_tr, clear.unsuitable.setDescription, Tek seferde 2-100 arası mesaj silebilirsiniz
 tr_tr, clear.older.setTitle, Seçilen mesajlar 2 haftadan eski
 tr_tr, clear.older.setDescription, 2 haftadan eski mesajlar silinemez
+
+// Yardım Komutu
+tr_tr, support.name, yardım
+
+
+// Müzik Komutları
+tr_tr, music.name, müzik
 
 // Katıl Komutu
 tr_tr, join.name, katıl
