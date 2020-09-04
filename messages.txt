@@ -86,7 +86,7 @@ en_en,  vote.error.setDescription,  You can only use 2-9 different answers once
 
 // Support Command
 en_en,  support.name,  support
-en_en,  support.gethelp,  Maybe you want to support TzeBot,  please?
+en_en,  support.gethelp,  Maybe you want to support TzeBot, please?
 en_en,  support.setDescription,  TzeBot is a discord bot & substructure.
 en_en,  support.setDescription2,  You can use TzeBot in your server(s) or just create your own bot on TzeBot's substructure.
 en_en,  support.setDescription3,  But if you want to take part in our development progress you can help us in patreon:
@@ -279,11 +279,11 @@ tr_tr,  clear.older.setDescription,  2 haftadan eski mesajlar silinemez
 
 // Destek Komutu
 tr_tr,  support.name,  destek
-tr_tr,  support.gethelp,  Belki TzeBot'u desteklemek istersiniz,  lütfen?
+tr_tr,  support.gethelp,  Belki TzeBot'u desteklemek istersiniz, lütfen?
 tr_tr,  support.setDescription,  TzeBot bir discord botu ve altyapısı.
 tr_tr,  support.setDescription2,  TzeBot'u sunucunuzda kullanabilir veya kendi botunuzu oluşturabilirsiniz.
 tr_tr,  support.setDescription3,  Eğer geliştirme sürecinde yer almak istiyorsanız patreon'dan destek verebilirsiniz:
-tr_tr,  support.setFooter,  Desteğiniz için şimdiden teşekkür ederiz,  minnettarız.
+tr_tr,  support.setFooter,  Desteğiniz için şimdiden teşekkür ederiz, minnettarız.
 
 // Oylama Komutu
 tr_tr,  vote.name,  oylama
