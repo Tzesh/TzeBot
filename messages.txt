@@ -10,7 +10,7 @@ en_en,  general.not_authorized.description,  You must have manage server permiss
 
 // General Stuff
 en_en,  general.bythecommand,  By the command of 
-en_en,  general.icon.success,  ✅ s
+en_en,  general.icon.success,  ✅ 
 en_en,  general.icon.error,  ❌ 
 en_en,  general.icon.join,  ⏺️ 
 en_en,  general.icon.leave,  ⏏ 
@@ -24,10 +24,20 @@ en_en,  general.icon.nowplaying,  ⏯️
 en_en,  general.icon.shuffle,  🔀 
 en_en,  general.icon.prefix,  🔧️ 
 en_en,  general.icon.clear,  🧻️ 
-en_en,  general.icon.language,  🏳️  
+en_en,  general.icon.language,  🏳️ 
 en_en,  general.icon.tzebot,  🤖 
 en_en,  general.icon.patreon,  💰 
 en_en,  general.icon.link,  🔗 
+en_en,  general.icon.vote,  🗳️ 
+en_en,  general.icon.1,  1️⃣
+en_en,  general.icon.2,  2️⃣
+en_en,  general.icon.3,  3️⃣
+en_en,  general.icon.4,  4️⃣
+en_en,  general.icon.5,  5️⃣
+en_en,  general.icon.6,  6️⃣
+en_en,  general.icon.7,  7️⃣
+en_en,  general.icon.8,  8️⃣
+en_en,  general.icon.9,  9️⃣
 
 
 // Moderation Commands
@@ -66,6 +76,13 @@ en_en,  clear.unsuitable.setTitle,  Unsuitable amount of messages
 en_en,  clear.unsuitable.setDescription,  You may only choose 2-100 messages at once
 en_en,  clear.older.setTitle,  Selected messages are older than 2 weeks
 en_en,  clear.older.setDescription,  Messages older than 2 weeks cannot be deleted
+
+// Vote Command
+en_en, vote.name, vote
+en_en, vote.gethelp, You can vote to the 9 different answers as shown: `vote [question] [answer1] [answer2]...`
+en_en, vote.setFooter, You can vote by adding reaction to the answer that you want to vote
+en_en, vote.error.setTitle, Uncorrect usage
+en_en, vote.error.setDescription, You can only use 2-9 different answers once
 
 // Support Command
 en_en,  support.name,  support
@@ -212,8 +229,18 @@ tr_tr,  general.icon.language,  🏳️
 tr_tr,  general.icon.tzebot,  🤖 
 tr_tr,  general.icon.patreon,  💰 
 tr_tr,  general.icon.link,  🔗 
+tr_tr,  general.icon.vote,  🗳️ 
+tr_tr,  general.icon.1,  1️⃣
+tr_tr,  general.icon.2,  2️⃣
+tr_tr,  general.icon.3,  3️⃣
+tr_tr,  general.icon.4,  4️⃣
+tr_tr,  general.icon.5,  5️⃣
+tr_tr,  general.icon.6,  6️⃣
+tr_tr,  general.icon.7,  7️⃣
+tr_tr,  general.icon.8,  8️⃣
+tr_tr,  general.icon.9,  9️⃣
 
-// Moderation Commands
+// Moderasyon Komutları
 tr_tr,  moderation.name,  moderasyon
 
 // Yardım Komutu
@@ -250,13 +277,20 @@ tr_tr,  clear.unsuitable.setDescription,  Tek seferde 2-100 arası mesaj silebil
 tr_tr,  clear.older.setTitle,  Seçilen mesajlar 2 haftadan eski
 tr_tr,  clear.older.setDescription,  2 haftadan eski mesajlar silinemez
 
-// Yardım Komutu
+// Destek Komutu
 tr_tr,  support.name,  destek
 tr_tr,  support.gethelp,  Belki TzeBot'u desteklemek istersiniz,  lütfen?
 tr_tr,  support.setDescription,  TzeBot bir discord botu ve altyapısı.
 tr_tr,  support.setDescription2,  TzeBot'u sunucunuzda kullanabilir veya kendi botunuzu oluşturabilirsiniz.
 tr_tr,  support.setDescription3,  Eğer geliştirme sürecinde yer almak istiyorsanız patreon'dan destek verebilirsiniz:
 tr_tr,  support.setFooter,  Desteğiniz için şimdiden teşekkür ederiz,  minnettarız.
+
+// Oylama Komutu
+en_en,  vote.name,  oylama
+en_en,  vote.gethelp,  9 farklı cevaba kadar oylama yapabilirsiniz: `oylama [soru] [cevap1] [cevap2]...`
+en_en,  vote.setFooter,  Oylamayı oylamak istediğiniz cevaba tepki ekleyerek yapabilirsiniz
+en_en,  vote.error.setTitle,  Yanlış kullanım
+en_en,  vote.error.setDescription,  Tek seferde sadece 2-9 cevap ekleyebilirsiniz
 
 
 // Müzik Komutları
