@@ -1,9 +1,5 @@
 package TzeBot.music;
 
-import TzeBot.command.CommandContext;
-import TzeBot.command.ICommand;
-import TzeBot.command.commands.music.PlayCommand;
-import com.jagrosh.jdautilities.command.Command;
 import com.sedmelluq.discord.lavaplayer.player.AudioLoadResultHandler;
 import com.sedmelluq.discord.lavaplayer.player.AudioPlayerManager;
 import com.sedmelluq.discord.lavaplayer.player.DefaultAudioPlayerManager;
@@ -14,7 +10,6 @@ import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.TextChannel;
-import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -54,9 +49,9 @@ public class PlayerManager {
             public void trackLoaded(AudioTrack track) {
                 EmbedBuilder success = new EmbedBuilder();
                 success.setColor(0x00ff00);
-                success.setTitle(TzeBot.Languages.LanguageDetector.getMessage("general.icon.success") + TzeBot.Languages.LanguageDetector.getMessage("playcommand.success.setTitle")  + track.getInfo().title);
+                success.setTitle(TzeBot.essentials.LanguageDetector.getMessage("general.icon.play") + TzeBot.essentials.LanguageDetector.getMessage("play.success.setTitle")  + track.getInfo().title);
                 success.setDescription(track.getInfo().uri);
-                success.setFooter(TzeBot.Languages.LanguageDetector.getMessage("general.bythecommand") + name, avatarURL);
+                success.setFooter(TzeBot.essentials.LanguageDetector.getMessage("general.bythecommand") + name, avatarURL);
 
                 channel.sendTyping().queue();
                 channel.sendMessage(success.build()).queue();
@@ -76,8 +71,8 @@ public class PlayerManager {
 
                 EmbedBuilder success = new EmbedBuilder();
                 success.setColor(0x00ff00);
-                success.setTitle(TzeBot.Languages.LanguageDetector.getMessage("playcommand.playlist.setTitle1") + firstTrack.getInfo().title + TzeBot.Languages.LanguageDetector.getMessage("playcommand.playlist.setTitle2") + playlist.getName() + ")");
-                success.setFooter(TzeBot.Languages.LanguageDetector.getMessage("general.bythecommand") + name, avatarURL);
+                success.setTitle(TzeBot.essentials.LanguageDetector.getMessage("play.playlist.setTitle1") + firstTrack.getInfo().title + TzeBot.essentials.LanguageDetector.getMessage("play.playlist.setTitle2") + playlist.getName() + ")");
+                success.setFooter(TzeBot.essentials.LanguageDetector.getMessage("general.bythecommand") + name, avatarURL);
                 
                 channel.sendTyping().queue();
                 channel.sendMessage(success.build()).queue();
@@ -92,8 +87,8 @@ public class PlayerManager {
             public void noMatches() {
                 EmbedBuilder error = new EmbedBuilder();
                 error.setColor(0xff3923);
-                error.setTitle(TzeBot.Languages.LanguageDetector.getMessage("general.icon.error") + TzeBot.Languages.LanguageDetector.getMessage("playcommand.nothing.setTitle"));
-                error.setDescription(TzeBot.Languages.LanguageDetector.getMessage("playcommand.nothing.setDescription") + trackUrl);
+                error.setTitle(TzeBot.essentials.LanguageDetector.getMessage("general.icon.error") + TzeBot.essentials.LanguageDetector.getMessage("play.nothing.setTitle"));
+                error.setDescription(TzeBot.essentials.LanguageDetector.getMessage("play.nothing.setDescription") + trackUrl);
 
                 channel.sendTyping().queue();
                 channel.sendMessage(error.build()).queue();
@@ -105,8 +100,8 @@ public class PlayerManager {
             public void loadFailed(FriendlyException exception) {
                 EmbedBuilder error = new EmbedBuilder();
                 error.setColor(0xff3923);
-                error.setTitle(TzeBot.Languages.LanguageDetector.getMessage("general.icon.error") + TzeBot.Languages.LanguageDetector.getMessage("playcommand.error.setTitle"));
-                error.setDescription(TzeBot.Languages.LanguageDetector.getMessage("playcommand.error.setDescription") + exception.getMessage());
+                error.setTitle(TzeBot.essentials.LanguageDetector.getMessage("general.icon.error") + TzeBot.essentials.LanguageDetector.getMessage("play.error.setTitle"));
+                error.setDescription(TzeBot.essentials.LanguageDetector.getMessage("play.error.setDescription") + exception.getMessage());
 
                 channel.sendTyping().queue();
                 channel.sendMessage(error.build()).queue();

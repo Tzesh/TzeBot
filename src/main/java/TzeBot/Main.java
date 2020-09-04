@@ -5,7 +5,7 @@
  */
 package TzeBot;
 
-import TzeBot.GUI.TzeGUI;
+import TzeBot.gui.TzeGUI;
 import java.sql.SQLException;
 import javax.security.auth.login.LoginException;
 
