@@ -24,7 +24,7 @@ en_en, general.icon.nowplaying, ⏯️
 en_en, general.icon.shuffle, 🔀 
 en_en, general.icon.prefix, 🔧️ 
 en_en, general.icon.clear, 🧻️
-en_en, general.icon.language 🏳️
+en_en, general.icon.language, 🏳️ 
 
 
 // Moderation Commands
@@ -205,7 +205,7 @@ tr_tr, general.icon.nowplaying, ⏯️
 tr_tr, general.icon.shuffle, 🔀 
 tr_tr, general.icon.prefix, 🔧️ 
 tr_tr, general.icon.clear, 🧻️
-tr_tr, general.icon.language 🏳️
+tr_tr, general.icon.language, 🏳️ 
 
 // Moderation Commands
 tr_tr, moderation.name, moderasyon
