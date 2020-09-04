@@ -38,6 +38,7 @@ en_en,  general.icon.6,  6️⃣
 en_en,  general.icon.7,  7️⃣
 en_en,  general.icon.8,  8️⃣
 en_en,  general.icon.9,  9️⃣
+en_en,  general.icon.question,  ❔
 
 
 // Moderation Commands
@@ -79,7 +80,7 @@ en_en,  clear.older.setDescription,  Messages older than 2 weeks cannot be delet
 
 // Vote Command
 en_en,  vote.name,  vote
-en_en,  vote.gethelp,  You can vote to the 9 different answers as shown: `vote [question] [answer1] [answer2]...`
+en_en,  vote.gethelp,  You can vote to the 9 different answers as shown: `vote [question] : [answer1] : [answer2]...`
 en_en,  vote.setFooter,  You can vote by adding reaction to the answer that you want to vote
 en_en,  vote.error.setTitle,  Uncorrect usage
 en_en,  vote.error.setDescription,  You can only use 2-9 different answers once
@@ -239,6 +240,7 @@ tr_tr,  general.icon.6,  6️⃣
 tr_tr,  general.icon.7,  7️⃣
 tr_tr,  general.icon.8,  8️⃣
 tr_tr,  general.icon.9,  9️⃣
+tr_tr,  general.icon.question,  ❔
 
 // Moderasyon Komutları
 tr_tr,  moderation.name,  moderasyon
@@ -287,7 +289,7 @@ tr_tr,  support.setFooter,  Desteğiniz için şimdiden teşekkür ederiz, minne
 
 // Oylama Komutu
 tr_tr,  vote.name,  oylama
-tr_tr,  vote.gethelp,  9 farklı cevaba kadar oylama yapabilirsiniz: `oylama [soru] [cevap1] [cevap2]...`
+tr_tr,  vote.gethelp,  9 farklı cevaba kadar oylama yapabilirsiniz: `oylama [soru] : [cevap1] : [cevap2]...`
 tr_tr,  vote.setFooter,  Oylamayı oylamak istediğiniz cevaba tepki ekleyerek yapabilirsiniz
 tr_tr,  vote.error.setTitle,  Yanlış kullanım
 tr_tr,  vote.error.setDescription,  Tek seferde sadece 2-9 cevap ekleyebilirsiniz
