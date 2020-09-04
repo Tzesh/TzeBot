@@ -98,7 +98,7 @@ en_en, leave.success.setTitle, Leaving your channel
 en_en, loop.name, loop
 en_en, loop.gethelp, Loops the current song
 en_en, loop.error.setTitle, There is nothing
-en_en, loop.error.setDescription, You might wanna add some songs into it
+en_en, loop.error.setDescription, You might wanna add some songs
 en_en, loop.success.setTitle, Looped the current song
 
 // Nowplaying Command
@@ -149,7 +149,7 @@ en_en, prefix.name, prefix
 en_en, prefix.gethelp1, Sets the prefix for this server
 en_en, prefix.gethelp2, Usage: `
 en_en, prefix.gethelp3, prefix <prefix>`
-en_en, prefix.success.setTitle, New prefix has been set to
+en_en, prefix.success.setTitle, Prefix has been set to
 
 // Skip Command
 en_en, skip.name, skip
@@ -171,7 +171,7 @@ en_en, volume.name, volume
 en_en, volume.gethelp, Sets the volume of player
 en_en, volume.error.setTitle, You can arrange the volume between [1-100]%
 en_en, volume.error.setDescription, Current volume is: 
-en_en, volume.success.setTitle, New volume is set to: 
+en_en, volume.success.setTitle, Volume is set to: 
 
 // Shuffle Command
 en_en, shuffle.name, shuffle
@@ -353,3 +353,8 @@ tr_tr, volume.gethelp, Oynatıcının sesini ayarlar
 tr_tr, volume.error.setTitle, Sesi [1-100]% arasında ayarlayabilirsiniz
 tr_tr, volume.error.setDescription, Mevcut ses: 
 tr_tr, volume.success.setTitle, Ses ayarlandı: 
+
+// Karıştır Komutu
+en_en, shuffle.name, karıştır
+en_en, shuffle.gethelp, Kuyruğu karıştırır
+en_en, shuffle.success.setTitle, Kuyruk karıştırıldı
