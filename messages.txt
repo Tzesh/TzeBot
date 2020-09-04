@@ -78,11 +78,11 @@ en_en,  clear.older.setTitle,  Selected messages are older than 2 weeks
 en_en,  clear.older.setDescription,  Messages older than 2 weeks cannot be deleted
 
 // Vote Command
-en_en, vote.name, vote
-en_en, vote.gethelp, You can vote to the 9 different answers as shown: `vote [question] [answer1] [answer2]...`
-en_en, vote.setFooter, You can vote by adding reaction to the answer that you want to vote
-en_en, vote.error.setTitle, Uncorrect usage
-en_en, vote.error.setDescription, You can only use 2-9 different answers once
+en_en,  vote.name,  vote
+en_en,  vote.gethelp,  You can vote to the 9 different answers as shown: `vote [question] [answer1] [answer2]...`
+en_en,  vote.setFooter,  You can vote by adding reaction to the answer that you want to vote
+en_en,  vote.error.setTitle,  Uncorrect usage
+en_en,  vote.error.setDescription,  You can only use 2-9 different answers once
 
 // Support Command
 en_en,  support.name,  support
@@ -286,11 +286,11 @@ tr_tr,  support.setDescription3,  Eğer geliştirme sürecinde yer almak istiyor
 tr_tr,  support.setFooter,  Desteğiniz için şimdiden teşekkür ederiz,  minnettarız.
 
 // Oylama Komutu
-en_en,  vote.name,  oylama
-en_en,  vote.gethelp,  9 farklı cevaba kadar oylama yapabilirsiniz: `oylama [soru] [cevap1] [cevap2]...`
-en_en,  vote.setFooter,  Oylamayı oylamak istediğiniz cevaba tepki ekleyerek yapabilirsiniz
-en_en,  vote.error.setTitle,  Yanlış kullanım
-en_en,  vote.error.setDescription,  Tek seferde sadece 2-9 cevap ekleyebilirsiniz
+tr_tr,  vote.name,  oylama
+tr_tr,  vote.gethelp,  9 farklı cevaba kadar oylama yapabilirsiniz: `oylama [soru] [cevap1] [cevap2]...`
+tr_tr,  vote.setFooter,  Oylamayı oylamak istediğiniz cevaba tepki ekleyerek yapabilirsiniz
+tr_tr,  vote.error.setTitle,  Yanlış kullanım
+tr_tr,  vote.error.setDescription,  Tek seferde sadece 2-9 cevap ekleyebilirsiniz
 
 
 // Müzik Komutları
