@@ -355,6 +355,6 @@ tr_tr, volume.error.setDescription, Mevcut ses:
 tr_tr, volume.success.setTitle, Ses ayarlandı: 
 
 // Karıştır Komutu
-en_en, shuffle.name, karıştır
-en_en, shuffle.gethelp, Kuyruğu karıştırır
-en_en, shuffle.success.setTitle, Kuyruk karıştırıldı
+tr_tr, shuffle.name, karıştır
+tr_tr, shuffle.gethelp, Kuyruğu karıştırır
+tr_tr, shuffle.success.setTitle, Kuyruk karıştırıldı
