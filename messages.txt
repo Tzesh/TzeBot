@@ -29,6 +29,7 @@ en_en,  general.icon.tzebot,  🤖
 en_en,  general.icon.patreon,  💰 
 en_en,  general.icon.link,  🔗 
 en_en,  general.icon.vote,  🗳️ 
+en_en,  general.icon.queue,  📜 
 en_en,  general.icon.1,  1️⃣
 en_en,  general.icon.2,  2️⃣
 en_en,  general.icon.3,  3️⃣
@@ -231,6 +232,7 @@ tr_tr,  general.icon.tzebot,  🤖
 tr_tr,  general.icon.patreon,  💰 
 tr_tr,  general.icon.link,  🔗 
 tr_tr,  general.icon.vote,  🗳️ 
+tr_tr,  general.icon.queue,  📜 
 tr_tr,  general.icon.1,  1️⃣
 tr_tr,  general.icon.2,  2️⃣
 tr_tr,  general.icon.3,  3️⃣
