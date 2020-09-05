@@ -121,7 +121,8 @@ en_en,  loop.name,  loop
 en_en,  loop.gethelp,  Loops the current song
 en_en,  loop.error.setTitle,  There is nothing
 en_en,  loop.error.setDescription,  You might wanna add some songs
-en_en,  loop.success.setTitle,  Looped the current song
+en_en,  loop.success.on.setTitle,  Looped the current song
+en_en,  loop.success.off.setTitle,  Loop of the current song disabled
 
 // Nowplaying Command
 en_en,  nowplaying.name,  nowplaying
@@ -324,7 +325,8 @@ tr_tr,  loop.name,  döngü
 tr_tr,  loop.gethelp,  Mevcut şarkıyı döngüye alır
 tr_tr,  loop.error.setTitle,  Hiçbir şey yok
 tr_tr,  loop.error.setDescription,  Belki biraz şarkı eklemek istersin
-tr_tr,  loop.success.setTitle,  Şarkı döngüye alındı
+en_en,  loop.success.on.setTitle,  Şarkı döngüye alındı
+en_en,  loop.success.off.setTitle,  Şarkı döngüden çıkarıldı
 
 // Oynatılan komutu
 tr_tr,  nowplaying.name,  oynatılan
