@@ -42,12 +42,29 @@ a {
     height: auto;
 }
 
+.bg-image {
+    background-image: url(../img/header.jpg);
+    background-size: cover;
+    background-position: center;
+    height: 20rem;
+    width: 100%;
+    z-index: -1;
+}
+
+
 .header {
-    padding: 30px;
     text-align: center;
     background-color: gray;
     color: white;
     font-family: 'Raleway', sans-serif;
+}
+
+.header h1 {
+    opacity: 1;
+}
+
+.header img {
+    padding-top: 4rem;
 }
 
 .navbar {
