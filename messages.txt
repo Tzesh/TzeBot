@@ -417,8 +417,8 @@ tr_tr,  shuffle.name,  karıştır
 tr_tr,  shuffle.gethelp,  Kuyruğu karıştırır
 tr_tr,  shuffle.success.setTitle,  Kuyruk karıştırıldı
 
-// Bağla Komutu
-tr_tr,  bound.name,  bağla
+// Sınırla Komutu
+tr_tr,  bound.name,  sınırla
 tr_tr,  bound.gethelp,  Bütün müzik komutlarının sadece seçilen yazı kanalında çalışmasını sağlayabilirsiniz
-tr_tr,  bound.success.on.setTitle,  Bütün müzik komutları sadece bu yazı kanalında çalışacak
+tr_tr,  bound.success.on.setTitle,  Bütün müzik komutları artık sadece bu kanal ile sınırlı
 tr_tr,  bound.success.off.setTitle,  Bütün müzik komutları artık bütün yazı kanallarında çalışacak
