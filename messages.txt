@@ -88,6 +88,10 @@ en_en,  vote.setFooter,  You can vote by adding reaction to the answer that you 
 en_en,  vote.error.setTitle,  Uncorrect usage
 en_en,  vote.error.setDescription,  You can only use 2-9 different answers once
 
+// VoteRole Command
+en_en,  voterole.name,  voterole
+en_en,  voterole.gethelp,  You can easily add a vote to automatically give roles to your members as shown: `voterole [question] : [answer1] : [rolename1] : [answer2] : [rolename2]...`
+
 // Support Command
 en_en,  support.name,  support
 en_en,  support.gethelp,  Maybe you want to support TzeBot, please?
@@ -422,3 +426,7 @@ tr_tr,  bound.name,  sınırla
 tr_tr,  bound.gethelp,  Bütün müzik komutlarının sadece seçilen yazı kanalında çalışmasını sağlayabilirsiniz
 tr_tr,  bound.success.on.setTitle,  Bütün müzik komutları artık sadece bu kanal ile sınırlı
 tr_tr,  bound.success.off.setTitle,  Bütün müzik komutları artık bütün yazı kanallarında çalışacak
+
+// Rol Oylama Komutu
+tr_tr,  voterole.name,  roloyla
+tr_tr,  voterole.gethelp,  You can easily add a vote to automatically give roles to your members as shown: `voterole [question] : [answer1] : [rolename1] : [answer2] : [rolename2]...`
