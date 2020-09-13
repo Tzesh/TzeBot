@@ -40,6 +40,8 @@ en_en,  general.icon.7,  7️⃣
 en_en,  general.icon.8,  8️⃣
 en_en,  general.icon.9,  9️⃣
 en_en,  general.icon.question,  ❔
+en_en,  general.icon.locked,  🔒 
+en_en,  general.icon.unlocked,  🔓 
 
 
 // Moderation Commands
@@ -202,6 +204,12 @@ en_en,  shuffle.name,  shuffle
 en_en,  shuffle.gethelp,  Shuffles the queue
 en_en,  shuffle.success.setTitle,  Shuffled the queue
 
+// Bound Command
+en_en,  bound.name,  bound
+en_en,  bound.gethelp,  You can set all the music commands that should work in one text-channel
+en_en,  bound.success.on.setTitle,  All the music commands now only work on current text-channel
+en_en,  bound.success.off.setTitle,  All the music commands now work every text-channel
+
 
 // Dil : Türkçe
 
@@ -245,6 +253,8 @@ tr_tr,  general.icon.7,  7️⃣
 tr_tr,  general.icon.8,  8️⃣
 tr_tr,  general.icon.9,  9️⃣
 tr_tr,  general.icon.question,  ❔
+tr_tr,  general.icon.locked,  🔒 
+tr_tr,  general.icon.unlocked,  🔓 
 
 // Moderasyon Komutları
 tr_tr,  moderation.name,  moderasyon
@@ -406,3 +416,9 @@ tr_tr,  volume.success.setTitle,  Ses ayarlandı:
 tr_tr,  shuffle.name,  karıştır
 tr_tr,  shuffle.gethelp,  Kuyruğu karıştırır
 tr_tr,  shuffle.success.setTitle,  Kuyruk karıştırıldı
+
+// Kilit Komutu
+tr_tr,  bound.name,  kilit
+tr_tr,  bound.gethelp,  Bütün müzik komutlarının sadece seçilen yazı kanalında çalışmasını sağlayabilirsiniz
+tr_tr,  bound.success.on.setTitle,  Bütün müzik komutları sadece bu yazı kanalında çalışacak
+tr_tr,  bound.success.off.setTitle,  Bütün müzik komutları artık bütün yazı kanallarında çalışacak
