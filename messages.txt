@@ -206,9 +206,9 @@ en_en,  shuffle.success.setTitle,  Shuffled the queue
 
 // Bound Command
 en_en,  bound.name,  bound
-en_en,  bound.gethelp,  You can set all the music commands that should work in one text-channel
-en_en,  bound.success.on.setTitle,  All the music commands now only work on current text-channel
-en_en,  bound.success.off.setTitle,  All the music commands now work every text-channel
+en_en,  bound.gethelp,  You can set all the music commands that should work in one text channel
+en_en,  bound.success.on.setTitle,  All the music commands now only work on the current text channel
+en_en,  bound.success.off.setTitle,  All the music commands now work every text channel
 
 
 // Dil : Türkçe
@@ -417,8 +417,8 @@ tr_tr,  shuffle.name,  karıştır
 tr_tr,  shuffle.gethelp,  Kuyruğu karıştırır
 tr_tr,  shuffle.success.setTitle,  Kuyruk karıştırıldı
 
-// Kilit Komutu
-tr_tr,  bound.name,  kilit
+// Bağla Komutu
+tr_tr,  bound.name,  bağla
 tr_tr,  bound.gethelp,  Bütün müzik komutlarının sadece seçilen yazı kanalında çalışmasını sağlayabilirsiniz
 tr_tr,  bound.success.on.setTitle,  Bütün müzik komutları sadece bu yazı kanalında çalışacak
 tr_tr,  bound.success.off.setTitle,  Bütün müzik komutları artık bütün yazı kanallarında çalışacak
