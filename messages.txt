@@ -103,7 +103,6 @@ en_en,  support.setFooter,  Thanks in advance for your support we are really app
 
 // Music Commands
 en_en,  music.name,  music
-en_en,  music.icon,  🎵
 
 // Join Command
 en_en,  join.name,  join
@@ -215,11 +214,6 @@ en_en,  bound.gethelp,  You can set all the music commands that should work in o
 en_en,  bound.success.on.setTitle,  All the music commands now only work on the current text channel
 en_en,  bound.success.off.setTitle,  All the music commands now work every text channel
 
-// Channel Command
-en_en,  channel.name,  channel
-en_en,  channel.gethelp,  You can create an unique music channel with emote controls
-en_en,  channel.setTopic, :play_pause: Pause/Resume the song :stop_button: Stop and empty the queue :track_next: Skip the song :arrows_counterclockwise: Switch between the loop modes :twisted_rightwards_arrows: Shuffle the queue :star: Add the current song to your private playlist :x: Remove the current song from your private playlist.
-
 
 // Dil : Türkçe
 
@@ -319,13 +313,9 @@ tr_tr,  vote.setFooter,  Oylamayı oylamak istediğiniz cevaba tepki ekleyerek y
 tr_tr,  vote.error.setTitle,  Yanlış kullanım
 tr_tr,  vote.error.setDescription,  Tek seferde sadece 2-9 cevap ekleyebilirsiniz
 
-// Rol Oylama Komutu
-tr_tr,  voterole.name,  roloyla
-tr_tr,  voterole.gethelp,  Üyelerinize gösterilen şekilde oylama yaparak rol verebilirsiniz: `roloyla [soru] : [cevap1] : @RolAdı1 : [cevap2] : @Roladı2...`
 
 // Müzik Komutları
 tr_tr,  music.name,  müzik
-tr_tr,  music.icon,  🎵
 
 // Katıl Komutu
 tr_tr,  join.name,  katıl
@@ -437,7 +427,6 @@ tr_tr,  bound.gethelp,  Bütün müzik komutlarının sadece seçilen yazı kana
 tr_tr,  bound.success.on.setTitle,  Bütün müzik komutları artık sadece bu kanal ile sınırlı
 tr_tr,  bound.success.off.setTitle,  Bütün müzik komutları artık bütün yazı kanallarında çalışacak
 
-// Channel Command
-tr_tr,  channel.name,  kanal
-tr_tr,  channel.gethelp,  Emoji ile kontrol edilebilen müzik oynatıcısı için kanal ayarlaması.
-tr_tr,  channel.setTopic,  :play_pause: Pause/Resume the song :stop_button: Stop and empty the queue :track_next: Skip the song :arrows_counterclockwise: Switch between the loop modes :twisted_rightwards_arrows: Shuffle the queue :star: Add the current song to your private playlist :x: Remove the current song from your private playlist
+// Rol Oylama Komutu
+tr_tr,  voterole.name,  roloyla
+tr_tr,  voterole.gethelp,  You can easily add a vote to automatically give roles to your members as shown: `voterole [question] : [answer1] : [rolename1] : [answer2] : [rolename2]...`
