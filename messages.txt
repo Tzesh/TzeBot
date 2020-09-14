@@ -14,7 +14,7 @@ en_en,  general.icon.success,  ✅
 en_en,  general.icon.error,  ❌ 
 en_en,  general.icon.join,  ⏺️
 en_en,  general.icon.leave,  ⏏
-en_en,  general.icon.play,  ▶
+en_en,  general.icon.play,  ▶️
 en_en,  general.icon.pause,  ⏸
 en_en,  general.icon.stop,  ⏹️
 en_en,  general.icon.skip,  ⏭️
@@ -240,7 +240,7 @@ tr_tr,  general.icon.success,  ✅
 tr_tr,  general.icon.error,  ❌ 
 tr_tr,  general.icon.join,  ⏺️
 tr_tr,  general.icon.leave,  ⏏
-tr_tr,  general.icon.play,  ▶
+tr_tr,  general.icon.play,  ▶️
 tr_tr,  general.icon.pause,  ⏸
 tr_tr,  general.icon.stop,  ⏹️
 tr_tr,  general.icon.skip,  ⏭️
