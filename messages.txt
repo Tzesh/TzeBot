@@ -12,7 +12,7 @@ en_en,  general.not_authorized.description,  You must have manage server permiss
 en_en,  general.bythecommand,  By the command of 
 en_en,  general.icon.success,  ✅ 
 en_en,  general.icon.error,  ❌ 
-en_en,  general.icon.join,  U+23FA
+en_en,  general.icon.join,  U+FE0F
 en_en,  general.icon.leave,  U+23CF
 en_en,  general.icon.play,  U+25B6
 en_en,  general.icon.pause,  U+23F8
@@ -238,7 +238,7 @@ tr_tr,  general.not_authorized.description,  Bu komutu kullanmak için sunucuyu 
 tr_tr,  general.bythecommand,  Komutu veren 
 tr_tr,  general.icon.success,  ✅ 
 tr_tr,  general.icon.error,  ❌ 
-tr_tr,  general.icon.join,  U+23FA
+tr_tr,  general.icon.join,  U+FE0F
 tr_tr,  general.icon.leave,  U+23CF
 tr_tr,  general.icon.play,  U+25B6
 tr_tr,  general.icon.pause,  U+23F8
