@@ -219,6 +219,7 @@ en_en,  bound.success.off.setTitle,  All the music commands now work every text 
 en_en,  channel.name,  channel
 en_en,  channel.gethelp,  You can create an unique music channel with emote controls
 en_en,  channel.setTopic,  Topic
+en_en,  channel.success.setTitle,  Music channel created and initialized
 
 // Dil : Türkçe
 
@@ -440,3 +441,4 @@ tr_tr,  bound.success.off.setTitle,  Bütün müzik komutları artık bütün ya
 tr_tr,  channel.name,  kanal
 tr_tr,  channel.gethelp,  Emoji kontrolleriyle çalışan bir müzik kanalı oluşturabilirsiniz
 tr_tr,  channel.setTopic,  Konu
+tr_tr,  channel.success.setTitle,  Müzik kanalı oluşturuldu ve başlatıldı
