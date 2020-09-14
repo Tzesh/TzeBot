@@ -223,7 +223,7 @@ en_en,  channel.setTopic,  Topic
 en_en,  channel.success.setTitle,  Music channel created and initialized
 en_en,  channel.create,  create
 en_en,  channel.set,  set
-en_en,  channel.firstMessage,  Queue is empty, nothing is playing right now. You can just message url or name of the song which you want to listen to add queue.
+en_en,  channel.firstMessage,  Queue is empty, nothing is playing right now. You can just message url or name of the song which you want to listen to queue.
 
 // Dil : Türkçe
 
