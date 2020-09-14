@@ -10,8 +10,8 @@ en_en,  general.not_authorized.description,  You must have manage server permiss
 
 // General Stuff
 en_en,  general.bythecommand,  By the command of 
-en_en,  general.icon.success,  ✅
-en_en,  general.icon.error,  ❌
+en_en,  general.icon.success,  ✅ 
+en_en,  general.icon.error,  ❌ 
 en_en,  general.icon.join,  ⏺️
 en_en,  general.icon.leave,  ⏏
 en_en,  general.icon.play,  ▶
@@ -221,6 +221,8 @@ en_en,  channel.name,  channel
 en_en,  channel.gethelp,  You can create an unique music channel with emote controls
 en_en,  channel.setTopic,  Topic
 en_en,  channel.success.setTitle,  Music channel created and initialized
+en_en,  channel.create,  create
+en_en,  channel.set,  set
 
 // Dil : Türkçe
 
@@ -444,3 +446,5 @@ tr_tr,  channel.name,  kanal
 tr_tr,  channel.gethelp,  Emoji kontrolleriyle çalışan bir müzik kanalı oluşturabilirsiniz
 tr_tr,  channel.setTopic,  Konu
 tr_tr,  channel.success.setTitle,  Müzik kanalı oluşturuldu ve başlatıldı
+tr_tr,  channel.create,  oluştur
+tr_tr,  channel.set,  ayarla
