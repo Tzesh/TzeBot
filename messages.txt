@@ -90,7 +90,7 @@ en_en,  vote.error.setDescription,  You can only use 2-9 different answers once
 
 // VoteRole Command
 en_en,  voterole.name,  voterole
-en_en,  voterole.gethelp,  You can easily add a vote to automatically give roles to your members as shown: `voterole [question] : [answer1] : [rolename1] : [answer2] : [rolename2]...`
+en_en,  voterole.gethelp,  You can easily add a vote to automatically give roles to your members as shown: `voterole question : answer1 : @rolename1 : answer2 : rolename2...`
 
 // Support Command
 en_en,  support.name,  support
@@ -220,8 +220,6 @@ en_en,  channel.name,  channel
 en_en,  channel.gethelp,  You can create an unique music channel with emote controls
 en_en,  channel.setTopic,  :play_pause: Pause/Resume the song :stop_button: Stop and empty the queue :track_next: Skip the song :arrows_counterclockwise: Switch between the loop modes :twisted_rightwards_arrows: Shuffle the queue :star: Add the current song to your private playlist :x: Remove the current song from your private playlist.
 
-
-
 // Dil : Türkçe
 
 // Genel Hatalar
@@ -320,6 +318,9 @@ tr_tr,  vote.setFooter,  Oylamayı oylamak istediğiniz cevaba tepki ekleyerek y
 tr_tr,  vote.error.setTitle,  Yanlış kullanım
 tr_tr,  vote.error.setDescription,  Tek seferde sadece 2-9 cevap ekleyebilirsiniz
 
+// VoteRole Command
+tr_tr, voterole.name,  roloyla
+tr_tr, voterole.gethelp,  Üyelerinize kolayca oylama ile rol verebilirsiniz: `roloyla soru : cevap1 : @Rol1 : cevap2 : @Rol2...`
 
 // Müzik Komutları
 tr_tr,  music.name,  müzik
@@ -435,8 +436,7 @@ tr_tr,  bound.gethelp,  Bütün müzik komutlarının sadece seçilen yazı kana
 tr_tr,  bound.success.on.setTitle,  Bütün müzik komutları artık sadece bu kanal ile sınırlı
 tr_tr,  bound.success.off.setTitle,  Bütün müzik komutları artık bütün yazı kanallarında çalışacak
 
-// Channel Command
+// Kanal Komutu
 tr_tr,  channel.name,  kanal
 tr_tr,  channel.gethelp,  Emoji ile kontrol edilebilen müzik oynatıcısı için kanal ayarlaması.
 tr_tr,  channel.setTopic,  :play_pause: Pause/Resume the song :stop_button: Stop and empty the queue :track_next: Skip the song :arrows_counterclockwise: Switch between the loop modes :twisted_rightwards_arrows: Shuffle the queue :star: Add the current song to your private playlist :x: Remove the current song from your private playlist
-
