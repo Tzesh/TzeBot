@@ -218,7 +218,8 @@ en_en,  bound.success.off.setTitle,  All the music commands now work every text 
 // Channel Command
 en_en,  channel.name,  channel
 en_en,  channel.gethelp,  You can create an unique music channel with emote controls
-en_en,  channel.setTopic, :play_pause: Pause/Resume the song :stop_button: Stop and empty the queue :track_next: Skip the song :arrows_counterclockwise: Switch between the loop modes :twisted_rightwards_arrows: Shuffle the queue :star: Add the current song to your private playlist :x: Remove the current song from your private playlist.
+en_en,  channel.setTopic,  :play_pause: Pause/Resume the song :stop_button: Stop and empty the queue :track_next: Skip the song :arrows_counterclockwise: Switch between the loop modes :twisted_rightwards_arrows: Shuffle the queue :star: Add the current song to your private playlist :x: Remove the current song from your private playlist.
+
 
 
 // Dil : Türkçe
@@ -319,9 +320,6 @@ tr_tr,  vote.setFooter,  Oylamayı oylamak istediğiniz cevaba tepki ekleyerek y
 tr_tr,  vote.error.setTitle,  Yanlış kullanım
 tr_tr,  vote.error.setDescription,  Tek seferde sadece 2-9 cevap ekleyebilirsiniz
 
-// Rol Oylama Komutu
-tr_tr,  voterole.name,  roloyla
-tr_tr,  voterole.gethelp,  Üyelerinize gösterilen şekilde oylama yaparak rol verebilirsiniz: `roloyla [soru] : [cevap1] : RolAdı1 : [cevap2] : Roladı2...`
 
 // Müzik Komutları
 tr_tr,  music.name,  müzik
@@ -441,3 +439,4 @@ tr_tr,  bound.success.off.setTitle,  Bütün müzik komutları artık bütün ya
 tr_tr,  channel.name,  kanal
 tr_tr,  channel.gethelp,  Emoji ile kontrol edilebilen müzik oynatıcısı için kanal ayarlaması.
 tr_tr,  channel.setTopic,  :play_pause: Pause/Resume the song :stop_button: Stop and empty the queue :track_next: Skip the song :arrows_counterclockwise: Switch between the loop modes :twisted_rightwards_arrows: Shuffle the queue :star: Add the current song to your private playlist :x: Remove the current song from your private playlist
+
