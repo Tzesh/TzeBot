@@ -218,7 +218,7 @@ en_en,  bound.success.off.setTitle,  All the music commands now work every text 
 
 // Channel Command
 en_en,  channel.name,  channel
-en_en,  channel.gethelp,  You can create an unique music channel with emote controls
+en_en,  channel.gethelp,  You can create an unique music channel with emote controls and clean looking. Just type `channel create` to begin setup.
 en_en,  channel.setTopic,  You can just type url or name of the song that you want to play. You can easily control the player with emotes, none of the music commands will not work on an another channel and if you want to reset music commands and music channel just delete this channel.
 en_en,  channel.success.setTitle,  Music channel created and initialized
 en_en,  channel.create,  create
@@ -450,7 +450,7 @@ tr_tr,  bound.success.off.setTitle,  Bütün müzik komutları artık bütün ya
 
 // Kanal Komutu
 tr_tr,  channel.name,  kanal
-tr_tr,  channel.gethelp,  Emoji kontrolleriyle çalışan bir müzik kanalı oluşturabilirsiniz
+tr_tr,  channel.gethelp,  Emoji kontrolleriyle çalışan ve temiz görünen bir müzik kanalı oluşturabilirsiniz. `kanal oluştur` komutunu kullanıp işleme başlayabilirsiniz.
 tr_tr,  channel.setTopic,  Çalmak istediğiniz şarkının URL'sini veya adını yazabilirsiniz. Oynatıcıyı ifadelerle kolayca kontrol edebilirsiniz, müzik komutlarının hiçbiri başka bir kanalda çalışmaz ve müzik komutlarını ve müzik kanalını sıfırlamak isterseniz bu kanalı silin.
 tr_tr,  channel.success.setTitle,  Müzik kanalı oluşturuldu ve başlatıldı
 tr_tr,  channel.create,  oluştur
