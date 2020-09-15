@@ -231,6 +231,10 @@ en_en,  channel.success.setDescription,  You have to go to the created channel a
 en_en,  channel.setFooter,  All music commands will only work on this channel. You can delete this channel if you want to set or remove the music channel.
 en_en,  channel.already.setTitle,  Your server alreay has a music channel
 en_en,  channel.already.setDescription,  You can only have one music channel
+en_en,  channel.next,  Forwards the current song 15 seconds
+en_en,  channel.previous,  Backwards the current song 15 seconds
+en_en,  channel.volume,  Increases the volume 10%
+en_en,  channel.volumedown,  Decreases the volume 10%
 
 
 // Dil : Türkçe
@@ -465,3 +469,7 @@ tr_tr,  channel.success.setDescription,  Şimdi oluşturulan kanala gidip `kanal
 tr_tr,  channel.setFooter,  Bütün müzik komutları sadece bu kanalda çalışacaktır, eğer bunu kaldırmak veya başka bir kanal ayarlamak isterseniz kanalı silebilirsiniz.
 tr_tr,  channel.already.setTitle,  Sunucunuzun zaten müzik kanalı mevcut
 tr_tr,  channel.already.setDescription,  Sadece tek bir müzik kanalınız olabilir
+tr_tr,  channel.next,  Mevcut şarkıyı 15 saniye ileri sarar
+tr_tr,  channel.previous,  Mevcut şarkıyı 15 saniye geri sarar
+tr_tr,  channel.volume,  Sesi %10 yükseltir
+tr_tr,  channel.volumedown,  Sesi %10 azaltır
