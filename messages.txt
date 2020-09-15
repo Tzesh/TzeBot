@@ -91,7 +91,7 @@ en_en,  vote.error.setDescription,  You can only use 2-9 different answers once
 
 // VoteRole Command
 en_en,  voterole.name,  voterole
-en_en,  voterole.gethelp,  You can easily add a vote to automatically give roles to your members as shown: `voterole [question] : [answer1] : [rolename1] : [answer2] : [rolename2]...`
+en_en,  voterole.gethelp,  You can easily add a vote to automatically give roles to your members as shown: `voterole question : answer1 : @rolename1 : answer2 : @rolename2...`
 
 // Support Command
 en_en,  support.name,  support
@@ -219,7 +219,7 @@ en_en,  bound.success.off.setTitle,  All the music commands now work every text 
 // Channel Command
 en_en,  channel.name,  channel
 en_en,  channel.gethelp,  You can create an unique music channel with emote controls
-en_en,  channel.setTopic,  Topic
+en_en,  channel.setTopic,  You can just type url or name of the song that you want to play. You can easily control the player with emotes, none of the music commands will not work on an another channel and if you want to reset music commands and music channel just delete this channel.
 en_en,  channel.success.setTitle,  Music channel created and initialized
 en_en,  channel.create,  create
 en_en,  channel.set,  set
@@ -451,7 +451,7 @@ tr_tr,  bound.success.off.setTitle,  Bütün müzik komutları artık bütün ya
 // Kanal Komutu
 tr_tr,  channel.name,  kanal
 tr_tr,  channel.gethelp,  Emoji kontrolleriyle çalışan bir müzik kanalı oluşturabilirsiniz
-tr_tr,  channel.setTopic,  Konu
+tr_tr,  channel.setTopic,  Çalmak istediğiniz şarkının URL'sini veya adını yazabilirsiniz. Oynatıcıyı ifadelerle kolayca kontrol edebilirsiniz, müzik komutlarının hiçbiri başka bir kanalda çalışmaz ve müzik komutlarını ve müzik kanalını sıfırlamak isterseniz bu kanalı silin.
 tr_tr,  channel.success.setTitle,  Müzik kanalı oluşturuldu ve başlatıldı
 tr_tr,  channel.create,  oluştur
 tr_tr,  channel.set,  ayarla
