@@ -200,7 +200,7 @@ en_en,  stop.error.setDescription,  Cannot stop the song and clear the queue
 
 // Volume Command
 en_en,  volume.name,  volume
-en_en,  volume.gethelp,  Sets the volume of player
+en_en,  volume.gethelp,  Sets the volume of the player
 en_en,  volume.error.setTitle,  You can arrange the volume between [1-100]%
 en_en,  volume.error.setDescription,  Current volume is: 
 en_en,  volume.success.setTitle,  Volume is set to: 
@@ -225,6 +225,11 @@ en_en,  channel.create,  create
 en_en,  channel.set,  set
 en_en,  channel.firstMessage,  You can just message url or name of the song which you want to listen to queue:
 en_en,  channel.setTitle,  Music Channel
+en_en,  channel.success.setDescription,  You have to go to the created channel and write `channel set` once to finish the process
+en_en,  channel.setFooter,  All music commands will only work on this channel. You can delete this channel if you want to set or remove the music channel.
+en_en,  channel.already.setTitle,  Your server alreay has a music channel
+en_en,  channel.already.setDescription,  You can only have one music channel
+
 
 // Dil : Türkçe
 
@@ -452,3 +457,7 @@ tr_tr,  channel.create,  oluştur
 tr_tr,  channel.set,  ayarla
 tr_tr,  channel.firstMessage,  Oynatmak istediğiniz şarkının URL'ini veya adını yazarak kuyruğa ekleyebilirsiniz:
 tr_tr,  channel.setTitle,  Müzik Kanalı
+tr_tr,  channel.success.setDescription,  Şimdi oluşturulan kanala gidip `kanal ayarla` yazmalısınız ki işleminiz tamamlansın
+tr_tr,  channel.setFooter,  Bütün müzik komutları sadece bu kanalda çalışacaktır, eğer bunu kaldırmak veya başka bir kanal ayarlamak isterseniz kanalı silebilirsiniz.
+tr_tr,  channel.already.setTitle,  Sunucunuzun zaten müzik kanalı mevcut
+tr_tr,  channel.already.setDescription,  Sadece tek bir müzik kanalınız olabilir
