@@ -101,7 +101,7 @@ en_en,  support.gethelp,  Maybe you want to support TzeBot, please?
 en_en,  support.setDescription,  TzeBot is a discord bot & substructure.
 en_en,  support.setDescription2,  You can use TzeBot in your server(s) or just create your own bot on TzeBot's substructure.
 en_en,  support.setDescription3,  But if you want to take part in our development progress you can help us in patreon:
-en_en,  support.discordbots,  You can also support us by voting on top.gg: 
+en_en,  support.discordbots,  You can also support us by upvoting: 
 en_en,  support.setFooter,  Thanks in advance for your support we are really appreciated.
 
 // Music Commands
@@ -328,7 +328,7 @@ tr_tr,  support.gethelp,  Belki TzeBot'u desteklemek istersiniz, lütfen?
 tr_tr,  support.setDescription,  TzeBot bir discord botu ve altyapısı.
 tr_tr,  support.setDescription2,  TzeBot'u sunucunuzda kullanabilir veya kendi botunuzu oluşturabilirsiniz.
 tr_tr,  support.setDescription3,  Eğer geliştirme sürecinde yer almak istiyorsanız patreon'dan destek verebilirsiniz:
-tr_tr,  support.discordbots,  İsterseniz bizi top.gg'de oylayarak da destekleyebilirsiniz: 
+tr_tr,  support.discordbots,  İsterseniz bizi oylayarak da destekleyebilirsiniz: 
 tr_tr,  support.setFooter,  Desteğiniz için şimdiden teşekkür ederiz, minnettarız.
 
 // Oylama Komutu
