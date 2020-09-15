@@ -18,8 +18,8 @@ en_en,  general.icon.play,  ▶
 en_en,  general.icon.pause,  ⏸
 en_en,  general.icon.stop,  ⏹️
 en_en,  general.icon.skip,  ⏭️
-en_en,  general.icon.next,  ⏩
-en_en,  general.icon.previous,  ⏪
+en_en,  general.icon.next,  U+23E9
+en_en,  general.icon.previous,  U+23EA
 en_en,  general.icon.volume,  🔊
 en_en,  general.icon.volumedown,  🔉
 en_en,  general.icon.loop,  🔁
@@ -253,8 +253,8 @@ tr_tr,  general.icon.play,  ▶
 tr_tr,  general.icon.pause,  ⏸
 tr_tr,  general.icon.stop,  ⏹️
 tr_tr,  general.icon.skip,  ⏭️
-tr_tr,  general.icon.next,  ⏩
-tr_tr,  general.icon.previous,  ⏪
+tr_tr,  general.icon.next,  U+23E9
+tr_tr,  general.icon.previous,  U+23EA
 tr_tr,  general.icon.volume,  🔊
 tr_tr,  general.icon.volumedown,  🔉
 tr_tr,  general.icon.loop,  🔁
