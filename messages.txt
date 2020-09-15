@@ -223,7 +223,7 @@ en_en,  channel.setTopic,  Topic
 en_en,  channel.success.setTitle,  Music channel created and initialized
 en_en,  channel.create,  create
 en_en,  channel.set,  set
-en_en,  channel.firstMessage,  Queue is empty, nothing is playing right now. You can just message url or name of the song which you want to listen to queue.
+en_en,  channel.firstMessage,  You can just message url or name of the song which you want to listen to queue:
 en_en,  channel.setTitle,  Music Channel
 
 // Dil : Türkçe
@@ -450,5 +450,5 @@ tr_tr,  channel.setTopic,  Konu
 tr_tr,  channel.success.setTitle,  Müzik kanalı oluşturuldu ve başlatıldı
 tr_tr,  channel.create,  oluştur
 tr_tr,  channel.set,  ayarla
-tr_tr,  channel.firstMessage,  Kuyruk boş ve hiçbir şey oynatılmıyor. Oynatmak istediğiniz şarkının URL'ini veya adını yazarak kuyruğa ekleyebilirsiniz.
+tr_tr,  channel.firstMessage,  Oynatmak istediğiniz şarkının URL'ini veya adını yazarak kuyruğa ekleyebilirsiniz:
 tr_tr,  channel.setTitle,  Müzik Kanalı
