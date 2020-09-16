@@ -463,7 +463,7 @@ tr_tr,  bound.success.off.setTitle,  Bütün müzik komutları artık bütün ya
 // Kanal Komutu
 tr_tr,  channel.name,  kanal
 tr_tr,  channel.gethelp,  Emoji kontrolleriyle çalışan ve temiz görünen bir müzik kanalı oluşturabilirsiniz. `kanal oluştur` komutunu kullanıp işleme başlayabilirsiniz.
-tr_tr,  channel.setTopic,  Çalmak istediğiniz şarkının URL'sini veya adını yazabilirsiniz. Oynatıcıyı ifadelerle kolayca kontrol edebilirsiniz, müzik komutlarının hiçbiri başka bir kanalda çalışmaz ve müzik komutlarını beraberinde de müzik kanalını sıfırlamak isterseniz bu kanalı silin.
+tr_tr,  channel.setTopic,  Oynatmak istediğiniz şarkının URL'sini veya adını yazabilirsiniz. Oynatıcıyı ifadelerle kolayca kontrol edebilirsiniz, müzik komutlarının hiçbiri başka bir kanalda çalışmaz ve müzik komutlarını beraberinde de müzik kanalını sıfırlamak isterseniz bu kanalı silin.
 tr_tr,  channel.success.setTitle,  Müzik kanalı oluşturuldu ve başlatıldı
 tr_tr,  channel.wrongchannel.setTitle,  Yanlış kanal
 tr_tr,  channel.wrongchannel.setDescription,  Oluşturulan müzik kanalında `kanal ayarla` komutunu girmeniz gerekmekte
