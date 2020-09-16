@@ -22,6 +22,7 @@ import net.dv8tion.jda.api.managers.AudioManager;
 import javax.annotation.Nullable;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -46,15 +47,89 @@ public class Play implements ICommand {
     @Override
     public void handle(CommandContext ctx) {
 
-        TextChannel channel = ctx.getChannel();
+        final TextChannel channel = ctx.getChannel();
         String input = String.join(" ", ctx.getArgs());
-        GuildVoiceState memberVoiceState = ctx.getMember().getVoiceState();
-        VoiceChannel voiceChannel = memberVoiceState.getChannel();
-        Member selfmember = ctx.getGuild().getSelfMember();
-        AudioManager audioManager = ctx.getGuild().getAudioManager();
-        PlayerManager manager = PlayerManager.getInstance();
+        final GuildVoiceState memberVoiceState = ctx.getMember().getVoiceState();
+        final VoiceChannel voiceChannel = memberVoiceState.getChannel();
+        final Member selfmember = ctx.getGuild().getSelfMember();
+        final AudioManager audioManager = ctx.getGuild().getAudioManager();
+        final PlayerManager manager = PlayerManager.getInstance();
+        final String prefix = Config.PREFIXES.get(ctx.getGuild().getIdLong());
+        HashMap<Long, Long> IDs = Config.MUSICCHANNELS.computeIfAbsent(ctx.getGuild().getIdLong(), (id) -> null);
+        
+        if (IDs != null) {
+            if (IDs.containsKey(channel.getIdLong())) {
+                if (!isUrl(input)) {
+            String ytSearched = searchYoutube(input);
 
+            if (ytSearched == null) {
+                ctx.getMessage().delete().queue();
+                EmbedBuilder error = new EmbedBuilder();
+                error.setColor(0xff3923);
+                error.setTitle(TzeBot.essentials.LanguageDetector.getMessage("general.icon.error") + TzeBot.essentials.LanguageDetector.getMessage("play.noresults.setTitle"));
+                error.setDescription(TzeBot.essentials.LanguageDetector.getMessage("play.noresults.setDescription"));
 
+                channel.sendTyping().queue();
+                channel.sendMessage(error.build()).queue(message -> {
+                message.delete().queueAfter(5, TimeUnit.SECONDS);
+                });
+                error.clear();
+                return;
+            }
+            
+            input = ytSearched;
+            }
+            
+            if (!memberVoiceState.inVoiceChannel()) {
+            ctx.getMessage().delete().queue();
+            EmbedBuilder error = new EmbedBuilder();
+            error.setColor(0xff3923);
+            error.setTitle(TzeBot.essentials.LanguageDetector.getMessage("general.icon.error") + TzeBot.essentials.LanguageDetector.getMessage("join.joinchannel.setTitle"));
+            error.setDescription(TzeBot.essentials.LanguageDetector.getMessage("join.joinchannel.setDescription"));
+
+            channel.sendTyping().queue();
+            channel.sendMessage(error.build()).queue(message -> {
+                message.delete().queueAfter(5, TimeUnit.SECONDS);
+                });
+            error.clear();
+            return;
+            }
+
+            if (!selfmember.hasPermission(voiceChannel, Permission.VOICE_CONNECT)) {
+            ctx.getMessage().delete().queue();
+            EmbedBuilder error = new EmbedBuilder();
+            error.setColor(0xff3923);
+            error.setTitle(TzeBot.essentials.LanguageDetector.getMessage("general.icon.error") + TzeBot.essentials.LanguageDetector.getMessage("join.cannotjoin.setTitle"));
+            error.setDescription(TzeBot.essentials.LanguageDetector.getMessage("join.cannotjoin.setDescription"));
+
+            channel.sendTyping().queue();
+            channel.sendMessage(error.build()).queue(message -> {
+                message.delete().queueAfter(5, TimeUnit.SECONDS);
+                });
+            error.clear();
+            return;
+            }
+
+            if (!audioManager.isConnected()) {
+            audioManager.openAudioConnection(voiceChannel);
+            int volume = Config.VOLUMES.computeIfAbsent(ctx.getGuild().getIdLong(), (id) -> 50);
+            manager.getGuildMusicManager(ctx.getGuild()).player.setVolume(volume);
+            EmbedBuilder success = new EmbedBuilder();
+            success.setColor(0x00ff00);
+            success.setTitle(TzeBot.essentials.LanguageDetector.getMessage("general.icon.join") + TzeBot.essentials.LanguageDetector.getMessage("join.success.setTitle"));
+            success.setFooter(TzeBot.essentials.LanguageDetector.getMessage("general.bythecommand") + ctx.getMember().getUser().getName(), ctx.getMember().getUser().getAvatarUrl());
+
+            channel.sendTyping().queue();
+            channel.sendMessage(success.build()).queue(message -> {
+                message.delete().queueAfter(5, TimeUnit.SECONDS);
+                });
+            success.clear();
+            }
+            manager.loadAndPlay(ctx.getChannel(), input, ctx.getMember().getUser().getName(), ctx.getMember().getUser().getAvatarUrl(), true);
+            ctx.getMessage().delete().queue();
+            }
+        }
+        if (IDs == null) {
         if (!isUrl(input)) {
             String ytSearched = searchYoutube(input);
 
@@ -78,7 +153,7 @@ public class Play implements ICommand {
             EmbedBuilder error = new EmbedBuilder();
             error.setColor(0xff3923);
             error.setTitle(TzeBot.essentials.LanguageDetector.getMessage("general.icon.error") + TzeBot.essentials.LanguageDetector.getMessage("general.403"));
-            error.setDescription(TzeBot.essentials.LanguageDetector.getMessage("play.noargs.setDescription1") + Config.get("pre") + TzeBot.essentials.LanguageDetector.getMessage("play.noargs.setDescription2"));
+            error.setDescription(TzeBot.essentials.LanguageDetector.getMessage("play.noargs.setDescription1") + prefix + TzeBot.essentials.LanguageDetector.getMessage("play.noargs.setDescription2"));
 
             channel.sendTyping().queue();
             channel.sendMessage(error.build()).queue();
@@ -112,10 +187,11 @@ public class Play implements ICommand {
 
         if (!audioManager.isConnected()) {
             audioManager.openAudioConnection(voiceChannel);
-            manager.getGuildMusicManager(ctx.getGuild()).player.setVolume(5);
+            int volume = Config.VOLUMES.computeIfAbsent(ctx.getGuild().getIdLong(), (id) -> 50);
+            manager.getGuildMusicManager(ctx.getGuild()).player.setVolume(volume);
             EmbedBuilder succes = new EmbedBuilder();
             succes.setColor(0x00ff00);
-            succes.setTitle(TzeBot.essentials.LanguageDetector.getMessage("general.icon.play") + TzeBot.essentials.LanguageDetector.getMessage("join.success.setTitle"));
+            succes.setTitle(TzeBot.essentials.LanguageDetector.getMessage("general.icon.join") + TzeBot.essentials.LanguageDetector.getMessage("join.success.setTitle"));
             succes.setFooter(TzeBot.essentials.LanguageDetector.getMessage("general.bythecommand") + ctx.getMember().getUser().getName(), ctx.getMember().getUser().getAvatarUrl());
 
             channel.sendTyping().queue();
@@ -126,7 +202,7 @@ public class Play implements ICommand {
         GuildMusicManager musicManager = manager.getGuildMusicManager(ctx.getGuild());
         AudioPlayer player = musicManager.player;
 
-        manager.loadAndPlay(ctx.getChannel(), input, ctx.getMember().getUser().getName(), ctx.getMember().getUser().getAvatarUrl());
+        manager.loadAndPlay(ctx.getChannel(), input, ctx.getMember().getUser().getName(), ctx.getMember().getUser().getAvatarUrl(), false);
 
         AudioTrackInfo info = player.getPlayingTrack().getInfo();
 
@@ -137,7 +213,7 @@ public class Play implements ICommand {
                 formatTime(player.getPlayingTrack().getPosition()),
                 formatTime(player.getPlayingTrack().getDuration())
         )).build()).queue();
-
+        }
     }
 
     private boolean isUrl(String input) {

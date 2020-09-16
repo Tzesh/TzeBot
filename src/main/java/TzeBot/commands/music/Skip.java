@@ -12,11 +12,11 @@ import net.dv8tion.jda.api.entities.TextChannel;
 public class Skip implements ICommand {
     @Override
     public void handle(CommandContext ctx) {
-        TextChannel channel = ctx.getChannel();
-        PlayerManager playerManager = PlayerManager.getInstance();
-        GuildMusicManager musicManager = playerManager.getGuildMusicManager(ctx.getGuild());
-        TrackScheduler scheduler = musicManager.scheduler;
-        AudioPlayer player = musicManager.player;
+        final TextChannel channel = ctx.getChannel();
+        final PlayerManager playerManager = PlayerManager.getInstance();
+        final GuildMusicManager musicManager = playerManager.getGuildMusicManager(ctx.getGuild());
+        final TrackScheduler scheduler = musicManager.scheduler;
+        final AudioPlayer player = musicManager.player;
 
         if (player.getPlayingTrack() == null) {
             EmbedBuilder error = new EmbedBuilder();

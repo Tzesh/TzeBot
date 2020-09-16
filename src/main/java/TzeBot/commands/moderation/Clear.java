@@ -27,7 +27,6 @@ public class Clear implements ICommand {
             channel.sendTyping().queue();
             channel.sendMessage(error.build()).queue();
             error.clear();
-            return;
         }
         else if (args.isEmpty()) {
             EmbedBuilder error = new EmbedBuilder();
@@ -38,7 +37,6 @@ public class Clear implements ICommand {
             channel.sendTyping().queue();
             channel.sendMessage(error.build()).queue();
             error.clear();
-            return;
         }
         else {
             try {
@@ -49,7 +47,6 @@ public class Clear implements ICommand {
                 success.setColor(0x00ff00);
                 success.setTitle(TzeBot.essentials.LanguageDetector.getMessage("general.icon.success") + String.join("", args) + " " + TzeBot.essentials.LanguageDetector.getMessage("clear.successful.setTitle"));
                 success.setFooter(TzeBot.essentials.LanguageDetector.getMessage("general.bythecommand") + " " + ctx.getMember().getUser().getName(), ctx.getMember().getUser().getAvatarUrl());
-
 
                 ctx.getChannel().sendTyping().queue();
                 channel.sendMessage(success.build()).queue();
@@ -76,7 +73,7 @@ public class Clear implements ICommand {
                 }
             }
         }
-        }
+    }
 
     @Override
     public String getName() {

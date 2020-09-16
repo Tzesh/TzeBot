@@ -13,6 +13,7 @@ import net.dv8tion.jda.api.entities.TextChannel;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 public class PlayerManager {
     private static PlayerManager INSTANCE;
@@ -41,12 +42,27 @@ public class PlayerManager {
         return musicManager;
     }
 
-    public void loadAndPlay(TextChannel channel, String trackUrl, String name, String avatarURL) {
+    public void loadAndPlay(TextChannel channel, String trackUrl, String name, String avatarURL, boolean musicChannel) {
         GuildMusicManager  musicManager = getGuildMusicManager(channel.getGuild());
 
         playerManager.loadItemOrdered(musicManager, trackUrl, new AudioLoadResultHandler() {
             @Override
             public void trackLoaded(AudioTrack track) {
+                if (musicChannel) {
+                EmbedBuilder success = new EmbedBuilder();
+                success.setColor(0x00ff00);
+                success.setTitle(TzeBot.essentials.LanguageDetector.getMessage("general.icon.play") + TzeBot.essentials.LanguageDetector.getMessage("play.success.setTitle")  + track.getInfo().title);
+                success.setDescription(track.getInfo().uri);
+                success.setFooter(TzeBot.essentials.LanguageDetector.getMessage("general.bythecommand") + name, avatarURL);
+
+                channel.sendTyping().queue();
+                channel.sendMessage(success.build()).queue(message -> {
+                message.delete().queueAfter(5, TimeUnit.SECONDS);
+                });
+                success.clear();
+                
+                play(musicManager, track);
+                } else {
                 EmbedBuilder success = new EmbedBuilder();
                 success.setColor(0x00ff00);
                 success.setTitle(TzeBot.essentials.LanguageDetector.getMessage("general.icon.play") + TzeBot.essentials.LanguageDetector.getMessage("play.success.setTitle")  + track.getInfo().title);
@@ -58,7 +74,7 @@ public class PlayerManager {
                 success.clear();
                 
                 play(musicManager, track);
-
+                }
             }
 
             @Override
@@ -68,6 +84,8 @@ public class PlayerManager {
                 if (firstTrack == null) {
                     firstTrack = playlist.getTracks().remove(0);
                 }
+                
+                if (musicChannel) {
 
                 EmbedBuilder success = new EmbedBuilder();
                 success.setColor(0x00ff00);
@@ -75,16 +93,46 @@ public class PlayerManager {
                 success.setFooter(TzeBot.essentials.LanguageDetector.getMessage("general.bythecommand") + name, avatarURL);
                 
                 channel.sendTyping().queue();
-                channel.sendMessage(success.build()).queue();
+                channel.sendMessage(success.build()).queue(message -> {
+                message.delete().queueAfter(5, TimeUnit.SECONDS);
+                });
                 success.clear();
 
                 play(musicManager, firstTrack);
 
                 playlist.getTracks().forEach(musicManager.scheduler::queue);
+                } else {
+                EmbedBuilder success = new EmbedBuilder();
+                success.setColor(0x00ff00);
+                success.setTitle(TzeBot.essentials.LanguageDetector.getMessage("play.playlist.setTitle1") + firstTrack.getInfo().title + TzeBot.essentials.LanguageDetector.getMessage("play.playlist.setTitle2") + playlist.getName() + ")");
+                success.setFooter(TzeBot.essentials.LanguageDetector.getMessage("general.bythecommand") + name, avatarURL);
+                
+                channel.sendTyping().queue();
+                channel.sendMessage(success.build()).queue(message -> {
+                message.delete().queueAfter(5, TimeUnit.SECONDS);
+                });
+                success.clear();
+
+                play(musicManager, firstTrack);
+
+                playlist.getTracks().forEach(musicManager.scheduler::queue);
+                }
             }
 
             @Override
             public void noMatches() {
+                if (musicChannel) {
+                EmbedBuilder error = new EmbedBuilder();
+                error.setColor(0xff3923);
+                error.setTitle(TzeBot.essentials.LanguageDetector.getMessage("general.icon.error") + TzeBot.essentials.LanguageDetector.getMessage("play.nothing.setTitle"));
+                error.setDescription(TzeBot.essentials.LanguageDetector.getMessage("play.nothing.setDescription") + trackUrl);
+
+                channel.sendTyping().queue();
+                channel.sendMessage(error.build()).queue(message -> {
+                message.delete().queueAfter(5, TimeUnit.SECONDS);
+                });
+                error.clear();
+                } else {
                 EmbedBuilder error = new EmbedBuilder();
                 error.setColor(0xff3923);
                 error.setTitle(TzeBot.essentials.LanguageDetector.getMessage("general.icon.error") + TzeBot.essentials.LanguageDetector.getMessage("play.nothing.setTitle"));
@@ -93,11 +141,24 @@ public class PlayerManager {
                 channel.sendTyping().queue();
                 channel.sendMessage(error.build()).queue();
                 error.clear();
+                }
 
             }
 
             @Override
             public void loadFailed(FriendlyException exception) {
+                if (musicChannel) {
+                EmbedBuilder error = new EmbedBuilder();
+                error.setColor(0xff3923);
+                error.setTitle(TzeBot.essentials.LanguageDetector.getMessage("general.icon.error") + TzeBot.essentials.LanguageDetector.getMessage("play.error.setTitle"));
+                error.setDescription(TzeBot.essentials.LanguageDetector.getMessage("play.error.setDescription") + exception.getMessage());
+
+                channel.sendTyping().queue();
+                channel.sendMessage(error.build()).queue(message -> {
+                message.delete().queueAfter(5, TimeUnit.SECONDS);
+                });
+                error.clear();
+                } else {
                 EmbedBuilder error = new EmbedBuilder();
                 error.setColor(0xff3923);
                 error.setTitle(TzeBot.essentials.LanguageDetector.getMessage("general.icon.error") + TzeBot.essentials.LanguageDetector.getMessage("play.error.setTitle"));
@@ -106,6 +167,7 @@ public class PlayerManager {
                 channel.sendTyping().queue();
                 channel.sendMessage(error.build()).queue();
                 error.clear();
+                }
             }
         });
     }

@@ -48,7 +48,6 @@ public class Language implements ICommand {
             channel.sendTyping().queue();
             channel.sendMessage(error.build()).queue();
             error.clear();
-            return;
             } else {
                 if (Config.LANGUAGES.get(ctx.getGuild().getIdLong()).equals("en_en")) {
                     if (args.get(0).toLowerCase().equals("turkish")) {
@@ -103,7 +102,6 @@ public class Language implements ICommand {
                         channel.sendTyping().queue();
                         channel.sendMessage(error.build()).queue();
                         error.clear();
-                        return;
                     } else {
                         EmbedBuilder error = new EmbedBuilder();
                         error.setColor(0xff3923);
@@ -113,7 +111,6 @@ public class Language implements ICommand {
                         channel.sendTyping().queue();
                         channel.sendMessage(error.build()).queue();
                         error.clear();
-                        return;
                     } 
             }
         }

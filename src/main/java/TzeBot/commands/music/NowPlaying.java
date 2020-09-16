@@ -14,10 +14,10 @@ import java.util.concurrent.TimeUnit;
 public class NowPlaying implements ICommand {
     @Override
     public void handle(CommandContext ctx) {
-        TextChannel channel = ctx.getChannel();
-        PlayerManager playerManager = PlayerManager.getInstance();
-        GuildMusicManager musicManager = playerManager.getGuildMusicManager(ctx.getGuild());
-        AudioPlayer player = musicManager.player;
+        final TextChannel channel = ctx.getChannel();
+        final PlayerManager playerManager = PlayerManager.getInstance();
+        final GuildMusicManager musicManager = playerManager.getGuildMusicManager(ctx.getGuild());
+        final AudioPlayer player = musicManager.player;
 
         if (player.getPlayingTrack() == null) {
             EmbedBuilder error = new EmbedBuilder();

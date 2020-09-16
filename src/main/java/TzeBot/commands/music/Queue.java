@@ -9,7 +9,6 @@ import com.sedmelluq.discord.lavaplayer.track.AudioTrackInfo;
 import me.duncte123.botcommons.messaging.EmbedUtils;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.TextChannel;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.BlockingQueue;
@@ -17,10 +16,10 @@ import java.util.concurrent.BlockingQueue;
 public class Queue implements ICommand {
     @Override
     public void handle(CommandContext ctx) {
-        TextChannel channel = ctx.getChannel();
-        PlayerManager playerManager = PlayerManager.getInstance();
-        GuildMusicManager musicManager = playerManager.getGuildMusicManager(ctx.getGuild());
-        BlockingQueue<AudioTrack> queue = musicManager.scheduler.getQueue();
+        final TextChannel channel = ctx.getChannel();
+        final PlayerManager playerManager = PlayerManager.getInstance();
+        final GuildMusicManager musicManager = playerManager.getGuildMusicManager(ctx.getGuild());
+        final BlockingQueue<AudioTrack> queue = musicManager.scheduler.getQueue();
 
         if (queue.isEmpty()) {
             EmbedBuilder error = new EmbedBuilder();

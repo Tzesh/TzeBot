@@ -11,6 +11,7 @@ import java.util.List;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.Member;
+import net.dv8tion.jda.api.entities.Role;
 import net.dv8tion.jda.api.entities.TextChannel;
 
 /**
@@ -65,7 +66,6 @@ public class Vote implements ICommand {
             message.addReaction(TzeBot.essentials.LanguageDetector.getMessage("general.icon.1")).queue();
             message.addReaction(TzeBot.essentials.LanguageDetector.getMessage("general.icon.2")).queue();
             });
-            channel.sendMessage(res).queue();
             vote3.clear();
             break;
             case 4:

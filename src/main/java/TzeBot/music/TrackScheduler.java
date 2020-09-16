@@ -4,6 +4,7 @@ import com.sedmelluq.discord.lavaplayer.player.AudioPlayer;
 import com.sedmelluq.discord.lavaplayer.player.event.AudioEventAdapter;
 import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
 import com.sedmelluq.discord.lavaplayer.track.AudioTrackEndReason;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -74,8 +75,22 @@ public class TrackScheduler extends AudioEventAdapter {
         repeat = value;
     }
     
-    public void shuffle()
-    {
-        Collections.shuffle((List<?>) queue);
+     public void changePosition(long time) {
+     final AudioTrack track = this.player.getPlayingTrack();
+     final long actualTime = time * 1000L;
+     if (time > 0) {
+         long position = Math.max(track.getPosition() - 1, Math.max(track.getPosition() + actualTime, 0));
+         player.getPlayingTrack().setPosition(position);
+     } else {
+     long position = Math.min(track.getPosition() - 1, Math.max(track.getPosition() + actualTime, 0));
+     player.getPlayingTrack().setPosition(position);
+     }
+    }
+
+    public void shufflePlaylist() {
+        final List<AudioTrack> tempList = new ArrayList<>(this.queue);
+        Collections.shuffle(tempList);
+        this.queue.clear();
+        this.queue.addAll(tempList);
     }
 }

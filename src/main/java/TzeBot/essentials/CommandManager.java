@@ -17,12 +17,17 @@ import TzeBot.commands.Help;
 import TzeBot.commands.Support;
 import TzeBot.commands.moderation.Language;
 import TzeBot.commands.moderation.Vote;
+import TzeBot.commands.moderation.VoteRole;
+import TzeBot.commands.music.Channel;
 import TzeBot.commands.music.Shuffle;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import javax.annotation.Nullable;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.regex.Pattern;
+import net.dv8tion.jda.api.entities.GuildChannel;
 
 public class CommandManager {
     private final List<ICommand> commands = new ArrayList<>();
@@ -44,8 +49,10 @@ public class CommandManager {
         addCommand(new NowPlaying());
         addCommand(new Volume());
         addCommand(new Loop());
-        addCommand(new Shuffle());
         addCommand(new Support());
+        addCommand(new VoteRole());
+        addCommand(new Channel());
+        addCommand(new Shuffle());
     }
 
     private void addCommand(ICommand cmd) {
@@ -81,15 +88,108 @@ public class CommandManager {
                 .split("\\s+");
 
         String invoke = split[0].toLowerCase();
-        ICommand cmd = this.getCommand(invoke);
-
-        if (cmd != null) {
+        String searchLower = invoke.toLowerCase();
+        Long textChannelID = Config.CHANNELS.computeIfAbsent(event.getGuild().getIdLong(), (id) -> 0L);
+        if (textChannelID != 0L && isExists(event)) {
+            for (ICommand cmd : this.commands) {
+                if (cmd.getName().equals(searchLower)) {
+                    if (cmd.getClass().getPackage().getName().equals("TzeBot.commands.music")) {
+                        if (textChannelID == event.getChannel().getIdLong()) {
+                            ICommand command = this.getCommand(invoke);
+                            if (command != null) {
+                                event.getChannel().sendTyping().queue();
+                                List<String> args = List.of(split).subList(1, split.length);
+                                CommandContext ctx = new CommandContext(event, args);
+                                command.handle(ctx);
+                            }
+                        }
+                    } else {
+                        ICommand command = this.getCommand(invoke);
+                        if (command != null) {
+                            event.getChannel().sendTyping().queue();
+                            List<String> args = List.of(split).subList(1, split.length);
+                            CommandContext ctx = new CommandContext(event, args);
+                            command.handle(ctx);
+                    }
+                }
+                }
+            }
+        } else {
+        ICommand command = this.getCommand(invoke);
+        if (command != null) {
             event.getChannel().sendTyping().queue();
             List<String> args = List.of(split).subList(1, split.length);
-
             CommandContext ctx = new CommandContext(event, args);
-
-            cmd.handle(ctx);
+            command.handle(ctx);
+            }
         }
+    }
+    
+    void handle(GuildMessageReceivedEvent event) {
+        String[] split =  event.getMessage().getContentRaw()
+                .split("\\s+");
+
+        String invoke = split[0].toLowerCase();
+        String searchLower = invoke.toLowerCase();
+        Long textChannelID = Config.CHANNELS.computeIfAbsent(event.getGuild().getIdLong(), (id) -> 0L);
+        HashMap<Long, Long> IDs = Config.MUSICCHANNELS.computeIfAbsent(event.getGuild().getIdLong(), (id) -> null);
+        if (textChannelID != 0L && isExists(event) && IDs == null) {
+            for (ICommand cmd : this.commands) {
+                if (cmd.getName().equals(searchLower)) {
+                    if (cmd.getClass().getPackage().getName().equals("TzeBot.commands.music")) {
+                        if (textChannelID == event.getChannel().getIdLong()) {
+                            ICommand command = this.getCommand(invoke);
+                            if (command != null) {
+                                event.getChannel().sendTyping().queue();
+                                List<String> args = List.of(split).subList(1, split.length);
+                                CommandContext ctx = new CommandContext(event, args);
+                                command.handle(ctx);
+                            }
+                        }
+                    } else {
+                        ICommand command = this.getCommand(invoke);
+                        if (command != null) {
+                            event.getChannel().sendTyping().queue();
+                            List<String> args = List.of(split).subList(1, split.length);
+                            CommandContext ctx = new CommandContext(event, args);
+                            command.handle(ctx);
+                    }
+                }
+                }
+            }
+        } else {
+        if (IDs != null && IDs.containsKey(event.getChannel().getIdLong())) {
+            ICommand command2 = this.getCommand(TzeBot.essentials.LanguageDetector.getMessage("play.name"));
+            event.getChannel().sendTyping().queue();
+            List<String> args = List.of(split).subList(0, split.length);
+            CommandContext ctx = new CommandContext(event, args);
+            command2.handle(ctx);
+            return;
+        }
+        ICommand command = this.getCommand(invoke);
+        if (command != null) {
+            event.getChannel().sendTyping().queue();
+            List<String> args = List.of(split).subList(1, split.length);
+            CommandContext ctx = new CommandContext(event, args);
+            command.handle(ctx);
+            } else {
+            ICommand command1 = this.getCommand(TzeBot.essentials.LanguageDetector.getMessage("play.name"));
+            event.getChannel().sendTyping().queue();
+            List<String> args = List.of(split).subList(0, split.length);
+            CommandContext ctx = new CommandContext(event, args);
+            command1.handle(ctx);
+            }
+        }
+    }
+    
+    public boolean isExists(GuildMessageReceivedEvent event) {
+        Iterator<GuildChannel> iterator = event.getGuild().getChannels().iterator();
+        while (iterator.hasNext()) {
+            if (iterator.next().getIdLong() == Config.CHANNELS.get(event.getGuild().getIdLong())) {
+                return true;
+            }
+        }
+        Config.CHANNELS.put(event.getGuild().getIdLong(), 0L);
+        return false;
     }
 }

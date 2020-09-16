@@ -5,22 +5,16 @@ import TzeBot.essentials.ICommand;
 import TzeBot.music.GuildMusicManager;
 import TzeBot.music.PlayerManager;
 import TzeBot.music.TrackScheduler;
-import com.sedmelluq.discord.lavaplayer.player.AudioPlayer;
-import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.TextChannel;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.concurrent.BlockingQueue;
 
 public class Loop implements ICommand {
     @Override
     public void handle(CommandContext ctx) {
-        TextChannel channel = ctx.getChannel();
-        PlayerManager playerManager = PlayerManager.getInstance();
-        GuildMusicManager musicManager = playerManager.getGuildMusicManager(ctx.getGuild());
-        BlockingQueue<AudioTrack> queue = musicManager.scheduler.getQueue();
-        TrackScheduler scheduler = musicManager.scheduler;
+        final TextChannel channel = ctx.getChannel();
+        final PlayerManager playerManager = PlayerManager.getInstance();
+        final GuildMusicManager musicManager = playerManager.getGuildMusicManager(ctx.getGuild());
+        final TrackScheduler scheduler = musicManager.scheduler;
 
         
 
@@ -34,16 +28,29 @@ public class Loop implements ICommand {
             channel.sendMessage(error.build()).queue();
             error.clear();
         } else {
+            if (scheduler.isRepeating() == false) {
             scheduler.setRepeating(!scheduler.isRepeating());
 
             EmbedBuilder success = new EmbedBuilder();
             success.setColor(0x00ff00);
-            success.setTitle(TzeBot.essentials.LanguageDetector.getMessage("general.icon.loop") + TzeBot.essentials.LanguageDetector.getMessage("loop.success.setTitle"));
+            success.setTitle(TzeBot.essentials.LanguageDetector.getMessage("general.icon.loop") + TzeBot.essentials.LanguageDetector.getMessage("loop.success.on.setTitle"));
             success.setFooter(TzeBot.essentials.LanguageDetector.getMessage("general.bythecommand") + ctx.getMember().getUser().getName(), ctx.getMember().getUser().getAvatarUrl());
 
             channel.sendTyping().queue();
             channel.sendMessage(success.build()).queue();
             success.clear();
+              } else {
+            scheduler.setRepeating(!scheduler.isRepeating());
+
+            EmbedBuilder success = new EmbedBuilder();
+            success.setColor(0x00ff00);
+            success.setTitle(TzeBot.essentials.LanguageDetector.getMessage("general.icon.loop") + TzeBot.essentials.LanguageDetector.getMessage("loop.success.off.setTitle"));
+            success.setFooter(TzeBot.essentials.LanguageDetector.getMessage("general.bythecommand") + ctx.getMember().getUser().getName(), ctx.getMember().getUser().getAvatarUrl());
+
+            channel.sendTyping().queue();
+            channel.sendMessage(success.build()).queue();
+            success.clear();
+            }
             }
         }
 

@@ -50,7 +50,6 @@ public class Prefix implements ICommand {
         success.setTitle(TzeBot.essentials.LanguageDetector.getMessage("general.icon.success") + " " + TzeBot.essentials.LanguageDetector.getMessage("prefix.success.setTitle") + "`" + newPrefix + "`");
         success.setFooter(TzeBot.essentials.LanguageDetector.getMessage("general.bythecommand") + " " + ctx.getMember().getUser().getName(), ctx.getMember().getUser().getAvatarUrl());
 
-
         channel.sendTyping().queue();
         channel.sendMessage(success.build()).queue();
         success.clear();

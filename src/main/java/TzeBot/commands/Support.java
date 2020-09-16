@@ -7,9 +7,7 @@ package TzeBot.commands;
 
 import TzeBot.essentials.CommandContext;
 import TzeBot.essentials.ICommand;
-import java.util.List;
 import net.dv8tion.jda.api.EmbedBuilder;
-import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.TextChannel;
 
 /**
@@ -20,7 +18,6 @@ public class Support implements ICommand {
     @Override
     public void handle(CommandContext ctx) {
         final TextChannel channel = ctx.getChannel();
-        final List<String> args = ctx.getArgs();
         
             EmbedBuilder support = new EmbedBuilder();
             support.setColor(0x00ff00);
@@ -28,7 +25,8 @@ public class Support implements ICommand {
             support.setDescription(TzeBot.essentials.LanguageDetector.getMessage("support.setDescription")
                                     + "\n" + TzeBot.essentials.LanguageDetector.getMessage("support.setDescription2")
                                     + "\n" + TzeBot.essentials.LanguageDetector.getMessage("support.setDescription3")
-                                    + "\n" + TzeBot.essentials.LanguageDetector.getMessage("general.icon.patreon") + "https://www.patreon.com/tzebot");
+                                    + "\n" + TzeBot.essentials.LanguageDetector.getMessage("general.icon.patreon") + "https://www.patreon.com/tzebot"
+                                    + "\n" + TzeBot.essentials.LanguageDetector.getMessage("support.discordbots") + "https://discordbotlist.com/bots/tzebot");
             support.setFooter(TzeBot.essentials.LanguageDetector.getMessage("support.setFooter"));
             channel.sendTyping().queue();
             channel.sendMessage(support.build()).queue();

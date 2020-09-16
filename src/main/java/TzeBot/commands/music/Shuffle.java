@@ -21,10 +21,10 @@ public class Shuffle implements ICommand {
 
     @Override
     public void handle(CommandContext ctx) {
-        TextChannel channel = ctx.getChannel();
-        PlayerManager playerManager = PlayerManager.getInstance();
-        GuildMusicManager musicManager = playerManager.getGuildMusicManager(ctx.getGuild());
-        TrackScheduler scheduler = musicManager.scheduler;
+        final TextChannel channel = ctx.getChannel();
+        final PlayerManager playerManager = PlayerManager.getInstance();
+        final GuildMusicManager musicManager = playerManager.getGuildMusicManager(ctx.getGuild());
+        final TrackScheduler scheduler = musicManager.scheduler;
 
         if (musicManager.scheduler.getQueue().isEmpty() && musicManager.player.getPlayingTrack() == null) {
             EmbedBuilder error = new EmbedBuilder();
@@ -36,8 +36,7 @@ public class Shuffle implements ICommand {
             channel.sendMessage(error.build()).queue();
             error.clear();
         } else {
-            scheduler.shuffle();
-
+            scheduler.shufflePlaylist();
             EmbedBuilder success = new EmbedBuilder();
             success.setColor(0x00ff00);
             success.setTitle(TzeBot.essentials.LanguageDetector.getMessage("general.icon.shuffle") + TzeBot.essentials.LanguageDetector.getMessage("shuffle.success.setTitle"));

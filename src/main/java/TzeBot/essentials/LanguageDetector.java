@@ -49,7 +49,6 @@ public class LanguageDetector extends ListenerAdapter {
     }
     
     public static String getMessage(String key) {
-        Config.LANGUAGES.get(guildId);
         String shortening = Config.LANGUAGES.computeIfAbsent(guildId, (id) -> "en_en");
         if (shortening.equals("en_en")) {
             return en_en.get(key);

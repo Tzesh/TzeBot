@@ -1,8 +1,10 @@
 package TzeBot.commands.music;
 
 import TzeBot.essentials.CommandContext;
+import TzeBot.essentials.Config;
 import TzeBot.essentials.ICommand;
 import TzeBot.music.PlayerManager;
+import java.util.HashMap;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.GuildVoiceState;
@@ -14,9 +16,9 @@ import net.dv8tion.jda.api.managers.AudioManager;
 public class Join implements ICommand {
     @Override
     public void handle(CommandContext ctx) {
-        TextChannel channel = ctx.getChannel();
-        PlayerManager manager = PlayerManager.getInstance();
-        AudioManager audioManager = ctx.getGuild().getAudioManager();
+        final TextChannel channel = ctx.getChannel();
+        final PlayerManager manager = PlayerManager.getInstance();
+        final AudioManager audioManager = ctx.getGuild().getAudioManager();
 
         if (audioManager.isConnected()) {
             EmbedBuilder error = new EmbedBuilder();
@@ -60,7 +62,8 @@ public class Join implements ICommand {
         }
 
         audioManager.openAudioConnection(voiceChannel);
-        manager.getGuildMusicManager(ctx.getGuild()).player.setVolume(5);
+        int volume = Config.VOLUMES.computeIfAbsent(ctx.getGuild().getIdLong(), (id) -> 50);
+        manager.getGuildMusicManager(ctx.getGuild()).player.setVolume(volume);
         EmbedBuilder succes = new EmbedBuilder();
         succes.setColor(0x00ff00);
         succes.setTitle(TzeBot.essentials.LanguageDetector.getMessage("general.icon.join") + TzeBot.essentials.LanguageDetector.getMessage("join.success.setTitle"));

@@ -11,10 +11,10 @@ import net.dv8tion.jda.api.entities.TextChannel;
 public class Resume implements ICommand {
     @Override
     public void handle(CommandContext ctx) {
-        TextChannel channel = ctx.getChannel();
-        PlayerManager playerManager = PlayerManager.getInstance();
-        GuildMusicManager musicManager = playerManager.getGuildMusicManager(ctx.getGuild());
-        AudioPlayer player = musicManager.player;
+        final TextChannel channel = ctx.getChannel();
+        final PlayerManager playerManager = PlayerManager.getInstance();
+        final GuildMusicManager musicManager = playerManager.getGuildMusicManager(ctx.getGuild());
+        final AudioPlayer player = musicManager.player;
 
         if (player.getPlayingTrack() == null) {
             EmbedBuilder error = new EmbedBuilder();
@@ -25,12 +25,11 @@ public class Resume implements ICommand {
             channel.sendTyping().queue();
             channel.sendMessage(error.build()).queue();
             error.clear();
-
         } else if (player.isPaused()) {
             player.setPaused(false);
             EmbedBuilder success = new EmbedBuilder();
             success.setColor(0x00ff00);
-            success.setTitle(TzeBot.essentials.LanguageDetector.getMessage("general.icon.resume") + TzeBot.essentials.LanguageDetector.getMessage("resume.success.setTitle") + player.getPlayingTrack().getInfo().title);
+            success.setTitle(TzeBot.essentials.LanguageDetector.getMessage("general.icon.play") + TzeBot.essentials.LanguageDetector.getMessage("resume.success.setTitle") + player.getPlayingTrack().getInfo().title);
             success.setFooter(TzeBot.essentials.LanguageDetector.getMessage("general.bythecommand") + ctx.getMember().getUser().getName(), ctx.getMember().getUser().getAvatarUrl());
 
 

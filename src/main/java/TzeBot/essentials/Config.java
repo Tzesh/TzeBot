@@ -12,6 +12,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.URL;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.Map;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -20,16 +21,24 @@ import static java.util.concurrent.TimeUnit.MINUTES;
 
 public class Config {
 
-    private static Dotenv dotenv = Dotenv.load();
+    private static final Dotenv dotenv = Dotenv.load();
+    private static final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
+    
     public static Map<Long, String> PREFIXES = new HashMap<>();
     public static Map<Long, String> LANGUAGES = new HashMap<>();
-    private static final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
+    public static Map<Long, Long> CHANNELS = new HashMap<>();
+    public static Map<Long, LinkedList<Long>> VOTEROLES = new HashMap<>();
+    public static Map<Long, HashMap<Long, Long>> MUSICCHANNELS = new HashMap<>();
+    public static Map<Long, Integer> VOLUMES = new HashMap<>();
+    public static boolean isCreated = false;
+    
     public static int serverNumber = 0;
-    public static double currentVersion = 1.8;
+    public static double currentVersion = 2;
     
     public static String get(String key) {
         return dotenv.get(key.toUpperCase());
     }
+    
     public static void save(String token, String pre, String owner, String key, String shards) {
          try (FileWriter writer = new FileWriter(".env")) {
             writer.write("TOKEN=" + token +
@@ -41,7 +50,6 @@ public class Config {
             System.out.println("An error occured during saving the .env");
         }
          System.out.println("All .env settings have been saved.");
-         dotenv = Dotenv.load();
      }
     
     public static void saveDatabase() {
@@ -50,6 +58,15 @@ public class Config {
                 out.writeObject(prefixDB);
                 Map<Long, String> languagesDB = LANGUAGES;
                 out.writeObject(languagesDB);
+                Map<Long, Long> channelsDB = CHANNELS;
+                out.writeObject(channelsDB);
+                Map<Long, LinkedList<Long>> voterolesDB = VOTEROLES;
+                out.writeObject(voterolesDB);
+                Map<Long, HashMap<Long, Long>> musicchannelsDB = MUSICCHANNELS;
+                out.writeObject(musicchannelsDB);
+                Map<Long, Integer> volumesDB = VOLUMES;
+                out.writeObject(volumesDB);
+                
             } catch (IOException exception) {
                 System.out.println("An error occurred during saving databases process...");
             }
@@ -61,6 +78,10 @@ public class Config {
             try (ObjectInputStream in = new ObjectInputStream(new FileInputStream(file))) {
                 PREFIXES = (HashMap<Long, String>)in.readObject();
                 LANGUAGES = (HashMap<Long, String>)in.readObject();
+                CHANNELS = (HashMap<Long, Long>)in.readObject();
+                VOTEROLES = (HashMap<Long, LinkedList<Long>>)in.readObject();
+                MUSICCHANNELS = (HashMap<Long, HashMap<Long, Long>>)in.readObject();
+                VOLUMES = (HashMap<Long, Integer>)in.readObject();
             } catch (IOException exception) {
                 System.out.println("An error occured during process...");
             } catch (ClassNotFoundException exception) {
@@ -75,7 +96,7 @@ public class Config {
                 public void run() { saveDatabase(); }
             };
         ScheduledFuture<?> beeperHandle = scheduler.scheduleAtFixedRate(beeper, 15, 15, MINUTES);
-        System.out.println("Prefixes and languages are saved into database.");
+        System.out.println("Prefixes and languages are saving into database per 15 minutes.");
     }
     
     public static boolean versionControl() {
@@ -102,5 +123,4 @@ public class Config {
         }
         return true;
     }
-               
-    }
+}
