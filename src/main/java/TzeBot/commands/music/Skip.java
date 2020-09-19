@@ -2,6 +2,7 @@ package TzeBot.commands.music;
 
 import TzeBot.essentials.CommandContext;
 import TzeBot.essentials.ICommand;
+import TzeBot.essentials.LanguageDetector;
 import TzeBot.music.GuildMusicManager;
 import TzeBot.music.PlayerManager;
 import TzeBot.music.TrackScheduler;
@@ -10,6 +11,7 @@ import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.TextChannel;
 
 public class Skip implements ICommand {
+
     @Override
     public void handle(CommandContext ctx) {
         final TextChannel channel = ctx.getChannel();
@@ -21,8 +23,8 @@ public class Skip implements ICommand {
         if (player.getPlayingTrack() == null) {
             EmbedBuilder error = new EmbedBuilder();
             error.setColor(0xff3923);
-            error.setTitle(TzeBot.essentials.LanguageDetector.getMessage("general.icon.error") + TzeBot.essentials.LanguageDetector.getMessage("skip.error.setTitle"));
-            error.setDescription(TzeBot.essentials.LanguageDetector.getMessage("skip.error.setDescription"));
+            error.setTitle(LanguageDetector.getMessage("general.icon.error") + LanguageDetector.getMessage("skip.error.setTitle"));
+            error.setDescription(LanguageDetector.getMessage("skip.error.setDescription"));
 
             channel.sendTyping().queue();
             channel.sendMessage(error.build()).queue();
@@ -32,8 +34,8 @@ public class Skip implements ICommand {
 
         EmbedBuilder success = new EmbedBuilder();
         success.setColor(0x00ff00);
-        success.setTitle(TzeBot.essentials.LanguageDetector.getMessage("general.icon.skip") + TzeBot.essentials.LanguageDetector.getMessage("skip.success.setTitle1") + player.getPlayingTrack().getInfo().title + TzeBot.essentials.LanguageDetector.getMessage("skip.success.setTitle2"));
-        success.setFooter(TzeBot.essentials.LanguageDetector.getMessage("general.bythecommand") + " " + ctx.getMember().getUser().getName(), ctx.getMember().getUser().getAvatarUrl());
+        success.setTitle(LanguageDetector.getMessage("general.icon.skip") + LanguageDetector.getMessage("skip.success.setTitle1") + player.getPlayingTrack().getInfo().title + LanguageDetector.getMessage("skip.success.setTitle2"));
+        success.setFooter(LanguageDetector.getMessage("general.bythecommand") + " " + ctx.getMember().getUser().getName(), ctx.getMember().getUser().getAvatarUrl());
 
         scheduler.nextTrack();
 
@@ -44,11 +46,11 @@ public class Skip implements ICommand {
 
     @Override
     public String getName() {
-        return TzeBot.essentials.LanguageDetector.getMessage("skip.name");
+        return LanguageDetector.getMessage("skip.name");
     }
 
     @Override
     public String getHelp() {
-        return TzeBot.essentials.LanguageDetector.getMessage("skip.gethelp");
+        return LanguageDetector.getMessage("skip.gethelp");
     }
 }

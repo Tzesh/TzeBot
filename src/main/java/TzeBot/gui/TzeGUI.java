@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package TzeBot.gui;
 
 import TzeBot.gui.TextAreaOutputStream;
@@ -21,13 +16,10 @@ import javax.security.auth.login.LoginException;
 import javax.swing.JButton;
 import net.dv8tion.jda.api.sharding.DefaultShardManagerBuilder;
 
-/**
- *
- * @author Tzesh
- */
 public class TzeGUI extends javax.swing.JFrame {
+
     int shards = 1;
-    
+
     public TzeGUI() {
         Config.getDatabase();
         initComponents();
@@ -38,32 +30,27 @@ public class TzeGUI extends javax.swing.JFrame {
         System.setErr(ps);
         checkVariables();
         checkVersion();
-        addWindowListener(new WindowAdapter()
-        {
+        addWindowListener(new WindowAdapter() {
             @Override
-            public void windowClosing(WindowEvent e)
-            {
+            public void windowClosing(WindowEvent e) {
                 Config.saveDatabase();
                 System.exit(0);
             }
         });
-        startButton.addActionListener(new ActionListener()
-    {
-        @Override
-        public void actionPerformed(ActionEvent e)
-        {
-            if(startButton == (JButton)e.getSource())
-            {
-                startButton.setEnabled(false);
-                token.setEnabled(false);
-                ownerID.setEnabled(false);
-                prefix.setEnabled(false);
-                apiKEY.setEnabled(false);
-                shard.setEnabled(false);
+        startButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (startButton == (JButton) e.getSource()) {
+                    startButton.setEnabled(false);
+                    token.setEnabled(false);
+                    ownerID.setEnabled(false);
+                    prefix.setEnabled(false);
+                    apiKEY.setEnabled(false);
+                    shard.setEnabled(false);
+                }
             }
-        }
 
-    });
+        });
         System.out.println("GUI has been initialized.");
     }
 
@@ -72,61 +59,68 @@ public class TzeGUI extends javax.swing.JFrame {
             token.setText("Not-installed");
         } else {
             token.setText(Config.get("token"));
-        } if (Config.get("Owner") == null || Config.get("Owner").equals("")) {
+        }
+        if (Config.get("Owner") == null || Config.get("Owner").equals("")) {
             ownerID.setText("Not-installed");
         } else {
             ownerID.setText(Config.get("Owner"));
-        } if (Config.get("Pre") == null || Config.get("pre").equals("")) {
+        }
+        if (Config.get("Pre") == null || Config.get("pre").equals("")) {
             prefix.setText("Not-installed");
         } else {
             prefix.setText(Config.get("Pre"));
-        } if (Config.get("Key") == null || Config.get("Key").equals("")) {
+        }
+        if (Config.get("Key") == null || Config.get("Key").equals("")) {
             apiKEY.setText("Not-installed");
         } else {
             apiKEY.setText(Config.get("Key"));
-        } if (Config.get("shard") == null || Config.get("shard").equals("")) {
+        }
+        if (Config.get("shard") == null || Config.get("shard").equals("")) {
             shard.setText("1");
         } else {
             shard.setText(Integer.toString(PREFIXES.size()));
         }
-        
+
         shard.addKeyListener(new KeyAdapter() {
-        public void keyTyped(KeyEvent e) {
-        char c = e.getKeyChar();
-        if (!((c >= '0') && (c <= '9') ||
-         (c == KeyEvent.VK_BACK_SPACE) ||
-         (c == KeyEvent.VK_DELETE))) {
-        getToolkit().beep();
-        e.consume();
-         }
-         }
-         });
-        
+            public void keyTyped(KeyEvent e) {
+                char c = e.getKeyChar();
+                if (!((c >= '0') && (c <= '9')
+                        || (c == KeyEvent.VK_BACK_SPACE)
+                        || (c == KeyEvent.VK_DELETE))) {
+                    getToolkit().beep();
+                    e.consume();
+                }
+            }
+        });
+
         ownerID.addKeyListener(new KeyAdapter() {
-        public void keyTyped(KeyEvent e) {
-        char c = e.getKeyChar();
-        if (!((c >= '0') && (c <= '9') ||
-         (c == KeyEvent.VK_BACK_SPACE) ||
-         (c == KeyEvent.VK_DELETE))) {
-        getToolkit().beep();
-        e.consume();
-         }
-         }
-         });
+            public void keyTyped(KeyEvent e) {
+                char c = e.getKeyChar();
+                if (!((c >= '0') && (c <= '9')
+                        || (c == KeyEvent.VK_BACK_SPACE)
+                        || (c == KeyEvent.VK_DELETE))) {
+                    getToolkit().beep();
+                    e.consume();
+                }
+            }
+        });
         progressInfo.setText("All .env variables have been checked.");
     }
-    
+
     public void checkVersion() {
         versionNumber.setText("v" + Config.currentVersion);
-        if (Config.versionControl() == true) System.out.println("You are using the latest version of TzeBot v" + Config.currentVersion);
-        else {
+        if (Config.versionControl() == true) {
+            System.out.println("You are using the latest version of TzeBot v" + Config.currentVersion);
+        } else {
             updateButton.setVisible(true);
         }
     }
-    
+
     public void getvariables() {
         shards = Integer.parseInt(shard.getText());
-        if (shards <= 1) shards = 1;
+        if (shards <= 1) {
+            shards = 1;
+        }
         Config.save(token.getText(), prefix.getText(), ownerID.getText(), apiKEY.getText(), shard.getText());
         progressInfo.setText("All .env variables have been saved.");
     }
@@ -361,33 +355,33 @@ public class TzeGUI extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void startButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_startButtonActionPerformed
-       getvariables();
-       Config.saveForAQuarter();
-       TzeBot.essentials.LanguageDetector.getMessages();
+        getvariables();
+        Config.saveForAQuarter();
+        TzeBot.essentials.LanguageDetector.getMessages();
         progressInfo.setText("Bot started.");
         try {
-                DefaultShardManagerBuilder.createDefault(Config.get("key"))
-                .setToken(Config.get("token"))
-                .addEventListeners(new Listener())
-                .setShardsTotal(shards)
-                .build();
+            DefaultShardManagerBuilder.createDefault(Config.get("key"))
+                    .setToken(Config.get("token"))
+                    .addEventListeners(new Listener())
+                    .setShardsTotal(shards)
+                    .build();
         } catch (LoginException exception) {
             System.out.println("An error occured please make sure you have set all variables properly.");
         }
     }//GEN-LAST:event_startButtonActionPerformed
 
     private void updateButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateButtonActionPerformed
-         try {
-        java.awt.Desktop.getDesktop().browse(java.net.URI.create("https://github.com/Tzesh/TzeBot/releases"));
-    } catch (Exception e) {
-        System.out.println("An error occured during opening the update page.");
-    }
+        try {
+            java.awt.Desktop.getDesktop().browse(java.net.URI.create("https://github.com/Tzesh/TzeBot/releases"));
+        } catch (Exception e) {
+            System.out.println("An error occured during opening the update page.");
+        }
     }//GEN-LAST:event_updateButtonActionPerformed
 
     public void appendText(String text) {
         console.append(text);
     }
- 
+
     /**
      * @param args the command line arguments
      */
@@ -398,9 +392,9 @@ public class TzeGUI extends javax.swing.JFrame {
          * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
          */
     }
-    
+
     public void start() throws LoginException, SQLException {
-        
+
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
                 if ("Nimbus".equals(info.getName())) {

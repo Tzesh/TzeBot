@@ -12,9 +12,11 @@ import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 
 /**
- * This class schedules tracks for the audio player. It contains the queue of tracks.
+ * This class schedules tracks for the audio player. It contains the queue of
+ * tracks.
  */
 public class TrackScheduler extends AudioEventAdapter {
+
     private final AudioPlayer player;
     private final BlockingQueue<AudioTrack> queue;
     private boolean repeat = false;
@@ -29,7 +31,8 @@ public class TrackScheduler extends AudioEventAdapter {
     }
 
     /**
-     * Add the next track to queue or play right away if nothing is in the queue.
+     * Add the next track to queue or play right away if nothing is in the
+     * queue.
      *
      * @param track The track to play or add to queue.
      */
@@ -60,31 +63,32 @@ public class TrackScheduler extends AudioEventAdapter {
         // Only start the next track if the end reason is suitable for it (FINISHED or LOAD_FAILED)
         this.lastTrack = track;
         if (endReason.mayStartNext) {
-            if (repeat)
+            if (repeat) {
                 player.startTrack(lastTrack.makeClone(), false);
-            else
+            } else {
                 nextTrack();
+            }
         }
     }
-    
-        public boolean isRepeating() {
+
+    public boolean isRepeating() {
         return repeat;
     }
-    
+
     public void setRepeating(boolean value) {
         repeat = value;
     }
-    
-     public void changePosition(long time) {
-     final AudioTrack track = this.player.getPlayingTrack();
-     final long actualTime = time * 1000L;
-     if (time > 0) {
-         long position = Math.max(track.getPosition() - 1, Math.max(track.getPosition() + actualTime, 0));
-         player.getPlayingTrack().setPosition(position);
-     } else {
-     long position = Math.min(track.getPosition() - 1, Math.max(track.getPosition() + actualTime, 0));
-     player.getPlayingTrack().setPosition(position);
-     }
+
+    public void changePosition(long time) {
+        final AudioTrack track = this.player.getPlayingTrack();
+        final long actualTime = time * 1000L;
+        if (time > 0) {
+            long position = Math.max(track.getPosition() - 1, Math.max(track.getPosition() + actualTime, 0));
+            player.getPlayingTrack().setPosition(position);
+        } else {
+            long position = Math.min(track.getPosition() - 1, Math.max(track.getPosition() + actualTime, 0));
+            player.getPlayingTrack().setPosition(position);
+        }
     }
 
     public void shufflePlaylist() {

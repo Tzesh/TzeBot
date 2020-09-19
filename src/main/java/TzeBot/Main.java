@@ -1,21 +1,12 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package TzeBot;
 
 import TzeBot.gui.TzeGUI;
 import java.sql.SQLException;
 import javax.security.auth.login.LoginException;
 
-/**
- *
- * @author Tzesh
- */
 public class Main {
-    public static void main(String args[]) throws LoginException, SQLException {
-        TzeGUI tzegui = new TzeGUI();
-        tzegui.start();
+
+    public static void main(String args[]) throws LoginException, SQLException { // Database support will be added in future
+        new TzeGUI().start(); // All of the functions and required things will be called and operated in TzeGUI.java
     }
 }

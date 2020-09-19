@@ -30,6 +30,7 @@ import java.util.regex.Pattern;
 import net.dv8tion.jda.api.entities.GuildChannel;
 
 public class CommandManager {
+
     private final List<ICommand> commands = new ArrayList<>();
 
     public CommandManager() {
@@ -69,7 +70,6 @@ public class CommandManager {
         return commands;
     }
 
-
     @Nullable
     public ICommand getCommand(String search) {
         String searchLower = search.toLowerCase();
@@ -83,7 +83,7 @@ public class CommandManager {
     }
 
     void handle(GuildMessageReceivedEvent event, String prefix) {
-        String[] split =  event.getMessage().getContentRaw()
+        String[] split = event.getMessage().getContentRaw()
                 .replaceFirst("(?i)" + Pattern.quote(prefix), "")
                 .split("\\s+");
 
@@ -110,23 +110,23 @@ public class CommandManager {
                             List<String> args = List.of(split).subList(1, split.length);
                             CommandContext ctx = new CommandContext(event, args);
                             command.handle(ctx);
+                        }
                     }
-                }
                 }
             }
         } else {
-        ICommand command = this.getCommand(invoke);
-        if (command != null) {
-            event.getChannel().sendTyping().queue();
-            List<String> args = List.of(split).subList(1, split.length);
-            CommandContext ctx = new CommandContext(event, args);
-            command.handle(ctx);
+            ICommand command = this.getCommand(invoke);
+            if (command != null) {
+                event.getChannel().sendTyping().queue();
+                List<String> args = List.of(split).subList(1, split.length);
+                CommandContext ctx = new CommandContext(event, args);
+                command.handle(ctx);
             }
         }
     }
-    
+
     void handle(GuildMessageReceivedEvent event) {
-        String[] split =  event.getMessage().getContentRaw()
+        String[] split = event.getMessage().getContentRaw()
                 .split("\\s+");
 
         String invoke = split[0].toLowerCase();
@@ -153,35 +153,35 @@ public class CommandManager {
                             List<String> args = List.of(split).subList(1, split.length);
                             CommandContext ctx = new CommandContext(event, args);
                             command.handle(ctx);
+                        }
                     }
-                }
                 }
             }
         } else {
-        if (IDs != null && IDs.containsKey(event.getChannel().getIdLong())) {
-            ICommand command2 = this.getCommand(TzeBot.essentials.LanguageDetector.getMessage("play.name"));
-            event.getChannel().sendTyping().queue();
-            List<String> args = List.of(split).subList(0, split.length);
-            CommandContext ctx = new CommandContext(event, args);
-            command2.handle(ctx);
-            return;
-        }
-        ICommand command = this.getCommand(invoke);
-        if (command != null) {
-            event.getChannel().sendTyping().queue();
-            List<String> args = List.of(split).subList(1, split.length);
-            CommandContext ctx = new CommandContext(event, args);
-            command.handle(ctx);
+            if (IDs != null && IDs.containsKey(event.getChannel().getIdLong())) {
+                ICommand command2 = this.getCommand(LanguageDetector.getMessage("play.name"));
+                event.getChannel().sendTyping().queue();
+                List<String> args = List.of(split).subList(0, split.length);
+                CommandContext ctx = new CommandContext(event, args);
+                command2.handle(ctx);
+                return;
+            }
+            ICommand command = this.getCommand(invoke);
+            if (command != null) {
+                event.getChannel().sendTyping().queue();
+                List<String> args = List.of(split).subList(1, split.length);
+                CommandContext ctx = new CommandContext(event, args);
+                command.handle(ctx);
             } else {
-            ICommand command1 = this.getCommand(TzeBot.essentials.LanguageDetector.getMessage("play.name"));
-            event.getChannel().sendTyping().queue();
-            List<String> args = List.of(split).subList(0, split.length);
-            CommandContext ctx = new CommandContext(event, args);
-            command1.handle(ctx);
+                ICommand command1 = this.getCommand(LanguageDetector.getMessage("play.name"));
+                event.getChannel().sendTyping().queue();
+                List<String> args = List.of(split).subList(0, split.length);
+                CommandContext ctx = new CommandContext(event, args);
+                command1.handle(ctx);
             }
         }
     }
-    
+
     public boolean isExists(GuildMessageReceivedEvent event) {
         Iterator<GuildChannel> iterator = event.getGuild().getChannels().iterator();
         while (iterator.hasNext()) {

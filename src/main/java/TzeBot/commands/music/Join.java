@@ -3,8 +3,8 @@ package TzeBot.commands.music;
 import TzeBot.essentials.CommandContext;
 import TzeBot.essentials.Config;
 import TzeBot.essentials.ICommand;
+import TzeBot.essentials.LanguageDetector;
 import TzeBot.music.PlayerManager;
-import java.util.HashMap;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.GuildVoiceState;
@@ -14,6 +14,7 @@ import net.dv8tion.jda.api.entities.VoiceChannel;
 import net.dv8tion.jda.api.managers.AudioManager;
 
 public class Join implements ICommand {
+
     @Override
     public void handle(CommandContext ctx) {
         final TextChannel channel = ctx.getChannel();
@@ -23,8 +24,8 @@ public class Join implements ICommand {
         if (audioManager.isConnected()) {
             EmbedBuilder error = new EmbedBuilder();
             error.setColor(0xff3923);
-            error.setTitle(TzeBot.essentials.LanguageDetector.getMessage("general.icon.error") + TzeBot.essentials.LanguageDetector.getMessage("join.alreadyconnected.setTitle"));
-            error.setDescription(TzeBot.essentials.LanguageDetector.getMessage("join.alreadyconnected.setDescription"));
+            error.setTitle(LanguageDetector.getMessage("general.icon.error") + LanguageDetector.getMessage("join.alreadyconnected.setTitle"));
+            error.setDescription(LanguageDetector.getMessage("join.alreadyconnected.setDescription"));
 
             channel.sendTyping().queue();
             channel.sendMessage(error.build()).queue();
@@ -37,8 +38,8 @@ public class Join implements ICommand {
         if (!memberVoiceState.inVoiceChannel()) {
             EmbedBuilder error = new EmbedBuilder();
             error.setColor(0xff3923);
-            error.setTitle(TzeBot.essentials.LanguageDetector.getMessage("general.icon.error") + TzeBot.essentials.LanguageDetector.getMessage("join.joinchannel.setTitle"));
-            error.setDescription(TzeBot.essentials.LanguageDetector.getMessage("join.joinchannel.setDescription"));
+            error.setTitle(LanguageDetector.getMessage("general.icon.error") + LanguageDetector.getMessage("join.joinchannel.setTitle"));
+            error.setDescription(LanguageDetector.getMessage("join.joinchannel.setDescription"));
 
             channel.sendTyping().queue();
             channel.sendMessage(error.build()).queue();
@@ -52,8 +53,8 @@ public class Join implements ICommand {
         if (!selfmember.hasPermission(voiceChannel, Permission.VOICE_CONNECT)) {
             EmbedBuilder error = new EmbedBuilder();
             error.setColor(0xff3923);
-            error.setTitle(TzeBot.essentials.LanguageDetector.getMessage("general.icon.error") + TzeBot.essentials.LanguageDetector.getMessage("join.cannotjoin.setTitle"));
-            error.setDescription(TzeBot.essentials.LanguageDetector.getMessage("join.cannotjoin.setDescription"));
+            error.setTitle(LanguageDetector.getMessage("general.icon.error") + LanguageDetector.getMessage("join.cannotjoin.setTitle"));
+            error.setDescription(LanguageDetector.getMessage("join.cannotjoin.setDescription"));
 
             channel.sendTyping().queue();
             channel.sendMessage(error.build()).queue();
@@ -66,8 +67,8 @@ public class Join implements ICommand {
         manager.getGuildMusicManager(ctx.getGuild()).player.setVolume(volume);
         EmbedBuilder succes = new EmbedBuilder();
         succes.setColor(0x00ff00);
-        succes.setTitle(TzeBot.essentials.LanguageDetector.getMessage("general.icon.join") + TzeBot.essentials.LanguageDetector.getMessage("join.success.setTitle"));
-        succes.setFooter(TzeBot.essentials.LanguageDetector.getMessage("general.bythecommand") + ctx.getMember().getUser().getName(), ctx.getMember().getUser().getAvatarUrl());
+        succes.setTitle(LanguageDetector.getMessage("general.icon.join") + LanguageDetector.getMessage("join.success.setTitle"));
+        succes.setFooter(LanguageDetector.getMessage("general.bythecommand") + ctx.getMember().getUser().getName(), ctx.getMember().getUser().getAvatarUrl());
 
         channel.sendTyping().queue();
         channel.sendMessage(succes.build()).queue();
@@ -76,11 +77,11 @@ public class Join implements ICommand {
 
     @Override
     public String getName() {
-        return TzeBot.essentials.LanguageDetector.getMessage("join.name");
+        return LanguageDetector.getMessage("join.name");
     }
 
     @Override
     public String getHelp() {
-        return TzeBot.essentials.LanguageDetector.getMessage("join.gethelp");
+        return LanguageDetector.getMessage("join.gethelp");
     }
 }

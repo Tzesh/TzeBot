@@ -3,6 +3,7 @@ package TzeBot.commands.music;
 import TzeBot.essentials.Config;
 import TzeBot.essentials.CommandContext;
 import TzeBot.essentials.ICommand;
+import TzeBot.essentials.LanguageDetector;
 import TzeBot.music.GuildMusicManager;
 import TzeBot.music.PlayerManager;
 import com.google.api.client.googleapis.javanet.GoogleNetHttpTransport;
@@ -27,9 +28,10 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 public class Play implements ICommand {
+
     private final YouTube youTube;
 
-    public Play () {
+    public Play() {
         YouTube temp = null;
         try {
             temp = new YouTube.Builder(
@@ -44,6 +46,7 @@ public class Play implements ICommand {
         }
         youTube = temp;
     }
+
     @Override
     public void handle(CommandContext ctx) {
 
@@ -56,88 +59,103 @@ public class Play implements ICommand {
         final PlayerManager manager = PlayerManager.getInstance();
         final String prefix = Config.PREFIXES.get(ctx.getGuild().getIdLong());
         HashMap<Long, Long> IDs = Config.MUSICCHANNELS.computeIfAbsent(ctx.getGuild().getIdLong(), (id) -> null);
-        
+
         if (IDs != null) {
             if (IDs.containsKey(channel.getIdLong())) {
                 if (!isUrl(input)) {
-            String ytSearched = searchYoutube(input);
+                    String ytSearched = searchYoutube(input);
 
-            if (ytSearched == null) {
+                    if (ytSearched == null) {
+                        ctx.getMessage().delete().queue();
+                        EmbedBuilder error = new EmbedBuilder();
+                        error.setColor(0xff3923);
+                        error.setTitle(LanguageDetector.getMessage("general.icon.error") + LanguageDetector.getMessage("play.noresults.setTitle"));
+                        error.setDescription(LanguageDetector.getMessage("play.noresults.setDescription"));
+
+                        channel.sendTyping().queue();
+                        channel.sendMessage(error.build()).queue(message -> {
+                            message.delete().queueAfter(5, TimeUnit.SECONDS);
+                        });
+                        error.clear();
+                        return;
+                    }
+
+                    input = ytSearched;
+                }
+
+                if (!memberVoiceState.inVoiceChannel()) {
+                    ctx.getMessage().delete().queue();
+                    EmbedBuilder error = new EmbedBuilder();
+                    error.setColor(0xff3923);
+                    error.setTitle(LanguageDetector.getMessage("general.icon.error") + LanguageDetector.getMessage("join.joinchannel.setTitle"));
+                    error.setDescription(LanguageDetector.getMessage("join.joinchannel.setDescription"));
+
+                    channel.sendTyping().queue();
+                    channel.sendMessage(error.build()).queue(message -> {
+                        message.delete().queueAfter(5, TimeUnit.SECONDS);
+                    });
+                    error.clear();
+                    return;
+                }
+
+                if (!selfmember.hasPermission(voiceChannel, Permission.VOICE_CONNECT)) {
+                    ctx.getMessage().delete().queue();
+                    EmbedBuilder error = new EmbedBuilder();
+                    error.setColor(0xff3923);
+                    error.setTitle(LanguageDetector.getMessage("general.icon.error") + LanguageDetector.getMessage("join.cannotjoin.setTitle"));
+                    error.setDescription(LanguageDetector.getMessage("join.cannotjoin.setDescription"));
+
+                    channel.sendTyping().queue();
+                    channel.sendMessage(error.build()).queue(message -> {
+                        message.delete().queueAfter(5, TimeUnit.SECONDS);
+                    });
+                    error.clear();
+                    return;
+                }
+
+                if (!audioManager.isConnected()) {
+                    audioManager.openAudioConnection(voiceChannel);
+                    int volume = Config.VOLUMES.computeIfAbsent(ctx.getGuild().getIdLong(), (id) -> 50);
+                    manager.getGuildMusicManager(ctx.getGuild()).player.setVolume(volume);
+                    EmbedBuilder success = new EmbedBuilder();
+                    success.setColor(0x00ff00);
+                    success.setTitle(LanguageDetector.getMessage("general.icon.join") + LanguageDetector.getMessage("join.success.setTitle"));
+                    success.setFooter(LanguageDetector.getMessage("general.bythecommand") + ctx.getMember().getUser().getName(), ctx.getMember().getUser().getAvatarUrl());
+
+                    channel.sendTyping().queue();
+                    channel.sendMessage(success.build()).queue(message -> {
+                        message.delete().queueAfter(5, TimeUnit.SECONDS);
+                    });
+                    success.clear();
+                }
+                manager.loadAndPlay(ctx.getChannel(), input, ctx.getMember().getUser().getName(), ctx.getMember().getUser().getAvatarUrl(), true);
                 ctx.getMessage().delete().queue();
-                EmbedBuilder error = new EmbedBuilder();
-                error.setColor(0xff3923);
-                error.setTitle(TzeBot.essentials.LanguageDetector.getMessage("general.icon.error") + TzeBot.essentials.LanguageDetector.getMessage("play.noresults.setTitle"));
-                error.setDescription(TzeBot.essentials.LanguageDetector.getMessage("play.noresults.setDescription"));
-
-                channel.sendTyping().queue();
-                channel.sendMessage(error.build()).queue(message -> {
-                message.delete().queueAfter(5, TimeUnit.SECONDS);
-                });
-                error.clear();
-                return;
-            }
-            
-            input = ytSearched;
-            }
-            
-            if (!memberVoiceState.inVoiceChannel()) {
-            ctx.getMessage().delete().queue();
-            EmbedBuilder error = new EmbedBuilder();
-            error.setColor(0xff3923);
-            error.setTitle(TzeBot.essentials.LanguageDetector.getMessage("general.icon.error") + TzeBot.essentials.LanguageDetector.getMessage("join.joinchannel.setTitle"));
-            error.setDescription(TzeBot.essentials.LanguageDetector.getMessage("join.joinchannel.setDescription"));
-
-            channel.sendTyping().queue();
-            channel.sendMessage(error.build()).queue(message -> {
-                message.delete().queueAfter(5, TimeUnit.SECONDS);
-                });
-            error.clear();
-            return;
-            }
-
-            if (!selfmember.hasPermission(voiceChannel, Permission.VOICE_CONNECT)) {
-            ctx.getMessage().delete().queue();
-            EmbedBuilder error = new EmbedBuilder();
-            error.setColor(0xff3923);
-            error.setTitle(TzeBot.essentials.LanguageDetector.getMessage("general.icon.error") + TzeBot.essentials.LanguageDetector.getMessage("join.cannotjoin.setTitle"));
-            error.setDescription(TzeBot.essentials.LanguageDetector.getMessage("join.cannotjoin.setDescription"));
-
-            channel.sendTyping().queue();
-            channel.sendMessage(error.build()).queue(message -> {
-                message.delete().queueAfter(5, TimeUnit.SECONDS);
-                });
-            error.clear();
-            return;
-            }
-
-            if (!audioManager.isConnected()) {
-            audioManager.openAudioConnection(voiceChannel);
-            int volume = Config.VOLUMES.computeIfAbsent(ctx.getGuild().getIdLong(), (id) -> 50);
-            manager.getGuildMusicManager(ctx.getGuild()).player.setVolume(volume);
-            EmbedBuilder success = new EmbedBuilder();
-            success.setColor(0x00ff00);
-            success.setTitle(TzeBot.essentials.LanguageDetector.getMessage("general.icon.join") + TzeBot.essentials.LanguageDetector.getMessage("join.success.setTitle"));
-            success.setFooter(TzeBot.essentials.LanguageDetector.getMessage("general.bythecommand") + ctx.getMember().getUser().getName(), ctx.getMember().getUser().getAvatarUrl());
-
-            channel.sendTyping().queue();
-            channel.sendMessage(success.build()).queue(message -> {
-                message.delete().queueAfter(5, TimeUnit.SECONDS);
-                });
-            success.clear();
-            }
-            manager.loadAndPlay(ctx.getChannel(), input, ctx.getMember().getUser().getName(), ctx.getMember().getUser().getAvatarUrl(), true);
-            ctx.getMessage().delete().queue();
             }
         }
         if (IDs == null) {
-        if (!isUrl(input)) {
-            String ytSearched = searchYoutube(input);
+            if (!isUrl(input)) {
+                String ytSearched = searchYoutube(input);
 
-            if (ytSearched == null) {
+                if (ytSearched == null) {
+                    EmbedBuilder error = new EmbedBuilder();
+                    error.setColor(0xff3923);
+                    error.setTitle(LanguageDetector.getMessage("general.icon.error") + LanguageDetector.getMessage("play.noresults.setTitle"));
+                    error.setDescription(LanguageDetector.getMessage("play.noresults.setDescription"));
+
+                    channel.sendTyping().queue();
+                    channel.sendMessage(error.build()).queue();
+                    error.clear();
+                    return;
+                }
+
+                input = ytSearched;
+            }
+
+            if (ctx.getArgs().isEmpty()) {
                 EmbedBuilder error = new EmbedBuilder();
                 error.setColor(0xff3923);
-            error.setTitle(TzeBot.essentials.LanguageDetector.getMessage("general.icon.error") + TzeBot.essentials.LanguageDetector.getMessage("play.noresults.setTitle"));
-            error.setDescription(TzeBot.essentials.LanguageDetector.getMessage("play.noresults.setDescription"));
+                error.setTitle(LanguageDetector.getMessage("general.icon.error") + LanguageDetector.getMessage("general.403"));
+                error.setDescription(LanguageDetector.getMessage("play.noargs.setDescription1") + prefix + LanguageDetector.getMessage("play.noargs.setDescription2"));
 
                 channel.sendTyping().queue();
                 channel.sendMessage(error.build()).queue();
@@ -145,74 +163,58 @@ public class Play implements ICommand {
                 return;
             }
 
+            if (!memberVoiceState.inVoiceChannel()) {
+                EmbedBuilder error = new EmbedBuilder();
+                error.setColor(0xff3923);
+                error.setTitle(LanguageDetector.getMessage("general.icon.error") + LanguageDetector.getMessage("join.joinchannel.setTitle"));
+                error.setDescription(LanguageDetector.getMessage("join.joinchannel.setDescription"));
 
-            input = ytSearched;
-        }
+                channel.sendTyping().queue();
+                channel.sendMessage(error.build()).queue();
+                error.clear();
+                return;
+            }
 
-        if (ctx.getArgs().isEmpty()) {
-            EmbedBuilder error = new EmbedBuilder();
-            error.setColor(0xff3923);
-            error.setTitle(TzeBot.essentials.LanguageDetector.getMessage("general.icon.error") + TzeBot.essentials.LanguageDetector.getMessage("general.403"));
-            error.setDescription(TzeBot.essentials.LanguageDetector.getMessage("play.noargs.setDescription1") + prefix + TzeBot.essentials.LanguageDetector.getMessage("play.noargs.setDescription2"));
+            if (!selfmember.hasPermission(voiceChannel, Permission.VOICE_CONNECT)) {
+                EmbedBuilder error = new EmbedBuilder();
+                error.setColor(0xff3923);
+                error.setTitle(LanguageDetector.getMessage("general.icon.error") + LanguageDetector.getMessage("join.cannotjoin.setTitle"));
+                error.setDescription(LanguageDetector.getMessage("join.cannotjoin.setDescription"));
 
-            channel.sendTyping().queue();
-            channel.sendMessage(error.build()).queue();
-            error.clear();
-            return;
-        }
+                channel.sendTyping().queue();
+                channel.sendMessage(error.build()).queue();
+                error.clear();
+                return;
+            }
 
-        if (!memberVoiceState.inVoiceChannel()) {
-            EmbedBuilder error = new EmbedBuilder();
-            error.setColor(0xff3923);
-            error.setTitle(TzeBot.essentials.LanguageDetector.getMessage("general.icon.error") + TzeBot.essentials.LanguageDetector.getMessage("join.joinchannel.setTitle"));
-            error.setDescription(TzeBot.essentials.LanguageDetector.getMessage("join.joinchannel.setDescription"));
+            if (!audioManager.isConnected()) {
+                audioManager.openAudioConnection(voiceChannel);
+                int volume = Config.VOLUMES.computeIfAbsent(ctx.getGuild().getIdLong(), (id) -> 50);
+                manager.getGuildMusicManager(ctx.getGuild()).player.setVolume(volume);
+                EmbedBuilder succes = new EmbedBuilder();
+                succes.setColor(0x00ff00);
+                succes.setTitle(LanguageDetector.getMessage("general.icon.join") + LanguageDetector.getMessage("join.success.setTitle"));
+                succes.setFooter(LanguageDetector.getMessage("general.bythecommand") + ctx.getMember().getUser().getName(), ctx.getMember().getUser().getAvatarUrl());
 
-            channel.sendTyping().queue();
-            channel.sendMessage(error.build()).queue();
-            error.clear();
-            return;
-        }
+                channel.sendTyping().queue();
+                channel.sendMessage(succes.build()).queue();
+                succes.clear();
+            }
 
-        if (!selfmember.hasPermission(voiceChannel, Permission.VOICE_CONNECT)) {
-            EmbedBuilder error = new EmbedBuilder();
-            error.setColor(0xff3923);
-            error.setTitle(TzeBot.essentials.LanguageDetector.getMessage("general.icon.error") + TzeBot.essentials.LanguageDetector.getMessage("join.cannotjoin.setTitle"));
-            error.setDescription(TzeBot.essentials.LanguageDetector.getMessage("join.cannotjoin.setDescription"));
+            GuildMusicManager musicManager = manager.getGuildMusicManager(ctx.getGuild());
+            AudioPlayer player = musicManager.player;
 
-            channel.sendTyping().queue();
-            channel.sendMessage(error.build()).queue();
-            error.clear();
-            return;
-        }
+            manager.loadAndPlay(ctx.getChannel(), input, ctx.getMember().getUser().getName(), ctx.getMember().getUser().getAvatarUrl(), false);
 
-        if (!audioManager.isConnected()) {
-            audioManager.openAudioConnection(voiceChannel);
-            int volume = Config.VOLUMES.computeIfAbsent(ctx.getGuild().getIdLong(), (id) -> 50);
-            manager.getGuildMusicManager(ctx.getGuild()).player.setVolume(volume);
-            EmbedBuilder succes = new EmbedBuilder();
-            succes.setColor(0x00ff00);
-            succes.setTitle(TzeBot.essentials.LanguageDetector.getMessage("general.icon.join") + TzeBot.essentials.LanguageDetector.getMessage("join.success.setTitle"));
-            succes.setFooter(TzeBot.essentials.LanguageDetector.getMessage("general.bythecommand") + ctx.getMember().getUser().getName(), ctx.getMember().getUser().getAvatarUrl());
+            AudioTrackInfo info = player.getPlayingTrack().getInfo();
 
-            channel.sendTyping().queue();
-            channel.sendMessage(succes.build()).queue();
-            succes.clear();
-        }
-
-        GuildMusicManager musicManager = manager.getGuildMusicManager(ctx.getGuild());
-        AudioPlayer player = musicManager.player;
-
-        manager.loadAndPlay(ctx.getChannel(), input, ctx.getMember().getUser().getName(), ctx.getMember().getUser().getAvatarUrl(), false);
-
-        AudioTrackInfo info = player.getPlayingTrack().getInfo();
-
-        channel.sendMessage(EmbedUtils.embedMessage(String.format("**" + TzeBot.essentials.LanguageDetector.getMessage("general.icon.nowplaying") + TzeBot.essentials.LanguageDetector.getMessage("nowplaying.nowplaying") + "** [%s]{%s}\n%s %s - %s",
-                info.title,
-                info.uri,
-                player.isPaused() ? "\u23F8" : "▶",
-                formatTime(player.getPlayingTrack().getPosition()),
-                formatTime(player.getPlayingTrack().getDuration())
-        )).build()).queue();
+            channel.sendMessage(EmbedUtils.embedMessage(String.format("**" + LanguageDetector.getMessage("general.icon.nowplaying") + LanguageDetector.getMessage("nowplaying.nowplaying") + "** [%s]{%s}\n%s %s - %s",
+                    info.title,
+                    info.uri,
+                    player.isPaused() ? "\u23F8" : "▶",
+                    formatTime(player.getPlayingTrack().getPosition()),
+                    formatTime(player.getPlayingTrack().getDuration())
+            )).build()).queue();
         }
     }
 
@@ -250,13 +252,13 @@ public class Play implements ICommand {
 
     @Override
     public String getName() {
-        return TzeBot.essentials.LanguageDetector.getMessage("play.name");
+        return LanguageDetector.getMessage("play.name");
     }
 
     @Override
     public String getHelp() {
-        return TzeBot.essentials.LanguageDetector.getMessage("play.gethelp1") + "\n" +
-                TzeBot.essentials.LanguageDetector.getMessage("play.gethelp2") + Config.get("pre") + getName() + TzeBot.essentials.LanguageDetector.getMessage("play.gethelp3");
+        return LanguageDetector.getMessage("play.gethelp1") + "\n"
+                + LanguageDetector.getMessage("play.gethelp2") + Config.get("pre") + getName() + LanguageDetector.getMessage("play.gethelp3");
     }
 
     private String formatTime(long timeInMilis) {

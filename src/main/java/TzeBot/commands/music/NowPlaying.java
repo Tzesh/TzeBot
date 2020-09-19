@@ -2,6 +2,7 @@ package TzeBot.commands.music;
 
 import TzeBot.essentials.CommandContext;
 import TzeBot.essentials.ICommand;
+import TzeBot.essentials.LanguageDetector;
 import TzeBot.music.GuildMusicManager;
 import TzeBot.music.PlayerManager;
 import com.sedmelluq.discord.lavaplayer.player.AudioPlayer;
@@ -12,6 +13,7 @@ import net.dv8tion.jda.api.entities.TextChannel;
 import java.util.concurrent.TimeUnit;
 
 public class NowPlaying implements ICommand {
+
     @Override
     public void handle(CommandContext ctx) {
         final TextChannel channel = ctx.getChannel();
@@ -22,8 +24,8 @@ public class NowPlaying implements ICommand {
         if (player.getPlayingTrack() == null) {
             EmbedBuilder error = new EmbedBuilder();
             error.setColor(0xff3923);
-            error.setTitle(TzeBot.essentials.LanguageDetector.getMessage("general.icon.error") + TzeBot.essentials.LanguageDetector.getMessage("nowplaying.error.setTitle"));
-            error.setDescription(TzeBot.essentials.LanguageDetector.getMessage("nowplaying.error.setDescription"));
+            error.setTitle(LanguageDetector.getMessage("general.icon.error") + LanguageDetector.getMessage("nowplaying.error.setTitle"));
+            error.setDescription(LanguageDetector.getMessage("nowplaying.error.setDescription"));
 
             channel.sendTyping().queue();
             channel.sendMessage(error.build()).queue();
@@ -33,7 +35,7 @@ public class NowPlaying implements ICommand {
 
         AudioTrackInfo info = player.getPlayingTrack().getInfo();
 
-        channel.sendMessage(EmbedUtils.embedMessage(String.format("**" + TzeBot.essentials.LanguageDetector.getMessage("general.icon.nowplaying") + TzeBot.essentials.LanguageDetector.getMessage("nowplaying.nowplaying") + "** [%s]{%s}\n%s %s - %s",
+        channel.sendMessage(EmbedUtils.embedMessage(String.format("**" + LanguageDetector.getMessage("general.icon.nowplaying") + LanguageDetector.getMessage("nowplaying.nowplaying") + "** [%s]{%s}\n%s %s - %s",
                 info.title,
                 info.uri,
                 player.isPaused() ? "\u23F8" : "▶",
@@ -45,12 +47,12 @@ public class NowPlaying implements ICommand {
 
     @Override
     public String getName() {
-        return TzeBot.essentials.LanguageDetector.getMessage("nowplaying.name");
+        return LanguageDetector.getMessage("nowplaying.name");
     }
 
     @Override
     public String getHelp() {
-        return TzeBot.essentials.LanguageDetector.getMessage("nowplaying.gethelp");
+        return LanguageDetector.getMessage("nowplaying.gethelp");
     }
 
     private String formatTime(long timeInMilis) {
