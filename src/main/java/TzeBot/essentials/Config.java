@@ -106,7 +106,7 @@ public class Config {
                 saveDatabase();
             }
         };
-        ScheduledFuture<?> beeperHandle = scheduler.scheduleAtFixedRate(beeper, 1, 1, MINUTES);
+        ScheduledFuture<?> beeperHandle = scheduler.scheduleAtFixedRate(beeper, 15, 15, MINUTES);
         System.out.println("Prefixes and languages are saving into database per 15 minutes.");
     }
 
