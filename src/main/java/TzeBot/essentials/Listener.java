@@ -55,11 +55,9 @@ public class Listener extends ListenerAdapter {
         HashMap<Long, Long> IDs = Config.MUSICCHANNELS.computeIfAbsent(event.getGuild().getIdLong(), (id) -> null);
         if (IDs != null && IDs.containsKey(event.getChannel().getIdLong())) {
             final long guildId = event.getGuild().getIdLong();
-            LanguageDetector.setGuild(guildId);
             manager.handle(event);
         } else {
             final long guildId = event.getGuild().getIdLong();
-            LanguageDetector.setGuild(guildId);
             String pre = Config.PREFIXES.computeIfAbsent(guildId, (id) -> Config.get("pre"));
 
             if (raw.startsWith(pre)) {
@@ -70,39 +68,40 @@ public class Listener extends ListenerAdapter {
 
     @Override
     public void onGuildMessageReactionRemove(GuildMessageReactionRemoveEvent event) {
+        final long guildID = event.getGuild().getIdLong();
         if (Config.VOTEROLES.containsKey(event.getMessageIdLong())) {
             List<Long> roleIDs = Config.VOTEROLES.get(event.getMessageIdLong());
             switch (roleIDs.size()) {
                 case 2:
-                    if (event.getReactionEmote().getEmoji().equals(LanguageDetector.getMessage("general.icon.1"))) {
+                    if (event.getReactionEmote().getEmoji().equals(LanguageDetector.getMessage("general.icon.1", guildID))) {
                         event.getGuild().removeRoleFromMember(event.getMember(), event.getGuild().getRoleById(roleIDs.get(0))).queue();
                     }
-                    if (event.getReactionEmote().getEmoji().equals(LanguageDetector.getMessage("general.icon.2"))) {
+                    if (event.getReactionEmote().getEmoji().equals(LanguageDetector.getMessage("general.icon.2", guildID))) {
                         event.getGuild().removeRoleFromMember(event.getMember(), event.getGuild().getRoleById(roleIDs.get(1))).queue();
                     }
                     break;
                 case 3:
-                    if (event.getReactionEmote().getEmoji().equals(LanguageDetector.getMessage("general.icon.1"))) {
+                    if (event.getReactionEmote().getEmoji().equals(LanguageDetector.getMessage("general.icon.1", guildID))) {
                         event.getGuild().removeRoleFromMember(event.getMember(), event.getGuild().getRoleById(roleIDs.get(0))).queue();
                     }
-                    if (event.getReactionEmote().getEmoji().equals(LanguageDetector.getMessage("general.icon.2"))) {
+                    if (event.getReactionEmote().getEmoji().equals(LanguageDetector.getMessage("general.icon.2", guildID))) {
                         event.getGuild().removeRoleFromMember(event.getMember(), event.getGuild().getRoleById(roleIDs.get(1))).queue();
                     }
-                    if (event.getReactionEmote().getEmoji().equals(LanguageDetector.getMessage("general.icon.3"))) {
+                    if (event.getReactionEmote().getEmoji().equals(LanguageDetector.getMessage("general.icon.3", guildID))) {
                         event.getGuild().removeRoleFromMember(event.getMember(), event.getGuild().getRoleById(roleIDs.get(2))).queue();
                     }
                     break;
                 case 4:
-                    if (event.getReactionEmote().getEmoji().equals(LanguageDetector.getMessage("general.icon.1"))) {
+                    if (event.getReactionEmote().getEmoji().equals(LanguageDetector.getMessage("general.icon.1", guildID))) {
                         event.getGuild().removeRoleFromMember(event.getMember(), event.getGuild().getRoleById(roleIDs.get(0))).queue();
                     }
-                    if (event.getReactionEmote().getEmoji().equals(LanguageDetector.getMessage("general.icon.2"))) {
+                    if (event.getReactionEmote().getEmoji().equals(LanguageDetector.getMessage("general.icon.2", guildID))) {
                         event.getGuild().removeRoleFromMember(event.getMember(), event.getGuild().getRoleById(roleIDs.get(1))).queue();
                     }
-                    if (event.getReactionEmote().getEmoji().equals(LanguageDetector.getMessage("general.icon.3"))) {
+                    if (event.getReactionEmote().getEmoji().equals(LanguageDetector.getMessage("general.icon.3", guildID))) {
                         event.getGuild().removeRoleFromMember(event.getMember(), event.getGuild().getRoleById(roleIDs.get(2))).queue();
                     }
-                    if (event.getReactionEmote().getEmoji().equals(LanguageDetector.getMessage("general.icon.4"))) {
+                    if (event.getReactionEmote().getEmoji().equals(LanguageDetector.getMessage("general.icon.4", guildID))) {
                         event.getGuild().removeRoleFromMember(event.getMember(), event.getGuild().getRoleById(roleIDs.get(3))).queue();
                     }
                     break;
@@ -117,8 +116,10 @@ public class Listener extends ListenerAdapter {
         if (event.getUser().isBot()) {
             return;
         }
+        
+        final long guildID = event.getGuild().getIdLong();
+        
         HashMap<Long, Long> IDs = Config.MUSICCHANNELS.computeIfAbsent(event.getGuild().getIdLong(), (id) -> null);
-
         if (IDs != null) {
             final TextChannel channel = event.getChannel();
             final AudioManager audioManager = event.getGuild().getAudioManager();
@@ -129,14 +130,14 @@ public class Listener extends ListenerAdapter {
             final BlockingQueue<AudioTrack> queue = musicManager.scheduler.getQueue();
 
             if (IDs.containsValue(event.getMessageIdLong())) {
-                if (event.getReactionEmote().getEmoji().equals(LanguageDetector.getMessage("general.icon.join"))) {
+                if (event.getReactionEmote().getEmoji().equals(LanguageDetector.getMessage("general.icon.join", guildID))) {
 
                     if (audioManager.isConnected()) {
                         event.getChannel().removeReactionById(event.getMessageId(), event.getReactionEmote().getEmoji(), event.getUser()).queue();
                         EmbedBuilder error = new EmbedBuilder();
                         error.setColor(0xff3923);
-                        error.setTitle(LanguageDetector.getMessage("general.icon.error") + LanguageDetector.getMessage("join.alreadyconnected.setTitle"));
-                        error.setDescription(LanguageDetector.getMessage("join.alreadyconnected.setDescription"));
+                        error.setTitle(LanguageDetector.getMessage("general.icon.error", guildID) + LanguageDetector.getMessage("join.alreadyconnected.setTitle", guildID));
+                        error.setDescription(LanguageDetector.getMessage("join.alreadyconnected.setDescription", guildID));
 
                         channel.sendTyping().queue();
                         channel.sendMessage(error.build()).queue(message -> {
@@ -152,8 +153,8 @@ public class Listener extends ListenerAdapter {
                         event.getChannel().removeReactionById(event.getMessageId(), event.getReactionEmote().getEmoji(), event.getUser()).queue();
                         EmbedBuilder error = new EmbedBuilder();
                         error.setColor(0xff3923);
-                        error.setTitle(LanguageDetector.getMessage("general.icon.error") + LanguageDetector.getMessage("join.joinchannel.setTitle"));
-                        error.setDescription(LanguageDetector.getMessage("join.joinchannel.setDescription"));
+                        error.setTitle(LanguageDetector.getMessage("general.icon.error", guildID) + LanguageDetector.getMessage("join.joinchannel.setTitle", guildID));
+                        error.setDescription(LanguageDetector.getMessage("join.joinchannel.setDescription", guildID));
 
                         channel.sendTyping().queue();
                         channel.sendMessage(error.build()).queue(message -> {
@@ -170,8 +171,8 @@ public class Listener extends ListenerAdapter {
                         event.getChannel().removeReactionById(event.getMessageId(), event.getReactionEmote().getEmoji(), event.getUser()).queue();
                         EmbedBuilder error = new EmbedBuilder();
                         error.setColor(0xff3923);
-                        error.setTitle(LanguageDetector.getMessage("general.icon.error") + LanguageDetector.getMessage("join.cannotjoin.setTitle"));
-                        error.setDescription(LanguageDetector.getMessage("join.cannotjoin.setDescription"));
+                        error.setTitle(LanguageDetector.getMessage("general.icon.error", guildID) + LanguageDetector.getMessage("join.cannotjoin.setTitle", guildID));
+                        error.setDescription(LanguageDetector.getMessage("join.cannotjoin.setDescription", guildID));
 
                         channel.sendTyping().queue();
                         channel.sendMessage(error.build()).queue(message -> {
@@ -187,8 +188,8 @@ public class Listener extends ListenerAdapter {
                     event.getChannel().removeReactionById(event.getMessageId(), event.getReactionEmote().getEmoji(), event.getUser()).queue();
                     EmbedBuilder succes = new EmbedBuilder();
                     succes.setColor(0x00ff00);
-                    succes.setTitle(LanguageDetector.getMessage("general.icon.join") + LanguageDetector.getMessage("join.success.setTitle"));
-                    succes.setFooter(LanguageDetector.getMessage("general.bythecommand") + event.getMember().getUser().getName(), event.getMember().getUser().getAvatarUrl());
+                    succes.setTitle(LanguageDetector.getMessage("general.icon.join", guildID) + LanguageDetector.getMessage("join.success.setTitle", guildID));
+                    succes.setFooter(LanguageDetector.getMessage("general.bythecommand", guildID) + event.getMember().getUser().getName(), event.getMember().getUser().getAvatarUrl());
 
                     channel.sendTyping().queue();
                     channel.sendMessage(succes.build()).queue(message -> {
@@ -196,14 +197,14 @@ public class Listener extends ListenerAdapter {
                     });
                     succes.clear();
                 }
-                if (event.getReactionEmote().getEmoji().equals(LanguageDetector.getMessage("general.icon.leave"))) {
+                if (event.getReactionEmote().getEmoji().equals(LanguageDetector.getMessage("general.icon.leave", guildID))) {
 
                     if (!audioManager.isConnected()) {
                         event.getChannel().removeReactionById(event.getMessageId(), event.getReactionEmote().getEmoji(), event.getUser()).queue();
                         EmbedBuilder error = new EmbedBuilder();
                         error.setColor(0xff3923);
-                        error.setTitle(LanguageDetector.getMessage("general.icon.error") + LanguageDetector.getMessage("leave.cannotleave.setTitle"));
-                        error.setDescription(LanguageDetector.getMessage("leave.notconnected"));
+                        error.setTitle(LanguageDetector.getMessage("general.icon.error", guildID) + LanguageDetector.getMessage("leave.cannotleave.setTitle", guildID));
+                        error.setDescription(LanguageDetector.getMessage("leave.notconnected", guildID));
 
                         channel.sendTyping().queue();
                         channel.sendMessage(error.build()).queue(message -> {
@@ -219,8 +220,8 @@ public class Listener extends ListenerAdapter {
                         event.getChannel().removeReactionById(event.getMessageId(), event.getReactionEmote().getEmoji(), event.getUser()).queue();
                         EmbedBuilder error = new EmbedBuilder();
                         error.setColor(0xff3923);
-                        error.setTitle(LanguageDetector.getMessage("general.icon.error") + LanguageDetector.getMessage("leave.cannotleave.setTitle"));
-                        error.setDescription(LanguageDetector.getMessage("leave.notin"));
+                        error.setTitle(LanguageDetector.getMessage("general.icon.error", guildID) + LanguageDetector.getMessage("leave.cannotleave.setTitle", guildID));
+                        error.setDescription(LanguageDetector.getMessage("leave.notin", guildID));
 
                         channel.sendTyping().queue();
                         channel.sendMessage(error.build()).queue(message -> {
@@ -238,8 +239,8 @@ public class Listener extends ListenerAdapter {
                         event.getChannel().removeReactionById(event.getMessageId(), event.getReactionEmote().getEmoji(), event.getUser()).queue();
                         EmbedBuilder success = new EmbedBuilder();
                         success.setColor(0x00ff00);
-                        success.setTitle(LanguageDetector.getMessage("general.icon.stop") + LanguageDetector.getMessage("stop.success.setTitle"));
-                        success.setFooter(LanguageDetector.getMessage("general.bythecommand") + " " + event.getMember().getUser().getName(), event.getMember().getUser().getAvatarUrl());
+                        success.setTitle(LanguageDetector.getMessage("general.icon.stop", guildID) + LanguageDetector.getMessage("stop.success.setTitle", guildID));
+                        success.setFooter(LanguageDetector.getMessage("general.bythecommand", guildID) + " " + event.getMember().getUser().getName(), event.getMember().getUser().getAvatarUrl());
 
                         channel.sendTyping().queue();
                         channel.sendMessage(success.build()).queue(message -> {
@@ -252,8 +253,8 @@ public class Listener extends ListenerAdapter {
                     event.getChannel().removeReactionById(event.getMessageId(), event.getReactionEmote().getEmoji(), event.getUser()).queue();
                     EmbedBuilder success = new EmbedBuilder();
                     success.setColor(0x00ff00);
-                    success.setTitle(LanguageDetector.getMessage("general.icon.leave") + LanguageDetector.getMessage("leave.success.setTitle"));
-                    success.setFooter(LanguageDetector.getMessage("general.bythecommand") + event.getMember().getUser().getName(), event.getMember().getUser().getAvatarUrl());
+                    success.setTitle(LanguageDetector.getMessage("general.icon.leave", guildID) + LanguageDetector.getMessage("leave.success.setTitle", guildID));
+                    success.setFooter(LanguageDetector.getMessage("general.bythecommand", guildID) + event.getMember().getUser().getName(), event.getMember().getUser().getAvatarUrl());
 
                     channel.sendTyping().queue();
                     channel.sendMessage(success.build()).queue(message -> {
@@ -261,13 +262,13 @@ public class Listener extends ListenerAdapter {
                     });
                     success.clear();
                 }
-                if (event.getReactionEmote().getEmoji().equals(LanguageDetector.getMessage("general.icon.pause"))) {
+                if (event.getReactionEmote().getEmoji().equals(LanguageDetector.getMessage("general.icon.pause", guildID))) {
                     if (player.getPlayingTrack() == null) {
                         event.getChannel().removeReactionById(event.getMessageId(), event.getReactionEmote().getEmoji(), event.getUser()).queue();
                         EmbedBuilder error = new EmbedBuilder();
                         error.setColor(0xff3923);
-                        error.setTitle(LanguageDetector.getMessage("general.icon.error") + LanguageDetector.getMessage("pause.error.setTitle"));
-                        error.setDescription(LanguageDetector.getMessage("pause.error.setDescription"));
+                        error.setTitle(LanguageDetector.getMessage("general.icon.error", guildID) + LanguageDetector.getMessage("pause.error.setTitle", guildID));
+                        error.setDescription(LanguageDetector.getMessage("pause.error.setDescription", guildID));
 
                         channel.sendTyping().queue();
                         channel.sendMessage(error.build()).queue(message -> {
@@ -279,8 +280,8 @@ public class Listener extends ListenerAdapter {
                         event.getChannel().removeReactionById(event.getMessageId(), event.getReactionEmote().getEmoji(), event.getUser()).queue();
                         EmbedBuilder success = new EmbedBuilder();
                         success.setColor(0x00ff00);
-                        success.setTitle(LanguageDetector.getMessage("general.icon.pause") + LanguageDetector.getMessage("pause.success.setTitle") + player.getPlayingTrack().getInfo().title);
-                        success.setFooter(LanguageDetector.getMessage("general.bythecommand") + event.getMember().getUser().getName(), event.getMember().getUser().getAvatarUrl());
+                        success.setTitle(LanguageDetector.getMessage("general.icon.pause", guildID) + LanguageDetector.getMessage("pause.success.setTitle", guildID) + player.getPlayingTrack().getInfo().title);
+                        success.setFooter(LanguageDetector.getMessage("general.bythecommand", guildID) + event.getMember().getUser().getName(), event.getMember().getUser().getAvatarUrl());
 
                         channel.sendTyping().queue();
                         channel.sendMessage(success.build()).queue(message -> {
@@ -289,15 +290,15 @@ public class Listener extends ListenerAdapter {
                         success.clear();
                     }
                 }
-                if (event.getReactionEmote().getEmoji().equals(LanguageDetector.getMessage("general.icon.stop"))) {
+                if (event.getReactionEmote().getEmoji().equals(LanguageDetector.getMessage("general.icon.stop", guildID))) {
                     if (audioManager.isConnected()) {
                         audioManager.closeAudioConnection();
                         event.getChannel().removeReactionById(event.getMessageId(), event.getReactionEmote().getEmoji(), event.getUser()).queue();
 
                         EmbedBuilder success = new EmbedBuilder();
                         success.setColor(0x00ff00);
-                        success.setTitle(LanguageDetector.getMessage("general.icon.leave") + LanguageDetector.getMessage("leave.success.setTitle"));
-                        success.setFooter(LanguageDetector.getMessage("general.bythecommand") + event.getMember().getUser().getName(), event.getMember().getUser().getAvatarUrl());
+                        success.setTitle(LanguageDetector.getMessage("general.icon.leave", guildID) + LanguageDetector.getMessage("leave.success.setTitle", guildID));
+                        success.setFooter(LanguageDetector.getMessage("general.bythecommand", guildID) + event.getMember().getUser().getName(), event.getMember().getUser().getAvatarUrl());
 
                         channel.sendTyping().queue();
                         channel.sendMessage(success.build()).queue(message -> {
@@ -313,8 +314,8 @@ public class Listener extends ListenerAdapter {
                         event.getChannel().removeReactionById(event.getMessageId(), event.getReactionEmote().getEmoji(), event.getUser()).queue();
                         EmbedBuilder success = new EmbedBuilder();
                         success.setColor(0x00ff00);
-                        success.setTitle(LanguageDetector.getMessage("general.icon.stop") + LanguageDetector.getMessage("stop.success.setTitle"));
-                        success.setFooter(LanguageDetector.getMessage("general.bythecommand") + " " + event.getMember().getUser().getName(), event.getMember().getUser().getAvatarUrl());
+                        success.setTitle(LanguageDetector.getMessage("general.icon.stop", guildID) + LanguageDetector.getMessage("stop.success.setTitle", guildID));
+                        success.setFooter(LanguageDetector.getMessage("general.bythecommand", guildID) + " " + event.getMember().getUser().getName(), event.getMember().getUser().getAvatarUrl());
 
                         channel.sendTyping().queue();
                         channel.sendMessage(success.build()).queue(message -> {
@@ -325,8 +326,8 @@ public class Listener extends ListenerAdapter {
                         event.getChannel().removeReactionById(event.getMessageId(), event.getReactionEmote().getEmoji(), event.getUser()).queue();
                         EmbedBuilder error = new EmbedBuilder();
                         error.setColor(0xff3923);
-                        error.setTitle(LanguageDetector.getMessage("general.icon.error") + LanguageDetector.getMessage("stop.error.setTitle"));
-                        error.setDescription(LanguageDetector.getMessage("stop.error.setDescription"));
+                        error.setTitle(LanguageDetector.getMessage("general.icon.error", guildID) + LanguageDetector.getMessage("stop.error.setTitle", guildID));
+                        error.setDescription(LanguageDetector.getMessage("stop.error.setDescription", guildID));
 
                         channel.sendTyping().queue();
                         channel.sendMessage(error.build()).queue(message -> {
@@ -335,13 +336,13 @@ public class Listener extends ListenerAdapter {
                         error.clear();
                     }
                 }
-                if (event.getReactionEmote().getEmoji().equals(LanguageDetector.getMessage("general.icon.play"))) {
+                if (event.getReactionEmote().getEmoji().equals(LanguageDetector.getMessage("general.icon.play", guildID))) {
                     if (player.getPlayingTrack() == null) {
                         event.getChannel().removeReactionById(event.getMessageId(), event.getReactionEmote().getEmoji(), event.getUser()).queue();
                         EmbedBuilder error = new EmbedBuilder();
                         error.setColor(0xff3923);
-                        error.setTitle(LanguageDetector.getMessage("general.icon.error") + LanguageDetector.getMessage("nowplaying.error.setTitle"));
-                        error.setDescription(LanguageDetector.getMessage("resume.error.setDescription"));
+                        error.setTitle(LanguageDetector.getMessage("general.icon.error", guildID) + LanguageDetector.getMessage("nowplaying.error.setTitle", guildID));
+                        error.setDescription(LanguageDetector.getMessage("resume.error.setDescription", guildID));
 
                         channel.sendTyping().queue();
                         channel.sendMessage(error.build()).queue(message -> {
@@ -353,8 +354,8 @@ public class Listener extends ListenerAdapter {
                         event.getChannel().removeReactionById(event.getMessageId(), event.getReactionEmote().getEmoji(), event.getUser()).queue();
                         EmbedBuilder success = new EmbedBuilder();
                         success.setColor(0x00ff00);
-                        success.setTitle(LanguageDetector.getMessage("general.icon.play") + LanguageDetector.getMessage("resume.success.setTitle") + player.getPlayingTrack().getInfo().title);
-                        success.setFooter(LanguageDetector.getMessage("general.bythecommand") + event.getMember().getUser().getName(), event.getMember().getUser().getAvatarUrl());
+                        success.setTitle(LanguageDetector.getMessage("general.icon.play", guildID) + LanguageDetector.getMessage("resume.success.setTitle", guildID) + player.getPlayingTrack().getInfo().title);
+                        success.setFooter(LanguageDetector.getMessage("general.bythecommand", guildID) + event.getMember().getUser().getName(), event.getMember().getUser().getAvatarUrl());
 
                         channel.sendTyping().queue();
                         channel.sendMessage(success.build()).queue(message -> {
@@ -365,8 +366,8 @@ public class Listener extends ListenerAdapter {
                         event.getChannel().removeReactionById(event.getMessageId(), event.getReactionEmote().getEmoji(), event.getUser()).queue();
                         EmbedBuilder error = new EmbedBuilder();
                         error.setColor(0xff3923);
-                        error.setTitle(LanguageDetector.getMessage("general.icon.error") + LanguageDetector.getMessage("nowplaying.error.setTitle"));
-                        error.setDescription(LanguageDetector.getMessage("resume.nothingtoresumed.setDescription"));
+                        error.setTitle(LanguageDetector.getMessage("general.icon.error", guildID) + LanguageDetector.getMessage("nowplaying.error.setTitle", guildID));
+                        error.setDescription(LanguageDetector.getMessage("resume.nothingtoresumed.setDescription", guildID));
 
                         channel.sendTyping().queue();
                         channel.sendMessage(error.build()).queue(message -> {
@@ -375,13 +376,13 @@ public class Listener extends ListenerAdapter {
                         error.clear();
                     }
                 }
-                if (event.getReactionEmote().getEmoji().equals(LanguageDetector.getMessage("general.icon.skip"))) {
+                if (event.getReactionEmote().getEmoji().equals(LanguageDetector.getMessage("general.icon.skip", guildID))) {
                     if (player.getPlayingTrack() == null) {
                         event.getChannel().removeReactionById(event.getMessageId(), event.getReactionEmote().getEmoji(), event.getUser()).queue();
                         EmbedBuilder error = new EmbedBuilder();
                         error.setColor(0xff3923);
-                        error.setTitle(LanguageDetector.getMessage("general.icon.error") + LanguageDetector.getMessage("skip.error.setTitle"));
-                        error.setDescription(LanguageDetector.getMessage("skip.error.setDescription"));
+                        error.setTitle(LanguageDetector.getMessage("general.icon.error", guildID) + LanguageDetector.getMessage("skip.error.setTitle", guildID));
+                        error.setDescription(LanguageDetector.getMessage("skip.error.setDescription", guildID));
 
                         channel.sendTyping().queue();
                         channel.sendMessage(error.build()).queue(message -> {
@@ -393,8 +394,8 @@ public class Listener extends ListenerAdapter {
                     event.getChannel().removeReactionById(event.getMessageId(), event.getReactionEmote().getEmoji(), event.getUser()).queue();
                     EmbedBuilder success = new EmbedBuilder();
                     success.setColor(0x00ff00);
-                    success.setTitle(LanguageDetector.getMessage("general.icon.skip") + LanguageDetector.getMessage("skip.success.setTitle1") + player.getPlayingTrack().getInfo().title + LanguageDetector.getMessage("skip.success.setTitle2"));
-                    success.setFooter(LanguageDetector.getMessage("general.bythecommand") + " " + event.getMember().getUser().getName(), event.getMember().getUser().getAvatarUrl());
+                    success.setTitle(LanguageDetector.getMessage("general.icon.skip", guildID) + LanguageDetector.getMessage("skip.success.setTitle1", guildID) + player.getPlayingTrack().getInfo().title + LanguageDetector.getMessage("skip.success.setTitle2", guildID));
+                    success.setFooter(LanguageDetector.getMessage("general.bythecommand", guildID) + " " + event.getMember().getUser().getName(), event.getMember().getUser().getAvatarUrl());
 
                     channel.sendTyping().queue();
                     channel.sendMessage(success.build()).queue(message -> {
@@ -405,15 +406,15 @@ public class Listener extends ListenerAdapter {
                     scheduler.nextTrack();
                     event.getChannel().removeReactionById(event.getMessageId(), event.getReactionEmote().getEmoji(), event.getUser()).queue();
                 }
-                if (event.getReactionEmote().getEmoji().equals(LanguageDetector.getMessage("general.icon.volume"))) {
+                if (event.getReactionEmote().getEmoji().equals(LanguageDetector.getMessage("general.icon.volume", guildID))) {
                     if (playerManager.getGuildMusicManager(event.getGuild()).player.getVolume() + 10 > 100) {
                         playerManager.getGuildMusicManager(event.getGuild()).player.setVolume(100);
                         Config.VOLUMES.put(event.getGuild().getIdLong(), 100);
                         event.getChannel().removeReactionById(event.getMessageId(), event.getReactionEmote().getEmoji(), event.getUser()).queue();
                         EmbedBuilder success = new EmbedBuilder();
                         success.setColor(0x00ff00);
-                        success.setTitle(LanguageDetector.getMessage("general.icon.volume") + LanguageDetector.getMessage("volume.success.setTitle") + playerManager.getGuildMusicManager(event.getGuild()).player.getVolume() + "%");
-                        success.setFooter(LanguageDetector.getMessage("general.bythecommand") + " " + event.getMember().getUser().getName(), event.getMember().getUser().getAvatarUrl());
+                        success.setTitle(LanguageDetector.getMessage("general.icon.volume", guildID) + LanguageDetector.getMessage("volume.success.setTitle", guildID) + playerManager.getGuildMusicManager(event.getGuild()).player.getVolume() + "%");
+                        success.setFooter(LanguageDetector.getMessage("general.bythecommand", guildID) + " " + event.getMember().getUser().getName(), event.getMember().getUser().getAvatarUrl());
 
                         channel.sendTyping().queue();
                         channel.sendMessage(success.build()).queue(message -> {
@@ -427,8 +428,8 @@ public class Listener extends ListenerAdapter {
                     event.getChannel().removeReactionById(event.getMessageId(), event.getReactionEmote().getEmoji(), event.getUser()).queue();
                     EmbedBuilder success = new EmbedBuilder();
                     success.setColor(0x00ff00);
-                    success.setTitle(LanguageDetector.getMessage("general.icon.volume") + LanguageDetector.getMessage("volume.success.setTitle") + playerManager.getGuildMusicManager(event.getGuild()).player.getVolume() + "%");
-                    success.setFooter(LanguageDetector.getMessage("general.bythecommand") + " " + event.getMember().getUser().getName(), event.getMember().getUser().getAvatarUrl());
+                    success.setTitle(LanguageDetector.getMessage("general.icon.volume", guildID) + LanguageDetector.getMessage("volume.success.setTitle", guildID) + playerManager.getGuildMusicManager(event.getGuild()).player.getVolume() + "%");
+                    success.setFooter(LanguageDetector.getMessage("general.bythecommand", guildID) + " " + event.getMember().getUser().getName(), event.getMember().getUser().getAvatarUrl());
 
                     channel.sendTyping().queue();
                     channel.sendMessage(success.build()).queue(message -> {
@@ -436,14 +437,14 @@ public class Listener extends ListenerAdapter {
                     });
                     success.clear();
                 }
-                if (event.getReactionEmote().getEmoji().equals(LanguageDetector.getMessage("general.icon.volumedown"))) {
+                if (event.getReactionEmote().getEmoji().equals(LanguageDetector.getMessage("general.icon.volumedown", guildID))) {
                     if (playerManager.getGuildMusicManager(event.getGuild()).player.getVolume() - 10 < 0) {
                         playerManager.getGuildMusicManager(event.getGuild()).player.setVolume(0);
                         Config.VOLUMES.put(event.getGuild().getIdLong(), 0);
                         EmbedBuilder success = new EmbedBuilder();
                         success.setColor(0x00ff00);
-                        success.setTitle(LanguageDetector.getMessage("general.icon.volume") + LanguageDetector.getMessage("volume.success.setTitle") + playerManager.getGuildMusicManager(event.getGuild()).player.getVolume() + "%");
-                        success.setFooter(LanguageDetector.getMessage("general.bythecommand") + " " + event.getMember().getUser().getName(), event.getMember().getUser().getAvatarUrl());
+                        success.setTitle(LanguageDetector.getMessage("general.icon.volume", guildID) + LanguageDetector.getMessage("volume.success.setTitle", guildID) + playerManager.getGuildMusicManager(event.getGuild()).player.getVolume() + "%");
+                        success.setFooter(LanguageDetector.getMessage("general.bythecommand", guildID) + " " + event.getMember().getUser().getName(), event.getMember().getUser().getAvatarUrl());
 
                         channel.sendTyping().queue();
                         channel.sendMessage(success.build()).queue(message -> {
@@ -457,8 +458,8 @@ public class Listener extends ListenerAdapter {
                     event.getChannel().removeReactionById(event.getMessageId(), event.getReactionEmote().getEmoji(), event.getUser()).queue();
                     EmbedBuilder success = new EmbedBuilder();
                     success.setColor(0x00ff00);
-                    success.setTitle(LanguageDetector.getMessage("general.icon.volume") + LanguageDetector.getMessage("volume.success.setTitle") + playerManager.getGuildMusicManager(event.getGuild()).player.getVolume() + "%");
-                    success.setFooter(LanguageDetector.getMessage("general.bythecommand") + " " + event.getMember().getUser().getName(), event.getMember().getUser().getAvatarUrl());
+                    success.setTitle(LanguageDetector.getMessage("general.icon.volume", guildID) + LanguageDetector.getMessage("volume.success.setTitle", guildID) + playerManager.getGuildMusicManager(event.getGuild()).player.getVolume() + "%");
+                    success.setFooter(LanguageDetector.getMessage("general.bythecommand", guildID) + " " + event.getMember().getUser().getName(), event.getMember().getUser().getAvatarUrl());
 
                     channel.sendTyping().queue();
                     channel.sendMessage(success.build()).queue(message -> {
@@ -466,13 +467,13 @@ public class Listener extends ListenerAdapter {
                     });
                     success.clear();
                 }
-                if (event.getReactionEmote().getEmoji().equals(LanguageDetector.getMessage("general.icon.loop"))) {
+                if (event.getReactionEmote().getEmoji().equals(LanguageDetector.getMessage("general.icon.loop", guildID))) {
                     if (musicManager.scheduler.getQueue().isEmpty() && musicManager.player.getPlayingTrack() == null) {
                         event.getChannel().removeReactionById(event.getMessageId(), event.getReactionEmote().getEmoji(), event.getUser()).queue();
                         EmbedBuilder error = new EmbedBuilder();
                         error.setColor(0xff3923);
-                        error.setTitle(LanguageDetector.getMessage("general.icon.error") + LanguageDetector.getMessage("loop.error.setTitle"));
-                        error.setDescription(LanguageDetector.getMessage("loop.error.setDescription"));
+                        error.setTitle(LanguageDetector.getMessage("general.icon.error", guildID) + LanguageDetector.getMessage("loop.error.setTitle", guildID));
+                        error.setDescription(LanguageDetector.getMessage("loop.error.setDescription", guildID));
 
                         channel.sendTyping().queue();
                         channel.sendMessage(error.build()).queue(message -> {
@@ -486,8 +487,8 @@ public class Listener extends ListenerAdapter {
 
                             EmbedBuilder success = new EmbedBuilder();
                             success.setColor(0x00ff00);
-                            success.setTitle(LanguageDetector.getMessage("general.icon.loop") + LanguageDetector.getMessage("loop.success.on.setTitle"));
-                            success.setFooter(LanguageDetector.getMessage("general.bythecommand") + event.getMember().getUser().getName(), event.getMember().getUser().getAvatarUrl());
+                            success.setTitle(LanguageDetector.getMessage("general.icon.loop", guildID) + LanguageDetector.getMessage("loop.success.on.setTitle", guildID));
+                            success.setFooter(LanguageDetector.getMessage("general.bythecommand", guildID) + event.getMember().getUser().getName(), event.getMember().getUser().getAvatarUrl());
 
                             channel.sendTyping().queue();
                             channel.sendMessage(success.build()).queue(message -> {
@@ -500,8 +501,8 @@ public class Listener extends ListenerAdapter {
 
                             EmbedBuilder success = new EmbedBuilder();
                             success.setColor(0x00ff00);
-                            success.setTitle(LanguageDetector.getMessage("general.icon.loop") + LanguageDetector.getMessage("loop.success.off.setTitle"));
-                            success.setFooter(LanguageDetector.getMessage("general.bythecommand") + event.getMember().getUser().getName(), event.getMember().getUser().getAvatarUrl());
+                            success.setTitle(LanguageDetector.getMessage("general.icon.loop", guildID) + LanguageDetector.getMessage("loop.success.off.setTitle", guildID));
+                            success.setFooter(LanguageDetector.getMessage("general.bythecommand", guildID) + event.getMember().getUser().getName(), event.getMember().getUser().getAvatarUrl());
 
                             channel.sendTyping().queue();
                             channel.sendMessage(success.build()).queue(message -> {
@@ -511,13 +512,13 @@ public class Listener extends ListenerAdapter {
                         }
                     }
                 }
-                if (event.getReactionEmote().getEmoji().equals(LanguageDetector.getMessage("general.icon.queue"))) {
+                if (event.getReactionEmote().getEmoji().equals(LanguageDetector.getMessage("general.icon.queue", guildID))) {
                     if (queue.isEmpty()) {
                         event.getChannel().removeReactionById(event.getMessageId(), event.getReactionEmote().getEmoji(), event.getUser()).queue();
                         EmbedBuilder error = new EmbedBuilder();
                         error.setColor(0xff3923);
-                        error.setTitle(LanguageDetector.getMessage("general.icon.error") + LanguageDetector.getMessage("loop.error.setTitle"));
-                        error.setDescription(LanguageDetector.getMessage("loop.error.setDescription"));
+                        error.setTitle(LanguageDetector.getMessage("general.icon.error", guildID) + LanguageDetector.getMessage("loop.error.setTitle", guildID));
+                        error.setDescription(LanguageDetector.getMessage("loop.error.setDescription", guildID));
 
                         channel.sendTyping().queue();
                         channel.sendMessage(error.build()).queue(message -> {
@@ -530,14 +531,14 @@ public class Listener extends ListenerAdapter {
                     int trackCount = Math.min(queue.size(), 20);
                     List<AudioTrack> tracks = new ArrayList<>(queue);
                     EmbedBuilder builder = EmbedUtils.defaultEmbed()
-                            .setTitle(LanguageDetector.getMessage("general.icon.queue") + LanguageDetector.getMessage("queue.setTitle") + queue.size() + ")");
+                            .setTitle(LanguageDetector.getMessage("general.icon.queue", guildID) + LanguageDetector.getMessage("queue.setTitle", guildID) + queue.size() + ")");
 
                     for (int i = 0; i < trackCount; i++) {
                         AudioTrack track = tracks.get(i);
                         AudioTrackInfo info = track.getInfo();
 
                         builder.appendDescription(String.format(
-                                i + 1 + ") " + "%s - %s\n",
+                                i + 1 + ", guildID) " + "%s - %s\n",
                                 info.title,
                                 info.author
                         ));
@@ -546,13 +547,13 @@ public class Listener extends ListenerAdapter {
                         message.delete().queueAfter(5, TimeUnit.SECONDS);
                     });
                 }
-                if (event.getReactionEmote().getEmoji().equals(LanguageDetector.getMessage("general.icon.nowplaying"))) {
+                if (event.getReactionEmote().getEmoji().equals(LanguageDetector.getMessage("general.icon.nowplaying", guildID))) {
                     if (player.getPlayingTrack() == null) {
                         event.getChannel().removeReactionById(event.getMessageId(), event.getReactionEmote().getEmoji(), event.getUser()).queue();
                         EmbedBuilder error = new EmbedBuilder();
                         error.setColor(0xff3923);
-                        error.setTitle(LanguageDetector.getMessage("general.icon.error") + LanguageDetector.getMessage("nowplaying.error.setTitle"));
-                        error.setDescription(LanguageDetector.getMessage("nowplaying.error.setDescription"));
+                        error.setTitle(LanguageDetector.getMessage("general.icon.error", guildID) + LanguageDetector.getMessage("nowplaying.error.setTitle", guildID));
+                        error.setDescription(LanguageDetector.getMessage("nowplaying.error.setDescription", guildID));
 
                         channel.sendTyping().queue();
                         channel.sendMessage(error.build()).queue(message -> {
@@ -564,7 +565,7 @@ public class Listener extends ListenerAdapter {
                     event.getChannel().removeReactionById(event.getMessageId(), event.getReactionEmote().getEmoji(), event.getUser()).queue();
                     AudioTrackInfo info = player.getPlayingTrack().getInfo();
 
-                    channel.sendMessage(EmbedUtils.embedMessage(String.format("**" + LanguageDetector.getMessage("general.icon.nowplaying") + LanguageDetector.getMessage("nowplaying.nowplaying") + "** [%s]{%s}\n%s %s - %s",
+                    channel.sendMessage(EmbedUtils.embedMessage(String.format("**" + LanguageDetector.getMessage("general.icon.nowplaying", guildID) + LanguageDetector.getMessage("nowplaying.nowplaying", guildID) + "** [%s]{%s}\n%s %s - %s",
                             info.title,
                             info.uri,
                             player.isPaused() ? "\u23F8" : "▶",
@@ -574,13 +575,13 @@ public class Listener extends ListenerAdapter {
                         message.delete().queueAfter(5, TimeUnit.SECONDS);
                     });
                 }
-                if (event.getReactionEmote().getEmoji().equals(LanguageDetector.getMessage("general.icon.next"))) {
+                if (event.getReactionEmote().getEmoji().equals(LanguageDetector.getMessage("general.icon.next", guildID))) {
                     if (player.getPlayingTrack() == null) {
                         event.getChannel().removeReactionById(event.getMessageId(), event.getReactionEmote().getEmoji(), event.getUser()).queue();
                         EmbedBuilder error = new EmbedBuilder();
                         error.setColor(0xff3923);
-                        error.setTitle(LanguageDetector.getMessage("general.icon.error") + LanguageDetector.getMessage("nowplaying.error.setTitle"));
-                        error.setDescription(LanguageDetector.getMessage("nowplaying.error.setDescription"));
+                        error.setTitle(LanguageDetector.getMessage("general.icon.error", guildID) + LanguageDetector.getMessage("nowplaying.error.setTitle", guildID));
+                        error.setDescription(LanguageDetector.getMessage("nowplaying.error.setDescription", guildID));
 
                         channel.sendTyping().queue();
                         channel.sendMessage(error.build()).queue(message -> {
@@ -592,13 +593,13 @@ public class Listener extends ListenerAdapter {
                     event.getChannel().removeReactionById(event.getMessageId(), event.getReactionEmote().getEmoji(), event.getUser()).queue();
                     scheduler.changePosition(15);
                 }
-                if (event.getReactionEmote().getEmoji().equals(LanguageDetector.getMessage("general.icon.previous"))) {
+                if (event.getReactionEmote().getEmoji().equals(LanguageDetector.getMessage("general.icon.previous", guildID))) {
                     if (player.getPlayingTrack() == null) {
                         event.getChannel().removeReactionById(event.getMessageId(), event.getReactionEmote().getEmoji(), event.getUser()).queue();
                         EmbedBuilder error = new EmbedBuilder();
                         error.setColor(0xff3923);
-                        error.setTitle(LanguageDetector.getMessage("general.icon.error") + LanguageDetector.getMessage("nowplaying.error.setTitle"));
-                        error.setDescription(LanguageDetector.getMessage("nowplaying.error.setDescription"));
+                        error.setTitle(LanguageDetector.getMessage("general.icon.error", guildID) + LanguageDetector.getMessage("nowplaying.error.setTitle", guildID));
+                        error.setDescription(LanguageDetector.getMessage("nowplaying.error.setDescription", guildID));
 
                         channel.sendTyping().queue();
                         channel.sendMessage(error.build()).queue(message -> {
@@ -610,12 +611,12 @@ public class Listener extends ListenerAdapter {
                     event.getChannel().removeReactionById(event.getMessageId(), event.getReactionEmote().getEmoji(), event.getUser()).queue();
                     scheduler.changePosition(-15);
                 }
-                if (event.getReactionEmote().getEmoji().equals(LanguageDetector.getMessage("general.icon.shuffle"))) {
+                if (event.getReactionEmote().getEmoji().equals(LanguageDetector.getMessage("general.icon.shuffle", guildID))) {
                     if (musicManager.scheduler.getQueue().isEmpty() && musicManager.player.getPlayingTrack() == null) {
                         EmbedBuilder error = new EmbedBuilder();
                         error.setColor(0xff3923);
-                        error.setTitle(LanguageDetector.getMessage("general.icon.error") + LanguageDetector.getMessage("loop.error.setTitle"));
-                        error.setDescription(LanguageDetector.getMessage("loop.error.setDescription"));
+                        error.setTitle(LanguageDetector.getMessage("general.icon.error", guildID) + LanguageDetector.getMessage("loop.error.setTitle", guildID));
+                        error.setDescription(LanguageDetector.getMessage("loop.error.setDescription", guildID));
 
                         channel.sendTyping().queue();
                         channel.sendMessage(error.build()).queue(message -> {
@@ -626,8 +627,8 @@ public class Listener extends ListenerAdapter {
                         scheduler.shufflePlaylist();
                         EmbedBuilder success = new EmbedBuilder();
                         success.setColor(0x00ff00);
-                        success.setTitle(LanguageDetector.getMessage("general.icon.shuffle") + LanguageDetector.getMessage("shuffle.success.setTitle"));
-                        success.setFooter(LanguageDetector.getMessage("general.bythecommand") + event.getMember().getUser().getName(), event.getMember().getUser().getAvatarUrl());
+                        success.setTitle(LanguageDetector.getMessage("general.icon.shuffle", guildID) + LanguageDetector.getMessage("shuffle.success.setTitle", guildID));
+                        success.setFooter(LanguageDetector.getMessage("general.bythecommand", guildID) + event.getMember().getUser().getName(), event.getMember().getUser().getAvatarUrl());
 
                         channel.sendTyping().queue();
                         channel.sendMessage(success.build()).queue(message -> {
@@ -648,35 +649,35 @@ public class Listener extends ListenerAdapter {
             }
             switch (roleIDs.size()) {
                 case 2:
-                    if (event.getReactionEmote().getEmoji().equals(LanguageDetector.getMessage("general.icon.1"))) {
+                    if (event.getReactionEmote().getEmoji().equals(LanguageDetector.getMessage("general.icon.1", guildID))) {
                         event.getGuild().addRoleToMember(event.getMember(), event.getGuild().getRoleById(roleIDs.get(0))).queue();
                     }
-                    if (event.getReactionEmote().getEmoji().equals(LanguageDetector.getMessage("general.icon.2"))) {
+                    if (event.getReactionEmote().getEmoji().equals(LanguageDetector.getMessage("general.icon.2", guildID))) {
                         event.getGuild().addRoleToMember(event.getMember(), event.getGuild().getRoleById(roleIDs.get(1))).queue();
                     }
                     break;
                 case 3:
-                    if (event.getReactionEmote().getEmoji().equals(LanguageDetector.getMessage("general.icon.1"))) {
+                    if (event.getReactionEmote().getEmoji().equals(LanguageDetector.getMessage("general.icon.1", guildID))) {
                         event.getGuild().addRoleToMember(event.getMember(), event.getGuild().getRoleById(roleIDs.get(0))).queue();
                     }
-                    if (event.getReactionEmote().getEmoji().equals(LanguageDetector.getMessage("general.icon.2"))) {
+                    if (event.getReactionEmote().getEmoji().equals(LanguageDetector.getMessage("general.icon.2", guildID))) {
                         event.getGuild().addRoleToMember(event.getMember(), event.getGuild().getRoleById(roleIDs.get(1))).queue();
                     }
-                    if (event.getReactionEmote().getEmoji().equals(LanguageDetector.getMessage("general.icon.3"))) {
+                    if (event.getReactionEmote().getEmoji().equals(LanguageDetector.getMessage("general.icon.3", guildID))) {
                         event.getGuild().addRoleToMember(event.getMember(), event.getGuild().getRoleById(roleIDs.get(2))).queue();
                     }
                     break;
                 case 4:
-                    if (event.getReactionEmote().getEmoji().equals(LanguageDetector.getMessage("general.icon.1"))) {
+                    if (event.getReactionEmote().getEmoji().equals(LanguageDetector.getMessage("general.icon.1", guildID))) {
                         event.getGuild().addRoleToMember(event.getMember(), event.getGuild().getRoleById(roleIDs.get(0))).queue();
                     }
-                    if (event.getReactionEmote().getEmoji().equals(LanguageDetector.getMessage("general.icon.2"))) {
+                    if (event.getReactionEmote().getEmoji().equals(LanguageDetector.getMessage("general.icon.2", guildID))) {
                         event.getGuild().addRoleToMember(event.getMember(), event.getGuild().getRoleById(roleIDs.get(1))).queue();
                     }
-                    if (event.getReactionEmote().getEmoji().equals(LanguageDetector.getMessage("general.icon.3"))) {
+                    if (event.getReactionEmote().getEmoji().equals(LanguageDetector.getMessage("general.icon.3", guildID))) {
                         event.getGuild().addRoleToMember(event.getMember(), event.getGuild().getRoleById(roleIDs.get(2))).queue();
                     }
-                    if (event.getReactionEmote().getEmoji().equals(LanguageDetector.getMessage("general.icon.4"))) {
+                    if (event.getReactionEmote().getEmoji().equals(LanguageDetector.getMessage("general.icon.4", guildID))) {
                         event.getGuild().addRoleToMember(event.getMember(), event.getGuild().getRoleById(roleIDs.get(3))).queue();
                     }
                     break;

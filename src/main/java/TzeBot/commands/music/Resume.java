@@ -17,12 +17,13 @@ public class Resume implements ICommand {
         final PlayerManager playerManager = PlayerManager.getInstance();
         final GuildMusicManager musicManager = playerManager.getGuildMusicManager(ctx.getGuild());
         final AudioPlayer player = musicManager.player;
+        final long guildID = ctx.getGuild().getIdLong();
 
         if (player.getPlayingTrack() == null) {
             EmbedBuilder error = new EmbedBuilder();
             error.setColor(0xff3923);
-            error.setTitle(LanguageDetector.getMessage("general.icon.error") + LanguageDetector.getMessage("nowplaying.error.setTitle"));
-            error.setDescription(LanguageDetector.getMessage("resume.error.setDescription"));
+            error.setTitle(LanguageDetector.getMessage("general.icon.error", guildID) + LanguageDetector.getMessage("nowplaying.error.setTitle", guildID));
+            error.setDescription(LanguageDetector.getMessage("resume.error.setDescription", guildID));
 
             channel.sendTyping().queue();
             channel.sendMessage(error.build()).queue();
@@ -31,8 +32,8 @@ public class Resume implements ICommand {
             player.setPaused(false);
             EmbedBuilder success = new EmbedBuilder();
             success.setColor(0x00ff00);
-            success.setTitle(LanguageDetector.getMessage("general.icon.play") + LanguageDetector.getMessage("resume.success.setTitle") + player.getPlayingTrack().getInfo().title);
-            success.setFooter(LanguageDetector.getMessage("general.bythecommand") + ctx.getMember().getUser().getName(), ctx.getMember().getUser().getAvatarUrl());
+            success.setTitle(LanguageDetector.getMessage("general.icon.play", guildID) + LanguageDetector.getMessage("resume.success.setTitle", guildID) + player.getPlayingTrack().getInfo().title);
+            success.setFooter(LanguageDetector.getMessage("general.bythecommand", guildID) + ctx.getMember().getUser().getName(), ctx.getMember().getUser().getAvatarUrl());
 
             channel.sendTyping().queue();
             channel.sendMessage(success.build()).queue();
@@ -40,8 +41,8 @@ public class Resume implements ICommand {
         } else {
             EmbedBuilder error = new EmbedBuilder();
             error.setColor(0xff3923);
-            error.setTitle(LanguageDetector.getMessage("general.icon.error") + LanguageDetector.getMessage("nowplaying.error.setTitle"));
-            error.setDescription(LanguageDetector.getMessage("resume.nothingtoresumed.setDescription"));
+            error.setTitle(LanguageDetector.getMessage("general.icon.error", guildID) + LanguageDetector.getMessage("nowplaying.error.setTitle", guildID));
+            error.setDescription(LanguageDetector.getMessage("resume.nothingtoresumed.setDescription", guildID));
 
             channel.sendTyping().queue();
             channel.sendMessage(error.build()).queue();
@@ -50,12 +51,12 @@ public class Resume implements ICommand {
     }
 
     @Override
-    public String getName() {
-        return LanguageDetector.getMessage("resume.name");
+    public String getName(long guildID) {
+        return LanguageDetector.getMessage("resume.name", guildID);
     }
 
     @Override
-    public String getHelp() {
-        return LanguageDetector.getMessage("resume.gethelp");
+    public String getHelp(long guildID) {
+        return LanguageDetector.getMessage("resume.gethelp", guildID);
     }
 }

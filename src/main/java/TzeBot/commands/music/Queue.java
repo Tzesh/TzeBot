@@ -22,12 +22,13 @@ public class Queue implements ICommand {
         final PlayerManager playerManager = PlayerManager.getInstance();
         final GuildMusicManager musicManager = playerManager.getGuildMusicManager(ctx.getGuild());
         final BlockingQueue<AudioTrack> queue = musicManager.scheduler.getQueue();
+        final long guildID = ctx.getGuild().getIdLong();
 
         if (queue.isEmpty()) {
             EmbedBuilder error = new EmbedBuilder();
             error.setColor(0xff3923);
-            error.setTitle(LanguageDetector.getMessage("general.icon.error") + LanguageDetector.getMessage("loop.error.setTitle"));
-            error.setDescription(LanguageDetector.getMessage("loop.error.setDescription"));
+            error.setTitle(LanguageDetector.getMessage("general.icon.error", guildID) + LanguageDetector.getMessage("loop.error.setTitle", guildID));
+            error.setDescription(LanguageDetector.getMessage("loop.error.setDescription", guildID));
 
             channel.sendTyping().queue();
             channel.sendMessage(error.build()).queue();
@@ -38,7 +39,7 @@ public class Queue implements ICommand {
         int trackCount = Math.min(queue.size(), 20);
         List<AudioTrack> tracks = new ArrayList<>(queue);
         EmbedBuilder builder = EmbedUtils.defaultEmbed()
-                .setTitle(LanguageDetector.getMessage("general.icon.queue") + LanguageDetector.getMessage("queue.setTitle") + queue.size() + ")");
+                .setTitle(LanguageDetector.getMessage("general.icon.queue", guildID) + LanguageDetector.getMessage("queue.setTitle", guildID) + queue.size() + ")");
 
         for (int i = 0; i < trackCount; i++) {
             AudioTrack track = tracks.get(i);
@@ -54,12 +55,12 @@ public class Queue implements ICommand {
     }
 
     @Override
-    public String getName() {
-        return LanguageDetector.getMessage("queue.name");
+    public String getName(long guildID) {
+        return LanguageDetector.getMessage("queue.name", guildID);
     }
 
     @Override
-    public String getHelp() {
-        return LanguageDetector.getMessage("queue.gethelp");
+    public String getHelp(long guildID) {
+        return LanguageDetector.getMessage("queue.gethelp", guildID);
     }
 }

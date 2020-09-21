@@ -20,12 +20,13 @@ public class Join implements ICommand {
         final TextChannel channel = ctx.getChannel();
         final PlayerManager manager = PlayerManager.getInstance();
         final AudioManager audioManager = ctx.getGuild().getAudioManager();
+        final long guildID = ctx.getGuild().getIdLong();
 
         if (audioManager.isConnected()) {
             EmbedBuilder error = new EmbedBuilder();
             error.setColor(0xff3923);
-            error.setTitle(LanguageDetector.getMessage("general.icon.error") + LanguageDetector.getMessage("join.alreadyconnected.setTitle"));
-            error.setDescription(LanguageDetector.getMessage("join.alreadyconnected.setDescription"));
+            error.setTitle(LanguageDetector.getMessage("general.icon.error", guildID) + LanguageDetector.getMessage("join.alreadyconnected.setTitle", guildID));
+            error.setDescription(LanguageDetector.getMessage("join.alreadyconnected.setDescription", guildID));
 
             channel.sendTyping().queue();
             channel.sendMessage(error.build()).queue();
@@ -38,8 +39,8 @@ public class Join implements ICommand {
         if (!memberVoiceState.inVoiceChannel()) {
             EmbedBuilder error = new EmbedBuilder();
             error.setColor(0xff3923);
-            error.setTitle(LanguageDetector.getMessage("general.icon.error") + LanguageDetector.getMessage("join.joinchannel.setTitle"));
-            error.setDescription(LanguageDetector.getMessage("join.joinchannel.setDescription"));
+            error.setTitle(LanguageDetector.getMessage("general.icon.error", guildID) + LanguageDetector.getMessage("join.joinchannel.setTitle", guildID));
+            error.setDescription(LanguageDetector.getMessage("join.joinchannel.setDescription", guildID));
 
             channel.sendTyping().queue();
             channel.sendMessage(error.build()).queue();
@@ -53,8 +54,8 @@ public class Join implements ICommand {
         if (!selfmember.hasPermission(voiceChannel, Permission.VOICE_CONNECT)) {
             EmbedBuilder error = new EmbedBuilder();
             error.setColor(0xff3923);
-            error.setTitle(LanguageDetector.getMessage("general.icon.error") + LanguageDetector.getMessage("join.cannotjoin.setTitle"));
-            error.setDescription(LanguageDetector.getMessage("join.cannotjoin.setDescription"));
+            error.setTitle(LanguageDetector.getMessage("general.icon.error", guildID) + LanguageDetector.getMessage("join.cannotjoin.setTitle", guildID));
+            error.setDescription(LanguageDetector.getMessage("join.cannotjoin.setDescription", guildID));
 
             channel.sendTyping().queue();
             channel.sendMessage(error.build()).queue();
@@ -67,8 +68,8 @@ public class Join implements ICommand {
         manager.getGuildMusicManager(ctx.getGuild()).player.setVolume(volume);
         EmbedBuilder succes = new EmbedBuilder();
         succes.setColor(0x00ff00);
-        succes.setTitle(LanguageDetector.getMessage("general.icon.join") + LanguageDetector.getMessage("join.success.setTitle"));
-        succes.setFooter(LanguageDetector.getMessage("general.bythecommand") + ctx.getMember().getUser().getName(), ctx.getMember().getUser().getAvatarUrl());
+        succes.setTitle(LanguageDetector.getMessage("general.icon.join", guildID) + LanguageDetector.getMessage("join.success.setTitle", guildID));
+        succes.setFooter(LanguageDetector.getMessage("general.bythecommand", guildID) + ctx.getMember().getUser().getName(), ctx.getMember().getUser().getAvatarUrl());
 
         channel.sendTyping().queue();
         channel.sendMessage(succes.build()).queue();
@@ -76,12 +77,12 @@ public class Join implements ICommand {
     }
 
     @Override
-    public String getName() {
-        return LanguageDetector.getMessage("join.name");
+    public String getName(long guildID) {
+        return LanguageDetector.getMessage("join.name", guildID);
     }
 
     @Override
-    public String getHelp() {
-        return LanguageDetector.getMessage("join.gethelp");
+    public String getHelp(long guildID) {
+        return LanguageDetector.getMessage("join.gethelp", guildID);
     }
 }

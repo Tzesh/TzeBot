@@ -17,12 +17,13 @@ public class Loop implements ICommand {
         final PlayerManager playerManager = PlayerManager.getInstance();
         final GuildMusicManager musicManager = playerManager.getGuildMusicManager(ctx.getGuild());
         final TrackScheduler scheduler = musicManager.scheduler;
+        final long guildID = ctx.getGuild().getIdLong();
 
         if (musicManager.scheduler.getQueue().isEmpty() && musicManager.player.getPlayingTrack() == null) {
             EmbedBuilder error = new EmbedBuilder();
             error.setColor(0xff3923);
-            error.setTitle(LanguageDetector.getMessage("general.icon.error") + LanguageDetector.getMessage("loop.error.setTitle"));
-            error.setDescription(LanguageDetector.getMessage("loop.error.setDescription"));
+            error.setTitle(LanguageDetector.getMessage("general.icon.error", guildID) + LanguageDetector.getMessage("loop.error.setTitle", guildID));
+            error.setDescription(LanguageDetector.getMessage("loop.error.setDescription", guildID));
 
             channel.sendTyping().queue();
             channel.sendMessage(error.build()).queue();
@@ -33,8 +34,8 @@ public class Loop implements ICommand {
 
                 EmbedBuilder success = new EmbedBuilder();
                 success.setColor(0x00ff00);
-                success.setTitle(LanguageDetector.getMessage("general.icon.loop") + LanguageDetector.getMessage("loop.success.on.setTitle"));
-                success.setFooter(LanguageDetector.getMessage("general.bythecommand") + ctx.getMember().getUser().getName(), ctx.getMember().getUser().getAvatarUrl());
+                success.setTitle(LanguageDetector.getMessage("general.icon.loop", guildID) + LanguageDetector.getMessage("loop.success.on.setTitle", guildID));
+                success.setFooter(LanguageDetector.getMessage("general.bythecommand", guildID) + ctx.getMember().getUser().getName(), ctx.getMember().getUser().getAvatarUrl());
 
                 channel.sendTyping().queue();
                 channel.sendMessage(success.build()).queue();
@@ -44,8 +45,8 @@ public class Loop implements ICommand {
 
                 EmbedBuilder success = new EmbedBuilder();
                 success.setColor(0x00ff00);
-                success.setTitle(LanguageDetector.getMessage("general.icon.loop") + LanguageDetector.getMessage("loop.success.off.setTitle"));
-                success.setFooter(LanguageDetector.getMessage("general.bythecommand") + ctx.getMember().getUser().getName(), ctx.getMember().getUser().getAvatarUrl());
+                success.setTitle(LanguageDetector.getMessage("general.icon.loop", guildID) + LanguageDetector.getMessage("loop.success.off.setTitle", guildID));
+                success.setFooter(LanguageDetector.getMessage("general.bythecommand", guildID) + ctx.getMember().getUser().getName(), ctx.getMember().getUser().getAvatarUrl());
 
                 channel.sendTyping().queue();
                 channel.sendMessage(success.build()).queue();
@@ -55,12 +56,12 @@ public class Loop implements ICommand {
     }
 
     @Override
-    public String getName() {
-        return LanguageDetector.getMessage("loop.name");
+    public String getName(long guildID) {
+        return LanguageDetector.getMessage("loop.name", guildID);
     }
 
     @Override
-    public String getHelp() {
-        return LanguageDetector.getMessage("loop.gethelp");
+    public String getHelp(long guildID) {
+        return LanguageDetector.getMessage("loop.gethelp", guildID);
     }
 }

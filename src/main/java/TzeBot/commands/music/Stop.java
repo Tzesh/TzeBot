@@ -17,13 +17,14 @@ public class Stop implements ICommand {
         final PlayerManager playerManager = PlayerManager.getInstance();
         final GuildMusicManager musicManager = playerManager.getGuildMusicManager(ctx.getGuild());
         final AudioManager audioManager = ctx.getGuild().getAudioManager();
+        final long guildID = ctx.getGuild().getIdLong();
 
         if (audioManager.isConnected()) {
             audioManager.closeAudioConnection();
             EmbedBuilder success = new EmbedBuilder();
             success.setColor(0x00ff00);
-            success.setTitle(LanguageDetector.getMessage("general.icon.leave") + LanguageDetector.getMessage("leave.success.setTitle"));
-            success.setFooter(LanguageDetector.getMessage("general.bythecommand") + ctx.getMember().getUser().getName(), ctx.getMember().getUser().getAvatarUrl());
+            success.setTitle(LanguageDetector.getMessage("general.icon.leave", guildID) + LanguageDetector.getMessage("leave.success.setTitle", guildID));
+            success.setFooter(LanguageDetector.getMessage("general.bythecommand", guildID) + ctx.getMember().getUser().getName(), ctx.getMember().getUser().getAvatarUrl());
 
             channel.sendTyping().queue();
             channel.sendMessage(success.build()).queue();
@@ -36,8 +37,8 @@ public class Stop implements ICommand {
 
             EmbedBuilder success = new EmbedBuilder();
             success.setColor(0x00ff00);
-            success.setTitle(LanguageDetector.getMessage("general.icon.stop") + LanguageDetector.getMessage("stop.success.setTitle"));
-            success.setFooter(LanguageDetector.getMessage("general.bythecommand") + " " + ctx.getMember().getUser().getName(), ctx.getMember().getUser().getAvatarUrl());
+            success.setTitle(LanguageDetector.getMessage("general.icon.stop", guildID) + LanguageDetector.getMessage("stop.success.setTitle", guildID));
+            success.setFooter(LanguageDetector.getMessage("general.bythecommand", guildID) + " " + ctx.getMember().getUser().getName(), ctx.getMember().getUser().getAvatarUrl());
 
             channel.sendTyping().queue();
             channel.sendMessage(success.build()).queue();
@@ -45,8 +46,8 @@ public class Stop implements ICommand {
         } else {
             EmbedBuilder error = new EmbedBuilder();
             error.setColor(0xff3923);
-            error.setTitle(LanguageDetector.getMessage("general.icon.error") + LanguageDetector.getMessage("stop.error.setTitle"));
-            error.setDescription(LanguageDetector.getMessage("stop.error.setDescription"));
+            error.setTitle(LanguageDetector.getMessage("general.icon.error", guildID) + LanguageDetector.getMessage("stop.error.setTitle", guildID));
+            error.setDescription(LanguageDetector.getMessage("stop.error.setDescription", guildID));
 
             channel.sendTyping().queue();
             channel.sendMessage(error.build()).queue();
@@ -56,12 +57,12 @@ public class Stop implements ICommand {
     }
 
     @Override
-    public String getName() {
-        return LanguageDetector.getMessage("stop.name");
+    public String getName(long guildID) {
+        return LanguageDetector.getMessage("stop.name", guildID);
     }
 
     @Override
-    public String getHelp() {
-        return LanguageDetector.getMessage("stop.gethelp");
+    public String getHelp(long guildID) {
+        return LanguageDetector.getMessage("stop.gethelp", guildID);
     }
 }

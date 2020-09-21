@@ -20,29 +20,30 @@ public class Support implements ICommand {
     @Override
     public void handle(CommandContext ctx) {
         final TextChannel channel = ctx.getChannel();
+        final long guildID = ctx.getGuild().getIdLong();
 
         EmbedBuilder support = new EmbedBuilder();
         support.setColor(0x00ff00);
-        support.setTitle(LanguageDetector.getMessage("general.icon.tzebot") + "TzeBot");
-        support.setDescription(LanguageDetector.getMessage("support.setDescription")
-                + "\n" + LanguageDetector.getMessage("support.setDescription2")
-                + "\n" + LanguageDetector.getMessage("support.setDescription3")
-                + "\n" + LanguageDetector.getMessage("general.icon.patreon") + "https://www.patreon.com/tzebot"
-                + "\n" + LanguageDetector.getMessage("support.discordbots") + "https://discordbotlist.com/bots/tzebot");
-        support.setFooter(LanguageDetector.getMessage("support.setFooter"));
+        support.setTitle(LanguageDetector.getMessage("general.icon.tzebot", guildID) + "TzeBot");
+        support.setDescription(LanguageDetector.getMessage("support.setDescription", guildID)
+                + "\n" + LanguageDetector.getMessage("support.setDescription2", guildID)
+                + "\n" + LanguageDetector.getMessage("support.setDescription3", guildID)
+                + "\n" + LanguageDetector.getMessage("general.icon.patreon", guildID) + "https://www.patreon.com/tzebot"
+                + "\n" + LanguageDetector.getMessage("support.discordbots", guildID) + "https://discordbotlist.com/bots/tzebot");
+        support.setFooter(LanguageDetector.getMessage("support.setFooter", guildID));
         channel.sendTyping().queue();
         channel.sendMessage(support.build()).queue();
         support.clear();
     }
 
     @Override
-    public String getName() {
-        return LanguageDetector.getMessage("support.name");
+    public String getName(long guildID) {
+        return LanguageDetector.getMessage("support.name", guildID);
     }
 
     @Override
-    public String getHelp() {
-        return LanguageDetector.getMessage("support.gethelp");
+    public String getHelp(long guildID) {
+        return LanguageDetector.getMessage("support.gethelp", guildID);
     }
 
 }

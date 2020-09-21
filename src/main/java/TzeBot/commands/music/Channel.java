@@ -28,23 +28,55 @@ public class Channel implements ICommand {
         final List<String> args = ctx.getArgs();
         final Member member = ctx.getMember();
         final String input = String.join(" ", ctx.getArgs());
+        final Member selfmember = ctx.getGuild().getSelfMember();
+        final long guildID = ctx.getGuild().getIdLong();
 
         if (!member.hasPermission(Permission.MANAGE_SERVER)) {
             EmbedBuilder error = new EmbedBuilder();
             error.setColor(0xff3923);
-            error.setTitle(LanguageDetector.getMessage("general.icon.error") + LanguageDetector.getMessage("general.not_authorized"));
-            error.setDescription(LanguageDetector.getMessage("general.not_authorized.description"));
+            error.setTitle(LanguageDetector.getMessage("general.icon.error", guildID) + LanguageDetector.getMessage("general.not_authorized", guildID));
+            error.setDescription(LanguageDetector.getMessage("general.not_authorized.description", guildID));
 
             channel.sendTyping().queue();
             channel.sendMessage(error.build()).queue();
             error.clear();
             return;
         }
+        if (!selfmember.hasPermission(Permission.MANAGE_CHANNEL)) {
+            EmbedBuilder error = new EmbedBuilder();
+            error.setColor(0xff3923);
+            error.setTitle(LanguageDetector.getMessage("general.icon.error", guildID) + LanguageDetector.getMessage("general.nonperm", guildID));
+            error.setDescription(LanguageDetector.getMessage("general.nonperm.manage_channel", guildID));
+
+            channel.sendTyping().queue();
+            channel.sendMessage(error.build()).queue();
+            error.clear();
+        }
+        if (!selfmember.hasPermission(Permission.MANAGE_EMOTES)) {
+            EmbedBuilder error = new EmbedBuilder();
+            error.setColor(0xff3923);
+            error.setTitle(LanguageDetector.getMessage("general.icon.error", guildID) + LanguageDetector.getMessage("general.nonperm", guildID));
+            error.setDescription(LanguageDetector.getMessage("general.nonperm.manage_emotes", guildID));
+
+            channel.sendTyping().queue();
+            channel.sendMessage(error.build()).queue();
+            error.clear();
+        }
+        if (!selfmember.hasPermission(Permission.MESSAGE_MANAGE)) {
+            EmbedBuilder error = new EmbedBuilder();
+            error.setColor(0xff3923);
+            error.setTitle(LanguageDetector.getMessage("general.icon.error", guildID) + LanguageDetector.getMessage("general.nonperm", guildID));
+            error.setDescription(LanguageDetector.getMessage("general.nonperm.message_manage", guildID));
+
+            channel.sendTyping().queue();
+            channel.sendMessage(error.build()).queue();
+            error.clear();
+        }
         if (args.isEmpty()) {
             EmbedBuilder error = new EmbedBuilder();
             error.setColor(0xff3923);
-            error.setTitle(LanguageDetector.getMessage("general.icon.error") + LanguageDetector.getMessage("channel.noargs.setTitle"));
-            error.setDescription(LanguageDetector.getMessage("channel.noargs.setDescription"));
+            error.setTitle(LanguageDetector.getMessage("general.icon.error", guildID) + LanguageDetector.getMessage("channel.noargs.setTitle", guildID));
+            error.setDescription(LanguageDetector.getMessage("channel.noargs.setDescription", guildID));
 
             channel.sendTyping().queue();
             channel.sendMessage(error.build()).queue();
@@ -54,82 +86,82 @@ public class Channel implements ICommand {
             if (args.size() > 1) {
                 EmbedBuilder error = new EmbedBuilder();
                 error.setColor(0xff3923);
-                error.setTitle(LanguageDetector.getMessage("general.icon.error") + LanguageDetector.getMessage("general.403"));
-                error.setDescription(LanguageDetector.getMessage("general.403.description"));
+                error.setTitle(LanguageDetector.getMessage("general.icon.error", guildID) + LanguageDetector.getMessage("general.403", guildID));
+                error.setDescription(LanguageDetector.getMessage("general.403.description", guildID));
 
                 channel.sendTyping().queue();
                 channel.sendMessage(error.build()).queue();
                 error.clear();
                 return;
             }
-            if (input.equals(LanguageDetector.getMessage("channel.create"))) {
+            if (input.equals(LanguageDetector.getMessage("channel.create", guildID))) {
                 if (isExists(ctx)) {
                     EmbedBuilder error = new EmbedBuilder();
                     error.setColor(0xff3923);
-                    error.setTitle(LanguageDetector.getMessage("general.icon.error") + LanguageDetector.getMessage("channel.already.setTitle"));
-                    error.setDescription(LanguageDetector.getMessage("channel.already.setDescription"));
+                    error.setTitle(LanguageDetector.getMessage("general.icon.error", guildID) + LanguageDetector.getMessage("channel.already.setTitle", guildID));
+                    error.setDescription(LanguageDetector.getMessage("channel.already.setDescription", guildID));
 
                     channel.sendTyping().queue();
                     channel.sendMessage(error.build()).queue();
                     error.clear();
                     return;
                 }
-                ctx.getGuild().createTextChannel(LanguageDetector.getMessage("music.icon") + LanguageDetector.getMessage("music.name"))
-                        .setTopic(LanguageDetector.getMessage("channel.setTopic"))
+                ctx.getGuild().createTextChannel(LanguageDetector.getMessage("music.icon", guildID) + LanguageDetector.getMessage("music.name", guildID))
+                        .setTopic(LanguageDetector.getMessage("channel.setTopic", guildID))
                         .queue(textchannel -> {
                             Config.CHANNELCREATED.put(ctx.getGuild().getIdLong(), textchannel.getIdLong());
                         });
 
                 EmbedBuilder success = new EmbedBuilder();
                 success.setColor(0x00ff00);
-                success.setTitle(LanguageDetector.getMessage("general.icon.success") + LanguageDetector.getMessage("channel.success.setTitle"));
-                success.setDescription(LanguageDetector.getMessage("channel.success.setDescription"));
-                success.setFooter(LanguageDetector.getMessage("general.bythecommand") + ctx.getMember().getUser().getName(), ctx.getMember().getUser().getAvatarUrl());
+                success.setTitle(LanguageDetector.getMessage("general.icon.success", guildID) + LanguageDetector.getMessage("channel.success.setTitle", guildID));
+                success.setDescription(LanguageDetector.getMessage("channel.success.setDescription", guildID));
+                success.setFooter(LanguageDetector.getMessage("general.bythecommand", guildID) + ctx.getMember().getUser().getName(), ctx.getMember().getUser().getAvatarUrl());
 
                 channel.sendTyping().queue();
                 channel.sendMessage(success.build()).queue();
                 success.clear();
                 return;
             }
-            if (input.equals(LanguageDetector.getMessage("channel.set"))) {
+            if (input.equals(LanguageDetector.getMessage("channel.set", guildID))) {
                 if (channel.getIdLong() == Config.CHANNELCREATED.get(ctx.getGuild().getIdLong())) {
                     ctx.getMessage().delete().queue();
                     channel.sendMessage("https://raw.githubusercontent.com/Tzesh/TzeBot/master/banner.PNG").queue();
 
                     EmbedBuilder success1 = new EmbedBuilder();
                     success1.setColor(0xcccccc);
-                    success1.setTitle(LanguageDetector.getMessage("music.icon") + " " + LanguageDetector.getMessage("channel.setTitle"));
-                    success1.setDescription(LanguageDetector.getMessage("channel.firstMessage")
-                            + "\n" + LanguageDetector.getMessage("general.icon.join") + ": " + LanguageDetector.getMessage("join.gethelp")
-                            + "\n" + LanguageDetector.getMessage("general.icon.leave") + ": " + LanguageDetector.getMessage("leave.gethelp")
-                            + "\n" + LanguageDetector.getMessage("general.icon.pause") + ": " + LanguageDetector.getMessage("pause.gethelp")
-                            + "\n" + LanguageDetector.getMessage("general.icon.stop") + ": " + LanguageDetector.getMessage("stop.gethelp")
-                            + "\n" + LanguageDetector.getMessage("general.icon.play") + ": " + LanguageDetector.getMessage("resume.gethelp")
-                            + "\n" + LanguageDetector.getMessage("general.icon.nowplaying") + ": " + LanguageDetector.getMessage("nowplaying.gethelp")
-                            + "\n" + LanguageDetector.getMessage("general.icon.skip") + ": " + LanguageDetector.getMessage("skip.gethelp")
-                            + "\n" + LanguageDetector.getMessage("general.icon.loop") + ": " + LanguageDetector.getMessage("loop.gethelp")
-                            + "\n" + LanguageDetector.getMessage("general.icon.shuffle") + ": " + LanguageDetector.getMessage("shuffle.gethelp")
-                            + "\n" + LanguageDetector.getMessage("general.icon.next") + ": " + LanguageDetector.getMessage("channel.next")
-                            + "\n" + LanguageDetector.getMessage("general.icon.previous") + ": " + LanguageDetector.getMessage("channel.previous")
-                            + "\n" + LanguageDetector.getMessage("general.icon.volume") + ": " + LanguageDetector.getMessage("channel.volume")
-                            + "\n" + LanguageDetector.getMessage("general.icon.volumedown") + ": " + LanguageDetector.getMessage("channel.volumedown")
-                            + "\n" + LanguageDetector.getMessage("general.icon.queue") + ": " + LanguageDetector.getMessage("queue.gethelp"));
-                    success1.setFooter(LanguageDetector.getMessage("channel.setFooter"));
+                    success1.setTitle(LanguageDetector.getMessage("music.icon", guildID) + " " + LanguageDetector.getMessage("channel.setTitle", guildID));
+                    success1.setDescription(LanguageDetector.getMessage("channel.firstMessage", guildID)
+                            + "\n" + LanguageDetector.getMessage("general.icon.join", guildID) + ": " + LanguageDetector.getMessage("join.gethelp", guildID)
+                            + "\n" + LanguageDetector.getMessage("general.icon.leave", guildID) + ": " + LanguageDetector.getMessage("leave.gethelp", guildID)
+                            + "\n" + LanguageDetector.getMessage("general.icon.pause", guildID) + ": " + LanguageDetector.getMessage("pause.gethelp", guildID)
+                            + "\n" + LanguageDetector.getMessage("general.icon.stop", guildID) + ": " + LanguageDetector.getMessage("stop.gethelp", guildID)
+                            + "\n" + LanguageDetector.getMessage("general.icon.play", guildID) + ": " + LanguageDetector.getMessage("resume.gethelp", guildID)
+                            + "\n" + LanguageDetector.getMessage("general.icon.nowplaying", guildID) + ": " + LanguageDetector.getMessage("nowplaying.gethelp", guildID)
+                            + "\n" + LanguageDetector.getMessage("general.icon.skip", guildID) + ": " + LanguageDetector.getMessage("skip.gethelp", guildID)
+                            + "\n" + LanguageDetector.getMessage("general.icon.loop", guildID) + ": " + LanguageDetector.getMessage("loop.gethelp", guildID)
+                            + "\n" + LanguageDetector.getMessage("general.icon.shuffle", guildID) + ": " + LanguageDetector.getMessage("shuffle.gethelp", guildID)
+                            + "\n" + LanguageDetector.getMessage("general.icon.next", guildID) + ": " + LanguageDetector.getMessage("channel.next", guildID)
+                            + "\n" + LanguageDetector.getMessage("general.icon.previous", guildID) + ": " + LanguageDetector.getMessage("channel.previous", guildID)
+                            + "\n" + LanguageDetector.getMessage("general.icon.volume", guildID) + ": " + LanguageDetector.getMessage("channel.volume", guildID)
+                            + "\n" + LanguageDetector.getMessage("general.icon.volumedown", guildID) + ": " + LanguageDetector.getMessage("channel.volumedown", guildID)
+                            + "\n" + LanguageDetector.getMessage("general.icon.queue", guildID) + ": " + LanguageDetector.getMessage("queue.gethelp", guildID));
+                    success1.setFooter(LanguageDetector.getMessage("channel.setFooter", guildID));
                     channel.sendMessage(success1.build()).queue(message -> {
-                        message.addReaction(LanguageDetector.getMessage("general.icon.join")).queue();
-                        message.addReaction(LanguageDetector.getMessage("general.icon.leave")).queue();
-                        message.addReaction(LanguageDetector.getMessage("general.icon.pause")).queue();
-                        message.addReaction(LanguageDetector.getMessage("general.icon.stop")).queue();
-                        message.addReaction(LanguageDetector.getMessage("general.icon.play")).queue();
-                        message.addReaction(LanguageDetector.getMessage("general.icon.nowplaying")).queue();
-                        message.addReaction(LanguageDetector.getMessage("general.icon.skip")).queue();
-                        message.addReaction(LanguageDetector.getMessage("general.icon.loop")).queue();
-                        message.addReaction(LanguageDetector.getMessage("general.icon.shuffle")).queue();
-                        message.addReaction(LanguageDetector.getMessage("general.icon.next")).queue();
-                        message.addReaction(LanguageDetector.getMessage("general.icon.previous")).queue();
-                        message.addReaction(LanguageDetector.getMessage("general.icon.volume")).queue();
-                        message.addReaction(LanguageDetector.getMessage("general.icon.volumedown")).queue();
-                        message.addReaction(LanguageDetector.getMessage("general.icon.queue")).queue();
+                        message.addReaction(LanguageDetector.getMessage("general.icon.join", guildID)).queue();
+                        message.addReaction(LanguageDetector.getMessage("general.icon.leave", guildID)).queue();
+                        message.addReaction(LanguageDetector.getMessage("general.icon.pause", guildID)).queue();
+                        message.addReaction(LanguageDetector.getMessage("general.icon.stop", guildID)).queue();
+                        message.addReaction(LanguageDetector.getMessage("general.icon.play", guildID)).queue();
+                        message.addReaction(LanguageDetector.getMessage("general.icon.nowplaying", guildID)).queue();
+                        message.addReaction(LanguageDetector.getMessage("general.icon.skip", guildID)).queue();
+                        message.addReaction(LanguageDetector.getMessage("general.icon.loop", guildID)).queue();
+                        message.addReaction(LanguageDetector.getMessage("general.icon.shuffle", guildID)).queue();
+                        message.addReaction(LanguageDetector.getMessage("general.icon.next", guildID)).queue();
+                        message.addReaction(LanguageDetector.getMessage("general.icon.previous", guildID)).queue();
+                        message.addReaction(LanguageDetector.getMessage("general.icon.volume", guildID)).queue();
+                        message.addReaction(LanguageDetector.getMessage("general.icon.volumedown", guildID)).queue();
+                        message.addReaction(LanguageDetector.getMessage("general.icon.queue", guildID)).queue();
                         HashMap<Long, Long> IDs = new HashMap<>();
                         IDs.put(channel.getIdLong(), message.getIdLong());
                         Config.MUSICCHANNELS.put(ctx.getGuild().getIdLong(), IDs);
@@ -139,8 +171,8 @@ public class Channel implements ICommand {
                 } else {
                     EmbedBuilder error = new EmbedBuilder();
                     error.setColor(0xff3923);
-                    error.setTitle(LanguageDetector.getMessage("general.icon.error") + LanguageDetector.getMessage("channel.wrongchannel.setTitle"));
-                    error.setDescription(LanguageDetector.getMessage("channel.wrongchannel.setDescription"));
+                    error.setTitle(LanguageDetector.getMessage("general.icon.error", guildID) + LanguageDetector.getMessage("channel.wrongchannel.setTitle", guildID));
+                    error.setDescription(LanguageDetector.getMessage("channel.wrongchannel.setDescription", guildID));
 
                     channel.sendTyping().queue();
                     channel.sendMessage(error.build()).queue();
@@ -149,8 +181,8 @@ public class Channel implements ICommand {
             } else {
                 EmbedBuilder error = new EmbedBuilder();
                 error.setColor(0xff3923);
-                error.setTitle(LanguageDetector.getMessage("general.icon.error") + LanguageDetector.getMessage("channel.noargs.setTitle"));
-                error.setDescription(LanguageDetector.getMessage("channel.noargs.setDescription"));
+                error.setTitle(LanguageDetector.getMessage("general.icon.error", guildID) + LanguageDetector.getMessage("channel.noargs.setTitle", guildID));
+                error.setDescription(LanguageDetector.getMessage("channel.noargs.setDescription", guildID));
 
                 channel.sendTyping().queue();
                 channel.sendMessage(error.build()).queue();
@@ -160,13 +192,13 @@ public class Channel implements ICommand {
     }
 
     @Override
-    public String getName() {
-        return LanguageDetector.getMessage("channel.name");
+    public String getName(long guildID) {
+        return LanguageDetector.getMessage("channel.name", guildID);
     }
 
     @Override
-    public String getHelp() {
-        return LanguageDetector.getMessage("channel.gethelp");
+    public String getHelp(long guildID) {
+        return LanguageDetector.getMessage("channel.gethelp", guildID);
     }
 
     public boolean isExists(CommandContext ctx) {

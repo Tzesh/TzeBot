@@ -49,7 +49,6 @@ public class TzeGUI extends javax.swing.JFrame {
                     shard.setEnabled(false);
                 }
             }
-
         });
         System.out.println("GUI has been initialized.");
     }

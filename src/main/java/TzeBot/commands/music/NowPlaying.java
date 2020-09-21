@@ -20,12 +20,13 @@ public class NowPlaying implements ICommand {
         final PlayerManager playerManager = PlayerManager.getInstance();
         final GuildMusicManager musicManager = playerManager.getGuildMusicManager(ctx.getGuild());
         final AudioPlayer player = musicManager.player;
+        final long guildID = ctx.getGuild().getIdLong();
 
         if (player.getPlayingTrack() == null) {
             EmbedBuilder error = new EmbedBuilder();
             error.setColor(0xff3923);
-            error.setTitle(LanguageDetector.getMessage("general.icon.error") + LanguageDetector.getMessage("nowplaying.error.setTitle"));
-            error.setDescription(LanguageDetector.getMessage("nowplaying.error.setDescription"));
+            error.setTitle(LanguageDetector.getMessage("general.icon.error", guildID) + LanguageDetector.getMessage("nowplaying.error.setTitle", guildID));
+            error.setDescription(LanguageDetector.getMessage("nowplaying.error.setDescription", guildID));
 
             channel.sendTyping().queue();
             channel.sendMessage(error.build()).queue();
@@ -35,7 +36,7 @@ public class NowPlaying implements ICommand {
 
         AudioTrackInfo info = player.getPlayingTrack().getInfo();
 
-        channel.sendMessage(EmbedUtils.embedMessage(String.format("**" + LanguageDetector.getMessage("general.icon.nowplaying") + LanguageDetector.getMessage("nowplaying.nowplaying") + "** [%s]{%s}\n%s %s - %s",
+        channel.sendMessage(EmbedUtils.embedMessage(String.format("**" + LanguageDetector.getMessage("general.icon.nowplaying", guildID) + LanguageDetector.getMessage("nowplaying.nowplaying", guildID) + "** [%s]{%s}\n%s %s - %s",
                 info.title,
                 info.uri,
                 player.isPaused() ? "\u23F8" : "▶",
@@ -46,13 +47,13 @@ public class NowPlaying implements ICommand {
     }
 
     @Override
-    public String getName() {
-        return LanguageDetector.getMessage("nowplaying.name");
+    public String getName(long guildID) {
+        return LanguageDetector.getMessage("nowplaying.name", guildID);
     }
 
     @Override
-    public String getHelp() {
-        return LanguageDetector.getMessage("nowplaying.gethelp");
+    public String getHelp(long guildID) {
+        return LanguageDetector.getMessage("nowplaying.gethelp", guildID);
     }
 
     private String formatTime(long timeInMilis) {

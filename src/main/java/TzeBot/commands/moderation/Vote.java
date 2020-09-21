@@ -25,24 +25,55 @@ public class Vote implements ICommand {
         final TextChannel channel = ctx.getChannel();
         final List<String> args = ctx.getArgs();
         final Member member = ctx.getMember();
+        final long guildID = ctx.getGuild().getIdLong();
+        final Member selfmember = ctx.getGuild().getSelfMember();
 
         if (!member.hasPermission(Permission.MANAGE_SERVER)) {
             EmbedBuilder error = new EmbedBuilder();
             error.setColor(0xff3923);
-            error.setTitle(LanguageDetector.getMessage("general.icon.error") + LanguageDetector.getMessage("general.not_authorized"));
-            error.setDescription(LanguageDetector.getMessage("general.not_authorized.description"));
+            error.setTitle(LanguageDetector.getMessage("general.icon.error", guildID) + LanguageDetector.getMessage("general.not_authorized", guildID));
+            error.setDescription(LanguageDetector.getMessage("general.not_authorized.description", guildID));
 
             channel.sendTyping().queue();
             channel.sendMessage(error.build()).queue();
             error.clear();
             return;
         }
+        if (!selfmember.hasPermission(Permission.MESSAGE_MANAGE)) {
+            EmbedBuilder error = new EmbedBuilder();
+            error.setColor(0xff3923);
+            error.setTitle(LanguageDetector.getMessage("general.icon.error", guildID) + LanguageDetector.getMessage("general.nonperm", guildID));
+            error.setDescription(LanguageDetector.getMessage("general.nonperm.message_manage", guildID));
 
+            channel.sendTyping().queue();
+            channel.sendMessage(error.build()).queue();
+            error.clear();
+        }
+        if (!selfmember.hasPermission(Permission.MANAGE_EMOTES)) {
+            EmbedBuilder error = new EmbedBuilder();
+            error.setColor(0xff3923);
+            error.setTitle(LanguageDetector.getMessage("general.icon.error", guildID) + LanguageDetector.getMessage("general.nonperm", guildID));
+            error.setDescription(LanguageDetector.getMessage("general.nonperm.manage_emotes", guildID));
+
+            channel.sendTyping().queue();
+            channel.sendMessage(error.build()).queue();
+            error.clear();
+        }
+        if (!selfmember.hasPermission(Permission.MANAGE_ROLES)) {
+            EmbedBuilder error = new EmbedBuilder();
+            error.setColor(0xff3923);
+            error.setTitle(LanguageDetector.getMessage("general.icon.error", guildID) + LanguageDetector.getMessage("general.nonperm", guildID));
+            error.setDescription(LanguageDetector.getMessage("general.nonperm.manage_roles", guildID));
+
+            channel.sendTyping().queue();
+            channel.sendMessage(error.build()).queue();
+            error.clear();
+        }
         if (args.isEmpty()) {
             EmbedBuilder error = new EmbedBuilder();
             error.setColor(0xff3923);
-            error.setTitle(LanguageDetector.getMessage("general.icon.error") + LanguageDetector.getMessage("general.403"));
-            error.setDescription(LanguageDetector.getMessage("general.403.description"));
+            error.setTitle(LanguageDetector.getMessage("general.icon.error", guildID) + LanguageDetector.getMessage("general.403", guildID));
+            error.setDescription(LanguageDetector.getMessage("general.403.description", guildID));
 
             channel.sendTyping().queue();
             channel.sendMessage(error.build()).queue();
@@ -55,175 +86,175 @@ public class Vote implements ICommand {
                 case 3:
                     EmbedBuilder vote3 = new EmbedBuilder();
                     vote3.setColor(0x0087ff);
-                    vote3.setTitle(LanguageDetector.getMessage("general.icon.vote") + variables[0] + LanguageDetector.getMessage("general.icon.question"));
-                    vote3.setDescription(LanguageDetector.getMessage("general.icon.1") + " " + variables[1]
-                            + "\n" + LanguageDetector.getMessage("general.icon.2") + " " + variables[2]);
-                    vote3.setFooter(LanguageDetector.getMessage("vote.setFooter"));
+                    vote3.setTitle(LanguageDetector.getMessage("general.icon.vote", guildID) + variables[0] + LanguageDetector.getMessage("general.icon.question", guildID));
+                    vote3.setDescription(LanguageDetector.getMessage("general.icon.1", guildID) + " " + variables[1]
+                            + "\n" + LanguageDetector.getMessage("general.icon.2", guildID) + " " + variables[2]);
+                    vote3.setFooter(LanguageDetector.getMessage("vote.setFooter", guildID));
                     channel.sendTyping().queue();
                     channel.sendMessage(vote3.build()).queue(message -> {
-                        message.addReaction(LanguageDetector.getMessage("general.icon.1")).queue();
-                        message.addReaction(LanguageDetector.getMessage("general.icon.2")).queue();
+                        message.addReaction(LanguageDetector.getMessage("general.icon.1", guildID)).queue();
+                        message.addReaction(LanguageDetector.getMessage("general.icon.2", guildID)).queue();
                     });
                     vote3.clear();
                     break;
                 case 4:
                     EmbedBuilder vote4 = new EmbedBuilder();
                     vote4.setColor(0x0087ff);
-                    vote4.setTitle(LanguageDetector.getMessage("general.icon.vote") + variables[0] + LanguageDetector.getMessage("general.icon.question"));
-                    vote4.setDescription(LanguageDetector.getMessage("general.icon.1") + " " + variables[1]
-                            + "\n" + LanguageDetector.getMessage("general.icon.2") + " " + variables[2]
-                            + "\n" + LanguageDetector.getMessage("general.icon.3") + " " + variables[3]);
-                    vote4.setFooter(LanguageDetector.getMessage("vote.setFooter"));
+                    vote4.setTitle(LanguageDetector.getMessage("general.icon.vote", guildID) + variables[0] + LanguageDetector.getMessage("general.icon.question", guildID));
+                    vote4.setDescription(LanguageDetector.getMessage("general.icon.1", guildID) + " " + variables[1]
+                            + "\n" + LanguageDetector.getMessage("general.icon.2", guildID) + " " + variables[2]
+                            + "\n" + LanguageDetector.getMessage("general.icon.3", guildID) + " " + variables[3]);
+                    vote4.setFooter(LanguageDetector.getMessage("vote.setFooter", guildID));
                     channel.sendTyping().queue();
                     channel.sendMessage(vote4.build()).queue(message -> {
-                        message.addReaction(LanguageDetector.getMessage("general.icon.1")).queue();
-                        message.addReaction(LanguageDetector.getMessage("general.icon.2")).queue();
-                        message.addReaction(LanguageDetector.getMessage("general.icon.3")).queue();
+                        message.addReaction(LanguageDetector.getMessage("general.icon.1", guildID)).queue();
+                        message.addReaction(LanguageDetector.getMessage("general.icon.2", guildID)).queue();
+                        message.addReaction(LanguageDetector.getMessage("general.icon.3", guildID)).queue();
                     });
                     vote4.clear();
                     break;
                 case 5:
                     EmbedBuilder vote5 = new EmbedBuilder();
                     vote5.setColor(0x0087ff);
-                    vote5.setTitle(LanguageDetector.getMessage("general.icon.vote") + variables[0] + LanguageDetector.getMessage("general.icon.question"));
-                    vote5.setDescription(LanguageDetector.getMessage("general.icon.1") + " " + variables[1]
-                            + "\n" + LanguageDetector.getMessage("general.icon.2") + " " + variables[2]
-                            + "\n" + LanguageDetector.getMessage("general.icon.3") + " " + variables[3]
-                            + "\n" + LanguageDetector.getMessage("general.icon.4") + " " + variables[4]);
-                    vote5.setFooter(LanguageDetector.getMessage("vote.setFooter"));
+                    vote5.setTitle(LanguageDetector.getMessage("general.icon.vote", guildID) + variables[0] + LanguageDetector.getMessage("general.icon.question", guildID));
+                    vote5.setDescription(LanguageDetector.getMessage("general.icon.1", guildID) + " " + variables[1]
+                            + "\n" + LanguageDetector.getMessage("general.icon.2", guildID) + " " + variables[2]
+                            + "\n" + LanguageDetector.getMessage("general.icon.3", guildID) + " " + variables[3]
+                            + "\n" + LanguageDetector.getMessage("general.icon.4", guildID) + " " + variables[4]);
+                    vote5.setFooter(LanguageDetector.getMessage("vote.setFooter", guildID));
                     channel.sendTyping().queue();
                     channel.sendMessage(vote5.build()).queue(message -> {
-                        message.addReaction(LanguageDetector.getMessage("general.icon.1")).queue();
-                        message.addReaction(LanguageDetector.getMessage("general.icon.2")).queue();
-                        message.addReaction(LanguageDetector.getMessage("general.icon.3")).queue();
-                        message.addReaction(LanguageDetector.getMessage("general.icon.4")).queue();
+                        message.addReaction(LanguageDetector.getMessage("general.icon.1", guildID)).queue();
+                        message.addReaction(LanguageDetector.getMessage("general.icon.2", guildID)).queue();
+                        message.addReaction(LanguageDetector.getMessage("general.icon.3", guildID)).queue();
+                        message.addReaction(LanguageDetector.getMessage("general.icon.4", guildID)).queue();
                     });
                     vote5.clear();
                     break;
                 case 6:
                     EmbedBuilder vote6 = new EmbedBuilder();
                     vote6.setColor(0x0087ff);
-                    vote6.setTitle(LanguageDetector.getMessage("general.icon.vote") + variables[0] + LanguageDetector.getMessage("general.icon.question"));
-                    vote6.setDescription(LanguageDetector.getMessage("general.icon.1") + " " + variables[1]
-                            + "\n" + LanguageDetector.getMessage("general.icon.2") + " " + variables[2]
-                            + "\n" + LanguageDetector.getMessage("general.icon.3") + " " + variables[3]
-                            + "\n" + LanguageDetector.getMessage("general.icon.4") + " " + variables[4]
-                            + "\n" + LanguageDetector.getMessage("general.icon.5") + " " + variables[5]);
-                    vote6.setFooter(LanguageDetector.getMessage("vote.setFooter"));
+                    vote6.setTitle(LanguageDetector.getMessage("general.icon.vote", guildID) + variables[0] + LanguageDetector.getMessage("general.icon.question", guildID));
+                    vote6.setDescription(LanguageDetector.getMessage("general.icon.1", guildID) + " " + variables[1]
+                            + "\n" + LanguageDetector.getMessage("general.icon.2", guildID) + " " + variables[2]
+                            + "\n" + LanguageDetector.getMessage("general.icon.3", guildID) + " " + variables[3]
+                            + "\n" + LanguageDetector.getMessage("general.icon.4", guildID) + " " + variables[4]
+                            + "\n" + LanguageDetector.getMessage("general.icon.5", guildID) + " " + variables[5]);
+                    vote6.setFooter(LanguageDetector.getMessage("vote.setFooter", guildID));
                     channel.sendTyping().queue();
                     channel.sendMessage(vote6.build()).queue(message -> {
-                        message.addReaction(LanguageDetector.getMessage("general.icon.1")).queue();
-                        message.addReaction(LanguageDetector.getMessage("general.icon.2")).queue();
-                        message.addReaction(LanguageDetector.getMessage("general.icon.3")).queue();
-                        message.addReaction(LanguageDetector.getMessage("general.icon.4")).queue();
-                        message.addReaction(LanguageDetector.getMessage("general.icon.5")).queue();
+                        message.addReaction(LanguageDetector.getMessage("general.icon.1", guildID)).queue();
+                        message.addReaction(LanguageDetector.getMessage("general.icon.2", guildID)).queue();
+                        message.addReaction(LanguageDetector.getMessage("general.icon.3", guildID)).queue();
+                        message.addReaction(LanguageDetector.getMessage("general.icon.4", guildID)).queue();
+                        message.addReaction(LanguageDetector.getMessage("general.icon.5", guildID)).queue();
                     });
                     vote6.clear();
                     break;
                 case 7:
                     EmbedBuilder vote7 = new EmbedBuilder();
                     vote7.setColor(0x0087ff);
-                    vote7.setTitle(LanguageDetector.getMessage("general.icon.vote") + variables[0] + LanguageDetector.getMessage("general.icon.question"));
-                    vote7.setDescription(LanguageDetector.getMessage("general.icon.1") + " " + variables[1]
-                            + "\n" + LanguageDetector.getMessage("general.icon.2") + " " + variables[2]
-                            + "\n" + LanguageDetector.getMessage("general.icon.3") + " " + variables[3]
-                            + "\n" + LanguageDetector.getMessage("general.icon.4") + " " + variables[4]
-                            + "\n" + LanguageDetector.getMessage("general.icon.5") + " " + variables[5]
-                            + "\n" + LanguageDetector.getMessage("general.icon.6") + " " + variables[6]);
-                    vote7.setFooter(LanguageDetector.getMessage("vote.setFooter"));
+                    vote7.setTitle(LanguageDetector.getMessage("general.icon.vote", guildID) + variables[0] + LanguageDetector.getMessage("general.icon.question", guildID));
+                    vote7.setDescription(LanguageDetector.getMessage("general.icon.1", guildID) + " " + variables[1]
+                            + "\n" + LanguageDetector.getMessage("general.icon.2", guildID) + " " + variables[2]
+                            + "\n" + LanguageDetector.getMessage("general.icon.3", guildID) + " " + variables[3]
+                            + "\n" + LanguageDetector.getMessage("general.icon.4", guildID) + " " + variables[4]
+                            + "\n" + LanguageDetector.getMessage("general.icon.5", guildID) + " " + variables[5]
+                            + "\n" + LanguageDetector.getMessage("general.icon.6", guildID) + " " + variables[6]);
+                    vote7.setFooter(LanguageDetector.getMessage("vote.setFooter", guildID));
                     channel.sendTyping().queue();
                     channel.sendMessage(vote7.build()).queue(message -> {
-                        message.addReaction(LanguageDetector.getMessage("general.icon.1")).queue();
-                        message.addReaction(LanguageDetector.getMessage("general.icon.2")).queue();
-                        message.addReaction(LanguageDetector.getMessage("general.icon.3")).queue();
-                        message.addReaction(LanguageDetector.getMessage("general.icon.4")).queue();
-                        message.addReaction(LanguageDetector.getMessage("general.icon.5")).queue();
-                        message.addReaction(LanguageDetector.getMessage("general.icon.6")).queue();
+                        message.addReaction(LanguageDetector.getMessage("general.icon.1", guildID)).queue();
+                        message.addReaction(LanguageDetector.getMessage("general.icon.2", guildID)).queue();
+                        message.addReaction(LanguageDetector.getMessage("general.icon.3", guildID)).queue();
+                        message.addReaction(LanguageDetector.getMessage("general.icon.4", guildID)).queue();
+                        message.addReaction(LanguageDetector.getMessage("general.icon.5", guildID)).queue();
+                        message.addReaction(LanguageDetector.getMessage("general.icon.6", guildID)).queue();
                     });
                     vote7.clear();
                     break;
                 case 8:
                     EmbedBuilder vote8 = new EmbedBuilder();
                     vote8.setColor(0x0087ff);
-                    vote8.setTitle(LanguageDetector.getMessage("general.icon.vote") + variables[0] + LanguageDetector.getMessage("general.icon.question"));
-                    vote8.setDescription(LanguageDetector.getMessage("general.icon.1") + " " + variables[1]
-                            + "\n" + LanguageDetector.getMessage("general.icon.2") + " " + variables[2]
-                            + "\n" + LanguageDetector.getMessage("general.icon.3") + " " + variables[3]
-                            + "\n" + LanguageDetector.getMessage("general.icon.4") + " " + variables[4]
-                            + "\n" + LanguageDetector.getMessage("general.icon.5") + " " + variables[5]
-                            + "\n" + LanguageDetector.getMessage("general.icon.6") + " " + variables[6]
-                            + "\n" + LanguageDetector.getMessage("general.icon.7") + " " + variables[7]);
-                    vote8.setFooter(LanguageDetector.getMessage("vote.setFooter"));
+                    vote8.setTitle(LanguageDetector.getMessage("general.icon.vote", guildID) + variables[0] + LanguageDetector.getMessage("general.icon.question", guildID));
+                    vote8.setDescription(LanguageDetector.getMessage("general.icon.1", guildID) + " " + variables[1]
+                            + "\n" + LanguageDetector.getMessage("general.icon.2", guildID) + " " + variables[2]
+                            + "\n" + LanguageDetector.getMessage("general.icon.3", guildID) + " " + variables[3]
+                            + "\n" + LanguageDetector.getMessage("general.icon.4", guildID) + " " + variables[4]
+                            + "\n" + LanguageDetector.getMessage("general.icon.5", guildID) + " " + variables[5]
+                            + "\n" + LanguageDetector.getMessage("general.icon.6", guildID) + " " + variables[6]
+                            + "\n" + LanguageDetector.getMessage("general.icon.7", guildID) + " " + variables[7]);
+                    vote8.setFooter(LanguageDetector.getMessage("vote.setFooter", guildID));
                     channel.sendTyping().queue();
                     channel.sendMessage(vote8.build()).queue(message -> {
-                        message.addReaction(LanguageDetector.getMessage("general.icon.1")).queue();
-                        message.addReaction(LanguageDetector.getMessage("general.icon.2")).queue();
-                        message.addReaction(LanguageDetector.getMessage("general.icon.3")).queue();
-                        message.addReaction(LanguageDetector.getMessage("general.icon.4")).queue();
-                        message.addReaction(LanguageDetector.getMessage("general.icon.5")).queue();
-                        message.addReaction(LanguageDetector.getMessage("general.icon.6")).queue();
-                        message.addReaction(LanguageDetector.getMessage("general.icon.7")).queue();
+                        message.addReaction(LanguageDetector.getMessage("general.icon.1", guildID)).queue();
+                        message.addReaction(LanguageDetector.getMessage("general.icon.2", guildID)).queue();
+                        message.addReaction(LanguageDetector.getMessage("general.icon.3", guildID)).queue();
+                        message.addReaction(LanguageDetector.getMessage("general.icon.4", guildID)).queue();
+                        message.addReaction(LanguageDetector.getMessage("general.icon.5", guildID)).queue();
+                        message.addReaction(LanguageDetector.getMessage("general.icon.6", guildID)).queue();
+                        message.addReaction(LanguageDetector.getMessage("general.icon.7", guildID)).queue();
                     });
                     vote8.clear();
                     break;
                 case 9:
                     EmbedBuilder vote9 = new EmbedBuilder();
                     vote9.setColor(0x0087ff);
-                    vote9.setTitle(LanguageDetector.getMessage("general.icon.vote") + variables[0] + LanguageDetector.getMessage("general.icon.question"));
-                    vote9.setDescription(LanguageDetector.getMessage("general.icon.1") + " " + variables[1]
-                            + "\n" + LanguageDetector.getMessage("general.icon.2") + " " + variables[2]
-                            + "\n" + LanguageDetector.getMessage("general.icon.3") + " " + variables[3]
-                            + "\n" + LanguageDetector.getMessage("general.icon.4") + " " + variables[4]
-                            + "\n" + LanguageDetector.getMessage("general.icon.5") + " " + variables[5]
-                            + "\n" + LanguageDetector.getMessage("general.icon.6") + " " + variables[6]
-                            + "\n" + LanguageDetector.getMessage("general.icon.7") + " " + variables[7]
-                            + "\n" + LanguageDetector.getMessage("general.icon.8") + " " + variables[8]);
-                    vote9.setFooter(LanguageDetector.getMessage("vote.setFooter"));
+                    vote9.setTitle(LanguageDetector.getMessage("general.icon.vote", guildID) + variables[0] + LanguageDetector.getMessage("general.icon.question", guildID));
+                    vote9.setDescription(LanguageDetector.getMessage("general.icon.1", guildID) + " " + variables[1]
+                            + "\n" + LanguageDetector.getMessage("general.icon.2", guildID) + " " + variables[2]
+                            + "\n" + LanguageDetector.getMessage("general.icon.3", guildID) + " " + variables[3]
+                            + "\n" + LanguageDetector.getMessage("general.icon.4", guildID) + " " + variables[4]
+                            + "\n" + LanguageDetector.getMessage("general.icon.5", guildID) + " " + variables[5]
+                            + "\n" + LanguageDetector.getMessage("general.icon.6", guildID) + " " + variables[6]
+                            + "\n" + LanguageDetector.getMessage("general.icon.7", guildID) + " " + variables[7]
+                            + "\n" + LanguageDetector.getMessage("general.icon.8", guildID) + " " + variables[8]);
+                    vote9.setFooter(LanguageDetector.getMessage("vote.setFooter", guildID));
                     channel.sendTyping().queue();
                     channel.sendMessage(vote9.build()).queue(message -> {
-                        message.addReaction(LanguageDetector.getMessage("general.icon.1")).queue();
-                        message.addReaction(LanguageDetector.getMessage("general.icon.2")).queue();
-                        message.addReaction(LanguageDetector.getMessage("general.icon.3")).queue();
-                        message.addReaction(LanguageDetector.getMessage("general.icon.4")).queue();
-                        message.addReaction(LanguageDetector.getMessage("general.icon.5")).queue();
-                        message.addReaction(LanguageDetector.getMessage("general.icon.6")).queue();
-                        message.addReaction(LanguageDetector.getMessage("general.icon.7")).queue();
-                        message.addReaction(LanguageDetector.getMessage("general.icon.8")).queue();
+                        message.addReaction(LanguageDetector.getMessage("general.icon.1", guildID)).queue();
+                        message.addReaction(LanguageDetector.getMessage("general.icon.2", guildID)).queue();
+                        message.addReaction(LanguageDetector.getMessage("general.icon.3", guildID)).queue();
+                        message.addReaction(LanguageDetector.getMessage("general.icon.4", guildID)).queue();
+                        message.addReaction(LanguageDetector.getMessage("general.icon.5", guildID)).queue();
+                        message.addReaction(LanguageDetector.getMessage("general.icon.6", guildID)).queue();
+                        message.addReaction(LanguageDetector.getMessage("general.icon.7", guildID)).queue();
+                        message.addReaction(LanguageDetector.getMessage("general.icon.8", guildID)).queue();
                     });
                     vote9.clear();
                     break;
                 case 10:
                     EmbedBuilder vote10 = new EmbedBuilder();
                     vote10.setColor(0x0087ff);
-                    vote10.setTitle(LanguageDetector.getMessage("general.icon.vote") + variables[0] + LanguageDetector.getMessage("general.icon.question"));
-                    vote10.setDescription(LanguageDetector.getMessage("general.icon.1") + " " + variables[1]
-                            + "\n" + LanguageDetector.getMessage("general.icon.2") + " " + variables[2]
-                            + "\n" + LanguageDetector.getMessage("general.icon.3") + " " + variables[3]
-                            + "\n" + LanguageDetector.getMessage("general.icon.4") + " " + variables[4]
-                            + "\n" + LanguageDetector.getMessage("general.icon.5") + " " + variables[5]
-                            + "\n" + LanguageDetector.getMessage("general.icon.6") + " " + variables[6]
-                            + "\n" + LanguageDetector.getMessage("general.icon.7") + " " + variables[7]
-                            + "\n" + LanguageDetector.getMessage("general.icon.8") + " " + variables[8]
-                            + "\n" + LanguageDetector.getMessage("general.icon.9") + " " + variables[9]);
-                    vote10.setFooter(LanguageDetector.getMessage("vote.setFooter"));
+                    vote10.setTitle(LanguageDetector.getMessage("general.icon.vote", guildID) + variables[0] + LanguageDetector.getMessage("general.icon.question", guildID));
+                    vote10.setDescription(LanguageDetector.getMessage("general.icon.1", guildID) + " " + variables[1]
+                            + "\n" + LanguageDetector.getMessage("general.icon.2", guildID) + " " + variables[2]
+                            + "\n" + LanguageDetector.getMessage("general.icon.3", guildID) + " " + variables[3]
+                            + "\n" + LanguageDetector.getMessage("general.icon.4", guildID) + " " + variables[4]
+                            + "\n" + LanguageDetector.getMessage("general.icon.5", guildID) + " " + variables[5]
+                            + "\n" + LanguageDetector.getMessage("general.icon.6", guildID) + " " + variables[6]
+                            + "\n" + LanguageDetector.getMessage("general.icon.7", guildID) + " " + variables[7]
+                            + "\n" + LanguageDetector.getMessage("general.icon.8", guildID) + " " + variables[8]
+                            + "\n" + LanguageDetector.getMessage("general.icon.9", guildID) + " " + variables[9]);
+                    vote10.setFooter(LanguageDetector.getMessage("vote.setFooter", guildID));
                     channel.sendTyping().queue();
                     channel.sendMessage(vote10.build()).queue(message -> {
-                        message.addReaction(LanguageDetector.getMessage("general.icon.1")).queue();
-                        message.addReaction(LanguageDetector.getMessage("general.icon.2")).queue();
-                        message.addReaction(LanguageDetector.getMessage("general.icon.3")).queue();
-                        message.addReaction(LanguageDetector.getMessage("general.icon.4")).queue();
-                        message.addReaction(LanguageDetector.getMessage("general.icon.5")).queue();
-                        message.addReaction(LanguageDetector.getMessage("general.icon.6")).queue();
-                        message.addReaction(LanguageDetector.getMessage("general.icon.7")).queue();
-                        message.addReaction(LanguageDetector.getMessage("general.icon.8")).queue();
-                        message.addReaction(LanguageDetector.getMessage("general.icon.9")).queue();
+                        message.addReaction(LanguageDetector.getMessage("general.icon.1", guildID)).queue();
+                        message.addReaction(LanguageDetector.getMessage("general.icon.2", guildID)).queue();
+                        message.addReaction(LanguageDetector.getMessage("general.icon.3", guildID)).queue();
+                        message.addReaction(LanguageDetector.getMessage("general.icon.4", guildID)).queue();
+                        message.addReaction(LanguageDetector.getMessage("general.icon.5", guildID)).queue();
+                        message.addReaction(LanguageDetector.getMessage("general.icon.6", guildID)).queue();
+                        message.addReaction(LanguageDetector.getMessage("general.icon.7", guildID)).queue();
+                        message.addReaction(LanguageDetector.getMessage("general.icon.8", guildID)).queue();
+                        message.addReaction(LanguageDetector.getMessage("general.icon.9", guildID)).queue();
                     });
                     vote10.clear();
                 default:
                     EmbedBuilder error = new EmbedBuilder();
                     error.setColor(0xff3923);
-                    error.setTitle(LanguageDetector.getMessage("general.icon.error") + LanguageDetector.getMessage("vote.error.setTitle"));
-                    error.setDescription(LanguageDetector.getMessage("vote.error.setDescription"));
+                    error.setTitle(LanguageDetector.getMessage("general.icon.error", guildID) + LanguageDetector.getMessage("vote.error.setTitle", guildID));
+                    error.setDescription(LanguageDetector.getMessage("vote.error.setDescription", guildID));
 
                     channel.sendTyping().queue();
                     channel.sendMessage(error.build()).queue();
@@ -234,13 +265,13 @@ public class Vote implements ICommand {
     }
 
     @Override
-    public String getName() {
-        return LanguageDetector.getMessage("vote.name");
+    public String getName(long guildID) {
+        return LanguageDetector.getMessage("vote.name", guildID);
     }
 
     @Override
-    public String getHelp() {
-        return LanguageDetector.getMessage("vote.gethelp");
+    public String getHelp(long guildID) {
+        return LanguageDetector.getMessage("vote.gethelp", guildID);
     }
 
 }

@@ -6,9 +6,9 @@ public interface ICommand {
 
     void handle(CommandContext ctx); // To get all of the functions of onGuildMessageReceivedEvent
 
-    String getName(); // Name of the code -> LanguageDetector.get("command.name");
+    String getName(long guildID); // Name of the code -> LanguageDetector.get("command.name", guildID);
 
-    String getHelp(); // Help line of the code but both are will be called in LanguageDetector.get("command.gethelp");
+    String getHelp(long guildID); // Help line of the code but both are will be called in LanguageDetector.get("command.gethelp", guildID);
 
     default List<String> getAliases() {
         return List.of();

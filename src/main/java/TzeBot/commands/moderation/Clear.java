@@ -18,12 +18,25 @@ public class Clear implements ICommand {
         final TextChannel channel = ctx.getChannel();
         final List<String> args = ctx.getArgs();
         final Member member = ctx.getMember();
+        final Member selfmember = ctx.getGuild().getSelfMember();
+        final long guildID = ctx.getGuild().getIdLong();
 
         if (!member.hasPermission(Permission.MANAGE_SERVER)) {
             EmbedBuilder error = new EmbedBuilder();
             error.setColor(0xff3923);
-            error.setTitle(LanguageDetector.getMessage("general.icon.error") + LanguageDetector.getMessage("general.not_authorized"));
-            error.setDescription(LanguageDetector.getMessage("general.not_authorized.description"));
+            error.setTitle(LanguageDetector.getMessage("general.icon.error", guildID) + LanguageDetector.getMessage("general.not_authorized", guildID));
+            error.setDescription(LanguageDetector.getMessage("general.not_authorized.description", guildID));
+
+            channel.sendTyping().queue();
+            channel.sendMessage(error.build()).queue();
+            error.clear();
+            return;
+        }
+        if (!selfmember.hasPermission(Permission.MESSAGE_MANAGE)) {
+            EmbedBuilder error = new EmbedBuilder();
+            error.setColor(0xff3923);
+            error.setTitle(LanguageDetector.getMessage("general.icon.error", guildID) + LanguageDetector.getMessage("general.nonperm", guildID));
+            error.setDescription(LanguageDetector.getMessage("general.nonperm.message_manage", guildID));
 
             channel.sendTyping().queue();
             channel.sendMessage(error.build()).queue();
@@ -31,8 +44,8 @@ public class Clear implements ICommand {
         } else if (args.isEmpty()) {
             EmbedBuilder error = new EmbedBuilder();
             error.setColor(0xff3923);
-            error.setTitle(LanguageDetector.getMessage("general.icon.error") + LanguageDetector.getMessage("general.403"));
-            error.setDescription(LanguageDetector.getMessage("general.403.description"));
+            error.setTitle(LanguageDetector.getMessage("general.icon.error", guildID) + LanguageDetector.getMessage("general.403", guildID));
+            error.setDescription(LanguageDetector.getMessage("general.403.description", guildID));
 
             channel.sendTyping().queue();
             channel.sendMessage(error.build()).queue();
@@ -44,8 +57,8 @@ public class Clear implements ICommand {
 
                 EmbedBuilder success = new EmbedBuilder();
                 success.setColor(0x00ff00);
-                success.setTitle(LanguageDetector.getMessage("general.icon.success") + String.join("", args) + " " + LanguageDetector.getMessage("clear.successful.setTitle"));
-                success.setFooter(LanguageDetector.getMessage("general.bythecommand") + " " + ctx.getMember().getUser().getName(), ctx.getMember().getUser().getAvatarUrl());
+                success.setTitle(LanguageDetector.getMessage("general.icon.success", guildID) + String.join("", args) + " " + LanguageDetector.getMessage("clear.successful.setTitle", guildID));
+                success.setFooter(LanguageDetector.getMessage("general.bythecommand", guildID) + " " + ctx.getMember().getUser().getName(), ctx.getMember().getUser().getAvatarUrl());
 
                 ctx.getChannel().sendTyping().queue();
                 channel.sendMessage(success.build()).queue();
@@ -54,8 +67,8 @@ public class Clear implements ICommand {
                 if (exception.toString().startsWith("java.lang.IllegalArgumentException")) {
                     EmbedBuilder error = new EmbedBuilder();
                     error.setColor(0xff3923);
-                    error.setTitle(LanguageDetector.getMessage("general.icon.error") + LanguageDetector.getMessage("clear.unsuitable.setTitle"));
-                    error.setDescription(LanguageDetector.getMessage("clear.unsuitable.setDescription"));
+                    error.setTitle(LanguageDetector.getMessage("general.icon.error", guildID) + LanguageDetector.getMessage("clear.unsuitable.setTitle", guildID));
+                    error.setDescription(LanguageDetector.getMessage("clear.unsuitable.setDescription", guildID));
 
                     channel.sendTyping().queue();
                     channel.sendMessage(error.build()).queue();
@@ -63,8 +76,8 @@ public class Clear implements ICommand {
                 } else {
                     EmbedBuilder error = new EmbedBuilder();
                     error.setColor(0xff3923);
-                    error.setTitle(LanguageDetector.getMessage("general.icon.error") + LanguageDetector.getMessage("clear.older.setTitle"));
-                    error.setDescription(LanguageDetector.getMessage("clear.older.setDescription"));
+                    error.setTitle(LanguageDetector.getMessage("general.icon.error", guildID) + LanguageDetector.getMessage("clear.older.setTitle", guildID));
+                    error.setDescription(LanguageDetector.getMessage("clear.older.setDescription", guildID));
 
                     channel.sendTyping().queue();
                     channel.sendMessage(error.build()).queue();
@@ -75,12 +88,12 @@ public class Clear implements ICommand {
     }
 
     @Override
-    public String getName() {
-        return LanguageDetector.getMessage("clear.name");
+    public String getName(long guildID) {
+        return LanguageDetector.getMessage("clear.name", guildID);
     }
 
     @Override
-    public String getHelp() {
-        return LanguageDetector.getMessage("clear.gethelp");
+    public String getHelp(long guildID) {
+        return LanguageDetector.getMessage("clear.gethelp", guildID);
     }
 }

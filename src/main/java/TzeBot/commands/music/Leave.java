@@ -20,12 +20,13 @@ public class Leave implements ICommand {
         final PlayerManager playerManager = PlayerManager.getInstance();
         final GuildMusicManager musicManager = playerManager.getGuildMusicManager(ctx.getGuild());
         final AudioPlayer player = musicManager.player;
+        final long guildID = ctx.getGuild().getIdLong();
 
         if (!audioManager.isConnected()) {
             EmbedBuilder error = new EmbedBuilder();
             error.setColor(0xff3923);
-            error.setTitle(LanguageDetector.getMessage("general.icon.error") + LanguageDetector.getMessage("leave.cannotleave.setTitle"));
-            error.setDescription(LanguageDetector.getMessage("leave.notconnected"));
+            error.setTitle(LanguageDetector.getMessage("general.icon.error", guildID) + LanguageDetector.getMessage("leave.cannotleave.setTitle", guildID));
+            error.setDescription(LanguageDetector.getMessage("leave.notconnected", guildID));
 
             channel.sendTyping().queue();
             channel.sendMessage(error.build()).queue();
@@ -38,8 +39,8 @@ public class Leave implements ICommand {
         if (!voiceChannel.getMembers().contains(ctx.getMember())) {
             EmbedBuilder error = new EmbedBuilder();
             error.setColor(0xff3923);
-            error.setTitle(LanguageDetector.getMessage("general.icon.error") + LanguageDetector.getMessage("leave.cannotleave.setTitle"));
-            error.setDescription(LanguageDetector.getMessage("leave.notin"));
+            error.setTitle(LanguageDetector.getMessage("general.icon.error", guildID) + LanguageDetector.getMessage("leave.cannotleave.setTitle", guildID));
+            error.setDescription(LanguageDetector.getMessage("leave.notin", guildID));
 
             channel.sendTyping().queue();
             channel.sendMessage(error.build()).queue();
@@ -54,8 +55,8 @@ public class Leave implements ICommand {
 
             EmbedBuilder success = new EmbedBuilder();
             success.setColor(0x00ff00);
-            success.setTitle(LanguageDetector.getMessage("general.icon.stop") + LanguageDetector.getMessage("stop.success.setTitle"));
-            success.setFooter(LanguageDetector.getMessage("general.bythecommand") + " " + ctx.getMember().getUser().getName(), ctx.getMember().getUser().getAvatarUrl());
+            success.setTitle(LanguageDetector.getMessage("general.icon.stop", guildID) + LanguageDetector.getMessage("stop.success.setTitle", guildID));
+            success.setFooter(LanguageDetector.getMessage("general.bythecommand", guildID) + " " + ctx.getMember().getUser().getName(), ctx.getMember().getUser().getAvatarUrl());
 
             channel.sendTyping().queue();
             channel.sendMessage(success.build()).queue();
@@ -65,8 +66,8 @@ public class Leave implements ICommand {
         audioManager.closeAudioConnection();
         EmbedBuilder success = new EmbedBuilder();
         success.setColor(0x00ff00);
-        success.setTitle(LanguageDetector.getMessage("general.icon.leave") + LanguageDetector.getMessage("leave.success.setTitle"));
-        success.setFooter(LanguageDetector.getMessage("general.bythecommand") + ctx.getMember().getUser().getName(), ctx.getMember().getUser().getAvatarUrl());
+        success.setTitle(LanguageDetector.getMessage("general.icon.leave", guildID) + LanguageDetector.getMessage("leave.success.setTitle", guildID));
+        success.setFooter(LanguageDetector.getMessage("general.bythecommand", guildID) + ctx.getMember().getUser().getName(), ctx.getMember().getUser().getAvatarUrl());
 
         channel.sendTyping().queue();
         channel.sendMessage(success.build()).queue();
@@ -75,12 +76,12 @@ public class Leave implements ICommand {
     }
 
     @Override
-    public String getName() {
-        return LanguageDetector.getMessage("leave.name");
+    public String getName(long guildID) {
+        return LanguageDetector.getMessage("leave.name", guildID);
     }
 
     @Override
-    public String getHelp() {
-        return LanguageDetector.getMessage("leave.gethelp");
+    public String getHelp(long guildID) {
+        return LanguageDetector.getMessage("leave.gethelp", guildID);
     }
 }

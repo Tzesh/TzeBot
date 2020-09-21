@@ -19,12 +19,13 @@ public class Skip implements ICommand {
         final GuildMusicManager musicManager = playerManager.getGuildMusicManager(ctx.getGuild());
         final TrackScheduler scheduler = musicManager.scheduler;
         final AudioPlayer player = musicManager.player;
+        final long guildID = ctx.getGuild().getIdLong();
 
         if (player.getPlayingTrack() == null) {
             EmbedBuilder error = new EmbedBuilder();
             error.setColor(0xff3923);
-            error.setTitle(LanguageDetector.getMessage("general.icon.error") + LanguageDetector.getMessage("skip.error.setTitle"));
-            error.setDescription(LanguageDetector.getMessage("skip.error.setDescription"));
+            error.setTitle(LanguageDetector.getMessage("general.icon.error", guildID) + LanguageDetector.getMessage("skip.error.setTitle", guildID));
+            error.setDescription(LanguageDetector.getMessage("skip.error.setDescription", guildID));
 
             channel.sendTyping().queue();
             channel.sendMessage(error.build()).queue();
@@ -34,8 +35,8 @@ public class Skip implements ICommand {
 
         EmbedBuilder success = new EmbedBuilder();
         success.setColor(0x00ff00);
-        success.setTitle(LanguageDetector.getMessage("general.icon.skip") + LanguageDetector.getMessage("skip.success.setTitle1") + player.getPlayingTrack().getInfo().title + LanguageDetector.getMessage("skip.success.setTitle2"));
-        success.setFooter(LanguageDetector.getMessage("general.bythecommand") + " " + ctx.getMember().getUser().getName(), ctx.getMember().getUser().getAvatarUrl());
+        success.setTitle(LanguageDetector.getMessage("general.icon.skip", guildID) + LanguageDetector.getMessage("skip.success.setTitle1", guildID) + player.getPlayingTrack().getInfo().title + LanguageDetector.getMessage("skip.success.setTitle2", guildID));
+        success.setFooter(LanguageDetector.getMessage("general.bythecommand", guildID) + " " + ctx.getMember().getUser().getName(), ctx.getMember().getUser().getAvatarUrl());
 
         scheduler.nextTrack();
 
@@ -45,12 +46,12 @@ public class Skip implements ICommand {
     }
 
     @Override
-    public String getName() {
-        return LanguageDetector.getMessage("skip.name");
+    public String getName(long guildID) {
+        return LanguageDetector.getMessage("skip.name", guildID);
     }
 
     @Override
-    public String getHelp() {
-        return LanguageDetector.getMessage("skip.gethelp");
+    public String getHelp(long guildID) {
+        return LanguageDetector.getMessage("skip.gethelp", guildID);
     }
 }

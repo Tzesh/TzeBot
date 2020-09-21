@@ -43,7 +43,7 @@ public class PlayerManager {
         return musicManager;
     }
 
-    public void loadAndPlay(TextChannel channel, String trackUrl, String name, String avatarURL, boolean musicChannel) {
+    public void loadAndPlay(TextChannel channel, String trackUrl, String name, String avatarURL, boolean musicChannel, long guildID) {
         GuildMusicManager musicManager = getGuildMusicManager(channel.getGuild());
 
         playerManager.loadItemOrdered(musicManager, trackUrl, new AudioLoadResultHandler() {
@@ -52,9 +52,9 @@ public class PlayerManager {
                 if (musicChannel) {
                     EmbedBuilder success = new EmbedBuilder();
                     success.setColor(0x00ff00);
-                    success.setTitle(TzeBot.essentials.LanguageDetector.getMessage("general.icon.play") + TzeBot.essentials.LanguageDetector.getMessage("play.success.setTitle") + track.getInfo().title);
+                    success.setTitle(TzeBot.essentials.LanguageDetector.getMessage("general.icon.play", guildID) + TzeBot.essentials.LanguageDetector.getMessage("play.success.setTitle", guildID) + track.getInfo().title);
                     success.setDescription(track.getInfo().uri);
-                    success.setFooter(TzeBot.essentials.LanguageDetector.getMessage("general.bythecommand") + name, avatarURL);
+                    success.setFooter(TzeBot.essentials.LanguageDetector.getMessage("general.bythecommand", guildID) + name, avatarURL);
 
                     channel.sendTyping().queue();
                     channel.sendMessage(success.build()).queue(message -> {
@@ -66,9 +66,9 @@ public class PlayerManager {
                 } else {
                     EmbedBuilder success = new EmbedBuilder();
                     success.setColor(0x00ff00);
-                    success.setTitle(TzeBot.essentials.LanguageDetector.getMessage("general.icon.play") + TzeBot.essentials.LanguageDetector.getMessage("play.success.setTitle") + track.getInfo().title);
+                    success.setTitle(TzeBot.essentials.LanguageDetector.getMessage("general.icon.play", guildID) + TzeBot.essentials.LanguageDetector.getMessage("play.success.setTitle", guildID) + track.getInfo().title);
                     success.setDescription(track.getInfo().uri);
-                    success.setFooter(TzeBot.essentials.LanguageDetector.getMessage("general.bythecommand") + name, avatarURL);
+                    success.setFooter(TzeBot.essentials.LanguageDetector.getMessage("general.bythecommand", guildID) + name, avatarURL);
 
                     channel.sendTyping().queue();
                     channel.sendMessage(success.build()).queue();
@@ -90,8 +90,8 @@ public class PlayerManager {
 
                     EmbedBuilder success = new EmbedBuilder();
                     success.setColor(0x00ff00);
-                    success.setTitle(TzeBot.essentials.LanguageDetector.getMessage("play.playlist.setTitle1") + firstTrack.getInfo().title + TzeBot.essentials.LanguageDetector.getMessage("play.playlist.setTitle2") + playlist.getName() + ")");
-                    success.setFooter(TzeBot.essentials.LanguageDetector.getMessage("general.bythecommand") + name, avatarURL);
+                    success.setTitle(TzeBot.essentials.LanguageDetector.getMessage("play.playlist.setTitle1", guildID) + firstTrack.getInfo().title + TzeBot.essentials.LanguageDetector.getMessage("play.playlist.setTitle2", guildID) + playlist.getName() + ")");
+                    success.setFooter(TzeBot.essentials.LanguageDetector.getMessage("general.bythecommand", guildID) + name, avatarURL);
 
                     channel.sendTyping().queue();
                     channel.sendMessage(success.build()).queue(message -> {
@@ -105,8 +105,8 @@ public class PlayerManager {
                 } else {
                     EmbedBuilder success = new EmbedBuilder();
                     success.setColor(0x00ff00);
-                    success.setTitle(TzeBot.essentials.LanguageDetector.getMessage("play.playlist.setTitle1") + firstTrack.getInfo().title + TzeBot.essentials.LanguageDetector.getMessage("play.playlist.setTitle2") + playlist.getName() + ")");
-                    success.setFooter(TzeBot.essentials.LanguageDetector.getMessage("general.bythecommand") + name, avatarURL);
+                    success.setTitle(TzeBot.essentials.LanguageDetector.getMessage("play.playlist.setTitle1", guildID) + firstTrack.getInfo().title + TzeBot.essentials.LanguageDetector.getMessage("play.playlist.setTitle2", guildID) + playlist.getName() + ")");
+                    success.setFooter(TzeBot.essentials.LanguageDetector.getMessage("general.bythecommand", guildID) + name, avatarURL);
 
                     channel.sendTyping().queue();
                     channel.sendMessage(success.build()).queue(message -> {
@@ -125,8 +125,8 @@ public class PlayerManager {
                 if (musicChannel) {
                     EmbedBuilder error = new EmbedBuilder();
                     error.setColor(0xff3923);
-                    error.setTitle(TzeBot.essentials.LanguageDetector.getMessage("general.icon.error") + TzeBot.essentials.LanguageDetector.getMessage("play.nothing.setTitle"));
-                    error.setDescription(TzeBot.essentials.LanguageDetector.getMessage("play.nothing.setDescription") + trackUrl);
+                    error.setTitle(TzeBot.essentials.LanguageDetector.getMessage("general.icon.error", guildID) + TzeBot.essentials.LanguageDetector.getMessage("play.nothing.setTitle", guildID));
+                    error.setDescription(TzeBot.essentials.LanguageDetector.getMessage("play.nothing.setDescription", guildID) + trackUrl);
 
                     channel.sendTyping().queue();
                     channel.sendMessage(error.build()).queue(message -> {
@@ -136,8 +136,8 @@ public class PlayerManager {
                 } else {
                     EmbedBuilder error = new EmbedBuilder();
                     error.setColor(0xff3923);
-                    error.setTitle(TzeBot.essentials.LanguageDetector.getMessage("general.icon.error") + TzeBot.essentials.LanguageDetector.getMessage("play.nothing.setTitle"));
-                    error.setDescription(TzeBot.essentials.LanguageDetector.getMessage("play.nothing.setDescription") + trackUrl);
+                    error.setTitle(TzeBot.essentials.LanguageDetector.getMessage("general.icon.error", guildID) + TzeBot.essentials.LanguageDetector.getMessage("play.nothing.setTitle", guildID));
+                    error.setDescription(TzeBot.essentials.LanguageDetector.getMessage("play.nothing.setDescription", guildID) + trackUrl);
 
                     channel.sendTyping().queue();
                     channel.sendMessage(error.build()).queue();
@@ -151,8 +151,8 @@ public class PlayerManager {
                 if (musicChannel) {
                     EmbedBuilder error = new EmbedBuilder();
                     error.setColor(0xff3923);
-                    error.setTitle(TzeBot.essentials.LanguageDetector.getMessage("general.icon.error") + TzeBot.essentials.LanguageDetector.getMessage("play.error.setTitle"));
-                    error.setDescription(TzeBot.essentials.LanguageDetector.getMessage("play.error.setDescription") + exception.getMessage());
+                    error.setTitle(TzeBot.essentials.LanguageDetector.getMessage("general.icon.error", guildID) + TzeBot.essentials.LanguageDetector.getMessage("play.error.setTitle", guildID));
+                    error.setDescription(TzeBot.essentials.LanguageDetector.getMessage("play.error.setDescription", guildID) + exception.getMessage());
 
                     channel.sendTyping().queue();
                     channel.sendMessage(error.build()).queue(message -> {
@@ -162,8 +162,8 @@ public class PlayerManager {
                 } else {
                     EmbedBuilder error = new EmbedBuilder();
                     error.setColor(0xff3923);
-                    error.setTitle(TzeBot.essentials.LanguageDetector.getMessage("general.icon.error") + TzeBot.essentials.LanguageDetector.getMessage("play.error.setTitle"));
-                    error.setDescription(TzeBot.essentials.LanguageDetector.getMessage("play.error.setDescription") + exception.getMessage());
+                    error.setTitle(TzeBot.essentials.LanguageDetector.getMessage("general.icon.error", guildID) + TzeBot.essentials.LanguageDetector.getMessage("play.error.setTitle", guildID));
+                    error.setDescription(TzeBot.essentials.LanguageDetector.getMessage("play.error.setDescription", guildID) + exception.getMessage());
 
                     channel.sendTyping().queue();
                     channel.sendMessage(error.build()).queue();

@@ -19,7 +19,6 @@ import net.dv8tion.jda.api.hooks.ListenerAdapter;
  */
 public class LanguageDetector extends ListenerAdapter {
 
-    static long guildId;
     private static final HashMap<String, String> en_en = new HashMap<>();
     private static final HashMap<String, String> tr_tr = new HashMap<>();
 
@@ -46,12 +45,8 @@ public class LanguageDetector extends ListenerAdapter {
         }
     }
 
-    public static void setGuild(long guildId) {
-        LanguageDetector.guildId = guildId;
-    }
-
-    public static String getMessage(String key) {
-        String shortening = Config.LANGUAGES.computeIfAbsent(guildId, (id) -> "en_en");
+    public static String getMessage(String key, long guildID) {
+        String shortening = Config.LANGUAGES.computeIfAbsent(guildID, (id) -> "en_en");
         if (shortening.equals("en_en")) {
             return en_en.get(key);
         }

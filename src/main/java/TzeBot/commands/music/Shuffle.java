@@ -26,12 +26,13 @@ public class Shuffle implements ICommand {
         final PlayerManager playerManager = PlayerManager.getInstance();
         final GuildMusicManager musicManager = playerManager.getGuildMusicManager(ctx.getGuild());
         final TrackScheduler scheduler = musicManager.scheduler;
+        final long guildID = ctx.getGuild().getIdLong();
 
         if (musicManager.scheduler.getQueue().isEmpty() && musicManager.player.getPlayingTrack() == null) {
             EmbedBuilder error = new EmbedBuilder();
             error.setColor(0xff3923);
-            error.setTitle(LanguageDetector.getMessage("general.icon.error") + LanguageDetector.getMessage("loop.error.setTitle"));
-            error.setDescription(LanguageDetector.getMessage("loop.error.setDescription"));
+            error.setTitle(LanguageDetector.getMessage("general.icon.error", guildID) + LanguageDetector.getMessage("loop.error.setTitle", guildID));
+            error.setDescription(LanguageDetector.getMessage("loop.error.setDescription", guildID));
 
             channel.sendTyping().queue();
             channel.sendMessage(error.build()).queue();
@@ -40,8 +41,8 @@ public class Shuffle implements ICommand {
             scheduler.shufflePlaylist();
             EmbedBuilder success = new EmbedBuilder();
             success.setColor(0x00ff00);
-            success.setTitle(LanguageDetector.getMessage("general.icon.shuffle") + LanguageDetector.getMessage("shuffle.success.setTitle"));
-            success.setFooter(LanguageDetector.getMessage("general.bythecommand") + ctx.getMember().getUser().getName(), ctx.getMember().getUser().getAvatarUrl());
+            success.setTitle(LanguageDetector.getMessage("general.icon.shuffle", guildID) + LanguageDetector.getMessage("shuffle.success.setTitle", guildID));
+            success.setFooter(LanguageDetector.getMessage("general.bythecommand", guildID) + ctx.getMember().getUser().getName(), ctx.getMember().getUser().getAvatarUrl());
 
             channel.sendTyping().queue();
             channel.sendMessage(success.build()).queue();
@@ -50,13 +51,13 @@ public class Shuffle implements ICommand {
     }
 
     @Override
-    public String getName() {
-        return LanguageDetector.getMessage("shuffle.name");
+    public String getName(long guildID) {
+        return LanguageDetector.getMessage("shuffle.name", guildID);
     }
 
     @Override
-    public String getHelp() {
-        return LanguageDetector.getMessage("shuffle.gethelp");
+    public String getHelp(long guildID) {
+        return LanguageDetector.getMessage("shuffle.gethelp", guildID);
     }
 
 }
