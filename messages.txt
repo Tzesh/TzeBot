@@ -7,6 +7,11 @@ en_en,  general.403,  None args specified
 en_en,  general.403.description,  Please retype command with its args
 en_en,  general.not_authorized,  Unauthorized person
 en_en,  general.not_authorized.description,  You must have manage server permission to use this command
+en_en,  general.nonperm,  TzeBot don't have required permissions
+en_en,  general.nonperm.message_manage,  Be ensure that TzeBot has "Manage Messages" permission
+en_en,  general.nonperm.manage_emotes,  Be ensure that TzeBot has "Manage Emotes" permission
+en_en,  general.nonperm.manage_channel,  Be ensure that TzeBot has "Manage Channels" permission
+en_en,  general.nonperm.manage_roles,  Be ensure that TzeBot has "Manage Roles" permission
 
 // General Stuff
 en_en,  general.bythecommand,  By the command of 
@@ -250,6 +255,12 @@ tr_tr,  general.403,  Argüman belirtilmedi
 tr_tr,  general.403.description,  Lütfen komutu argümanıyla tekrar yaz
 tr_tr,  general.not_authorized,  Yetkisiz kullanıcı
 tr_tr,  general.not_authorized.description,  Bu komutu kullanmak için sunucuyu yönetme yetkisine sahip olman gerek
+tr_tr,  general.nonperm,  TzeBot gerekli izinlere sahip değil
+tr_tr,  general.nonperm.message_manage,  Lütfen TzeBot'un "Mesajları Yönet" yetkisine sahip olduğundan emin olun
+tr_tr,  general.nonperm.manage_emotes,  Lütfen TzeBot'un "Emojileri Yönet" yetkisine sahip olduğundan emin olun
+tr_tr,  general.nonperm.manage_channel,  Lütfen TzeBot'un "Kanalları Yönet" yetkisine sahip olduğundan emin olun
+tr_tr,  general.nonperm.manage_roles,  Lütfen TzeBot'un "Rolleri Yönet" yetkisine sahip olduğundan emin olun
+
 
 // Genel Şeyler
 tr_tr,  general.bythecommand,  Komutu veren 
