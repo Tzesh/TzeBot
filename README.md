@@ -8,7 +8,7 @@ TzeBot, is a discord bot project that I've started about 6th month of 2020. The 
 Then I just wonder why was I not developing a really good one to publish it for free to use. All of the story of TzeBot just came out like this.
 
 ## How can I use it?
-### 1) Just invite TzeBot to your server
+### a) Just invite TzeBot to your server
 First of all, you have to have "**manage server**" permission of the server that you want to invite TzeBot. Then, <a href="https://discord.com/oauth2/authorize?client_id=700416851678855168&scope=bot&permissions=1379216720">**just click on this line to open invite link**</a> and select the server that you want to invite TzeBot, do not change the permissions of TzeBot if you want to use all of the features of it, that's it. Now you can use TzeBot in your discord server don't worry it's online 24/7. 
 ![Inviting TzeBot](https://i.imgur.com/M0ED2Q0.png)
 
@@ -35,7 +35,7 @@ Then all you have to do is just go to the created music channel and type "**.cha
 
 After you wrote "**.channel set**" into the music channel you will have been noticed that your message is deleted and 2 messages added into music channel. First one is banner of TzeBot, the other one is the reaction-control panel or at least the name that I put into it. It allows you to control music player with emotes. And all the functions of the emotes is above of themselves. You can just type name of the song or URL of the song that you want to play into channel.
 
-### 2) Use TzeBot as a substructure of your bot
+### b) Use TzeBot as a substructure of your bot
 
 Just download the latest version of TzeBot <a href="https://github.com/Tzesh/TzeBot/releases">**in this link**</a>. And extract TzeBot-x.x.rar to a directory then open TzeBot-x.x.jar. If you want to use TzeBot as a substructure of your bot, you'll need 3 things that have to be filled:
 
