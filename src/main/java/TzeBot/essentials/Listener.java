@@ -538,7 +538,7 @@ public class Listener extends ListenerAdapter {
                         AudioTrackInfo info = track.getInfo();
 
                         builder.appendDescription(String.format(
-                                i + 1 + ", guildID) " + "%s - %s\n",
+                                i + 1 + ") " + "%s - %s\n",
                                 info.title,
                                 info.author
                         ));
@@ -613,6 +613,7 @@ public class Listener extends ListenerAdapter {
                 }
                 if (event.getReactionEmote().getEmoji().equals(LanguageDetector.getMessage("general.icon.shuffle", guildID))) {
                     if (musicManager.scheduler.getQueue().isEmpty() && musicManager.player.getPlayingTrack() == null) {
+                        event.getChannel().removeReactionById(event.getMessageId(), event.getReactionEmote().getEmoji(), event.getUser()).queue();
                         EmbedBuilder error = new EmbedBuilder();
                         error.setColor(0xff3923);
                         error.setTitle(LanguageDetector.getMessage("general.icon.error", guildID) + LanguageDetector.getMessage("loop.error.setTitle", guildID));
@@ -624,6 +625,7 @@ public class Listener extends ListenerAdapter {
                         });
                         error.clear();
                     } else {
+                        event.getChannel().removeReactionById(event.getMessageId(), event.getReactionEmote().getEmoji(), event.getUser()).queue();
                         scheduler.shufflePlaylist();
                         EmbedBuilder success = new EmbedBuilder();
                         success.setColor(0x00ff00);

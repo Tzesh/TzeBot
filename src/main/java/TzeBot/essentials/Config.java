@@ -33,7 +33,7 @@ public class Config {
     public static Map<Long, Long> CHANNELCREATED = new HashMap<>(); // All of the music channels that are created but either initialized or not. It's important value for preventing some kind of abusing of channel creation.
 
     public static int serverNumber = 0;
-    public static double currentVersion = 2.2; // Check if there's an update or not.
+    public static double currentVersion = 2.3; // Check if there's an update or not.
 
     public static String get(String key) {
         return dotenv.get(key.toUpperCase());

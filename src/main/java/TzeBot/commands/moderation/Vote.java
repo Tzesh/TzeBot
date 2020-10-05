@@ -26,7 +26,6 @@ public class Vote implements ICommand {
         final List<String> args = ctx.getArgs();
         final Member member = ctx.getMember();
         final long guildID = ctx.getGuild().getIdLong();
-        final Member selfmember = ctx.getGuild().getSelfMember();
 
         if (!member.hasPermission(Permission.MANAGE_SERVER)) {
             EmbedBuilder error = new EmbedBuilder();
@@ -38,36 +37,6 @@ public class Vote implements ICommand {
             channel.sendMessage(error.build()).queue();
             error.clear();
             return;
-        }
-        if (!selfmember.hasPermission(Permission.MESSAGE_MANAGE)) {
-            EmbedBuilder error = new EmbedBuilder();
-            error.setColor(0xff3923);
-            error.setTitle(LanguageDetector.getMessage("general.icon.error", guildID) + LanguageDetector.getMessage("general.nonperm", guildID));
-            error.setDescription(LanguageDetector.getMessage("general.nonperm.message_manage", guildID));
-
-            channel.sendTyping().queue();
-            channel.sendMessage(error.build()).queue();
-            error.clear();
-        }
-        if (!selfmember.hasPermission(Permission.MANAGE_EMOTES)) {
-            EmbedBuilder error = new EmbedBuilder();
-            error.setColor(0xff3923);
-            error.setTitle(LanguageDetector.getMessage("general.icon.error", guildID) + LanguageDetector.getMessage("general.nonperm", guildID));
-            error.setDescription(LanguageDetector.getMessage("general.nonperm.manage_emotes", guildID));
-
-            channel.sendTyping().queue();
-            channel.sendMessage(error.build()).queue();
-            error.clear();
-        }
-        if (!selfmember.hasPermission(Permission.MANAGE_ROLES)) {
-            EmbedBuilder error = new EmbedBuilder();
-            error.setColor(0xff3923);
-            error.setTitle(LanguageDetector.getMessage("general.icon.error", guildID) + LanguageDetector.getMessage("general.nonperm", guildID));
-            error.setDescription(LanguageDetector.getMessage("general.nonperm.manage_roles", guildID));
-
-            channel.sendTyping().queue();
-            channel.sendMessage(error.build()).queue();
-            error.clear();
         }
         if (args.isEmpty()) {
             EmbedBuilder error = new EmbedBuilder();

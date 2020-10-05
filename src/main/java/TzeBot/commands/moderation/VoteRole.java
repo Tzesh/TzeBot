@@ -42,26 +42,6 @@ public class VoteRole implements ICommand {
             error.clear();
             return;
         }
-        if (!selfmember.hasPermission(Permission.MESSAGE_MANAGE)) {
-            EmbedBuilder error = new EmbedBuilder();
-            error.setColor(0xff3923);
-            error.setTitle(LanguageDetector.getMessage("general.icon.error", guildID) + LanguageDetector.getMessage("general.nonperm", guildID));
-            error.setDescription(LanguageDetector.getMessage("general.nonperm.message_manage", guildID));
-
-            channel.sendTyping().queue();
-            channel.sendMessage(error.build()).queue();
-            error.clear();
-        }
-        if (!selfmember.hasPermission(Permission.MANAGE_EMOTES)) {
-            EmbedBuilder error = new EmbedBuilder();
-            error.setColor(0xff3923);
-            error.setTitle(LanguageDetector.getMessage("general.icon.error", guildID) + LanguageDetector.getMessage("general.nonperm", guildID));
-            error.setDescription(LanguageDetector.getMessage("general.nonperm.manage_emotes", guildID));
-
-            channel.sendTyping().queue();
-            channel.sendMessage(error.build()).queue();
-            error.clear();
-        }
         if (!selfmember.hasPermission(Permission.MANAGE_ROLES)) {
             EmbedBuilder error = new EmbedBuilder();
             error.setColor(0xff3923);

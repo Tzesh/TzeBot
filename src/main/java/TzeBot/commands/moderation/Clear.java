@@ -52,7 +52,7 @@ public class Clear implements ICommand {
             error.clear();
         } else {
             try {
-                List<Message> messages = channel.getHistory().retrievePast(Integer.parseInt(String.join(" ", args))).complete();
+                List<Message> messages = channel.getHistory().retrievePast(Integer.parseInt(String.join(" ", args)) + 1).complete();
                 channel.deleteMessages(messages).queue();
 
                 EmbedBuilder success = new EmbedBuilder();

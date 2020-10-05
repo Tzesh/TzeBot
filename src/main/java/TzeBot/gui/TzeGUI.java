@@ -14,6 +14,8 @@ import java.io.PrintStream;
 import java.sql.SQLException;
 import javax.security.auth.login.LoginException;
 import javax.swing.JButton;
+
+import net.dv8tion.jda.api.entities.Activity;
 import net.dv8tion.jda.api.sharding.DefaultShardManagerBuilder;
 
 public class TzeGUI extends javax.swing.JFrame {
@@ -363,6 +365,7 @@ public class TzeGUI extends javax.swing.JFrame {
                     .setToken(Config.get("token"))
                     .addEventListeners(new Listener())
                     .setShardsTotal(shards)
+                    .setActivity(Activity.listening(".help"))
                     .build();
         } catch (LoginException exception) {
             System.out.println("An error occured please make sure you have set all variables properly.");

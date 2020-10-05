@@ -58,11 +58,14 @@ public class Play implements ICommand {
         final AudioManager audioManager = ctx.getGuild().getAudioManager();
         final PlayerManager manager = PlayerManager.getInstance();
         final String prefix = Config.PREFIXES.get(ctx.getGuild().getIdLong());
+        boolean musicChannel = false;
         HashMap<Long, Long> IDs = Config.MUSICCHANNELS.computeIfAbsent(ctx.getGuild().getIdLong(), (id) -> null);
+        if (IDs != null) {
+            musicChannel = IDs.containsKey(channel.getIdLong());
+        }
         final long guildID = ctx.getGuild().getIdLong();
 
-        if (IDs != null) {
-            if (IDs.containsKey(channel.getIdLong())) {
+        if (musicChannel) {
                 if (!isUrl(input)) {
                     String ytSearched = searchYoutube(input);
 
@@ -132,8 +135,7 @@ public class Play implements ICommand {
                 manager.loadAndPlay(ctx.getChannel(), input, ctx.getMember().getUser().getName(), ctx.getMember().getUser().getAvatarUrl(), true, guildID);
                 ctx.getMessage().delete().queue();
             }
-        }
-        if (IDs == null) {
+        else {
             if (!isUrl(input)) {
                 String ytSearched = searchYoutube(input);
 
@@ -201,21 +203,22 @@ public class Play implements ICommand {
                 channel.sendMessage(succes.build()).queue();
                 succes.clear();
             }
-
             GuildMusicManager musicManager = manager.getGuildMusicManager(ctx.getGuild());
             AudioPlayer player = musicManager.player;
 
             manager.loadAndPlay(ctx.getChannel(), input, ctx.getMember().getUser().getName(), ctx.getMember().getUser().getAvatarUrl(), false, guildID);
 
-            AudioTrackInfo info = player.getPlayingTrack().getInfo();
+            if (player.getPlayingTrack() != null) {
+                AudioTrackInfo info = player.getPlayingTrack().getInfo();
 
-            channel.sendMessage(EmbedUtils.embedMessage(String.format("**" + LanguageDetector.getMessage("general.icon.nowplaying", guildID) + LanguageDetector.getMessage("nowplaying.nowplaying", guildID) + "** [%s]{%s}\n%s %s - %s",
-                    info.title,
-                    info.uri,
-                    player.isPaused() ? "\u23F8" : "▶",
-                    formatTime(player.getPlayingTrack().getPosition()),
-                    formatTime(player.getPlayingTrack().getDuration())
-            )).build()).queue();
+                channel.sendMessage(EmbedUtils.embedMessage(String.format("**" + LanguageDetector.getMessage("general.icon.nowplaying", guildID) + LanguageDetector.getMessage("nowplaying.nowplaying", guildID) + "** [%s]{%s}\n%s %s - %s",
+                        info.title,
+                        info.uri,
+                        player.isPaused() ? "\u23F8" : "▶",
+                        formatTime(player.getPlayingTrack().getPosition()),
+                        formatTime(player.getPlayingTrack().getDuration())
+                )).build()).queue();
+            }
         }
     }
 

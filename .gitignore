@@ -2,7 +2,7 @@
 .gradle
 .idea
 .env
-database.db
+database.bin
 
 # Ignore Gradle build output directory
 build

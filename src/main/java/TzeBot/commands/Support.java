@@ -29,7 +29,7 @@ public class Support implements ICommand {
                 + "\n" + LanguageDetector.getMessage("support.setDescription2", guildID)
                 + "\n" + LanguageDetector.getMessage("support.setDescription3", guildID)
                 + "\n" + LanguageDetector.getMessage("general.icon.patreon", guildID) + "https://www.patreon.com/tzebot"
-                + "\n" + LanguageDetector.getMessage("support.discordbots", guildID) + "https://discordbotlist.com/bots/tzebot");
+                + "\n" + LanguageDetector.getMessage("support.discordbots", guildID) + "https://discordbotlist.com/bots/tzebot" + "\nhttps://bots.discordlabs.org/bot/700416851678855168");
         support.setFooter(LanguageDetector.getMessage("support.setFooter", guildID));
         channel.sendTyping().queue();
         channel.sendMessage(support.build()).queue();
