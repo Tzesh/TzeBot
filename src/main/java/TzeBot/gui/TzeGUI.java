@@ -27,6 +27,7 @@ public class TzeGUI extends javax.swing.JFrame {
     int shards = 1;
 
     public TzeGUI() {
+        Config.createENV();
         Config.getDatabase();
         initComponents();
         updateButton.setVisible(false);
@@ -71,7 +72,7 @@ public class TzeGUI extends javax.swing.JFrame {
             ownerID.setText(Config.get("Owner"));
         }
         if (Config.get("Pre") == null || Config.get("pre").equals("")) {
-            prefix.setText("Not-installed");
+            prefix.setText(".");
         } else {
             prefix.setText(Config.get("Pre"));
         }
@@ -365,8 +366,8 @@ public class TzeGUI extends javax.swing.JFrame {
         TzeBot.essentials.LanguageDetector.getMessages();
         progressInfo.setText("Bot started.");
         try {
-            DefaultShardManagerBuilder.createDefault(Config.get("key"))
-                    .setToken(Config.get("token"))
+            DefaultShardManagerBuilder.createDefault(apiKEY.getText())
+                    .setToken(token.getText())
                     .addEventListeners(new Listener())
                     .setShardsTotal(shards)
                     .setActivity(Activity.listening(".help"))

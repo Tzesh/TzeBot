@@ -22,6 +22,8 @@ import net.dv8tion.jda.api.managers.AudioManager;
 import javax.annotation.Nullable;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -241,10 +243,10 @@ public class Play implements ICommand {
     private String searchYoutube(String input) {
         try {
             List<SearchResult> results = youTube.search()
-                    .list("id,snippet")
+                    .list(Collections.singletonList("id,snippet"))
                     .setQ(input)
                     .setMaxResults(1L)
-                    .setType("video")
+                    .setType(Collections.singletonList("video"))
                     .setFields("items(id/kind,id/videoId,snippet/title,snippet/thumbnails/default/url)")
                     .setKey(Config.get("key"))
                     .execute()

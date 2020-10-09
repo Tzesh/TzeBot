@@ -1,6 +1,7 @@
 package TzeBot.essentials;
 
 import io.github.cdimascio.dotenv.Dotenv;
+import io.github.cdimascio.dotenv.DotenvBuilder;
 import net.dv8tion.jda.api.requests.GatewayIntent;
 import net.dv8tion.jda.api.sharding.DefaultShardManagerBuilder;
 import net.dv8tion.jda.api.utils.ChunkingFilter;
@@ -27,7 +28,9 @@ import static java.util.concurrent.TimeUnit.MINUTES;
 
 public class Config {
 
-    private static final Dotenv dotenv = Dotenv.load(); // To get .env file properties which are unique for bot
+    private static Dotenv dotenv = Dotenv.configure()
+                                        .ignoreIfMissing()
+                                        .load(); // To get .env file properties which are unique for bot
     private static final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1); // To save databases per 15 minutes
 
     public static Map<Long, String> PREFIXES = new HashMap<>(); // All of the prefixes of the servers default is .env's prefix setting
@@ -55,7 +58,24 @@ public class Config {
         } catch (IOException exception) {
             System.out.println("An error occured during saving the .env");
         }
+        Dotenv.load();
         System.out.println("All .env settings have been saved.");
+    }
+
+    public static void createENV() {
+        File envFile = new File(".env");
+        if (!envFile.exists()) {
+            try (FileWriter writer = new FileWriter(".env")) {
+                writer.write("TOKEN="
+                        + "\nPRE=."
+                        + "\nOWNER="
+                        + "\nKEY="
+                        + "\nSHARD=");
+            } catch (IOException exception) {
+                System.out.println("An error occured during saving the .env");
+            }
+            System.out.println("All .env settings have been saved.");
+        }
     }
 
     public static void saveDatabase() { // database.bin saving
