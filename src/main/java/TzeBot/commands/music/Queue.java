@@ -2,7 +2,6 @@ package TzeBot.commands.music;
 
 import TzeBot.essentials.CommandContext;
 import TzeBot.essentials.ICommand;
-import TzeBot.essentials.LanguageDetector;
 import TzeBot.music.GuildMusicManager;
 import TzeBot.music.PlayerManager;
 import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
@@ -13,6 +12,9 @@ import net.dv8tion.jda.api.entities.TextChannel;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.BlockingQueue;
+
+import static TzeBot.essentials.LanguageDetector.getMessage;
+
 
 public class Queue implements ICommand {
 
@@ -27,10 +29,10 @@ public class Queue implements ICommand {
         if (queue.isEmpty()) {
             EmbedBuilder error = new EmbedBuilder();
             error.setColor(0xff3923);
-            error.setTitle(LanguageDetector.getMessage("general.icon.error", guildID) + LanguageDetector.getMessage("loop.error.setTitle", guildID));
-            error.setDescription(LanguageDetector.getMessage("loop.error.setDescription", guildID));
+            error.setTitle(getMessage("general.icon.error", guildID) + getMessage("loop.error.setTitle", guildID));
+            error.setDescription(getMessage("loop.error.setDescription", guildID));
 
-            channel.sendTyping().queue();
+            
             channel.sendMessage(error.build()).queue();
             error.clear();
             return;
@@ -39,7 +41,7 @@ public class Queue implements ICommand {
         int trackCount = Math.min(queue.size(), 20);
         List<AudioTrack> tracks = new ArrayList<>(queue);
         EmbedBuilder builder = EmbedUtils.defaultEmbed()
-                .setTitle(LanguageDetector.getMessage("general.icon.queue", guildID) + LanguageDetector.getMessage("queue.setTitle", guildID) + queue.size() + ")");
+                .setTitle(getMessage("general.icon.queue", guildID) + getMessage("queue.setTitle", guildID) + queue.size() + ")");
 
         for (int i = 0; i < trackCount; i++) {
             AudioTrack track = tracks.get(i);
@@ -56,11 +58,11 @@ public class Queue implements ICommand {
 
     @Override
     public String getName(long guildID) {
-        return LanguageDetector.getMessage("queue.name", guildID);
+        return getMessage("queue.name", guildID);
     }
 
     @Override
     public String getHelp(long guildID) {
-        return LanguageDetector.getMessage("queue.gethelp", guildID);
+        return getMessage("queue.gethelp", guildID);
     }
 }

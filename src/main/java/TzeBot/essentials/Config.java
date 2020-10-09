@@ -1,6 +1,12 @@
 package TzeBot.essentials;
 
 import io.github.cdimascio.dotenv.Dotenv;
+import net.dv8tion.jda.api.requests.GatewayIntent;
+import net.dv8tion.jda.api.sharding.DefaultShardManagerBuilder;
+import net.dv8tion.jda.api.utils.ChunkingFilter;
+import net.dv8tion.jda.api.utils.MemberCachePolicy;
+import net.dv8tion.jda.api.utils.cache.CacheFlag;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
@@ -33,7 +39,7 @@ public class Config {
     public static Map<Long, Long> CHANNELCREATED = new HashMap<>(); // All of the music channels that are created but either initialized or not. It's important value for preventing some kind of abusing of channel creation.
 
     public static int serverNumber = 0;
-    public static double currentVersion = 2.3; // Check if there's an update or not.
+    public static double currentVersion = 2.4; // Check if there's an update or not.
 
     public static String get(String key) {
         return dotenv.get(key.toUpperCase());
@@ -69,7 +75,6 @@ public class Config {
             Map<Long, Long> channelcreatedDB = CHANNELCREATED;
             out.writeObject(channelcreatedDB);
             out.reset();
-            out.close();
         } catch (IOException exception) {
             System.out.println("An error occurred during saving databases process...");
         }
@@ -88,7 +93,6 @@ public class Config {
                 VOLUMES = (HashMap<Long, Integer>) in.readObject();
                 CHANNELCREATED = (HashMap<Long, Long>) in.readObject();
                 in.reset();
-                in.close();
             } catch (IOException exception) {
                 System.out.println("An error occured during process...");
             } catch (ClassNotFoundException exception) {

@@ -57,6 +57,10 @@ public class LanguageDetector extends ListenerAdapter {
         }
     }
 
+    public static String getMessage(String key) {
+        return en_en.get(key);
+    }
+
     public static String normalizer(String anormal) {
         anormal = Normalizer.normalize(anormal, Normalizer.Form.NFD);
         anormal = anormal.replaceAll("[^\\p{ASCII}]", "");

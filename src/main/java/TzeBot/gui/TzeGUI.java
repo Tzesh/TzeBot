@@ -16,7 +16,11 @@ import javax.security.auth.login.LoginException;
 import javax.swing.JButton;
 
 import net.dv8tion.jda.api.entities.Activity;
+import net.dv8tion.jda.api.requests.GatewayIntent;
 import net.dv8tion.jda.api.sharding.DefaultShardManagerBuilder;
+import net.dv8tion.jda.api.utils.ChunkingFilter;
+import net.dv8tion.jda.api.utils.MemberCachePolicy;
+import net.dv8tion.jda.api.utils.cache.CacheFlag;
 
 public class TzeGUI extends javax.swing.JFrame {
 
@@ -79,7 +83,7 @@ public class TzeGUI extends javax.swing.JFrame {
         if (Config.get("shard") == null || Config.get("shard").equals("")) {
             shard.setText("1");
         } else {
-            shard.setText(Integer.toString(PREFIXES.size()));
+            shard.setText(Integer.toString((PREFIXES.size() / 1500) + 1));
         }
 
         shard.addKeyListener(new KeyAdapter() {
@@ -366,6 +370,11 @@ public class TzeGUI extends javax.swing.JFrame {
                     .addEventListeners(new Listener())
                     .setShardsTotal(shards)
                     .setActivity(Activity.listening(".help"))
+                    .disableCache(CacheFlag.ACTIVITY)
+                    .setMemberCachePolicy(MemberCachePolicy.VOICE.or(MemberCachePolicy.OWNER))
+                    .setChunkingFilter(ChunkingFilter.NONE)
+                    .disableIntents(GatewayIntent.GUILD_MESSAGE_TYPING, GatewayIntent.DIRECT_MESSAGES, GatewayIntent.DIRECT_MESSAGE_REACTIONS, GatewayIntent.DIRECT_MESSAGE_TYPING, GatewayIntent.GUILD_BANS, GatewayIntent.GUILD_MESSAGE_TYPING, GatewayIntent.GUILD_INVITES)
+                    .setLargeThreshold(50)
                     .build();
         } catch (LoginException exception) {
             System.out.println("An error occured please make sure you have set all variables properly.");

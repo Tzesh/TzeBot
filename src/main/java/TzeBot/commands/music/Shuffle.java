@@ -7,12 +7,14 @@ package TzeBot.commands.music;
 
 import TzeBot.essentials.CommandContext;
 import TzeBot.essentials.ICommand;
-import TzeBot.essentials.LanguageDetector;
 import TzeBot.music.GuildMusicManager;
 import TzeBot.music.PlayerManager;
 import TzeBot.music.TrackScheduler;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.TextChannel;
+
+import static TzeBot.essentials.LanguageDetector.getMessage;
+
 
 /**
  *
@@ -31,20 +33,20 @@ public class Shuffle implements ICommand {
         if (musicManager.scheduler.getQueue().isEmpty() && musicManager.player.getPlayingTrack() == null) {
             EmbedBuilder error = new EmbedBuilder();
             error.setColor(0xff3923);
-            error.setTitle(LanguageDetector.getMessage("general.icon.error", guildID) + LanguageDetector.getMessage("loop.error.setTitle", guildID));
-            error.setDescription(LanguageDetector.getMessage("loop.error.setDescription", guildID));
+            error.setTitle(getMessage("general.icon.error", guildID) + getMessage("loop.error.setTitle", guildID));
+            error.setDescription(getMessage("loop.error.setDescription", guildID));
 
-            channel.sendTyping().queue();
+            
             channel.sendMessage(error.build()).queue();
             error.clear();
         } else {
             scheduler.shufflePlaylist();
             EmbedBuilder success = new EmbedBuilder();
             success.setColor(0x00ff00);
-            success.setTitle(LanguageDetector.getMessage("general.icon.shuffle", guildID) + LanguageDetector.getMessage("shuffle.success.setTitle", guildID));
-            success.setFooter(LanguageDetector.getMessage("general.bythecommand", guildID) + ctx.getMember().getUser().getName(), ctx.getMember().getUser().getAvatarUrl());
+            success.setTitle(getMessage("general.icon.shuffle", guildID) + getMessage("shuffle.success.setTitle", guildID));
+            success.setFooter(getMessage("general.bythecommand", guildID) + ctx.getMember().getUser().getName(), ctx.getMember().getUser().getAvatarUrl());
 
-            channel.sendTyping().queue();
+            
             channel.sendMessage(success.build()).queue();
             success.clear();
         }
@@ -52,12 +54,12 @@ public class Shuffle implements ICommand {
 
     @Override
     public String getName(long guildID) {
-        return LanguageDetector.getMessage("shuffle.name", guildID);
+        return getMessage("shuffle.name", guildID);
     }
 
     @Override
     public String getHelp(long guildID) {
-        return LanguageDetector.getMessage("shuffle.gethelp", guildID);
+        return getMessage("shuffle.gethelp", guildID);
     }
 
 }

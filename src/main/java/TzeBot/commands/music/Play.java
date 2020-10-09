@@ -3,7 +3,6 @@ package TzeBot.commands.music;
 import TzeBot.essentials.Config;
 import TzeBot.essentials.CommandContext;
 import TzeBot.essentials.ICommand;
-import TzeBot.essentials.LanguageDetector;
 import TzeBot.music.GuildMusicManager;
 import TzeBot.music.PlayerManager;
 import com.google.api.client.googleapis.javanet.GoogleNetHttpTransport;
@@ -26,6 +25,11 @@ import java.net.URL;
 import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
+
+import static TzeBot.essentials.LanguageDetector.getMessage;
+
+
+import static TzeBot.utils.Formatter.formatTime;
 
 public class Play implements ICommand {
 
@@ -73,12 +77,12 @@ public class Play implements ICommand {
                         ctx.getMessage().delete().queue();
                         EmbedBuilder error = new EmbedBuilder();
                         error.setColor(0xff3923);
-                        error.setTitle(LanguageDetector.getMessage("general.icon.error", guildID) + LanguageDetector.getMessage("play.noresults.setTitle", guildID));
-                        error.setDescription(LanguageDetector.getMessage("play.noresults.setDescription", guildID));
+                        error.setTitle(getMessage("general.icon.error", guildID) + getMessage("play.noresults.setTitle", guildID));
+                        error.setDescription(getMessage("play.noresults.setDescription", guildID));
 
-                        channel.sendTyping().queue();
+                        
                         channel.sendMessage(error.build()).queue(message -> {
-                            message.delete().queueAfter(5, TimeUnit.SECONDS);
+                            message.delete().queueAfter(3, TimeUnit.SECONDS);
                         });
                         error.clear();
                         return;
@@ -91,12 +95,12 @@ public class Play implements ICommand {
                     ctx.getMessage().delete().queue();
                     EmbedBuilder error = new EmbedBuilder();
                     error.setColor(0xff3923);
-                    error.setTitle(LanguageDetector.getMessage("general.icon.error", guildID) + LanguageDetector.getMessage("join.joinchannel.setTitle", guildID));
-                    error.setDescription(LanguageDetector.getMessage("join.joinchannel.setDescription", guildID));
+                    error.setTitle(getMessage("general.icon.error", guildID) + getMessage("join.joinchannel.setTitle", guildID));
+                    error.setDescription(getMessage("join.joinchannel.setDescription", guildID));
 
-                    channel.sendTyping().queue();
+                    
                     channel.sendMessage(error.build()).queue(message -> {
-                        message.delete().queueAfter(5, TimeUnit.SECONDS);
+                        message.delete().queueAfter(3, TimeUnit.SECONDS);
                     });
                     error.clear();
                     return;
@@ -106,12 +110,12 @@ public class Play implements ICommand {
                     ctx.getMessage().delete().queue();
                     EmbedBuilder error = new EmbedBuilder();
                     error.setColor(0xff3923);
-                    error.setTitle(LanguageDetector.getMessage("general.icon.error", guildID) + LanguageDetector.getMessage("join.cannotjoin.setTitle", guildID));
-                    error.setDescription(LanguageDetector.getMessage("join.cannotjoin.setDescription", guildID));
+                    error.setTitle(getMessage("general.icon.error", guildID) + getMessage("join.cannotjoin.setTitle", guildID));
+                    error.setDescription(getMessage("join.cannotjoin.setDescription", guildID));
 
-                    channel.sendTyping().queue();
+                    
                     channel.sendMessage(error.build()).queue(message -> {
-                        message.delete().queueAfter(5, TimeUnit.SECONDS);
+                        message.delete().queueAfter(3, TimeUnit.SECONDS);
                     });
                     error.clear();
                     return;
@@ -119,16 +123,17 @@ public class Play implements ICommand {
 
                 if (!audioManager.isConnected()) {
                     audioManager.openAudioConnection(voiceChannel);
+                    audioManager.setSelfDeafened(true);
                     int volume = Config.VOLUMES.computeIfAbsent(ctx.getGuild().getIdLong(), (id) -> 50);
                     manager.getGuildMusicManager(ctx.getGuild()).player.setVolume(volume);
                     EmbedBuilder success = new EmbedBuilder();
                     success.setColor(0x00ff00);
-                    success.setTitle(LanguageDetector.getMessage("general.icon.join", guildID) + LanguageDetector.getMessage("join.success.setTitle", guildID));
-                    success.setFooter(LanguageDetector.getMessage("general.bythecommand", guildID) + ctx.getMember().getUser().getName(), ctx.getMember().getUser().getAvatarUrl());
+                    success.setTitle(getMessage("general.icon.join", guildID) + getMessage("join.success.setTitle", guildID));
+                    success.setFooter(getMessage("general.bythecommand", guildID) + ctx.getMember().getUser().getName(), ctx.getMember().getUser().getAvatarUrl());
 
-                    channel.sendTyping().queue();
+                    
                     channel.sendMessage(success.build()).queue(message -> {
-                        message.delete().queueAfter(5, TimeUnit.SECONDS);
+                        message.delete().queueAfter(3, TimeUnit.SECONDS);
                     });
                     success.clear();
                 }
@@ -142,10 +147,10 @@ public class Play implements ICommand {
                 if (ytSearched == null) {
                     EmbedBuilder error = new EmbedBuilder();
                     error.setColor(0xff3923);
-                    error.setTitle(LanguageDetector.getMessage("general.icon.error", guildID) + LanguageDetector.getMessage("play.noresults.setTitle", guildID));
-                    error.setDescription(LanguageDetector.getMessage("play.noresults.setDescription", guildID));
+                    error.setTitle(getMessage("general.icon.error", guildID) + getMessage("play.noresults.setTitle", guildID));
+                    error.setDescription(getMessage("play.noresults.setDescription", guildID));
 
-                    channel.sendTyping().queue();
+                    
                     channel.sendMessage(error.build()).queue();
                     error.clear();
                     return;
@@ -157,10 +162,10 @@ public class Play implements ICommand {
             if (ctx.getArgs().isEmpty()) {
                 EmbedBuilder error = new EmbedBuilder();
                 error.setColor(0xff3923);
-                error.setTitle(LanguageDetector.getMessage("general.icon.error", guildID) + LanguageDetector.getMessage("general.403", guildID));
-                error.setDescription(LanguageDetector.getMessage("play.noargs.setDescription1", guildID) + prefix + LanguageDetector.getMessage("play.noargs.setDescription2", guildID));
+                error.setTitle(getMessage("general.icon.error", guildID) + getMessage("general.403", guildID));
+                error.setDescription(getMessage("play.noargs.setDescription1", guildID) + prefix + getMessage("play.noargs.setDescription2", guildID));
 
-                channel.sendTyping().queue();
+                
                 channel.sendMessage(error.build()).queue();
                 error.clear();
                 return;
@@ -169,10 +174,10 @@ public class Play implements ICommand {
             if (!memberVoiceState.inVoiceChannel()) {
                 EmbedBuilder error = new EmbedBuilder();
                 error.setColor(0xff3923);
-                error.setTitle(LanguageDetector.getMessage("general.icon.error", guildID) + LanguageDetector.getMessage("join.joinchannel.setTitle", guildID));
-                error.setDescription(LanguageDetector.getMessage("join.joinchannel.setDescription", guildID));
+                error.setTitle(getMessage("general.icon.error", guildID) + getMessage("join.joinchannel.setTitle", guildID));
+                error.setDescription(getMessage("join.joinchannel.setDescription", guildID));
 
-                channel.sendTyping().queue();
+                
                 channel.sendMessage(error.build()).queue();
                 error.clear();
                 return;
@@ -181,10 +186,10 @@ public class Play implements ICommand {
             if (!selfmember.hasPermission(voiceChannel, Permission.VOICE_CONNECT)) {
                 EmbedBuilder error = new EmbedBuilder();
                 error.setColor(0xff3923);
-                error.setTitle(LanguageDetector.getMessage("general.icon.error", guildID) + LanguageDetector.getMessage("join.cannotjoin.setTitle", guildID));
-                error.setDescription(LanguageDetector.getMessage("join.cannotjoin.setDescription", guildID));
+                error.setTitle(getMessage("general.icon.error", guildID) + getMessage("join.cannotjoin.setTitle", guildID));
+                error.setDescription(getMessage("join.cannotjoin.setDescription", guildID));
 
-                channel.sendTyping().queue();
+                
                 channel.sendMessage(error.build()).queue();
                 error.clear();
                 return;
@@ -192,14 +197,15 @@ public class Play implements ICommand {
 
             if (!audioManager.isConnected()) {
                 audioManager.openAudioConnection(voiceChannel);
+                audioManager.setSelfDeafened(true);
                 int volume = Config.VOLUMES.computeIfAbsent(ctx.getGuild().getIdLong(), (id) -> 50);
                 manager.getGuildMusicManager(ctx.getGuild()).player.setVolume(volume);
                 EmbedBuilder succes = new EmbedBuilder();
                 succes.setColor(0x00ff00);
-                succes.setTitle(LanguageDetector.getMessage("general.icon.join", guildID) + LanguageDetector.getMessage("join.success.setTitle", guildID));
-                succes.setFooter(LanguageDetector.getMessage("general.bythecommand", guildID) + ctx.getMember().getUser().getName(), ctx.getMember().getUser().getAvatarUrl());
+                succes.setTitle(getMessage("general.icon.join", guildID) + getMessage("join.success.setTitle", guildID));
+                succes.setFooter(getMessage("general.bythecommand", guildID) + ctx.getMember().getUser().getName(), ctx.getMember().getUser().getAvatarUrl());
 
-                channel.sendTyping().queue();
+                
                 channel.sendMessage(succes.build()).queue();
                 succes.clear();
             }
@@ -211,7 +217,7 @@ public class Play implements ICommand {
             if (player.getPlayingTrack() != null) {
                 AudioTrackInfo info = player.getPlayingTrack().getInfo();
 
-                channel.sendMessage(EmbedUtils.embedMessage(String.format("**" + LanguageDetector.getMessage("general.icon.nowplaying", guildID) + LanguageDetector.getMessage("nowplaying.nowplaying", guildID) + "** [%s]{%s}\n%s %s - %s",
+                channel.sendMessage(EmbedUtils.embedMessage(String.format("**" + getMessage("general.icon.nowplaying", guildID) + getMessage("nowplaying.nowplaying", guildID) + "** [%s]{%s}\n%s %s - %s",
                         info.title,
                         info.uri,
                         player.isPaused() ? "\u23F8" : "▶",
@@ -256,20 +262,12 @@ public class Play implements ICommand {
 
     @Override
     public String getName(long guildID) {
-        return LanguageDetector.getMessage("play.name", guildID);
+        return getMessage("play.name", guildID);
     }
 
     @Override
     public String getHelp(long guildID) {
-        return LanguageDetector.getMessage("play.gethelp1", guildID) + "\n"
-                + LanguageDetector.getMessage("play.gethelp2", guildID) + Config.get("pre") + getName(guildID) + LanguageDetector.getMessage("play.gethelp3", guildID);
-    }
-
-    private String formatTime(long timeInMilis) {
-        final long hours = timeInMilis / TimeUnit.HOURS.toMillis(1);
-        final long minutes = timeInMilis / TimeUnit.MINUTES.toMillis(1);
-        final long seconds = timeInMilis % TimeUnit.MINUTES.toMillis(1) / TimeUnit.SECONDS.toMillis(1);
-
-        return String.format("%02d:%02d:%02d", hours, minutes, seconds);
+        return getMessage("play.gethelp1", guildID) + "\n"
+                + getMessage("play.gethelp2", guildID) + Config.get("pre") + getName(guildID) + getMessage("play.gethelp3", guildID);
     }
 }

@@ -3,10 +3,13 @@ package TzeBot.commands.music;
 import TzeBot.essentials.CommandContext;
 import TzeBot.essentials.Config;
 import TzeBot.essentials.ICommand;
-import TzeBot.essentials.LanguageDetector;
 import TzeBot.music.PlayerManager;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.TextChannel;
+
+import static TzeBot.utils.Controller.isInteger;
+import static TzeBot.essentials.LanguageDetector.getMessage;
+
 
 public class Volume implements ICommand {
 
@@ -21,10 +24,10 @@ public class Volume implements ICommand {
             if (Integer.parseInt(input) > 100 || Integer.parseInt(input) < 0) {
                 EmbedBuilder error = new EmbedBuilder();
                 error.setColor(0xff3923);
-                error.setTitle(LanguageDetector.getMessage("general.icon.error", guildID) + LanguageDetector.getMessage("volume.error.setTitle", guildID));
-                error.setDescription(LanguageDetector.getMessage("volume.error.setDescription", guildID) + manager.getGuildMusicManager(ctx.getGuild()).player.getVolume() + "%");
+                error.setTitle(getMessage("general.icon.error", guildID) + getMessage("volume.error.setTitle", guildID));
+                error.setDescription(getMessage("volume.error.setDescription", guildID) + manager.getGuildMusicManager(ctx.getGuild()).player.getVolume() + "%");
 
-                channel.sendTyping().queue();
+                
                 channel.sendMessage(error.build()).queue();
                 error.clear();
             } else {
@@ -32,10 +35,10 @@ public class Volume implements ICommand {
                 Config.VOLUMES.put(ctx.getGuild().getIdLong(), Integer.parseInt(input));
                 EmbedBuilder success = new EmbedBuilder();
                 success.setColor(0x00ff00);
-                success.setTitle(LanguageDetector.getMessage("general.icon.volume", guildID) + LanguageDetector.getMessage("volume.success.setTitle", guildID) + manager.getGuildMusicManager(ctx.getGuild()).player.getVolume() + "%");
-                success.setFooter(LanguageDetector.getMessage("general.bythecommand", guildID) + " " + ctx.getMember().getUser().getName(), ctx.getMember().getUser().getAvatarUrl());
+                success.setTitle(getMessage("general.icon.volume", guildID) + getMessage("volume.success.setTitle", guildID) + manager.getGuildMusicManager(ctx.getGuild()).player.getVolume() + "%");
+                success.setFooter(getMessage("general.bythecommand", guildID) + " " + ctx.getMember().getUser().getName(), ctx.getMember().getUser().getAvatarUrl());
 
-                channel.sendTyping().queue();
+                
                 channel.sendMessage(success.build()).queue();
                 success.clear();
             }
@@ -43,10 +46,10 @@ public class Volume implements ICommand {
             if (input.equals("")) {
                 EmbedBuilder error = new EmbedBuilder();
                 error.setColor(0xff3923);
-                error.setTitle(LanguageDetector.getMessage("general.icon.error", guildID) + LanguageDetector.getMessage("volume.error.setTitle", guildID));
-                error.setDescription(LanguageDetector.getMessage("volume.error.setDescription", guildID) + manager.getGuildMusicManager(ctx.getGuild()).player.getVolume() + "%");
+                error.setTitle(getMessage("general.icon.error", guildID) + getMessage("volume.error.setTitle", guildID));
+                error.setDescription(getMessage("volume.error.setDescription", guildID) + manager.getGuildMusicManager(ctx.getGuild()).player.getVolume() + "%");
 
-                channel.sendTyping().queue();
+                
                 channel.sendMessage(error.build()).queue();
                 error.clear();
                 return;
@@ -54,10 +57,10 @@ public class Volume implements ICommand {
             if (ctx.getArgs().size() > 1) {
                 EmbedBuilder error = new EmbedBuilder();
                 error.setColor(0xff3923);
-                error.setTitle(LanguageDetector.getMessage("general.icon.error", guildID) + LanguageDetector.getMessage("general.403", guildID));
-                error.setDescription(LanguageDetector.getMessage("play.noargs.setDescription1", guildID) + Config.get("pre") + LanguageDetector.getMessage("play.noargs.setDescription2", guildID));
+                error.setTitle(getMessage("general.icon.error", guildID) + getMessage("general.403", guildID));
+                error.setDescription(getMessage("play.noargs.setDescription1", guildID) + Config.get("pre") + getMessage("play.noargs.setDescription2", guildID));
 
-                channel.sendTyping().queue();
+                
                 channel.sendMessage(error.build()).queue();
                 error.clear();
             }
@@ -66,20 +69,12 @@ public class Volume implements ICommand {
 
     @Override
     public String getName(long guildID) {
-        return LanguageDetector.getMessage("volume.name", guildID);
+        return getMessage("volume.name", guildID);
     }
 
     @Override
     public String getHelp(long guildID) {
-        return LanguageDetector.getMessage("volume.gethelp", guildID);
+        return getMessage("volume.gethelp", guildID);
     }
 
-    boolean isInteger(String string) {
-        try {
-            Integer.valueOf(string);
-            return true;
-        } catch (NumberFormatException e) {
-            return false;
-        }
-    }
 }

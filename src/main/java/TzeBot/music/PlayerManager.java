@@ -15,6 +15,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
+import static TzeBot.essentials.LanguageDetector.getMessage;
+import static TzeBot.utils.Formatter.formatURL;
+
 public class PlayerManager {
 
     private static PlayerManager INSTANCE;
@@ -27,6 +30,14 @@ public class PlayerManager {
         this.playerManager = new DefaultAudioPlayerManager();
         AudioSourceManagers.registerRemoteSources(playerManager);
         AudioSourceManagers.registerLocalSource(playerManager);
+    }
+
+    public static synchronized PlayerManager getInstance() {
+        if (INSTANCE == null) {
+            INSTANCE = new PlayerManager();
+        }
+
+        return INSTANCE;
     }
 
     public synchronized GuildMusicManager getGuildMusicManager(Guild guild) {
@@ -52,13 +63,13 @@ public class PlayerManager {
                 if (musicChannel) {
                     EmbedBuilder success = new EmbedBuilder();
                     success.setColor(0x00ff00);
-                    success.setTitle(TzeBot.essentials.LanguageDetector.getMessage("general.icon.play", guildID) + TzeBot.essentials.LanguageDetector.getMessage("play.success.setTitle", guildID) + track.getInfo().title);
+                    success.setTitle(getMessage("general.icon.play", guildID) + getMessage("play.success.setTitle", guildID) + track.getInfo().title);
                     success.setDescription(track.getInfo().uri);
-                    success.setFooter(TzeBot.essentials.LanguageDetector.getMessage("general.bythecommand", guildID) + name, avatarURL);
+                    success.setFooter(getMessage("general.bythecommand", guildID) + name, avatarURL);
+                    success.setThumbnail(formatURL("https://img.youtube.com/vi/" + trackUrl, false) + "/mqdefault.jpg");
 
-                    channel.sendTyping().queue();
                     channel.sendMessage(success.build()).queue(message -> {
-                        message.delete().queueAfter(5, TimeUnit.SECONDS);
+                        message.delete().queueAfter(3, TimeUnit.SECONDS);
                     });
                     success.clear();
 
@@ -66,11 +77,11 @@ public class PlayerManager {
                 } else {
                     EmbedBuilder success = new EmbedBuilder();
                     success.setColor(0x00ff00);
-                    success.setTitle(TzeBot.essentials.LanguageDetector.getMessage("general.icon.play", guildID) + TzeBot.essentials.LanguageDetector.getMessage("play.success.setTitle", guildID) + track.getInfo().title);
+                    success.setTitle(getMessage("general.icon.play", guildID) + getMessage("play.success.setTitle", guildID) + track.getInfo().title);
                     success.setDescription(track.getInfo().uri);
-                    success.setFooter(TzeBot.essentials.LanguageDetector.getMessage("general.bythecommand", guildID) + name, avatarURL);
+                    success.setFooter(getMessage("general.bythecommand", guildID) + name, avatarURL);
+                    success.setThumbnail(formatURL("https://img.youtube.com/vi/" + trackUrl, false) + "/mqdefault.jpg");
 
-                    channel.sendTyping().queue();
                     channel.sendMessage(success.build()).queue();
                     success.clear();
 
@@ -86,35 +97,60 @@ public class PlayerManager {
                     firstTrack = playlist.getTracks().remove(0);
                 }
 
+                if (playlist.getTracks().size() >= 90) {
+                    if (musicChannel) {
+                        EmbedBuilder error = new EmbedBuilder();
+                        error.setColor(0xff3923);
+                        error.setTitle(getMessage("general.icon.error", guildID) + getMessage("play.playlist.error.setTitle", guildID));
+                        error.setDescription(getMessage("play.playlist.error.setDescription", guildID) + trackUrl);
+
+                        channel.sendMessage(error.build()).queue(message -> {
+                            message.delete().queueAfter(3, TimeUnit.SECONDS);
+                        });
+                        error.clear();
+                    } else {
+                        EmbedBuilder error = new EmbedBuilder();
+                        error.setColor(0xff3923);
+                        error.setTitle(getMessage("general.icon.error", guildID) + getMessage("play.nothing.setTitle", guildID));
+                        error.setDescription(getMessage("play.nothing.setDescription", guildID) + trackUrl);
+
+                        channel.sendMessage(error.build()).queue();
+                        error.clear();
+                    }
+                }
+
                 if (musicChannel) {
 
                     EmbedBuilder success = new EmbedBuilder();
                     success.setColor(0x00ff00);
-                    success.setTitle(TzeBot.essentials.LanguageDetector.getMessage("play.playlist.setTitle1", guildID) + firstTrack.getInfo().title + TzeBot.essentials.LanguageDetector.getMessage("play.playlist.setTitle2", guildID) + playlist.getName() + ")");
-                    success.setFooter(TzeBot.essentials.LanguageDetector.getMessage("general.bythecommand", guildID) + name, avatarURL);
+                    success.setTitle(getMessage("play.playlist.setTitle1", guildID) + firstTrack.getInfo().title + getMessage("play.playlist.setTitle2", guildID) + playlist.getName() + ")");
+                    success.setDescription(getMessage("play.playlist.size") + ": " + playlist.getTracks().size());
+                    success.setFooter(getMessage("general.bythecommand", guildID) + name, avatarURL);
+                    success.setThumbnail(formatURL("https://img.youtube.com/vi/" + trackUrl, true) + "/mqdefault.jpg");
 
-                    channel.sendTyping().queue();
                     channel.sendMessage(success.build()).queue(message -> {
-                        message.delete().queueAfter(5, TimeUnit.SECONDS);
+                        message.delete().queueAfter(3, TimeUnit.SECONDS);
                     });
                     success.clear();
 
                     play(musicManager, firstTrack);
+                    playlist.getTracks().remove(0);
 
                     playlist.getTracks().forEach(musicManager.scheduler::queue);
                 } else {
                     EmbedBuilder success = new EmbedBuilder();
                     success.setColor(0x00ff00);
-                    success.setTitle(TzeBot.essentials.LanguageDetector.getMessage("play.playlist.setTitle1", guildID) + firstTrack.getInfo().title + TzeBot.essentials.LanguageDetector.getMessage("play.playlist.setTitle2", guildID) + playlist.getName() + ")");
-                    success.setFooter(TzeBot.essentials.LanguageDetector.getMessage("general.bythecommand", guildID) + name, avatarURL);
+                    success.setTitle(getMessage("play.playlist.setTitle1", guildID) + firstTrack.getInfo().title + getMessage("play.playlist.setTitle2", guildID) + playlist.getName() + ")");
+                    success.setFooter(getMessage("general.bythecommand", guildID) + name, avatarURL);
+                    success.setThumbnail(formatURL("https://img.youtube.com/vi/" + trackUrl, true) + "/mqdefault.jpg");
 
-                    channel.sendTyping().queue();
                     channel.sendMessage(success.build()).queue(message -> {
-                        message.delete().queueAfter(5, TimeUnit.SECONDS);
+                        message.delete().queueAfter(3, TimeUnit.SECONDS);
                     });
                     success.clear();
 
                     play(musicManager, firstTrack);
+                    playlist.getTracks().remove(0);
 
                     playlist.getTracks().forEach(musicManager.scheduler::queue);
                 }
@@ -125,21 +161,21 @@ public class PlayerManager {
                 if (musicChannel) {
                     EmbedBuilder error = new EmbedBuilder();
                     error.setColor(0xff3923);
-                    error.setTitle(TzeBot.essentials.LanguageDetector.getMessage("general.icon.error", guildID) + TzeBot.essentials.LanguageDetector.getMessage("play.nothing.setTitle", guildID));
-                    error.setDescription(TzeBot.essentials.LanguageDetector.getMessage("play.nothing.setDescription", guildID) + trackUrl);
+                    error.setTitle(getMessage("general.icon.error", guildID) + getMessage("play.nothing.setTitle", guildID));
+                    error.setDescription(getMessage("play.nothing.setDescription", guildID) + trackUrl);
 
-                    channel.sendTyping().queue();
+
                     channel.sendMessage(error.build()).queue(message -> {
-                        message.delete().queueAfter(5, TimeUnit.SECONDS);
+                        message.delete().queueAfter(3, TimeUnit.SECONDS);
                     });
                     error.clear();
                 } else {
                     EmbedBuilder error = new EmbedBuilder();
                     error.setColor(0xff3923);
-                    error.setTitle(TzeBot.essentials.LanguageDetector.getMessage("general.icon.error", guildID) + TzeBot.essentials.LanguageDetector.getMessage("play.nothing.setTitle", guildID));
-                    error.setDescription(TzeBot.essentials.LanguageDetector.getMessage("play.nothing.setDescription", guildID) + trackUrl);
+                    error.setTitle(getMessage("general.icon.error", guildID) + getMessage("play.nothing.setTitle", guildID));
+                    error.setDescription(getMessage("play.nothing.setDescription", guildID) + trackUrl);
 
-                    channel.sendTyping().queue();
+
                     channel.sendMessage(error.build()).queue();
                     error.clear();
                 }
@@ -151,21 +187,21 @@ public class PlayerManager {
                 if (musicChannel) {
                     EmbedBuilder error = new EmbedBuilder();
                     error.setColor(0xff3923);
-                    error.setTitle(TzeBot.essentials.LanguageDetector.getMessage("general.icon.error", guildID) + TzeBot.essentials.LanguageDetector.getMessage("play.error.setTitle", guildID));
-                    error.setDescription(TzeBot.essentials.LanguageDetector.getMessage("play.error.setDescription", guildID) + exception.getMessage());
+                    error.setTitle(getMessage("general.icon.error", guildID) + getMessage("play.error.setTitle", guildID));
+                    error.setDescription(getMessage("play.error.setDescription", guildID) + exception.getMessage());
 
-                    channel.sendTyping().queue();
+
                     channel.sendMessage(error.build()).queue(message -> {
-                        message.delete().queueAfter(5, TimeUnit.SECONDS);
+                        message.delete().queueAfter(3, TimeUnit.SECONDS);
                     });
                     error.clear();
                 } else {
                     EmbedBuilder error = new EmbedBuilder();
                     error.setColor(0xff3923);
-                    error.setTitle(TzeBot.essentials.LanguageDetector.getMessage("general.icon.error", guildID) + TzeBot.essentials.LanguageDetector.getMessage("play.error.setTitle", guildID));
-                    error.setDescription(TzeBot.essentials.LanguageDetector.getMessage("play.error.setDescription", guildID) + exception.getMessage());
+                    error.setTitle(getMessage("general.icon.error", guildID) + getMessage("play.error.setTitle", guildID));
+                    error.setDescription(getMessage("play.error.setDescription", guildID) + exception.getMessage());
 
-                    channel.sendTyping().queue();
+
                     channel.sendMessage(error.build()).queue();
                     error.clear();
                 }
@@ -175,13 +211,5 @@ public class PlayerManager {
 
     private void play(GuildMusicManager musicManager, AudioTrack track) {
         musicManager.scheduler.queue(track);
-    }
-
-    public static synchronized PlayerManager getInstance() {
-        if (INSTANCE == null) {
-            INSTANCE = new PlayerManager();
-        }
-
-        return INSTANCE;
     }
 }

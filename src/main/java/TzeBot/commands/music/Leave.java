@@ -2,7 +2,6 @@ package TzeBot.commands.music;
 
 import TzeBot.essentials.CommandContext;
 import TzeBot.essentials.ICommand;
-import TzeBot.essentials.LanguageDetector;
 import TzeBot.music.GuildMusicManager;
 import TzeBot.music.PlayerManager;
 import com.sedmelluq.discord.lavaplayer.player.AudioPlayer;
@@ -10,6 +9,9 @@ import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.TextChannel;
 import net.dv8tion.jda.api.entities.VoiceChannel;
 import net.dv8tion.jda.api.managers.AudioManager;
+
+
+import static TzeBot.essentials.LanguageDetector.getMessage;
 
 public class Leave implements ICommand {
 
@@ -25,10 +27,10 @@ public class Leave implements ICommand {
         if (!audioManager.isConnected()) {
             EmbedBuilder error = new EmbedBuilder();
             error.setColor(0xff3923);
-            error.setTitle(LanguageDetector.getMessage("general.icon.error", guildID) + LanguageDetector.getMessage("leave.cannotleave.setTitle", guildID));
-            error.setDescription(LanguageDetector.getMessage("leave.notconnected", guildID));
+            error.setTitle(getMessage("general.icon.error", guildID) + getMessage("leave.cannotleave.setTitle", guildID));
+            error.setDescription(getMessage("leave.notconnected", guildID));
 
-            channel.sendTyping().queue();
+            
             channel.sendMessage(error.build()).queue();
             error.clear();
             return;
@@ -39,10 +41,10 @@ public class Leave implements ICommand {
         if (!voiceChannel.getMembers().contains(ctx.getMember())) {
             EmbedBuilder error = new EmbedBuilder();
             error.setColor(0xff3923);
-            error.setTitle(LanguageDetector.getMessage("general.icon.error", guildID) + LanguageDetector.getMessage("leave.cannotleave.setTitle", guildID));
-            error.setDescription(LanguageDetector.getMessage("leave.notin", guildID));
+            error.setTitle(getMessage("general.icon.error", guildID) + getMessage("leave.cannotleave.setTitle", guildID));
+            error.setDescription(getMessage("leave.notin", guildID));
 
-            channel.sendTyping().queue();
+            
             channel.sendMessage(error.build()).queue();
             error.clear();
             return;
@@ -55,10 +57,10 @@ public class Leave implements ICommand {
 
             EmbedBuilder success = new EmbedBuilder();
             success.setColor(0x00ff00);
-            success.setTitle(LanguageDetector.getMessage("general.icon.stop", guildID) + LanguageDetector.getMessage("stop.success.setTitle", guildID));
-            success.setFooter(LanguageDetector.getMessage("general.bythecommand", guildID) + " " + ctx.getMember().getUser().getName(), ctx.getMember().getUser().getAvatarUrl());
+            success.setTitle(getMessage("general.icon.stop", guildID) + getMessage("stop.success.setTitle", guildID));
+            success.setFooter(getMessage("general.bythecommand", guildID) + " " + ctx.getMember().getUser().getName(), ctx.getMember().getUser().getAvatarUrl());
 
-            channel.sendTyping().queue();
+            
             channel.sendMessage(success.build()).queue();
             success.clear();
         }
@@ -66,10 +68,10 @@ public class Leave implements ICommand {
         audioManager.closeAudioConnection();
         EmbedBuilder success = new EmbedBuilder();
         success.setColor(0x00ff00);
-        success.setTitle(LanguageDetector.getMessage("general.icon.leave", guildID) + LanguageDetector.getMessage("leave.success.setTitle", guildID));
-        success.setFooter(LanguageDetector.getMessage("general.bythecommand", guildID) + ctx.getMember().getUser().getName(), ctx.getMember().getUser().getAvatarUrl());
+        success.setTitle(getMessage("general.icon.leave", guildID) + getMessage("leave.success.setTitle", guildID));
+        success.setFooter(getMessage("general.bythecommand", guildID) + ctx.getMember().getUser().getName(), ctx.getMember().getUser().getAvatarUrl());
 
-        channel.sendTyping().queue();
+        
         channel.sendMessage(success.build()).queue();
         success.clear();
 
@@ -77,11 +79,11 @@ public class Leave implements ICommand {
 
     @Override
     public String getName(long guildID) {
-        return LanguageDetector.getMessage("leave.name", guildID);
+        return getMessage("leave.name", guildID);
     }
 
     @Override
     public String getHelp(long guildID) {
-        return LanguageDetector.getMessage("leave.gethelp", guildID);
+        return getMessage("leave.gethelp", guildID);
     }
 }

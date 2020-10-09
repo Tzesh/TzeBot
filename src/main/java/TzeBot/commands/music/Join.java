@@ -3,7 +3,6 @@ package TzeBot.commands.music;
 import TzeBot.essentials.CommandContext;
 import TzeBot.essentials.Config;
 import TzeBot.essentials.ICommand;
-import TzeBot.essentials.LanguageDetector;
 import TzeBot.music.PlayerManager;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.Permission;
@@ -12,6 +11,9 @@ import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.TextChannel;
 import net.dv8tion.jda.api.entities.VoiceChannel;
 import net.dv8tion.jda.api.managers.AudioManager;
+
+
+import static TzeBot.essentials.LanguageDetector.getMessage;
 
 public class Join implements ICommand {
 
@@ -25,10 +27,10 @@ public class Join implements ICommand {
         if (audioManager.isConnected()) {
             EmbedBuilder error = new EmbedBuilder();
             error.setColor(0xff3923);
-            error.setTitle(LanguageDetector.getMessage("general.icon.error", guildID) + LanguageDetector.getMessage("join.alreadyconnected.setTitle", guildID));
-            error.setDescription(LanguageDetector.getMessage("join.alreadyconnected.setDescription", guildID));
+            error.setTitle(getMessage("general.icon.error", guildID) + getMessage("join.alreadyconnected.setTitle", guildID));
+            error.setDescription(getMessage("join.alreadyconnected.setDescription", guildID));
 
-            channel.sendTyping().queue();
+            
             channel.sendMessage(error.build()).queue();
             error.clear();
             return;
@@ -39,10 +41,10 @@ public class Join implements ICommand {
         if (!memberVoiceState.inVoiceChannel()) {
             EmbedBuilder error = new EmbedBuilder();
             error.setColor(0xff3923);
-            error.setTitle(LanguageDetector.getMessage("general.icon.error", guildID) + LanguageDetector.getMessage("join.joinchannel.setTitle", guildID));
-            error.setDescription(LanguageDetector.getMessage("join.joinchannel.setDescription", guildID));
+            error.setTitle(getMessage("general.icon.error", guildID) + getMessage("join.joinchannel.setTitle", guildID));
+            error.setDescription(getMessage("join.joinchannel.setDescription", guildID));
 
-            channel.sendTyping().queue();
+            
             channel.sendMessage(error.build()).queue();
             error.clear();
             return;
@@ -54,35 +56,36 @@ public class Join implements ICommand {
         if (!selfmember.hasPermission(voiceChannel, Permission.VOICE_CONNECT)) {
             EmbedBuilder error = new EmbedBuilder();
             error.setColor(0xff3923);
-            error.setTitle(LanguageDetector.getMessage("general.icon.error", guildID) + LanguageDetector.getMessage("join.cannotjoin.setTitle", guildID));
-            error.setDescription(LanguageDetector.getMessage("join.cannotjoin.setDescription", guildID));
+            error.setTitle(getMessage("general.icon.error", guildID) + getMessage("join.cannotjoin.setTitle", guildID));
+            error.setDescription(getMessage("join.cannotjoin.setDescription", guildID));
 
-            channel.sendTyping().queue();
+            
             channel.sendMessage(error.build()).queue();
             error.clear();
             return;
         }
 
         audioManager.openAudioConnection(voiceChannel);
+        audioManager.setSelfDeafened(true);
         int volume = Config.VOLUMES.computeIfAbsent(ctx.getGuild().getIdLong(), (id) -> 50);
         manager.getGuildMusicManager(ctx.getGuild()).player.setVolume(volume);
         EmbedBuilder succes = new EmbedBuilder();
         succes.setColor(0x00ff00);
-        succes.setTitle(LanguageDetector.getMessage("general.icon.join", guildID) + LanguageDetector.getMessage("join.success.setTitle", guildID));
-        succes.setFooter(LanguageDetector.getMessage("general.bythecommand", guildID) + ctx.getMember().getUser().getName(), ctx.getMember().getUser().getAvatarUrl());
+        succes.setTitle(getMessage("general.icon.join", guildID) + getMessage("join.success.setTitle", guildID));
+        succes.setFooter(getMessage("general.bythecommand", guildID) + ctx.getMember().getUser().getName(), ctx.getMember().getUser().getAvatarUrl());
 
-        channel.sendTyping().queue();
+        
         channel.sendMessage(succes.build()).queue();
         succes.clear();
     }
 
     @Override
     public String getName(long guildID) {
-        return LanguageDetector.getMessage("join.name", guildID);
+        return getMessage("join.name", guildID);
     }
 
     @Override
     public String getHelp(long guildID) {
-        return LanguageDetector.getMessage("join.gethelp", guildID);
+        return getMessage("join.gethelp", guildID);
     }
 }

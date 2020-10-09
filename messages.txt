@@ -169,7 +169,10 @@ en_en,  play.error.setDescription,  Could not play :
 en_en,  play.nothing.setTitle,  Nothing found
 en_en,  play.nothing.setDescription,  Nothing found by 
 en_en,  play.playlist.setTitle1,  Adding to queue 
-en_en,  play.playlist.setTitle2,   (first track of the playlist 
+en_en,  play.playlist.setTitle2,   (first track of the playlist
+en_en,  play.playlist.size,  Songs in the playlist
+en_en,  play.playlist.error.setTitle,  You omitted the maximum playlist size
+en_en,  play.playlist.error.setDescription,  Maximum playlist size allowing is 90
 
 // Queue Command
 en_en,  queue.name,  queue
@@ -417,7 +420,10 @@ tr_tr,  play.error.setDescription,  Oynatılamadı :
 tr_tr,  play.nothing.setTitle,  Hiçbir şey bulunamadı
 tr_tr,  play.nothing.setDescription,  Hiçbir şey bulunamadı 
 tr_tr,  play.playlist.setTitle1,  Kuyruğa eklendi 
-tr_tr,  play.playlist.setTitle2,   (kuyruğun ilk şarkısı 
+tr_tr,  play.playlist.setTitle2,   (kuyruğun ilk şarkısı
+tr_tr,  play.playlist.size,  Kuyruktaki toplam şarkı
+tr_tr,  play.playlist.error.setTitle,  İzin verilen maksimum şarkı sınırını aştınız
+tr_tr,  play.playlist.error.setDescription,  En fazla 90 şarkılık bir oynatma listesi oynatabilirsiniz
 
 // Kuyruk Komutu
 tr_tr,  queue.name,  kuyruk
