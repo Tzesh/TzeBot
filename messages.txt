@@ -108,6 +108,7 @@ en_en,  support.setDescription2,  You can use TzeBot in your server(s) or just c
 en_en,  support.setDescription3,  But if you want to take part in our development progress you can help us in patreon:
 en_en,  support.discordbots,  You can also support us by upvoting: 
 en_en,  support.setFooter,  Thanks in advance for your support we are really appreciated.
+en_en,  support.channel,  TzeBot Discord Support Channel
 
 // Music Commands
 en_en,  music.name,  music
@@ -348,6 +349,7 @@ tr_tr,  support.setDescription2,  TzeBot'u sunucunuzda kullanabilir veya kendi b
 tr_tr,  support.setDescription3,  Eğer geliştirme sürecinde yer almak istiyorsanız patreon'dan destek verebilirsiniz:
 tr_tr,  support.discordbots,  İsterseniz bizi oylayarak da destekleyebilirsiniz: 
 tr_tr,  support.setFooter,  Desteğiniz için şimdiden teşekkür ederiz, minnettarız.
+tr_tr,  support.channel,  TzeBot Discord Destek Kanalı
 
 // Oylama Komutu
 tr_tr,  vote.name,  oylama
