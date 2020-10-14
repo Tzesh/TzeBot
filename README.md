@@ -1,4 +1,5 @@
 # <a href="https://tzesh.github.io/TzeBot/">Discord Bot & Substructure</a>
+![CircleCI](https://img.shields.io/circleci/build/github/Tzesh/TzeBot?token=7659d002a0480a9d2527892bc683106fb5aedee2) ![GitHub issues](https://img.shields.io/github/issues/Tzesh/TzeBot) ![GitHub pull requests](https://img.shields.io/github/issues-pr/Tzesh/TzeBot) ![GitHub top language](https://img.shields.io/github/languages/top/Tzesh/TzeBot) ![GitHub repo size](https://img.shields.io/github/repo-size/Tzesh/TzeBot) ![GitHub All Releases](https://img.shields.io/github/downloads/Tzesh/TzeBot/total) ![Discord](https://img.shields.io/discord/751063002291241033?label=support-channel) ![GitHub last commit](https://img.shields.io/github/last-commit/Tzesh/TzeBot) ![GitHub Release Date](https://img.shields.io/github/release-date/Tzesh/TzeBot)
 #### Click on title above to go to the github.io page of TzeBot
 ## What is TzeBot?
 TzeBot, is a discord bot project that I've started about 6th month of 2020. The reasons that I started to develop TzeBot were:
