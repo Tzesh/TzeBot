@@ -221,11 +221,13 @@ en_en,  shuffle.name,  shuffle
 en_en,  shuffle.gethelp,  Shuffles the queue
 en_en,  shuffle.success.setTitle,  Shuffled the queue
 
-// Bound Command
-en_en,  bound.name,  bound
-en_en,  bound.gethelp,  You can set all the music commands that should work in one text channel
-en_en,  bound.success.on.setTitle,  All the music commands now only work on the current text channel
-en_en,  bound.success.off.setTitle,  All the music commands now work every text channel
+// Seek Command
+en_en,  seek.name,  seek
+en_en,  seek.gethelp,  Seeks the player backwards or forwards 15 seconds usage: `.seek forward` or `.seek backward`
+en_en,  seek.error.setTitle,  Unsuitable usage of command
+en_en,  seek.error.setDescription,  Please look at the usage of the usage of seek command
+en_en,  seek.forward,  forward
+en_en,  seek.backward,  backward
 
 // Channel Command
 en_en,  channel.name,  channel
@@ -473,11 +475,13 @@ tr_tr,  shuffle.name,  karıştır
 tr_tr,  shuffle.gethelp,  Kuyruğu karıştırır
 tr_tr,  shuffle.success.setTitle,  Kuyruk karıştırıldı
 
-// Sınırla Komutu
-tr_tr,  bound.name,  sınırla
-tr_tr,  bound.gethelp,  Bütün müzik komutlarının sadece seçilen yazı kanalında çalışmasını sağlayabilirsiniz
-tr_tr,  bound.success.on.setTitle,  Bütün müzik komutları artık sadece bu kanal ile sınırlı
-tr_tr,  bound.success.off.setTitle,  Bütün müzik komutları artık bütün yazı kanallarında çalışacak
+// Sar Komutu
+tr_tr,  seek.name,  sar
+tr_tr,  seek.gethelp,  Oynatıcıyı 15 saniye ileri veya geri sarar: `.sar ileri` veya `.sar geri`
+tr_tr,  seek.error.setTitle,  Komutun yanlış kullanımı
+tr_tr,  seek.error.setDescription,  Lütfen sar komutunun kullanımına bakınız
+tr_tr,  seek.forward,  ileri
+tr_tr,  seek.backward,  geri
 
 // Kanal Komutu
 tr_tr,  channel.name,  kanal

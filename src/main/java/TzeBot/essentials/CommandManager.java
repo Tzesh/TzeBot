@@ -1,16 +1,6 @@
 package TzeBot.essentials;
 
-import TzeBot.commands.music.Pause;
-import TzeBot.commands.music.Join;
-import TzeBot.commands.music.Skip;
-import TzeBot.commands.music.Loop;
-import TzeBot.commands.music.Play;
-import TzeBot.commands.music.Volume;
-import TzeBot.commands.music.Stop;
-import TzeBot.commands.music.Queue;
-import TzeBot.commands.music.NowPlaying;
-import TzeBot.commands.music.Leave;
-import TzeBot.commands.music.Resume;
+import TzeBot.commands.music.*;
 import TzeBot.commands.moderation.Prefix;
 import TzeBot.commands.moderation.Clear;
 import TzeBot.commands.Help;
@@ -19,7 +9,6 @@ import TzeBot.commands.moderation.Language;
 import TzeBot.commands.moderation.Vote;
 import TzeBot.commands.moderation.VoteRole;
 import TzeBot.commands.moderation.Channel;
-import TzeBot.commands.music.Shuffle;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import javax.annotation.Nullable;
 import java.util.ArrayList;
@@ -55,6 +44,7 @@ public class CommandManager {
         addCommand(new VoteRole());
         addCommand(new Channel());
         addCommand(new Shuffle());
+        addCommand(new Seek());
     }
 
     private void addCommand(ICommand cmd) {
