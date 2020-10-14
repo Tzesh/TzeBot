@@ -60,7 +60,7 @@ public class Help implements ICommand {
             info.addField(getMessage("general.icon.loop", guildID) + "`" + prefix + getMessage("loop.name", guildID) + "`", getMessage("loop.gethelp", guildID), true);
             info.addField(getMessage("general.icon.nowplaying", guildID) + "`" + prefix + getMessage("nowplaying.name", guildID) + "`", getMessage("nowplaying.gethelp", guildID), true);
             info.addField(getMessage("general.icon.queue", guildID) + "`" + prefix + getMessage("queue.name", guildID) + "`", getMessage("queue.gethelp", guildID), true);
-            info.addField(getMessage("general.icon.next", guildID) + "`" + prefix + getMessage("seek.name", guildID) + "`", getMessage("seek.gethelp", guildID), true);
+            info.addField(getMessage("general.icon.next", guildID) + "`" + prefix + getMessage("seek.name", guildID) + "`", getMessage("seek.gethelp", guildID) + getMessage("general.icon.next", guildID), true);
             info.setColor(0x6699ff);
             info.setTimestamp(Instant.now());
 
