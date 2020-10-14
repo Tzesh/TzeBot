@@ -10,7 +10,9 @@ import TzeBot.essentials.ICommand;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.TextChannel;
 
-import static TzeBot.essentials.LanguageDetector.getMessage;
+import java.time.Instant;
+
+import static TzeBot.essentials.LanguageManager.getMessage;
 
 
 /**
@@ -26,13 +28,17 @@ public class Support implements ICommand {
 
         EmbedBuilder support = new EmbedBuilder();
         support.setColor(0x00ff00);
-        support.setTitle(getMessage("general.icon.tzebot", guildID) + "TzeBot");
+        support.setTitle(getMessage("general.icon.tzebot", guildID) + " " + getMessage("support.channel", guildID), "https://discord.com/invite/CY4pGVv");
         support.setDescription(getMessage("support.setDescription", guildID)
                 + "\n" + getMessage("support.setDescription2", guildID)
                 + "\n" + getMessage("support.setDescription3", guildID)
                 + "\n" + getMessage("general.icon.patreon", guildID) + "https://www.patreon.com/tzebot"
-                + "\n" + getMessage("support.discordbots", guildID) + "https://discordbotlist.com/bots/tzebot" + "\nhttps://bots.discordlabs.org/bot/700416851678855168");
+                + "\n" + getMessage("support.discordbots", guildID));
+        support.addField("Discord Bot List", "😇", true);
+        support.addField("Discord Extreme List", "https://discordextremelist.xyz/en-US/bots/700416851678855168", true);
+        support.addField("Discord Labs", "https://bots.discordlabs.org/bot/700416851678855168", true);
         support.setFooter(getMessage("support.setFooter", guildID));
+        support.setTimestamp(Instant.now());
         
         channel.sendMessage(support.build()).queue();
         support.clear();

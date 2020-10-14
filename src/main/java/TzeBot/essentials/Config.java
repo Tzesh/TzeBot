@@ -24,14 +24,16 @@ import java.util.Map;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledFuture;
+import java.util.concurrent.TimeUnit;
+
 import static java.util.concurrent.TimeUnit.MINUTES;
+import static java.util.concurrent.TimeUnit.SECONDS;
 
 public class Config {
 
     private static Dotenv dotenv = Dotenv.configure()
                                         .ignoreIfMissing()
                                         .load(); // To get .env file properties which are unique for bot
-    private static final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1); // To save databases per 15 minutes
 
     public static Map<Long, String> PREFIXES = new HashMap<>(); // All of the prefixes of the servers default is .env's prefix setting
     public static Map<Long, String> LANGUAGES = new HashMap<>(); // All of the languages of the servers default is English
@@ -41,7 +43,6 @@ public class Config {
     public static Map<Long, Integer> VOLUMES = new HashMap<>(); // Volumes of the servers default is 50%
     public static Map<Long, Long> CHANNELCREATED = new HashMap<>(); // All of the music channels that are created but either initialized or not. It's important value for preventing some kind of abusing of channel creation.
 
-    public static int serverNumber = 0;
     public static double currentVersion = 2.4; // Check if there's an update or not.
 
     public static String get(String key) {
@@ -125,13 +126,14 @@ public class Config {
     }
 
     public static void saveForAQuarter() { // save database per 15 minutes
-        final Runnable beeper = new Runnable() {
+        final ScheduledExecutorService ses = Executors.newSingleThreadScheduledExecutor();
+        ses.scheduleAtFixedRate(new Runnable() {
+            @Override
             public void run() {
                 saveDatabase();
             }
-        };
-        ScheduledFuture<?> beeperHandle = scheduler.scheduleAtFixedRate(beeper, 15, 15, MINUTES);
-        System.out.println("Prefixes and languages are saving into database per 15 minutes.");
+        }, 0, 30, TimeUnit.MINUTES);
+        System.out.println("Prefixes and languages are saving into database per 30 minutes.");
     }
 
     public static boolean versionControl() { // check if there is an update or not

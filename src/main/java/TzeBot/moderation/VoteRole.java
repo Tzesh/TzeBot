@@ -1,7 +1,6 @@
 package TzeBot.moderation;
 
 import TzeBot.essentials.Config;
-import TzeBot.essentials.LanguageDetector;
 import net.dv8tion.jda.api.events.message.guild.react.GuildMessageReactionAddEvent;
 import net.dv8tion.jda.api.events.message.guild.react.GuildMessageReactionRemoveEvent;
 

@@ -11,7 +11,9 @@ import net.dv8tion.jda.api.entities.VoiceChannel;
 import net.dv8tion.jda.api.managers.AudioManager;
 
 
-import static TzeBot.essentials.LanguageDetector.getMessage;
+import java.time.Instant;
+
+import static TzeBot.essentials.LanguageManager.getMessage;
 
 public class Leave implements ICommand {
 
@@ -29,10 +31,9 @@ public class Leave implements ICommand {
             error.setColor(0xff3923);
             error.setTitle(getMessage("general.icon.error", guildID) + getMessage("leave.cannotleave.setTitle", guildID));
             error.setDescription(getMessage("leave.notconnected", guildID));
+            error.setTimestamp(Instant.now());
 
-            
             channel.sendMessage(error.build()).queue();
-            error.clear();
             return;
         }
 
@@ -43,10 +44,9 @@ public class Leave implements ICommand {
             error.setColor(0xff3923);
             error.setTitle(getMessage("general.icon.error", guildID) + getMessage("leave.cannotleave.setTitle", guildID));
             error.setDescription(getMessage("leave.notin", guildID));
+            error.setTimestamp(Instant.now());
 
-            
             channel.sendMessage(error.build()).queue();
-            error.clear();
             return;
         }
 
@@ -59,10 +59,9 @@ public class Leave implements ICommand {
             success.setColor(0x00ff00);
             success.setTitle(getMessage("general.icon.stop", guildID) + getMessage("stop.success.setTitle", guildID));
             success.setFooter(getMessage("general.bythecommand", guildID) + " " + ctx.getMember().getUser().getName(), ctx.getMember().getUser().getAvatarUrl());
+            success.setTimestamp(Instant.now());
 
-            
             channel.sendMessage(success.build()).queue();
-            success.clear();
         }
 
         audioManager.closeAudioConnection();
@@ -70,11 +69,9 @@ public class Leave implements ICommand {
         success.setColor(0x00ff00);
         success.setTitle(getMessage("general.icon.leave", guildID) + getMessage("leave.success.setTitle", guildID));
         success.setFooter(getMessage("general.bythecommand", guildID) + ctx.getMember().getUser().getName(), ctx.getMember().getUser().getAvatarUrl());
+        success.setTimestamp(Instant.now());
 
-        
         channel.sendMessage(success.build()).queue();
-        success.clear();
-
     }
 
     @Override

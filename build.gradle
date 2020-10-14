@@ -18,7 +18,6 @@ repositories {
 dependencies {
     compile group: 'net.dv8tion', name: 'JDA', version: '+'
     compile group: 'com.jagrosh', name: 'jda-utilities', version: '+'
-    compile group: 'me.duncte123', name: 'botCommons', version: '+'
     compile group: 'ch.qos.logback', name: 'logback-classic', version: '+'
     compile group: 'org.xerial', name: 'sqlite-jdbc', version: '+'
     compile 'io.github.cdimascio:java-dotenv:+'

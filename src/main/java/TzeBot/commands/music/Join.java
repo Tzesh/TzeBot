@@ -13,7 +13,9 @@ import net.dv8tion.jda.api.entities.VoiceChannel;
 import net.dv8tion.jda.api.managers.AudioManager;
 
 
-import static TzeBot.essentials.LanguageDetector.getMessage;
+import java.time.Instant;
+
+import static TzeBot.essentials.LanguageManager.getMessage;
 
 public class Join implements ICommand {
 
@@ -29,10 +31,9 @@ public class Join implements ICommand {
             error.setColor(0xff3923);
             error.setTitle(getMessage("general.icon.error", guildID) + getMessage("join.alreadyconnected.setTitle", guildID));
             error.setDescription(getMessage("join.alreadyconnected.setDescription", guildID));
-
+            error.setTimestamp(Instant.now());
             
             channel.sendMessage(error.build()).queue();
-            error.clear();
             return;
         }
 
@@ -43,10 +44,9 @@ public class Join implements ICommand {
             error.setColor(0xff3923);
             error.setTitle(getMessage("general.icon.error", guildID) + getMessage("join.joinchannel.setTitle", guildID));
             error.setDescription(getMessage("join.joinchannel.setDescription", guildID));
-
+            error.setTimestamp(Instant.now());
             
             channel.sendMessage(error.build()).queue();
-            error.clear();
             return;
         }
 
@@ -58,10 +58,9 @@ public class Join implements ICommand {
             error.setColor(0xff3923);
             error.setTitle(getMessage("general.icon.error", guildID) + getMessage("join.cannotjoin.setTitle", guildID));
             error.setDescription(getMessage("join.cannotjoin.setDescription", guildID));
-
+            error.setTimestamp(Instant.now());
             
             channel.sendMessage(error.build()).queue();
-            error.clear();
             return;
         }
 
@@ -69,14 +68,13 @@ public class Join implements ICommand {
         audioManager.setSelfDeafened(true);
         int volume = Config.VOLUMES.computeIfAbsent(ctx.getGuild().getIdLong(), (id) -> 50);
         manager.getGuildMusicManager(ctx.getGuild()).player.setVolume(volume);
-        EmbedBuilder succes = new EmbedBuilder();
-        succes.setColor(0x00ff00);
-        succes.setTitle(getMessage("general.icon.join", guildID) + getMessage("join.success.setTitle", guildID));
-        succes.setFooter(getMessage("general.bythecommand", guildID) + ctx.getMember().getUser().getName(), ctx.getMember().getUser().getAvatarUrl());
+        EmbedBuilder success = new EmbedBuilder();
+        success.setColor(0x00ff00);
+        success.setTitle(getMessage("general.icon.join", guildID) + getMessage("join.success.setTitle", guildID));
+        success.setFooter(getMessage("general.bythecommand", guildID) + ctx.getMember().getUser().getName(), ctx.getMember().getUser().getAvatarUrl());
+        success.setTimestamp(Instant.now());
 
-        
-        channel.sendMessage(succes.build()).queue();
-        succes.clear();
+        channel.sendMessage(success.build()).queue();
     }
 
     @Override

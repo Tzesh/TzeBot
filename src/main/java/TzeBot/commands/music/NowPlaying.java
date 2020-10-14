@@ -6,12 +6,14 @@ import TzeBot.music.GuildMusicManager;
 import TzeBot.music.PlayerManager;
 import com.sedmelluq.discord.lavaplayer.player.AudioPlayer;
 import com.sedmelluq.discord.lavaplayer.track.AudioTrackInfo;
-import me.duncte123.botcommons.messaging.EmbedUtils;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.TextChannel;
 
+import java.time.Instant;
+
 import static TzeBot.utils.Formatter.formatTime;
-import static TzeBot.essentials.LanguageDetector.getMessage;
+import static TzeBot.essentials.LanguageManager.getMessage;
+import static TzeBot.utils.Formatter.formatURL;
 
 public class NowPlaying implements ICommand {
 
@@ -28,23 +30,26 @@ public class NowPlaying implements ICommand {
             error.setColor(0xff3923);
             error.setTitle(getMessage("general.icon.error", guildID) + getMessage("nowplaying.error.setTitle", guildID));
             error.setDescription(getMessage("nowplaying.error.setDescription", guildID));
+            error.setTimestamp(Instant.now());
 
-            
             channel.sendMessage(error.build()).queue();
-            error.clear();
             return;
         }
 
         AudioTrackInfo info = player.getPlayingTrack().getInfo();
 
-        channel.sendMessage(EmbedUtils.embedMessage(String.format("**" + getMessage("general.icon.nowplaying", guildID) + getMessage("nowplaying.nowplaying", guildID) + "** [%s]{%s}\n%s %s - %s",
-                info.title,
-                info.uri,
+        EmbedBuilder message = new EmbedBuilder();
+        message.setAuthor(info.author);
+        message.setTitle(info.title, info.uri);
+        message.setImage(formatURL("https://img.youtube.com/vi/" + info.uri, false) + "/0.jpg");
+        message.setDescription(String.format("%s %s - %s",
                 player.isPaused() ? "\u23F8" : "▶",
                 formatTime(player.getPlayingTrack().getPosition()),
-                formatTime(player.getPlayingTrack().getDuration())
-        )).build()).queue();
+                formatTime(player.getPlayingTrack().getDuration())));
+        message.setFooter(getMessage("general.bythecommand", guildID) + ctx.getMember().getUser().getName(), ctx.getMember().getUser().getAvatarUrl());
+        message.setTimestamp(Instant.now());
 
+        channel.sendMessage(message.build()).queue();
     }
 
     @Override

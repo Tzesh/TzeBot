@@ -9,7 +9,9 @@ import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.TextChannel;
 
 
-import static TzeBot.essentials.LanguageDetector.getMessage;
+import java.time.Instant;
+
+import static TzeBot.essentials.LanguageManager.getMessage;
 
 public class Loop implements ICommand {
 
@@ -26,10 +28,9 @@ public class Loop implements ICommand {
             error.setColor(0xff3923);
             error.setTitle(getMessage("general.icon.error", guildID) + getMessage("loop.error.setTitle", guildID));
             error.setDescription(getMessage("loop.error.setDescription", guildID));
+            error.setTimestamp(Instant.now());
 
-            
             channel.sendMessage(error.build()).queue();
-            error.clear();
         } else {
             if (scheduler.isRepeating() == false) {
                 scheduler.setRepeating(!scheduler.isRepeating());
@@ -38,10 +39,9 @@ public class Loop implements ICommand {
                 success.setColor(0x00ff00);
                 success.setTitle(getMessage("general.icon.loop", guildID) + getMessage("loop.success.on.setTitle", guildID));
                 success.setFooter(getMessage("general.bythecommand", guildID) + ctx.getMember().getUser().getName(), ctx.getMember().getUser().getAvatarUrl());
+                success.setTimestamp(Instant.now());
 
-                
                 channel.sendMessage(success.build()).queue();
-                success.clear();
             } else {
                 scheduler.setRepeating(!scheduler.isRepeating());
 
@@ -49,10 +49,9 @@ public class Loop implements ICommand {
                 success.setColor(0x00ff00);
                 success.setTitle(getMessage("general.icon.loop", guildID) + getMessage("loop.success.off.setTitle", guildID));
                 success.setFooter(getMessage("general.bythecommand", guildID) + ctx.getMember().getUser().getName(), ctx.getMember().getUser().getAvatarUrl());
+                success.setTimestamp(Instant.now());
 
-                
                 channel.sendMessage(success.build()).queue();
-                success.clear();
             }
         }
     }

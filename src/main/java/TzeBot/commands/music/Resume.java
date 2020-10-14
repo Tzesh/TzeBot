@@ -8,7 +8,9 @@ import com.sedmelluq.discord.lavaplayer.player.AudioPlayer;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.TextChannel;
 
-import static TzeBot.essentials.LanguageDetector.getMessage;
+import java.time.Instant;
+
+import static TzeBot.essentials.LanguageManager.getMessage;
 
 
 public class Resume implements ICommand {
@@ -26,8 +28,8 @@ public class Resume implements ICommand {
             error.setColor(0xff3923);
             error.setTitle(getMessage("general.icon.error", guildID) + getMessage("nowplaying.error.setTitle", guildID));
             error.setDescription(getMessage("resume.error.setDescription", guildID));
+            error.setTimestamp(Instant.now());
 
-            
             channel.sendMessage(error.build()).queue();
             error.clear();
         } else if (player.isPaused()) {
@@ -36,8 +38,8 @@ public class Resume implements ICommand {
             success.setColor(0x00ff00);
             success.setTitle(getMessage("general.icon.play", guildID) + getMessage("resume.success.setTitle", guildID) + player.getPlayingTrack().getInfo().title);
             success.setFooter(getMessage("general.bythecommand", guildID) + ctx.getMember().getUser().getName(), ctx.getMember().getUser().getAvatarUrl());
+            success.setTimestamp(Instant.now());
 
-            
             channel.sendMessage(success.build()).queue();
             success.clear();
         } else {
@@ -45,8 +47,8 @@ public class Resume implements ICommand {
             error.setColor(0xff3923);
             error.setTitle(getMessage("general.icon.error", guildID) + getMessage("nowplaying.error.setTitle", guildID));
             error.setDescription(getMessage("resume.nothingtoresumed.setDescription", guildID));
+            error.setTimestamp(Instant.now());
 
-            
             channel.sendMessage(error.build()).queue();
             error.clear();
         }

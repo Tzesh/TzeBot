@@ -18,7 +18,7 @@ import TzeBot.commands.Support;
 import TzeBot.commands.moderation.Language;
 import TzeBot.commands.moderation.Vote;
 import TzeBot.commands.moderation.VoteRole;
-import TzeBot.commands.music.Channel;
+import TzeBot.commands.moderation.Channel;
 import TzeBot.commands.music.Shuffle;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import javax.annotation.Nullable;
@@ -164,7 +164,7 @@ public class CommandManager {
             }
         } else {
             if (IDs != null && IDs.containsKey(event.getChannel().getIdLong())) {
-                ICommand command2 = this.getCommand(LanguageDetector.getMessage("play.name", guildID), guildID);
+                ICommand command2 = this.getCommand(LanguageManager.getMessage("play.name", guildID), guildID);
                 event.getChannel().sendTyping().queue();
                 List<String> args = List.of(split).subList(0, split.length);
                 CommandContext ctx = new CommandContext(event, args);
@@ -178,7 +178,7 @@ public class CommandManager {
                 CommandContext ctx = new CommandContext(event, args);
                 command.handle(ctx);
             } else {
-                ICommand command1 = this.getCommand(LanguageDetector.getMessage("play.name", guildID), guildID);
+                ICommand command1 = this.getCommand(LanguageManager.getMessage("play.name", guildID), guildID);
                 event.getChannel().sendTyping().queue();
                 List<String> args = List.of(split).subList(0, split.length);
                 CommandContext ctx = new CommandContext(event, args);

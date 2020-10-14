@@ -17,27 +17,27 @@ en_en,  general.nonperm.manage_roles,  Be ensure that TzeBot has "Manage Roles" 
 en_en,  general.bythecommand,  By the command of 
 en_en,  general.icon.success,  ✅ 
 en_en,  general.icon.error,  ❌ 
-en_en,  general.icon.join,  ⏺️
-en_en,  general.icon.leave,  ⏏
-en_en,  general.icon.play,  ▶
-en_en,  general.icon.pause,  ⏸
-en_en,  general.icon.stop,  ⏹️
-en_en,  general.icon.skip,  ⏭️
-en_en,  general.icon.next,  ↪️
-en_en,  general.icon.previous,  ↩️
-en_en,  general.icon.volume,  🔊
-en_en,  general.icon.volumedown,  🔉
-en_en,  general.icon.loop,  🔁
-en_en,  general.icon.nowplaying,  ⏯️
-en_en,  general.icon.shuffle,  🔀
-en_en,  general.icon.prefix,  🔧️
-en_en,  general.icon.clear,  🧻️
-en_en,  general.icon.language,  🏳️
-en_en,  general.icon.tzebot,  🤖
-en_en,  general.icon.patreon,  💰
-en_en,  general.icon.link,  🔗
-en_en,  general.icon.vote,  🗳️
-en_en,  general.icon.queue,  📜
+en_en,  general.icon.join,  ⏺️ 
+en_en,  general.icon.leave,  ⏏ 
+en_en,  general.icon.play,  ▶ 
+en_en,  general.icon.pause,  ⏸ 
+en_en,  general.icon.stop,  ⏹️ 
+en_en,  general.icon.skip,  ⏭️ 
+en_en,  general.icon.next,  ↪️ 
+en_en,  general.icon.previous,  ↩️ 
+en_en,  general.icon.volume,  🔊 
+en_en,  general.icon.volumedown,  🔉 
+en_en,  general.icon.loop,  🔁 
+en_en,  general.icon.nowplaying,  ⏯️ 
+en_en,  general.icon.shuffle,  🔀 
+en_en,  general.icon.prefix,  🔧️ 
+en_en,  general.icon.clear,  🧻️ 
+en_en,  general.icon.language,  🏳️ 
+en_en,  general.icon.tzebot,  🤖 
+en_en,  general.icon.patreon,  💰 
+en_en,  general.icon.link,  🔗 
+en_en,  general.icon.vote,  🗳️ 
+en_en,  general.icon.queue,  📜 
 en_en,  general.icon.1,  1️⃣
 en_en,  general.icon.2,  2️⃣
 en_en,  general.icon.3,  3️⃣
@@ -47,7 +47,7 @@ en_en,  general.icon.6,  6️⃣
 en_en,  general.icon.7,  7️⃣
 en_en,  general.icon.8,  8️⃣
 en_en,  general.icon.9,  9️⃣
-en_en,  general.icon.question,  ❔
+en_en,  general.icon.question,  ❔ 
 en_en,  general.icon.locked,  🔒 
 en_en,  general.icon.unlocked,  🔓 
 
@@ -67,9 +67,9 @@ en_en,  help.info.setDescription2,  🎵 music commands:
 en_en,  help.info.setDescription3,  ℹ️ support command: 
 en_en,  help.info.setFooter,  Frankensteined by Tzesh
 en_en,  help.music.info.setTitle,  🎵 Music Commands
-en_en,  help.music.info.setDescription,  All commands are listed below: 
+en_en,  help.music.info.setDescription,  All of the music commands are listed with their usages and functions below:
 en_en,  help.moderation.info.setTitle,  ⚙️ Moderation Commands
-en_en,  help.moderation.info.setDescription,  All commands are listed below: 
+en_en,  help.moderation.info.setDescription,  All of the moderation commands are listed with their usages and functions below:
 
 // Language Command
 en_en,  language.name,  language
@@ -108,6 +108,7 @@ en_en,  support.setDescription2,  You can use TzeBot in your server(s) or just c
 en_en,  support.setDescription3,  But if you want to take part in our development progress you can help us in patreon:
 en_en,  support.discordbots,  You can also support us by upvoting: 
 en_en,  support.setFooter,  Thanks in advance for your support we are really appreciated.
+en_en,  support.channel,  TzeBot Discord Support Channel
 
 // Music Commands
 en_en,  music.name,  music
@@ -269,27 +270,27 @@ tr_tr,  general.nonperm.manage_roles,  Lütfen TzeBot'un "Rolleri Yönet" yetkis
 tr_tr,  general.bythecommand,  Komutu veren 
 tr_tr,  general.icon.success,  ✅ 
 tr_tr,  general.icon.error,  ❌ 
-tr_tr,  general.icon.join,  ⏺️
-tr_tr,  general.icon.leave,  ⏏
-tr_tr,  general.icon.play,  ▶
-tr_tr,  general.icon.pause,  ⏸
-tr_tr,  general.icon.stop,  ⏹️
-tr_tr,  general.icon.skip,  ⏭️
-tr_tr,  general.icon.next,  ↪️
-tr_tr,  general.icon.previous,  ↩️
-tr_tr,  general.icon.volume,  🔊
-tr_tr,  general.icon.volumedown,  🔉
-tr_tr,  general.icon.loop,  🔁
-tr_tr,  general.icon.nowplaying,  ⏯️
-tr_tr,  general.icon.shuffle,  🔀
-tr_tr,  general.icon.prefix,  🔧️
-tr_tr,  general.icon.clear,  🧻️
-tr_tr,  general.icon.language,  🏳️
-tr_tr,  general.icon.tzebot,  🤖
-tr_tr,  general.icon.patreon,  💰
-tr_tr,  general.icon.link,  🔗
-tr_tr,  general.icon.vote,  🗳️
-tr_tr,  general.icon.queue,  📜
+tr_tr,  general.icon.join,  ⏺️ 
+tr_tr,  general.icon.leave,  ⏏ 
+tr_tr,  general.icon.play,  ▶ 
+tr_tr,  general.icon.pause,  ⏸ 
+tr_tr,  general.icon.stop,  ⏹️ 
+tr_tr,  general.icon.skip,  ⏭️ 
+tr_tr,  general.icon.next,  ↪️ 
+tr_tr,  general.icon.previous,  ↩️ 
+tr_tr,  general.icon.volume,  🔊 
+tr_tr,  general.icon.volumedown,  🔉 
+tr_tr,  general.icon.loop,  🔁 
+tr_tr,  general.icon.nowplaying,  ⏯️ 
+tr_tr,  general.icon.shuffle,  🔀 
+tr_tr,  general.icon.prefix,  🔧️ 
+tr_tr,  general.icon.clear,  🧻️ 
+tr_tr,  general.icon.language,  🏳️ 
+tr_tr,  general.icon.tzebot,  🤖 
+tr_tr,  general.icon.patreon,  💰 
+tr_tr,  general.icon.link,  🔗 
+tr_tr,  general.icon.vote,  🗳️ 
+tr_tr,  general.icon.queue,  📜 
 tr_tr,  general.icon.1,  1️⃣
 tr_tr,  general.icon.2,  2️⃣
 tr_tr,  general.icon.3,  3️⃣
@@ -299,12 +300,12 @@ tr_tr,  general.icon.6,  6️⃣
 tr_tr,  general.icon.7,  7️⃣
 tr_tr,  general.icon.8,  8️⃣
 tr_tr,  general.icon.9,  9️⃣
-tr_tr,  general.icon.question,  ❔
+tr_tr,  general.icon.question,  ❔ 
 tr_tr,  general.icon.locked,  🔒 
 tr_tr,  general.icon.unlocked,  🔓 
 
 // Moderasyon Komutları
-tr_tr,  moderation.name,  moderasyon
+tr_tr,  moderation.name,  yönetim
 
 // Yardım Komutu
 tr_tr,  help.name,  yardım
@@ -313,14 +314,14 @@ tr_tr,  help.gethelp2,  Kullanım: `
 tr_tr,  help.gethelp3,  yardım [komut]`
 tr_tr,  help.info.setTitle,  TzeBOT BOT
 tr_tr,  help.info.setDescription,  Çoklu dil desteği, müzik oynatıcı, tamamıyla fonksiyonel, 7/24 aktif...
-tr_tr,  help.info.setDescription1,  ⚙️ moderasyon komutları: 
+tr_tr,  help.info.setDescription1,  ⚙️ yönetim komutları: 
 tr_tr,  help.info.setDescription2,  🎵 müzik komutları: 
 tr_tr,  help.info.setDescription3,  ℹ️ destek komutu: 
 tr_tr,  help.info.setFooter,  Tzesh tarafından frankensteinlandı
 tr_tr,  help.music.info.setTitle,  🎵 Müzik Komutları
-tr_tr,  help.music.info.setDescription,  Bütün komutlar aşağıdaki gibidir: 
-tr_tr,  help.moderation.info.setTitle,  ⚙️ Moderasyon Komutları
-tr_tr,  help.moderation.info.setDescription,  Bütün komutlar aşağıdaki gibidir: 
+tr_tr,  help.music.info.setDescription,  Bütün müzik komutları kullanımları ve fonksiyonlarıyla beraber aşağıdaki gibidir:
+tr_tr,  help.moderation.info.setTitle,  ⚙️ Yönetim Komutları
+tr_tr,  help.moderation.info.setDescription,  Bütün yönetim komutları kullanımları ve fonksiyonlarıyla beraber aşağıdaki gibidir:
 
 // Dil Komutu
 tr_tr,  language.name,  dil
@@ -348,6 +349,7 @@ tr_tr,  support.setDescription2,  TzeBot'u sunucunuzda kullanabilir veya kendi b
 tr_tr,  support.setDescription3,  Eğer geliştirme sürecinde yer almak istiyorsanız patreon'dan destek verebilirsiniz:
 tr_tr,  support.discordbots,  İsterseniz bizi oylayarak da destekleyebilirsiniz: 
 tr_tr,  support.setFooter,  Desteğiniz için şimdiden teşekkür ederiz, minnettarız.
+tr_tr,  support.channel,  TzeBot Discord Destek Kanalı
 
 // Oylama Komutu
 tr_tr,  vote.name,  oylama

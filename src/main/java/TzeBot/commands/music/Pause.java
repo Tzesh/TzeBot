@@ -9,7 +9,9 @@ import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.TextChannel;
 
 
-import static TzeBot.essentials.LanguageDetector.getMessage;
+import java.time.Instant;
+
+import static TzeBot.essentials.LanguageManager.getMessage;
 
 public class Pause implements ICommand {
 
@@ -26,8 +28,8 @@ public class Pause implements ICommand {
             error.setColor(0xff3923);
             error.setTitle(getMessage("general.icon.error", guildID) + getMessage("pause.error.setTitle", guildID));
             error.setDescription(getMessage("pause.error.setDescription", guildID));
+            error.setTimestamp(Instant.now());
 
-            
             channel.sendMessage(error.build()).queue();
             error.clear();
         } else {
@@ -36,10 +38,9 @@ public class Pause implements ICommand {
             success.setColor(0x00ff00);
             success.setTitle(getMessage("general.icon.pause", guildID) + getMessage("pause.success.setTitle", guildID) + player.getPlayingTrack().getInfo().title);
             success.setFooter(getMessage("general.bythecommand", guildID) + ctx.getMember().getUser().getName(), ctx.getMember().getUser().getAvatarUrl());
+            success.setTimestamp(Instant.now());
 
-            
             channel.sendMessage(success.build()).queue();
-            success.clear();
         }
     }
 

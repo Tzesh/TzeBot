@@ -11,11 +11,12 @@ import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.TextChannel;
 
+import java.time.Instant;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
-import static TzeBot.essentials.LanguageDetector.getMessage;
+import static TzeBot.essentials.LanguageManager.getMessage;
 import static TzeBot.utils.Formatter.formatURL;
 
 public class PlayerManager {
@@ -63,27 +64,27 @@ public class PlayerManager {
                 if (musicChannel) {
                     EmbedBuilder success = new EmbedBuilder();
                     success.setColor(0x00ff00);
-                    success.setTitle(getMessage("general.icon.play", guildID) + getMessage("play.success.setTitle", guildID) + track.getInfo().title);
-                    success.setDescription(track.getInfo().uri);
+                    success.setAuthor(track.getInfo().author);
+                    success.setTitle(getMessage("general.icon.play", guildID) + getMessage("play.success.setTitle", guildID) + track.getInfo().title, track.getInfo().uri);
                     success.setFooter(getMessage("general.bythecommand", guildID) + name, avatarURL);
-                    success.setThumbnail(formatURL("https://img.youtube.com/vi/" + trackUrl, false) + "/mqdefault.jpg");
+                    success.setImage(formatURL("https://img.youtube.com/vi/" + trackUrl, false) + "/0.jpg");
+                    success.setTimestamp(Instant.now());
 
                     channel.sendMessage(success.build()).queue(message -> {
                         message.delete().queueAfter(3, TimeUnit.SECONDS);
                     });
-                    success.clear();
 
                     play(musicManager, track);
                 } else {
                     EmbedBuilder success = new EmbedBuilder();
                     success.setColor(0x00ff00);
-                    success.setTitle(getMessage("general.icon.play", guildID) + getMessage("play.success.setTitle", guildID) + track.getInfo().title);
-                    success.setDescription(track.getInfo().uri);
+                    success.setAuthor(track.getInfo().author);
+                    success.setTitle(getMessage("general.icon.play", guildID) + getMessage("play.success.setTitle", guildID) + track.getInfo().title, track.getInfo().uri);
                     success.setFooter(getMessage("general.bythecommand", guildID) + name, avatarURL);
-                    success.setThumbnail(formatURL("https://img.youtube.com/vi/" + trackUrl, false) + "/mqdefault.jpg");
+                    success.setImage(formatURL("https://img.youtube.com/vi/" + trackUrl, false) + "/0.jpg");
+                    success.setTimestamp(Instant.now());
 
                     channel.sendMessage(success.build()).queue();
-                    success.clear();
 
                     play(musicManager, track);
                 }
@@ -102,20 +103,22 @@ public class PlayerManager {
                         EmbedBuilder error = new EmbedBuilder();
                         error.setColor(0xff3923);
                         error.setTitle(getMessage("general.icon.error", guildID) + getMessage("play.playlist.error.setTitle", guildID));
-                        error.setDescription(getMessage("play.playlist.error.setDescription", guildID) + trackUrl);
+                        error.setDescription(getMessage("play.playlist.error.setDescription", guildID));
+                        error.setTimestamp(Instant.now());
 
                         channel.sendMessage(error.build()).queue(message -> {
                             message.delete().queueAfter(3, TimeUnit.SECONDS);
                         });
-                        error.clear();
+                        return;
                     } else {
                         EmbedBuilder error = new EmbedBuilder();
                         error.setColor(0xff3923);
                         error.setTitle(getMessage("general.icon.error", guildID) + getMessage("play.nothing.setTitle", guildID));
-                        error.setDescription(getMessage("play.nothing.setDescription", guildID) + trackUrl);
+                        error.setDescription(getMessage("play.nothing.setDescription", guildID));
+                        error.setTimestamp(Instant.now());
 
                         channel.sendMessage(error.build()).queue();
-                        error.clear();
+                        return;
                     }
                 }
 
@@ -126,12 +129,12 @@ public class PlayerManager {
                     success.setTitle(getMessage("play.playlist.setTitle1", guildID) + firstTrack.getInfo().title + getMessage("play.playlist.setTitle2", guildID) + playlist.getName() + ")");
                     success.setDescription(getMessage("play.playlist.size") + ": " + playlist.getTracks().size());
                     success.setFooter(getMessage("general.bythecommand", guildID) + name, avatarURL);
-                    success.setThumbnail(formatURL("https://img.youtube.com/vi/" + trackUrl, true) + "/mqdefault.jpg");
+                    success.setImage(formatURL("https://img.youtube.com/vi/" + trackUrl, true) + "/0.jpg");
+                    success.setTimestamp(Instant.now());
 
                     channel.sendMessage(success.build()).queue(message -> {
                         message.delete().queueAfter(3, TimeUnit.SECONDS);
                     });
-                    success.clear();
 
                     play(musicManager, firstTrack);
                     playlist.getTracks().remove(0);
@@ -142,12 +145,12 @@ public class PlayerManager {
                     success.setColor(0x00ff00);
                     success.setTitle(getMessage("play.playlist.setTitle1", guildID) + firstTrack.getInfo().title + getMessage("play.playlist.setTitle2", guildID) + playlist.getName() + ")");
                     success.setFooter(getMessage("general.bythecommand", guildID) + name, avatarURL);
-                    success.setThumbnail(formatURL("https://img.youtube.com/vi/" + trackUrl, true) + "/mqdefault.jpg");
+                    success.setImage(formatURL("https://img.youtube.com/vi/" + trackUrl, true) + "/0.jpg");
+                    success.setTimestamp(Instant.now());
 
                     channel.sendMessage(success.build()).queue(message -> {
                         message.delete().queueAfter(3, TimeUnit.SECONDS);
                     });
-                    success.clear();
 
                     play(musicManager, firstTrack);
                     playlist.getTracks().remove(0);
@@ -163,21 +166,19 @@ public class PlayerManager {
                     error.setColor(0xff3923);
                     error.setTitle(getMessage("general.icon.error", guildID) + getMessage("play.nothing.setTitle", guildID));
                     error.setDescription(getMessage("play.nothing.setDescription", guildID) + trackUrl);
-
+                    error.setTimestamp(Instant.now());
 
                     channel.sendMessage(error.build()).queue(message -> {
                         message.delete().queueAfter(3, TimeUnit.SECONDS);
                     });
-                    error.clear();
                 } else {
                     EmbedBuilder error = new EmbedBuilder();
                     error.setColor(0xff3923);
                     error.setTitle(getMessage("general.icon.error", guildID) + getMessage("play.nothing.setTitle", guildID));
                     error.setDescription(getMessage("play.nothing.setDescription", guildID) + trackUrl);
-
+                    error.setTimestamp(Instant.now());
 
                     channel.sendMessage(error.build()).queue();
-                    error.clear();
                 }
 
             }
@@ -189,21 +190,19 @@ public class PlayerManager {
                     error.setColor(0xff3923);
                     error.setTitle(getMessage("general.icon.error", guildID) + getMessage("play.error.setTitle", guildID));
                     error.setDescription(getMessage("play.error.setDescription", guildID) + exception.getMessage());
-
+                    error.setTimestamp(Instant.now());
 
                     channel.sendMessage(error.build()).queue(message -> {
                         message.delete().queueAfter(3, TimeUnit.SECONDS);
                     });
-                    error.clear();
                 } else {
                     EmbedBuilder error = new EmbedBuilder();
                     error.setColor(0xff3923);
                     error.setTitle(getMessage("general.icon.error", guildID) + getMessage("play.error.setTitle", guildID));
                     error.setDescription(getMessage("play.error.setDescription", guildID) + exception.getMessage());
-
+                    error.setTimestamp(Instant.now());
 
                     channel.sendMessage(error.build()).queue();
-                    error.clear();
                 }
             }
         });

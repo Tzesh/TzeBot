@@ -7,6 +7,8 @@ import net.dv8tion.jda.api.audio.AudioSendHandler;
 
 import java.nio.ByteBuffer;
 
+import static com.sedmelluq.discord.lavaplayer.format.StandardAudioDataFormats.DISCORD_OPUS;
+
 /**
  * This is a wrapper around AudioPlayer which makes it behave as an
  * AudioSendHandler for JDA. As JDA calls canProvide before every call to
@@ -23,9 +25,10 @@ public class AudioPlayerSendHandler implements AudioSendHandler {
      * @param audioPlayer Audio player to wrap.
      */
     public AudioPlayerSendHandler(AudioPlayer audioPlayer) {
-        this.audioPlayer = audioPlayer;
-        this.buffer = ByteBuffer.allocate(1024);
         this.frame = new MutableAudioFrame();
+        this.audioPlayer = audioPlayer;
+        this.buffer = ByteBuffer.allocate(DISCORD_OPUS.maximumChunkSize());
+        this.frame.setFormat(DISCORD_OPUS);
         this.frame.setBuffer(buffer);
     }
 

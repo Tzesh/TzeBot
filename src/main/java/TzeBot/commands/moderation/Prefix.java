@@ -3,7 +3,7 @@ package TzeBot.commands.moderation;
 import TzeBot.essentials.Config;
 import TzeBot.essentials.CommandContext;
 import TzeBot.essentials.ICommand;
-import TzeBot.essentials.LanguageDetector;
+import TzeBot.essentials.LanguageManager;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.Member;
@@ -23,24 +23,20 @@ public class Prefix implements ICommand {
         if (!member.hasPermission(Permission.MANAGE_SERVER)) {
             EmbedBuilder error = new EmbedBuilder();
             error.setColor(0xff3923);
-            error.setTitle(LanguageDetector.getMessage("general.icon.error", guildID) + LanguageDetector.getMessage("general.not_authorized", guildID));
-            error.setDescription(LanguageDetector.getMessage("general.not_authorized.description", guildID));
+            error.setTitle(LanguageManager.getMessage("general.icon.error", guildID) + LanguageManager.getMessage("general.not_authorized", guildID));
+            error.setDescription(LanguageManager.getMessage("general.not_authorized.description", guildID));
 
-            channel.sendTyping().queue();
             channel.sendMessage(error.build()).queue();
-            error.clear();
             return;
         }
 
         if (args.isEmpty()) {
             EmbedBuilder error = new EmbedBuilder();
             error.setColor(0xff3923);
-            error.setTitle(LanguageDetector.getMessage("general.icon.error", guildID) + LanguageDetector.getMessage("general.403", guildID));
-            error.setDescription(LanguageDetector.getMessage("general.403.description", guildID));
+            error.setTitle(LanguageManager.getMessage("general.icon.error", guildID) + LanguageManager.getMessage("general.403", guildID));
+            error.setDescription(LanguageManager.getMessage("general.403.description", guildID));
 
-            channel.sendTyping().queue();
             channel.sendMessage(error.build()).queue();
-            error.clear();
             return;
         }
 
@@ -49,22 +45,20 @@ public class Prefix implements ICommand {
 
         EmbedBuilder success = new EmbedBuilder();
         success.setColor(0x00ff00);
-        success.setTitle(LanguageDetector.getMessage("general.icon.success", guildID) + " " + LanguageDetector.getMessage("prefix.success.setTitle", guildID) + "`" + newPrefix + "`");
-        success.setFooter(LanguageDetector.getMessage("general.bythecommand", guildID) + " " + ctx.getMember().getUser().getName(), ctx.getMember().getUser().getAvatarUrl());
+        success.setTitle(LanguageManager.getMessage("general.icon.success", guildID) + " " + LanguageManager.getMessage("prefix.success.setTitle", guildID) + "`" + newPrefix + "`");
+        success.setFooter(LanguageManager.getMessage("general.bythecommand", guildID) + " " + ctx.getMember().getUser().getName(), ctx.getMember().getUser().getAvatarUrl());
 
-        channel.sendTyping().queue();
         channel.sendMessage(success.build()).queue();
-        success.clear();
     }
 
     @Override
     public String getName(long guildID) {
-        return LanguageDetector.getMessage("prefix.name", guildID);
+        return LanguageManager.getMessage("prefix.name", guildID);
     }
 
     @Override
     public String getHelp(long guildID) {
-        return LanguageDetector.getMessage("prefix.gethelp1", guildID)
-                + "\n" + LanguageDetector.getMessage("prefix.gethelp2", guildID) + Config.get("pre") + LanguageDetector.getMessage("prefix.gethelp3", guildID);
+        return LanguageManager.getMessage("prefix.gethelp1", guildID)
+                + "\n" + LanguageManager.getMessage("prefix.gethelp2", guildID) + Config.get("pre") + LanguageManager.getMessage("prefix.gethelp3", guildID);
     }
 }

@@ -1,6 +1,6 @@
 package TzeBot.gui;
 
-import TzeBot.gui.TextAreaOutputStream;
+import TzeBot.essentials.LanguageManager;
 import TzeBot.essentials.Config;
 import static TzeBot.essentials.Config.PREFIXES;
 import TzeBot.essentials.Listener;
@@ -15,6 +15,8 @@ import java.sql.SQLException;
 import javax.security.auth.login.LoginException;
 import javax.swing.JButton;
 
+import net.dv8tion.jda.api.GatewayEncoding;
+import net.dv8tion.jda.api.OnlineStatus;
 import net.dv8tion.jda.api.entities.Activity;
 import net.dv8tion.jda.api.requests.GatewayIntent;
 import net.dv8tion.jda.api.sharding.DefaultShardManagerBuilder;
@@ -363,7 +365,7 @@ public class TzeGUI extends javax.swing.JFrame {
     private void startButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_startButtonActionPerformed
         getvariables();
         Config.saveForAQuarter();
-        TzeBot.essentials.LanguageDetector.getMessages();
+        LanguageManager.getMessages();
         progressInfo.setText("Bot started.");
         try {
             DefaultShardManagerBuilder.createDefault(apiKEY.getText())
@@ -371,10 +373,13 @@ public class TzeGUI extends javax.swing.JFrame {
                     .addEventListeners(new Listener())
                     .setShardsTotal(shards)
                     .setActivity(Activity.listening(".help"))
-                    .disableCache(CacheFlag.ACTIVITY)
+                    .disableCache(CacheFlag.ACTIVITY, CacheFlag.MEMBER_OVERRIDES)
                     .setMemberCachePolicy(MemberCachePolicy.VOICE.or(MemberCachePolicy.OWNER))
                     .setChunkingFilter(ChunkingFilter.NONE)
                     .disableIntents(GatewayIntent.GUILD_MESSAGE_TYPING, GatewayIntent.DIRECT_MESSAGES, GatewayIntent.DIRECT_MESSAGE_REACTIONS, GatewayIntent.DIRECT_MESSAGE_TYPING, GatewayIntent.GUILD_BANS, GatewayIntent.GUILD_MESSAGE_TYPING, GatewayIntent.GUILD_INVITES)
+                    .setStatus(OnlineStatus.DO_NOT_DISTURB)
+                    .setGatewayEncoding(GatewayEncoding.ETF)
+                    .setAutoReconnect(true)
                     .setLargeThreshold(50)
                     .build();
         } catch (LoginException exception) {

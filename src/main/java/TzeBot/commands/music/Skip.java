@@ -9,7 +9,9 @@ import com.sedmelluq.discord.lavaplayer.player.AudioPlayer;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.TextChannel;
 
-import static TzeBot.essentials.LanguageDetector.getMessage;
+import java.time.Instant;
+
+import static TzeBot.essentials.LanguageManager.getMessage;
 
 public class Skip implements ICommand {
 
@@ -27,10 +29,9 @@ public class Skip implements ICommand {
             error.setColor(0xff3923);
             error.setTitle(getMessage("general.icon.error", guildID) + getMessage("skip.error.setTitle", guildID));
             error.setDescription(getMessage("skip.error.setDescription", guildID));
+            error.setTimestamp(Instant.now());
 
-            
             channel.sendMessage(error.build()).queue();
-            error.clear();
             return;
         }
 
@@ -38,12 +39,10 @@ public class Skip implements ICommand {
         success.setColor(0x00ff00);
         success.setTitle(getMessage("general.icon.skip", guildID) + getMessage("skip.success.setTitle1", guildID) + player.getPlayingTrack().getInfo().title + getMessage("skip.success.setTitle2", guildID));
         success.setFooter(getMessage("general.bythecommand", guildID) + " " + ctx.getMember().getUser().getName(), ctx.getMember().getUser().getAvatarUrl());
+        success.setTimestamp(Instant.now());
 
         scheduler.nextTrack();
-
-        
         channel.sendMessage(success.build()).queue();
-        success.clear();
     }
 
     @Override
