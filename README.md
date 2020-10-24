@@ -52,3 +52,6 @@ Now you are ready to go. Just hit start button to make your bot online.
 * Automatic saving-loading: Don't worry about losing datas of your servers. All of the database is saving per 15 minutes and also on close and loading every start.
 * Version control: If you are encountering some problems when using TzeBot substructure, just give us a feedback and then wait for a new version. In every start TzeBot will check if there is an update or not.
 * Sharding: This is a feature that allows you to use your bot too many of servers. 1 shard unofficially equals about 1500 server load.
+
+#### Requirements
+Please make sure you have at least JDK (13.0.2) or newer version to use TzeBot. TzeBot averagely uses 125-225 MB RAM and %0.1 CPU while working, it's really resource friendly. If you have any questions you are always free to ask me if you encounter any errors or something that might has to be feedbacked please open an issue in issue section and ask in there...
