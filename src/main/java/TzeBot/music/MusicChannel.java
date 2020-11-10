@@ -394,6 +394,24 @@ public class MusicChannel {
                     }
                     break;
                 case "\uD83D\uDCDC":
+                     if (player.getPlayingTrack() != null) {
+                        event.getChannel().removeReactionById(event.getMessageId(), event.getReactionEmote().getEmoji(), event.getUser()).queueAfter(3, TimeUnit.SECONDS);
+                        AudioTrackInfo info = player.getPlayingTrack().getInfo();
+
+                        EmbedBuilder nplaying = new EmbedBuilder();
+                        nplaying.setTitle(info.title, info.uri);
+                        nplaying.setAuthor(info.author);
+                        nplaying.setImage(formatURL("https://img.youtube.com/vi/" + info.uri, false) + "/0.jpg");
+                        nplaying.setDescription(String.format("%s %s - %s",
+                                player.isPaused() ? "\u23F8" : "▶",
+                                formatTime(player.getPlayingTrack().getPosition()),
+                                formatTime(player.getPlayingTrack().getDuration())));
+                        nplaying.setTimestamp(Instant.now());
+                        nplaying.setFooter(getMessage("general.bythecommand", guildID) + event.getMember().getUser().getName(), event.getMember().getUser().getAvatarUrl());
+                        channel.sendMessage(nplaying.build()).queue(message -> {
+                            message.delete().queueAfter(3, TimeUnit.SECONDS);
+                        });
+                    }
                     if (queue.isEmpty()) {
                         event.getChannel().removeReactionById(event.getMessageId(), event.getReactionEmote().getEmoji(), event.getUser()).queueAfter(3, TimeUnit.SECONDS);
                         EmbedBuilder error = new EmbedBuilder();
