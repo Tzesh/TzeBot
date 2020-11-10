@@ -1,7 +1,7 @@
 package TzeBot.commands.moderation;
 
-import TzeBot.essentials.Config;
 import TzeBot.essentials.CommandContext;
+import TzeBot.essentials.Config;
 import TzeBot.essentials.ICommand;
 import TzeBot.essentials.LanguageManager;
 import net.dv8tion.jda.api.EmbedBuilder;

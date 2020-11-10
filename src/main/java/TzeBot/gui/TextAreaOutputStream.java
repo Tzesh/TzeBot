@@ -1,14 +1,17 @@
 package TzeBot.gui;
 
-import java.awt.*;
-import java.io.*;
-import java.util.*;
-import java.util.List;
 import javax.swing.*;
+import java.awt.*;
+import java.io.OutputStream;
+import java.io.UnsupportedEncodingException;
+import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
 
 public class TextAreaOutputStream
         extends OutputStream {
-    private byte[] oneByte;
+    private final byte[] oneByte;
     private Appender appender;
 
     public TextAreaOutputStream(JTextArea txtara) {
@@ -22,7 +25,11 @@ public class TextAreaOutputStream
         oneByte = new byte[1];
         appender = new Appender(txtara, maxlin);
     }
-    
+
+    static private String bytesToString(byte[] ba, int str, int len) {
+        return new String(ba, str, len, StandardCharsets.UTF_8);
+    }
+
     public synchronized void clear() {
         if (appender != null) {
             appender.clear();
@@ -51,22 +58,15 @@ public class TextAreaOutputStream
         }
     }
 
-    static private String bytesToString(byte[] ba, int str, int len) {
-        try {
-            return new String(ba, str, len, "UTF-8");
-        } catch (UnsupportedEncodingException thr) {
-            return new String(ba, str, len);
-        } // all JVMs are required to support UTF-8
-    }
-    
     static class Appender
             implements Runnable {
 
+        static private final String EOL1 = "\n";
+        static private final String EOL2 = System.getProperty("line.separator", EOL1);
         private final JTextArea textArea;
         private final int maxLines;
         private final LinkedList<Integer> lengths;
         private final List<String> values;
-
         private int curLength;
         private boolean clear;
         private boolean queue;
@@ -100,7 +100,7 @@ public class TextAreaOutputStream
                 EventQueue.invokeLater(this);
             }
         }
-        
+
         public synchronized void run() {
             if (clear) {
                 textArea.setText("");
@@ -120,9 +120,6 @@ public class TextAreaOutputStream
             clear = false;
             queue = true;
         }
-
-        static private final String EOL1 = "\n";
-        static private final String EOL2 = System.getProperty("line.separator", EOL1);
     }
 
 }

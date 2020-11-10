@@ -1,39 +1,17 @@
 package TzeBot.essentials;
 
 import io.github.cdimascio.dotenv.Dotenv;
-import io.github.cdimascio.dotenv.DotenvBuilder;
-import net.dv8tion.jda.api.requests.GatewayIntent;
-import net.dv8tion.jda.api.sharding.DefaultShardManagerBuilder;
-import net.dv8tion.jda.api.utils.ChunkingFilter;
-import net.dv8tion.jda.api.utils.MemberCachePolicy;
-import net.dv8tion.jda.api.utils.cache.CacheFlag;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
+import java.io.*;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Map;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
 
-import static java.util.concurrent.TimeUnit.MINUTES;
-import static java.util.concurrent.TimeUnit.SECONDS;
-
 public class Config {
-
-    private static Dotenv dotenv = Dotenv.configure()
-                                        .ignoreIfMissing()
-                                        .load(); // To get .env file properties which are unique for bot
 
     public static Map<Long, String> PREFIXES = new HashMap<>(); // All of the prefixes of the servers default is .env's prefix setting
     public static Map<Long, String> LANGUAGES = new HashMap<>(); // All of the languages of the servers default is English
@@ -42,8 +20,10 @@ public class Config {
     public static Map<Long, HashMap<Long, Long>> MUSICCHANNELS = new HashMap<>(); // All of the music channels that are created and initialized.
     public static Map<Long, Integer> VOLUMES = new HashMap<>(); // Volumes of the servers default is 50%
     public static Map<Long, Long> CHANNELCREATED = new HashMap<>(); // All of the music channels that are created but either initialized or not. It's important value for preventing some kind of abusing of channel creation.
-
-    public static double currentVersion = 2.4; // Check if there's an update or not.
+    public static double currentVersion = 2.45; // Check if there's an update or not.
+    private static final Dotenv dotenv = Dotenv.configure()
+            .ignoreIfMissing()
+            .load(); // To get .env file properties which are unique for bot
 
     public static String get(String key) {
         return dotenv.get(key.toUpperCase());
@@ -149,7 +129,7 @@ public class Config {
                 if (array[0].equals("version")) {
                     if (currentVersion * 100 < Double.parseDouble(array[1]) * 100) {
                         System.out.println("You are currently using TzeBot v" + currentVersion);
-                        System.out.println("Please update your TzeBot to latest version by downloading TzeBot-" + array[1] + ".rar from update button.");
+                        System.out.println("Please update your TzeBot to latest version by downloading TzeBot-" + array[1] + ".zip from update button.");
                         return false;
                     }
                 }

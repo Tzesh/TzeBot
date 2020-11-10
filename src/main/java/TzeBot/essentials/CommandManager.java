@@ -1,22 +1,18 @@
 package TzeBot.essentials;
 
-import TzeBot.commands.music.*;
-import TzeBot.commands.moderation.Prefix;
-import TzeBot.commands.moderation.Clear;
 import TzeBot.commands.Help;
 import TzeBot.commands.Support;
-import TzeBot.commands.moderation.Language;
-import TzeBot.commands.moderation.Vote;
-import TzeBot.commands.moderation.VoteRole;
-import TzeBot.commands.moderation.Channel;
+import TzeBot.commands.moderation.*;
+import TzeBot.commands.music.*;
+import net.dv8tion.jda.api.entities.GuildChannel;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
+
 import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.regex.Pattern;
-import net.dv8tion.jda.api.entities.GuildChannel;
 
 public class CommandManager {
 
@@ -83,6 +79,7 @@ public class CommandManager {
         String invoke = split[0].toLowerCase();
         String searchLower = invoke.toLowerCase();
         Long textChannelID = Config.CHANNELS.computeIfAbsent(event.getGuild().getIdLong(), (id) -> 0L);
+
         if (textChannelID != 0L && isExists(event)) {
             for (ICommand cmd : this.commands) {
                 if (cmd.getName(guildID).equals(searchLower)) {

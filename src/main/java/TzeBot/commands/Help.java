@@ -1,15 +1,14 @@
 package TzeBot.commands;
 
+import TzeBot.essentials.CommandContext;
 import TzeBot.essentials.CommandManager;
 import TzeBot.essentials.Config;
-import TzeBot.essentials.CommandContext;
 import TzeBot.essentials.ICommand;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.TextChannel;
 
 import java.time.Instant;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 import static TzeBot.essentials.LanguageManager.getMessage;
 
@@ -38,7 +37,7 @@ public class Help implements ICommand {
             info.setImage("https://raw.githubusercontent.com/Tzesh/TzeBot/master/embed_logo.png");
             info.setColor(0x6699ff);
             info.setTimestamp(Instant.now());
-            info.setFooter(getMessage("help.info.setFooter", guildID), "https://cdn.discordapp.com/avatars/217668226845245440/8326b24c3961afa0b3727a771220719e.png");
+            info.setFooter(getMessage("help.info.setFooter", guildID), ctx.getSelfMember().getUser().getAvatarUrl());
 
             channel.sendMessage(info.build()).queue();
             return;
@@ -64,7 +63,7 @@ public class Help implements ICommand {
             info.setColor(0x6699ff);
             info.setTimestamp(Instant.now());
 
-            info.setFooter(getMessage("help.info.setFooter", guildID), "https://cdn.discordapp.com/avatars/217668226845245440/8326b24c3961afa0b3727a771220719e.png");
+            info.setFooter(getMessage("help.info.setFooter", guildID), ctx.getSelfMember().getUser().getAvatarUrl());
             channel.sendMessage(info.build()).queue();
             return;
         }
@@ -80,8 +79,8 @@ public class Help implements ICommand {
             info.addField(getMessage("general.icon.vote", guildID) + "`" + prefix + getMessage("voterole.name", guildID) + "`", getMessage("voterole.gethelp", guildID), true);
             info.setColor(0x6699ff);
             info.setTimestamp(Instant.now());
-            info.setFooter(getMessage("help.info.setFooter", guildID), "https://cdn.discordapp.com/avatars/217668226845245440/8326b24c3961afa0b3727a771220719e.png");
-            
+            info.setFooter(getMessage("help.info.setFooter", guildID), ctx.getSelfMember().getUser().getAvatarUrl());
+
             channel.sendMessage(info.build()).queue();
             return;
         }

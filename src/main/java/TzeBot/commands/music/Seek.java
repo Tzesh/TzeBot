@@ -13,7 +13,6 @@ import net.dv8tion.jda.api.entities.TextChannel;
 
 import java.time.Instant;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 import static TzeBot.essentials.LanguageManager.getMessage;
 
@@ -55,15 +54,15 @@ public class Seek implements ICommand {
         } else if (args.get(0).equals(getMessage("seek.backward", guildID))) {
             scheduler.changePosition(-15);
         } else {
-                EmbedBuilder error = new EmbedBuilder();
-                error.setColor(0xff3923);
-                error.setTitle(LanguageManager.getMessage("general.icon.error", guildID) + LanguageManager.getMessage("seek.error.setTitle", guildID));
-                error.setDescription(LanguageManager.getMessage("seek.error.setDescription", guildID));
-                error.setTimestamp(Instant.now());
+            EmbedBuilder error = new EmbedBuilder();
+            error.setColor(0xff3923);
+            error.setTitle(LanguageManager.getMessage("general.icon.error", guildID) + LanguageManager.getMessage("seek.error.setTitle", guildID));
+            error.setDescription(LanguageManager.getMessage("seek.error.setDescription", guildID));
+            error.setTimestamp(Instant.now());
 
-                channel.sendMessage(error.build()).queue();
+            channel.sendMessage(error.build()).queue();
         }
-        }
+    }
 
     @Override
     public String getName(long guildID) {

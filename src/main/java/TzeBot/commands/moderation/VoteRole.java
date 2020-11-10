@@ -9,17 +9,16 @@ import TzeBot.essentials.CommandContext;
 import TzeBot.essentials.Config;
 import TzeBot.essentials.ICommand;
 import TzeBot.essentials.LanguageManager;
-
-import java.time.Instant;
-import java.util.LinkedList;
-import java.util.List;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.TextChannel;
 
+import java.time.Instant;
+import java.util.LinkedList;
+import java.util.List;
+
 /**
- *
  * @author Tzesh
  */
 public class VoteRole implements ICommand {
@@ -87,7 +86,7 @@ public class VoteRole implements ICommand {
                     vote3.setDescription(LanguageManager.getMessage("general.icon.1", guildID) + " " + variables[1]
                             + "\n" + LanguageManager.getMessage("general.icon.2", guildID) + " " + variables[3]);
                     vote3.setFooter(LanguageManager.getMessage("vote.setFooter", guildID));
-                    
+
                     channel.sendMessage(vote3.build()).queue(message -> {
                         message.addReaction(LanguageManager.getMessage("general.icon.1", guildID)).queue();
                         message.addReaction(LanguageManager.getMessage("general.icon.2", guildID)).queue();
@@ -101,7 +100,7 @@ public class VoteRole implements ICommand {
                         error.setTitle(LanguageManager.getMessage("general.icon.error", guildID) + LanguageManager.getMessage("vote.error.setTitle", guildID));
                         error.setDescription(LanguageManager.getMessage("vote.error.setDescription", guildID));
                         error.setTimestamp(Instant.now());
-                        
+
                         channel.sendMessage(error.build()).queue();
                         return;
                     }
@@ -112,7 +111,7 @@ public class VoteRole implements ICommand {
                             + "\n" + LanguageManager.getMessage("general.icon.2", guildID) + " " + variables[2]
                             + "\n" + LanguageManager.getMessage("general.icon.3", guildID) + " " + variables[3]);
                     vote4.setFooter(LanguageManager.getMessage("vote.setFooter", guildID));
-                    
+
                     channel.sendMessage(vote4.build()).queue(message -> {
                         message.addReaction(LanguageManager.getMessage("general.icon.1", guildID)).queue();
                         message.addReaction(LanguageManager.getMessage("general.icon.2", guildID)).queue();
@@ -127,7 +126,7 @@ public class VoteRole implements ICommand {
                         error.setTitle(LanguageManager.getMessage("general.icon.error", guildID) + LanguageManager.getMessage("vote.error.setTitle", guildID));
                         error.setDescription(LanguageManager.getMessage("vote.error.setDescription", guildID));
                         error.setTimestamp(Instant.now());
-                        
+
                         channel.sendMessage(error.build()).queue();
                         return;
                     }
@@ -139,7 +138,7 @@ public class VoteRole implements ICommand {
                             + "\n" + LanguageManager.getMessage("general.icon.3", guildID) + " " + variables[3]
                             + "\n" + LanguageManager.getMessage("general.icon.4", guildID) + " " + variables[4]);
                     vote5.setFooter(LanguageManager.getMessage("vote.setFooter", guildID));
-                    
+
                     channel.sendMessage(vote5.build()).queue(message -> {
                         message.addReaction(LanguageManager.getMessage("general.icon.1", guildID)).queue();
                         message.addReaction(LanguageManager.getMessage("general.icon.2", guildID)).queue();

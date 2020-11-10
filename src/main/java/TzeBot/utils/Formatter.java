@@ -10,6 +10,7 @@ public class Formatter {
 
         return String.format("%02d:%02d:%02d", hours, minutes, seconds);
     }
+
     public static String formatURL(String input, boolean playlist) {
         return playlist ? input.substring(0, input.indexOf("&")).replace("https://www.youtube.com/watch?v=", "") : input.replace("https://www.youtube.com/watch?v=", "");
     }

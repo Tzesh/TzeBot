@@ -8,16 +8,15 @@ package TzeBot.commands.moderation;
 import TzeBot.essentials.CommandContext;
 import TzeBot.essentials.ICommand;
 import TzeBot.essentials.LanguageManager;
-
-import java.time.Instant;
-import java.util.List;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.TextChannel;
 
+import java.time.Instant;
+import java.util.List;
+
 /**
- *
  * @author Tzesh
  */
 public class Vote implements ICommand {
@@ -37,7 +36,7 @@ public class Vote implements ICommand {
             error.setTimestamp(Instant.now());
 
             channel.sendMessage(error.build()).queue();
-            
+
             return;
         }
         if (args.isEmpty()) {
@@ -48,7 +47,7 @@ public class Vote implements ICommand {
             error.setTimestamp(Instant.now());
 
             channel.sendMessage(error.build()).queue();
-            
+
         } else {
             String space = " ";
             String res = String.join(space, args);
@@ -61,7 +60,7 @@ public class Vote implements ICommand {
                     vote3.setDescription(LanguageManager.getMessage("general.icon.1", guildID) + " " + variables[1]
                             + "\n" + LanguageManager.getMessage("general.icon.2", guildID) + " " + variables[2]);
                     vote3.setFooter(LanguageManager.getMessage("vote.setFooter", guildID));
-                    
+
                     channel.sendMessage(vote3.build()).queue(message -> {
                         message.addReaction(LanguageManager.getMessage("general.icon.1", guildID)).queue();
                         message.addReaction(LanguageManager.getMessage("general.icon.2", guildID)).queue();

@@ -6,13 +6,14 @@ plugins {
 
 mainClassName = 'TzeBot.Main'
 
-version '2.4'
+version '2.45'
 
 sourceCompatibility = JavaVersion.VERSION_11
 
 repositories {
     jcenter()
     mavenCentral()
+    maven { url 'https://jitpack.io' } // required to be able to use commits as dependencies' version
 }
 
 dependencies {
@@ -23,7 +24,7 @@ dependencies {
     compile 'io.github.cdimascio:java-dotenv:+'
     compile 'com.google.apis:google-api-services-youtube:+'
 
-    implementation 'com.sedmelluq:lavaplayer:+'
+    implementation 'com.github.Devoxin:lavaplayer:+'
 }
 
 compileJava.options.encoding = 'UTF-8'

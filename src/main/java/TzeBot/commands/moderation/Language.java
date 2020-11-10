@@ -29,6 +29,7 @@ public class Language implements ICommand {
         final List<String> args = ctx.getArgs();
         final Member member = ctx.getMember();
         final long guildID = ctx.getGuild().getIdLong();
+        final String prefix = Config.PREFIXES.get(ctx.getGuild().getIdLong());
 
         if (!member.hasPermission(Permission.MANAGE_SERVER)) {
             EmbedBuilder error = new EmbedBuilder();
@@ -48,7 +49,7 @@ public class Language implements ICommand {
             error.setTimestamp(Instant.now());
 
             channel.sendMessage(error.build()).queue();
-            
+
         } else {
             if (Config.LANGUAGES.get(ctx.getGuild().getIdLong()).equals("en_en")) {
                 if (args.get(0).toLowerCase().equals("turkish")) {
@@ -56,6 +57,7 @@ public class Language implements ICommand {
                     EmbedBuilder success = new EmbedBuilder();
                     success.setColor(0x00ff00);
                     success.setTitle(LanguageManager.getMessage("general.icon.success", guildID) + LanguageManager.getMessage("language.successful.setTitle", guildID));
+                    success.setDescription("Türkçe olarak komutlara göz atmak dilerseniz `" + prefix + "yardım` komudunu kullanabilirsiniz, if you want to revert language back to English just type `" + prefix + "dil ingilizce`.");
                     success.setFooter(LanguageManager.getMessage("general.bythecommand", guildID) + " " + ctx.getMember().getUser().getName(), ctx.getMember().getUser().getAvatarUrl());
                     success.setTimestamp(Instant.now());
 
@@ -88,6 +90,7 @@ public class Language implements ICommand {
                     EmbedBuilder success = new EmbedBuilder();
                     success.setColor(0x00ff00);
                     success.setTitle(LanguageManager.getMessage("general.icon.success", guildID) + LanguageManager.getMessage("language.successful.setTitle", guildID));
+                    success.setDescription("You can use `" + prefix + "help` command to look at the commands in English, if you want to revert language back to Turkish just type `" + prefix + "language turkish`.");
                     success.setFooter(LanguageManager.getMessage("general.bythecommand", guildID) + " " + ctx.getMember().getUser().getName(), ctx.getMember().getUser().getAvatarUrl());
                     success.setTimestamp(Instant.now());
                     channel.sendMessage(success.build()).queue();

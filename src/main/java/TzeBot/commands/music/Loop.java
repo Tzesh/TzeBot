@@ -8,7 +8,6 @@ import TzeBot.music.TrackScheduler;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.TextChannel;
 
-
 import java.time.Instant;
 
 import static TzeBot.essentials.LanguageManager.getMessage;

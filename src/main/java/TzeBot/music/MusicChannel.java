@@ -1,7 +1,6 @@
 package TzeBot.music;
 
 import TzeBot.essentials.Config;
-import TzeBot.utils.Formatter;
 import com.sedmelluq.discord.lavaplayer.player.AudioPlayer;
 import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
 import com.sedmelluq.discord.lavaplayer.track.AudioTrackInfo;

@@ -1,20 +1,16 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package TzeBot.essentials;
+
+import net.dv8tion.jda.api.hooks.ListenerAdapter;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.text.Normalizer;
 import java.util.HashMap;
-import net.dv8tion.jda.api.hooks.ListenerAdapter;
 
 /**
- *
  * @author Tzesh
  */
 public class LanguageManager extends ListenerAdapter {
@@ -26,7 +22,7 @@ public class LanguageManager extends ListenerAdapter {
         try {
             URL tzegit = new URL("https://raw.githubusercontent.com/Tzesh/TzeBot/master/messages.txt");
             BufferedReader in = new BufferedReader(
-                    new InputStreamReader(tzegit.openStream(), "UTF8"));
+                    new InputStreamReader(tzegit.openStream(), StandardCharsets.UTF_8));
             String inputLine = in.readLine();
             while ((inputLine = in.readLine()) != null) {
                 String[] array = inputLine.split(",  ");

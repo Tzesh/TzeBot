@@ -4,12 +4,15 @@ import com.sedmelluq.discord.lavaplayer.player.AudioLoadResultHandler;
 import com.sedmelluq.discord.lavaplayer.player.AudioPlayerManager;
 import com.sedmelluq.discord.lavaplayer.player.DefaultAudioPlayerManager;
 import com.sedmelluq.discord.lavaplayer.source.AudioSourceManagers;
+import com.sedmelluq.discord.lavaplayer.source.youtube.YoutubeAudioSourceManager;
 import com.sedmelluq.discord.lavaplayer.tools.FriendlyException;
 import com.sedmelluq.discord.lavaplayer.track.AudioPlaylist;
 import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.TextChannel;
+import org.apache.http.client.config.CookieSpecs;
+import org.apache.http.client.config.RequestConfig;
 
 import java.time.Instant;
 import java.util.HashMap;
@@ -31,6 +34,12 @@ public class PlayerManager {
         this.playerManager = new DefaultAudioPlayerManager();
         AudioSourceManagers.registerRemoteSources(playerManager);
         AudioSourceManagers.registerLocalSource(playerManager);
+        YoutubeAudioSourceManager youtubeAudioSourceManager = new YoutubeAudioSourceManager();
+        youtubeAudioSourceManager.setPlaylistPageCount(90);
+        youtubeAudioSourceManager.configureRequests(config -> RequestConfig.copy(config)
+                .setCookieSpec(CookieSpecs.IGNORE_COOKIES)
+                .build());
+        playerManager.registerSourceManager(youtubeAudioSourceManager);
     }
 
     public static synchronized PlayerManager getInstance() {
@@ -55,10 +64,10 @@ public class PlayerManager {
         return musicManager;
     }
 
-    public void loadAndPlay(TextChannel channel, String trackUrl, String name, String avatarURL, boolean musicChannel, long guildID) {
+    public void loadAndPlay(TextChannel channel, String identifier, String name, String avatarURL, boolean musicChannel, long guildID) {
         GuildMusicManager musicManager = getGuildMusicManager(channel.getGuild());
 
-        playerManager.loadItemOrdered(musicManager, trackUrl, new AudioLoadResultHandler() {
+        playerManager.loadItemOrdered(musicManager, identifier, new AudioLoadResultHandler() {
             @Override
             public void trackLoaded(AudioTrack track) {
                 if (musicChannel) {
@@ -67,7 +76,7 @@ public class PlayerManager {
                     success.setAuthor(track.getInfo().author);
                     success.setTitle(getMessage("general.icon.play", guildID) + getMessage("play.success.setTitle", guildID) + track.getInfo().title, track.getInfo().uri);
                     success.setFooter(getMessage("general.bythecommand", guildID) + name, avatarURL);
-                    success.setImage(formatURL("https://img.youtube.com/vi/" + trackUrl, false) + "/0.jpg");
+                    success.setImage(formatURL("https://img.youtube.com/vi/" + track.getInfo().uri, false) + "/0.jpg");
                     success.setTimestamp(Instant.now());
 
                     channel.sendMessage(success.build()).queue(message -> {
@@ -81,7 +90,7 @@ public class PlayerManager {
                     success.setAuthor(track.getInfo().author);
                     success.setTitle(getMessage("general.icon.play", guildID) + getMessage("play.success.setTitle", guildID) + track.getInfo().title, track.getInfo().uri);
                     success.setFooter(getMessage("general.bythecommand", guildID) + name, avatarURL);
-                    success.setImage(formatURL("https://img.youtube.com/vi/" + trackUrl, false) + "/0.jpg");
+                    success.setImage(formatURL("https://img.youtube.com/vi/" + track.getInfo().uri, false) + "/0.jpg");
                     success.setTimestamp(Instant.now());
 
                     channel.sendMessage(success.build()).queue();
@@ -129,7 +138,6 @@ public class PlayerManager {
                     success.setTitle(getMessage("play.playlist.setTitle1", guildID) + firstTrack.getInfo().title + getMessage("play.playlist.setTitle2", guildID) + playlist.getName() + ")");
                     success.setDescription(getMessage("play.playlist.size") + ": " + playlist.getTracks().size());
                     success.setFooter(getMessage("general.bythecommand", guildID) + name, avatarURL);
-                    success.setImage(formatURL("https://img.youtube.com/vi/" + trackUrl, true) + "/0.jpg");
                     success.setTimestamp(Instant.now());
 
                     channel.sendMessage(success.build()).queue(message -> {
@@ -145,7 +153,6 @@ public class PlayerManager {
                     success.setColor(0x00ff00);
                     success.setTitle(getMessage("play.playlist.setTitle1", guildID) + firstTrack.getInfo().title + getMessage("play.playlist.setTitle2", guildID) + playlist.getName() + ")");
                     success.setFooter(getMessage("general.bythecommand", guildID) + name, avatarURL);
-                    success.setImage(formatURL("https://img.youtube.com/vi/" + trackUrl, true) + "/0.jpg");
                     success.setTimestamp(Instant.now());
 
                     channel.sendMessage(success.build()).queue(message -> {
@@ -165,7 +172,7 @@ public class PlayerManager {
                     EmbedBuilder error = new EmbedBuilder();
                     error.setColor(0xff3923);
                     error.setTitle(getMessage("general.icon.error", guildID) + getMessage("play.nothing.setTitle", guildID));
-                    error.setDescription(getMessage("play.nothing.setDescription", guildID) + trackUrl);
+                    error.setDescription(getMessage("play.nothing.setDescription", guildID));
                     error.setTimestamp(Instant.now());
 
                     channel.sendMessage(error.build()).queue(message -> {
@@ -175,7 +182,7 @@ public class PlayerManager {
                     EmbedBuilder error = new EmbedBuilder();
                     error.setColor(0xff3923);
                     error.setTitle(getMessage("general.icon.error", guildID) + getMessage("play.nothing.setTitle", guildID));
-                    error.setDescription(getMessage("play.nothing.setDescription", guildID) + trackUrl);
+                    error.setDescription(getMessage("play.nothing.setDescription", guildID));
                     error.setTimestamp(Instant.now());
 
                     channel.sendMessage(error.build()).queue();

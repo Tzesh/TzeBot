@@ -1,7 +1,7 @@
 package TzeBot.commands.music;
 
-import TzeBot.essentials.Config;
 import TzeBot.essentials.CommandContext;
+import TzeBot.essentials.Config;
 import TzeBot.essentials.ICommand;
 import TzeBot.music.GuildMusicManager;
 import TzeBot.music.PlayerManager;
@@ -18,6 +18,7 @@ import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.TextChannel;
 import net.dv8tion.jda.api.entities.VoiceChannel;
 import net.dv8tion.jda.api.managers.AudioManager;
+
 import javax.annotation.Nullable;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -28,8 +29,6 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import static TzeBot.essentials.LanguageManager.getMessage;
-
-
 import static TzeBot.utils.Formatter.formatTime;
 import static TzeBot.utils.Formatter.formatURL;
 
@@ -72,73 +71,76 @@ public class Play implements ICommand {
         final long guildID = ctx.getGuild().getIdLong();
 
         if (musicChannel) {
-                if (!isUrl(input)) {
-                    String ytSearched = searchYoutube(input);
+            if (!isUrl(input)) {
+                String ytSearched = searchYoutube(input);
 
-                    if (ytSearched == null) {
-                        ctx.getMessage().delete().queue();
-                        EmbedBuilder error = new EmbedBuilder();
-                        error.setColor(0xff3923);
-                        error.setTitle(getMessage("general.icon.error", guildID) + getMessage("play.noresults.setTitle", guildID));
-                        error.setDescription(getMessage("play.noresults.setDescription", guildID));
-                        error.setTimestamp(Instant.now());
-                        
-                        channel.sendMessage(error.build()).queue(message -> {
-                            message.delete().queueAfter(3, TimeUnit.SECONDS);
-                        });
-                        return;
-                    }
-
-                    input = ytSearched;
-                }
-
-                if (!memberVoiceState.inVoiceChannel()) {
+                if (ytSearched == null) {
                     ctx.getMessage().delete().queue();
                     EmbedBuilder error = new EmbedBuilder();
                     error.setColor(0xff3923);
-                    error.setTitle(getMessage("general.icon.error", guildID) + getMessage("join.joinchannel.setTitle", guildID));
-                    error.setDescription(getMessage("join.joinchannel.setDescription", guildID));
+                    error.setTitle(getMessage("general.icon.error", guildID) + getMessage("play.noresults.setTitle", guildID));
+                    error.setDescription(getMessage("play.noresults.setDescription", guildID));
                     error.setTimestamp(Instant.now());
-                    
+
                     channel.sendMessage(error.build()).queue(message -> {
                         message.delete().queueAfter(3, TimeUnit.SECONDS);
                     });
                     return;
                 }
 
-                if (!selfmember.hasPermission(voiceChannel, Permission.VOICE_CONNECT)) {
-                    ctx.getMessage().delete().queue();
-                    EmbedBuilder error = new EmbedBuilder();
-                    error.setColor(0xff3923);
-                    error.setTitle(getMessage("general.icon.error", guildID) + getMessage("join.cannotjoin.setTitle", guildID));
-                    error.setDescription(getMessage("join.cannotjoin.setDescription", guildID));
-                    error.setTimestamp(Instant.now());
-                    
-                    channel.sendMessage(error.build()).queue(message -> {
-                        message.delete().queueAfter(3, TimeUnit.SECONDS);
-                    });
-                    return;
-                }
-
-                if (!audioManager.isConnected()) {
-                    audioManager.openAudioConnection(voiceChannel);
-                    audioManager.setSelfDeafened(true);
-                    int volume = Config.VOLUMES.computeIfAbsent(ctx.getGuild().getIdLong(), (id) -> 50);
-                    manager.getGuildMusicManager(ctx.getGuild()).player.setVolume(volume);
-                    EmbedBuilder success = new EmbedBuilder();
-                    success.setColor(0x00ff00);
-                    success.setTitle(getMessage("general.icon.join", guildID) + getMessage("join.success.setTitle", guildID));
-                    success.setFooter(getMessage("general.bythecommand", guildID) + ctx.getMember().getUser().getName(), ctx.getMember().getUser().getAvatarUrl());
-                    success.setTimestamp(Instant.now());
-
-                    channel.sendMessage(success.build()).queue(message -> {
-                        message.delete().queueAfter(3, TimeUnit.SECONDS);
-                    });
-                }
-                manager.loadAndPlay(ctx.getChannel(), input, ctx.getMember().getUser().getName(), ctx.getMember().getUser().getAvatarUrl(), true, guildID);
-                ctx.getMessage().delete().queue();
+                input = ytSearched;
             }
-        else {
+
+            if (!memberVoiceState.inVoiceChannel()) {
+                ctx.getMessage().delete().queue();
+                EmbedBuilder error = new EmbedBuilder();
+                error.setColor(0xff3923);
+                error.setTitle(getMessage("general.icon.error", guildID) + getMessage("join.joinchannel.setTitle", guildID));
+                error.setDescription(getMessage("join.joinchannel.setDescription", guildID));
+                error.setTimestamp(Instant.now());
+
+                channel.sendMessage(error.build()).queue(message -> {
+                    message.delete().queueAfter(3, TimeUnit.SECONDS);
+                });
+                return;
+            }
+
+            if (!selfmember.hasPermission(voiceChannel, Permission.VOICE_CONNECT)) {
+                ctx.getMessage().delete().queue();
+                EmbedBuilder error = new EmbedBuilder();
+                error.setColor(0xff3923);
+                error.setTitle(getMessage("general.icon.error", guildID) + getMessage("join.cannotjoin.setTitle", guildID));
+                error.setDescription(getMessage("join.cannotjoin.setDescription", guildID));
+                error.setTimestamp(Instant.now());
+
+                channel.sendMessage(error.build()).queue(message -> {
+                    message.delete().queueAfter(3, TimeUnit.SECONDS);
+                });
+                return;
+            }
+
+            if (!audioManager.isConnected()) {
+                audioManager.openAudioConnection(voiceChannel);
+                audioManager.setSelfDeafened(true);
+                int volume = Config.VOLUMES.computeIfAbsent(ctx.getGuild().getIdLong(), (id) -> 50);
+                manager.getGuildMusicManager(ctx.getGuild()).player.setVolume(volume);
+                EmbedBuilder success = new EmbedBuilder();
+                success.setColor(0x00ff00);
+                success.setTitle(getMessage("general.icon.join", guildID) + getMessage("join.success.setTitle", guildID));
+                success.setFooter(getMessage("general.bythecommand", guildID) + ctx.getMember().getUser().getName(), ctx.getMember().getUser().getAvatarUrl());
+                success.setTimestamp(Instant.now());
+
+                channel.sendMessage(success.build()).queue(message -> {
+                    message.delete().queueAfter(3, TimeUnit.SECONDS);
+                });
+            }
+            GuildMusicManager musicManager = manager.getGuildMusicManager(ctx.getGuild());
+            AudioPlayer player = musicManager.player;
+            if (player.isPaused()) player.setPaused(false);
+            if (player.getVolume() == 0) player.setVolume(50);
+            manager.loadAndPlay(ctx.getChannel(), input, ctx.getMember().getUser().getName(), ctx.getMember().getUser().getAvatarUrl(), true, guildID);
+            ctx.getMessage().delete().queue();
+        } else {
             if (!isUrl(input)) {
                 String ytSearched = searchYoutube(input);
 
@@ -204,7 +206,8 @@ public class Play implements ICommand {
             }
             GuildMusicManager musicManager = manager.getGuildMusicManager(ctx.getGuild());
             AudioPlayer player = musicManager.player;
-
+            if (player.isPaused()) player.setPaused(false);
+            if (player.getVolume() == 0) player.setVolume(50);
             manager.loadAndPlay(ctx.getChannel(), input, ctx.getMember().getUser().getName(), ctx.getMember().getUser().getAvatarUrl(), false, guildID);
 
             if (player.getPlayingTrack() != null) {

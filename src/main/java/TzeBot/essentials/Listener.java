@@ -2,29 +2,24 @@ package TzeBot.essentials;
 
 import TzeBot.music.GuildMusicManager;
 import TzeBot.music.MusicChannel;
-
-import java.time.Instant;
-import java.util.HashMap;
-import java.util.List;
-
 import TzeBot.music.PlayerManager;
 import com.sedmelluq.discord.lavaplayer.player.AudioPlayer;
-import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.events.ReadyEvent;
 import net.dv8tion.jda.api.events.guild.voice.GuildVoiceLeaveEvent;
+import net.dv8tion.jda.api.events.message.guild.GuildMessageDeleteEvent;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
+import net.dv8tion.jda.api.events.message.guild.react.GuildMessageReactionAddEvent;
+import net.dv8tion.jda.api.events.message.guild.react.GuildMessageReactionRemoveEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import net.dv8tion.jda.api.managers.AudioManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import javax.annotation.Nonnull;
+import java.util.HashMap;
+import java.util.List;
 
-import net.dv8tion.jda.api.events.message.guild.GuildMessageDeleteEvent;
-import net.dv8tion.jda.api.events.message.guild.react.GuildMessageReactionAddEvent;
-import net.dv8tion.jda.api.events.message.guild.react.GuildMessageReactionRemoveEvent;
-
-import static TzeBot.essentials.LanguageManager.getMessage;
 import static TzeBot.moderation.VoteRole.onReactionAdd;
 import static TzeBot.moderation.VoteRole.onReactionRemove;
 
@@ -40,6 +35,7 @@ public class Listener extends ListenerAdapter {
 
     @Override
     public void onGuildMessageReceived(@Nonnull GuildMessageReceivedEvent event) {
+
         String raw = event.getMessage().getContentRaw();
         User user = event.getAuthor();
 
@@ -49,7 +45,6 @@ public class Listener extends ListenerAdapter {
 
         HashMap<Long, Long> IDs = Config.MUSICCHANNELS.computeIfAbsent(event.getGuild().getIdLong(), (id) -> null);
         if (IDs != null && IDs.containsKey(event.getChannel().getIdLong())) {
-            final long guildId = event.getGuild().getIdLong();
             manager.handle(event);
         } else {
             final long guildId = event.getGuild().getIdLong();
@@ -74,7 +69,7 @@ public class Listener extends ListenerAdapter {
         if (event.getUser().isBot()) {
             return;
         }
-        
+
         HashMap<Long, Long> IDs = Config.MUSICCHANNELS.computeIfAbsent(event.getGuild().getIdLong(), (id) -> null);
         if (IDs != null) {
             MusicChannel.handle(event);
@@ -91,9 +86,7 @@ public class Listener extends ListenerAdapter {
 
     @Override
     public void onGuildMessageDelete(GuildMessageDeleteEvent event) {
-        if (Config.VOTEROLES.containsKey(event.getMessageIdLong())) {
-            Config.VOTEROLES.remove(event.getMessageIdLong());
-        }
+        Config.VOTEROLES.remove(event.getMessageIdLong());
         if (Config.MUSICCHANNELS.containsKey(event.getMessageIdLong())) {
             Config.MUSICCHANNELS.remove(event.getGuild().getIdLong());
         }

@@ -19,7 +19,6 @@ import static TzeBot.essentials.LanguageManager.getMessage;
 
 
 /**
- *
  * @author Tzesh
  */
 public class Shuffle implements ICommand {

@@ -16,7 +16,6 @@ import static TzeBot.essentials.LanguageManager.getMessage;
 
 
 /**
- *
  * @author Tzesh
  */
 public class Support implements ICommand {
@@ -39,7 +38,7 @@ public class Support implements ICommand {
         support.addField("Discord Labs", "https://bots.discordlabs.org/bot/700416851678855168", true);
         support.setFooter(getMessage("support.setFooter", guildID));
         support.setTimestamp(Instant.now());
-        
+
         channel.sendMessage(support.build()).queue();
         support.clear();
     }

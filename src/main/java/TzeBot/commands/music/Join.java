@@ -12,7 +12,6 @@ import net.dv8tion.jda.api.entities.TextChannel;
 import net.dv8tion.jda.api.entities.VoiceChannel;
 import net.dv8tion.jda.api.managers.AudioManager;
 
-
 import java.time.Instant;
 
 import static TzeBot.essentials.LanguageManager.getMessage;
@@ -32,7 +31,7 @@ public class Join implements ICommand {
             error.setTitle(getMessage("general.icon.error", guildID) + getMessage("join.alreadyconnected.setTitle", guildID));
             error.setDescription(getMessage("join.alreadyconnected.setDescription", guildID));
             error.setTimestamp(Instant.now());
-            
+
             channel.sendMessage(error.build()).queue();
             return;
         }
@@ -45,7 +44,7 @@ public class Join implements ICommand {
             error.setTitle(getMessage("general.icon.error", guildID) + getMessage("join.joinchannel.setTitle", guildID));
             error.setDescription(getMessage("join.joinchannel.setDescription", guildID));
             error.setTimestamp(Instant.now());
-            
+
             channel.sendMessage(error.build()).queue();
             return;
         }
@@ -59,7 +58,7 @@ public class Join implements ICommand {
             error.setTitle(getMessage("general.icon.error", guildID) + getMessage("join.cannotjoin.setTitle", guildID));
             error.setDescription(getMessage("join.cannotjoin.setDescription", guildID));
             error.setTimestamp(Instant.now());
-            
+
             channel.sendMessage(error.build()).queue();
             return;
         }

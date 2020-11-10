@@ -9,8 +9,8 @@ import net.dv8tion.jda.api.entities.TextChannel;
 
 import java.time.Instant;
 
-import static TzeBot.utils.Controller.isInteger;
 import static TzeBot.essentials.LanguageManager.getMessage;
+import static TzeBot.utils.Controller.isInteger;
 
 
 public class Volume implements ICommand {

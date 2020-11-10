@@ -1,28 +1,27 @@
 /*
-* To change this license header, choose License Headers in Project Properties.
-* To change this template file, choose Tools | Templates
-* and open the template in the editor.
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
  */
 package TzeBot.commands.moderation;
 
 import TzeBot.essentials.CommandContext;
 import TzeBot.essentials.Config;
 import TzeBot.essentials.ICommand;
-
-import java.time.Instant;
-import java.util.HashMap;
-import java.util.List;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.TextChannel;
 
-import static TzeBot.utils.Controller.isExists;
+import java.time.Instant;
+import java.util.HashMap;
+import java.util.List;
+
 import static TzeBot.essentials.LanguageManager.getMessage;
+import static TzeBot.utils.Controller.isExists;
 
 
 /**
- *
  * @author Tzesh
  */
 public class Channel implements ICommand {
@@ -42,7 +41,7 @@ public class Channel implements ICommand {
             error.setTitle(getMessage("general.icon.error", guildID) + getMessage("general.not_authorized", guildID));
             error.setDescription(getMessage("general.not_authorized.description", guildID));
             error.setTimestamp(Instant.now());
-            
+
             channel.sendMessage(error.build()).queue();
             return;
         }
@@ -52,7 +51,7 @@ public class Channel implements ICommand {
             error.setTitle(getMessage("general.icon.error", guildID) + getMessage("general.nonperm", guildID));
             error.setDescription(getMessage("general.nonperm.manage_channel", guildID));
             error.setTimestamp(Instant.now());
-            
+
             channel.sendMessage(error.build()).queue();
         }
         if (!selfmember.hasPermission(Permission.MANAGE_EMOTES)) {
@@ -61,7 +60,7 @@ public class Channel implements ICommand {
             error.setTitle(getMessage("general.icon.error", guildID) + getMessage("general.nonperm", guildID));
             error.setDescription(getMessage("general.nonperm.manage_emotes", guildID));
             error.setTimestamp(Instant.now());
-            
+
             channel.sendMessage(error.build()).queue();
             return;
         }
@@ -71,7 +70,7 @@ public class Channel implements ICommand {
             error.setTitle(getMessage("general.icon.error", guildID) + getMessage("general.nonperm", guildID));
             error.setDescription(getMessage("general.nonperm.message_manage", guildID));
             error.setTimestamp(Instant.now());
-            
+
             channel.sendMessage(error.build()).queue();
             return;
         }
@@ -81,7 +80,7 @@ public class Channel implements ICommand {
             error.setTitle(getMessage("general.icon.error", guildID) + getMessage("channel.noargs.setTitle", guildID));
             error.setDescription(getMessage("channel.noargs.setDescription", guildID));
             error.setTimestamp(Instant.now());
-            
+
             channel.sendMessage(error.build()).queue();
         } else {
             if (args.size() > 1) {
@@ -90,7 +89,7 @@ public class Channel implements ICommand {
                 error.setTitle(getMessage("general.icon.error", guildID) + getMessage("general.403", guildID));
                 error.setDescription(getMessage("general.403.description", guildID));
                 error.setTimestamp(Instant.now());
-                
+
                 channel.sendMessage(error.build()).queue();
                 return;
             }
@@ -101,7 +100,7 @@ public class Channel implements ICommand {
                     error.setTitle(getMessage("general.icon.error", guildID) + getMessage("channel.already.setTitle", guildID));
                     error.setDescription(getMessage("channel.already.setDescription", guildID));
                     error.setTimestamp(Instant.now());
-                    
+
                     channel.sendMessage(error.build()).queue();
                     return;
                 }
@@ -174,7 +173,7 @@ public class Channel implements ICommand {
                     error.setDescription(getMessage("channel.wrongchannel.setDescription", guildID));
                     error.setTimestamp(Instant.now());
                     channel.sendMessage(error.build()).queue();
-                    
+
                 }
             } else {
                 EmbedBuilder error = new EmbedBuilder();

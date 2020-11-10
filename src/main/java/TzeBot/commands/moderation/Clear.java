@@ -40,7 +40,7 @@ public class Clear implements ICommand {
             error.setTimestamp(Instant.now());
 
             channel.sendMessage(error.build()).queue();
-            
+
         } else if (args.isEmpty()) {
             EmbedBuilder error = new EmbedBuilder();
             error.setColor(0xff3923);
