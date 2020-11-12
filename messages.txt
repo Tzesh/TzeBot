@@ -12,6 +12,8 @@ en_en,  general.nonperm.message_manage,  Be ensure that TzeBot has "Manage Messa
 en_en,  general.nonperm.manage_emotes,  Be ensure that TzeBot has "Manage Emotes" permission
 en_en,  general.nonperm.manage_channel,  Be ensure that TzeBot has "Manage Channels" permission
 en_en,  general.nonperm.manage_roles,  Be ensure that TzeBot has "Manage Roles" permission
+en_en,  general.hierarchy,  We're breaking the hierarchy
+en_en,  general.hierarchy.setDescription,  Please make sure TzeBot is on top of the given roles in hierarchy
 
 // General Stuff
 en_en,  general.bythecommand,  By the command of 
@@ -266,6 +268,9 @@ tr_tr,  general.nonperm.message_manage,  Lütfen TzeBot'un "Mesajları Yönet" y
 tr_tr,  general.nonperm.manage_emotes,  Lütfen TzeBot'un "Emojileri Yönet" yetkisine sahip olduğundan emin olun
 tr_tr,  general.nonperm.manage_channel,  Lütfen TzeBot'un "Kanalları Yönet" yetkisine sahip olduğundan emin olun
 tr_tr,  general.nonperm.manage_roles,  Lütfen TzeBot'un "Rolleri Yönet" yetkisine sahip olduğundan emin olun
+tr_tr,  general.hierarchy,  Hiyerarşiyi ihlal ediyoruz
+tr_tr,  general.hierarchy.setDescription,  Lütfen TzeBot'un verdiğiniz rollerden daha üstte olduğuna emin olun
+
 
 
 // Genel Şeyler
