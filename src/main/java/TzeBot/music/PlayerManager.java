@@ -35,7 +35,7 @@ public class PlayerManager {
         AudioSourceManagers.registerRemoteSources(playerManager);
         AudioSourceManagers.registerLocalSource(playerManager);
         YoutubeAudioSourceManager youtubeAudioSourceManager = new YoutubeAudioSourceManager();
-        youtubeAudioSourceManager.setPlaylistPageCount(90);
+        youtubeAudioSourceManager.setPlaylistPageCount(150);
         youtubeAudioSourceManager.configureRequests(config -> RequestConfig.copy(config)
                 .setCookieSpec(CookieSpecs.IGNORE_COOKIES)
                 .build());
@@ -107,7 +107,7 @@ public class PlayerManager {
                     firstTrack = playlist.getTracks().remove(0);
                 }
 
-                if (playlist.getTracks().size() >= 90) {
+                if (playlist.getTracks().size() > 150) {
                     if (musicChannel) {
                         EmbedBuilder error = new EmbedBuilder();
                         error.setColor(0xff3923);
