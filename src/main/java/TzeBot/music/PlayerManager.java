@@ -30,15 +30,11 @@ public class PlayerManager {
 
     public PlayerManager() {
         this.musicManagers = new HashMap<>();
-
         this.playerManager = new DefaultAudioPlayerManager();
         AudioSourceManagers.registerRemoteSources(playerManager);
         AudioSourceManagers.registerLocalSource(playerManager);
         YoutubeAudioSourceManager youtubeAudioSourceManager = new YoutubeAudioSourceManager();
-        youtubeAudioSourceManager.setPlaylistPageCount(150);
-        youtubeAudioSourceManager.configureRequests(config -> RequestConfig.copy(config)
-                .setCookieSpec(CookieSpecs.IGNORE_COOKIES)
-                .build());
+        youtubeAudioSourceManager.setPlaylistPageCount(2);
         playerManager.registerSourceManager(youtubeAudioSourceManager);
     }
 
@@ -107,7 +103,7 @@ public class PlayerManager {
                     firstTrack = playlist.getTracks().remove(0);
                 }
 
-                if (playlist.getTracks().size() > 150) {
+                if (playlist.getTracks().size() > 200) {
                     if (musicChannel) {
                         EmbedBuilder error = new EmbedBuilder();
                         error.setColor(0xff3923);
