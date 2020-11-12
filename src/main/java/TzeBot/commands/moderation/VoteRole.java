@@ -66,6 +66,16 @@ public class VoteRole implements ICommand {
             String[] variables = res.split(" : ");
             for (int i = 0; i < ctx.getMessage().getMentionedRoles().size(); i++) {
                 roleIDs.add(i, ctx.getMessage().getMentionedRoles().get(i).getIdLong());
+                if (!ctx.getSelfMember().canInteract(ctx.getMessage().getMentionedRoles().get(i))) {
+                    EmbedBuilder error = new EmbedBuilder();
+                    error.setColor(0xff3923);
+                    error.setTitle(LanguageManager.getMessage("general.icon.error", guildID) + LanguageManager.getMessage("general.hierarchy", guildID));
+                    error.setDescription(LanguageManager.getMessage("general.hierarchy.setDescription", guildID));
+                    error.setTimestamp(Instant.now());
+
+                    channel.sendMessage(error.build()).queue();
+                    return;
+                }
             }
             switch (variables.length) {
                 case 5:
