@@ -54,16 +54,6 @@ public class Channel implements ICommand {
 
             channel.sendMessage(error.build()).queue();
         }
-        if (!selfmember.hasPermission(Permission.MANAGE_EMOTES)) {
-            EmbedBuilder error = new EmbedBuilder();
-            error.setColor(0xff3923);
-            error.setTitle(getMessage("general.icon.error", guildID) + getMessage("general.nonperm", guildID));
-            error.setDescription(getMessage("general.nonperm.manage_emotes", guildID));
-            error.setTimestamp(Instant.now());
-
-            channel.sendMessage(error.build()).queue();
-            return;
-        }
         if (!selfmember.hasPermission(Permission.MESSAGE_MANAGE)) {
             EmbedBuilder error = new EmbedBuilder();
             error.setColor(0xff3923);
