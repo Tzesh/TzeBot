@@ -13,7 +13,6 @@ import net.dv8tion.jda.api.utils.MemberCachePolicy;
 import net.dv8tion.jda.api.utils.cache.CacheFlag;
 
 import javax.security.auth.login.LoginException;
-import javax.swing.*;
 import java.awt.event.*;
 import java.io.PrintStream;
 import java.sql.SQLException;
@@ -46,6 +45,7 @@ public class TzeGUI extends javax.swing.JFrame {
     private javax.swing.JTextField token;
     private javax.swing.JButton updateButton;
     private javax.swing.JLabel versionNumber;
+
     public TzeGUI() {
         Config.createENV();
         Config.getDatabase();

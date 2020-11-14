@@ -13,6 +13,9 @@ import java.util.concurrent.TimeUnit;
 
 public class Config {
 
+    private static final Dotenv dotenv = Dotenv.configure()
+            .ignoreIfMissing()
+            .load(); // To get .env file properties which are unique for bot
     public static Map<Long, String> PREFIXES = new HashMap<>(); // All of the prefixes of the servers default is .env's prefix setting
     public static Map<Long, String> LANGUAGES = new HashMap<>(); // All of the languages of the servers default is English
     public static Map<Long, Long> CHANNELS = new HashMap<>(); // This was the part of the bound command that allows you to bound music channels to one channel.
@@ -21,9 +24,6 @@ public class Config {
     public static Map<Long, Integer> VOLUMES = new HashMap<>(); // Volumes of the servers default is 50%
     public static Map<Long, Long> CHANNELCREATED = new HashMap<>(); // All of the music channels that are created but either initialized or not. It's important value for preventing some kind of abusing of channel creation.
     public static double currentVersion = 2.45; // Check if there's an update or not.
-    private static final Dotenv dotenv = Dotenv.configure()
-            .ignoreIfMissing()
-            .load(); // To get .env file properties which are unique for bot
 
     public static String get(String key) {
         return dotenv.get(key.toUpperCase());

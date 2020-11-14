@@ -3,7 +3,6 @@ package TzeBot.gui;
 import javax.swing.*;
 import java.awt.*;
 import java.io.OutputStream;
-import java.io.UnsupportedEncodingException;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.LinkedList;

@@ -38,7 +38,7 @@ public class MusicChannel {
 
         if (IDs.containsValue(event.getMessageIdLong())) {
             switch (event.getReactionEmote().getEmoji()) {
-                case "⏯":
+                case "⏯️":
                     if (player.getPlayingTrack() == null) {
                         event.getChannel().removeReactionById(event.getMessageId(), event.getReactionEmote().getEmoji(), event.getUser()).queueAfter(3, TimeUnit.SECONDS);
                         EmbedBuilder error = new EmbedBuilder();
@@ -50,7 +50,9 @@ public class MusicChannel {
                         channel.sendMessage(error.build()).queue(message -> {
                             message.delete().queueAfter(3, TimeUnit.SECONDS);
                         });
-                    } else if (!player.isPaused()) {
+                        return;
+                    }
+                    if (!player.isPaused()) {
                         player.setPaused(true);
                         event.getChannel().removeReactionById(event.getMessageId(), event.getReactionEmote().getEmoji(), event.getUser()).queueAfter(3, TimeUnit.SECONDS);
                         EmbedBuilder success = new EmbedBuilder();
@@ -62,7 +64,7 @@ public class MusicChannel {
                         channel.sendMessage(success.build()).queue(message -> {
                             message.delete().queueAfter(3, TimeUnit.SECONDS);
                         });
-                    } else if (player.isPaused()) {
+                    } else {
                         player.setPaused(false);
                         event.getChannel().removeReactionById(event.getMessageId(), event.getReactionEmote().getEmoji(), event.getUser()).queueAfter(3, TimeUnit.SECONDS);
                         EmbedBuilder success = new EmbedBuilder();
@@ -248,7 +250,7 @@ public class MusicChannel {
                     }
                     break;
                 case "\uD83D\uDCDC":
-                     if (player.getPlayingTrack() != null) {
+                    if (player.getPlayingTrack() != null) {
                         event.getChannel().removeReactionById(event.getMessageId(), event.getReactionEmote().getEmoji(), event.getUser()).queueAfter(3, TimeUnit.SECONDS);
                         AudioTrackInfo info = player.getPlayingTrack().getInfo();
 
@@ -311,8 +313,7 @@ public class MusicChannel {
                         channel.sendMessage(error.build()).queue(message -> {
                             message.delete().queueAfter(3, TimeUnit.SECONDS);
                         });
-                    }
-                    else {
+                    } else {
                         event.getChannel().removeReactionById(event.getMessageId(), event.getReactionEmote().getEmoji(), event.getUser()).queueAfter(3, TimeUnit.SECONDS);
                         scheduler.changePosition(15);
                     }
@@ -329,8 +330,7 @@ public class MusicChannel {
                         channel.sendMessage(error.build()).queue(message -> {
                             message.delete().queueAfter(3, TimeUnit.SECONDS);
                         });
-                    }
-                    else {
+                    } else {
                         event.getChannel().removeReactionById(event.getMessageId(), event.getReactionEmote().getEmoji(), event.getUser()).queueAfter(3, TimeUnit.SECONDS);
                         scheduler.changePosition(-15);
                     }

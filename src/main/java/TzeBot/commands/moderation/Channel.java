@@ -129,7 +129,9 @@ public class Channel implements ICommand {
                     success1.addField(getMessage("general.icon.previous", guildID), getMessage("channel.previous", guildID), true);
                     success1.addField(getMessage("general.icon.volumedown", guildID), getMessage("channel.volumedown", guildID), true);
                     success1.addField(getMessage("general.icon.volume", guildID), getMessage("channel.volume", guildID), true);
+                    success1.addBlankField(true);
                     success1.addField(getMessage("general.icon.queue", guildID), getMessage("channel.queuenp", guildID), true);
+                    success1.addBlankField(true);
                     success1.setFooter(getMessage("channel.setFooter", guildID));
                     channel.sendMessage(success1.build()).queue(message -> {
                         message.addReaction(getMessage("general.icon.nowplaying", guildID)).queue();
