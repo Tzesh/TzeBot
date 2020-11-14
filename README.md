@@ -32,7 +32,7 @@ If you aim to use TzeBot as a music bot that you might have been noticed "**.cha
 
 Then all you have to do is just go to the created music channel and type "**.channel set**":
 
-![Music Commands](https://i.imgur.com/hk34y5v.png)
+![Music Commands](https://i.imgur.com/gpGL7Zw.png)
 
 After you wrote "**.channel set**" into the music channel you will have been noticed that your message is deleted and 2 messages added into music channel. First one is banner of TzeBot, the other one is the reaction-control panel or at least the name that I put into it. It allows you to control music player with emotes. And all the functions of the emotes is above of themselves. You can just type name of the song or URL of the song that you want to play into channel.
 
