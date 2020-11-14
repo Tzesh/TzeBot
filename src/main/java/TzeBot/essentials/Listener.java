@@ -72,6 +72,11 @@ public class Listener extends ListenerAdapter {
                     message.addReaction(getMessage("general.icon.volume", guildID)).queue();
                     message.addReaction(getMessage("general.icon.queue", guildID)).queue();
                 });
+                try {
+                    wait(200);
+                } catch (InterruptedException exception) {
+                    exception.printStackTrace();
+                }
             }
         }
     }
