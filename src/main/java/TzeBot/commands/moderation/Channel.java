@@ -127,9 +127,9 @@ public class Channel implements ICommand {
                     success1.addField(getMessage("general.icon.shuffle", guildID), getMessage("shuffle.gethelp", guildID), true);
                     success1.addField(getMessage("general.icon.next", guildID), getMessage("channel.next", guildID), true);
                     success1.addField(getMessage("general.icon.previous", guildID), getMessage("channel.previous", guildID), true);
-                    success1.addField(getMessage("general.icon.queue", guildID), getMessage("channel.queuenp", guildID), true);
                     success1.addField(getMessage("general.icon.volumedown", guildID), getMessage("channel.volumedown", guildID), true);
                     success1.addField(getMessage("general.icon.volume", guildID), getMessage("channel.volume", guildID), true);
+                    success1.addField(getMessage("general.icon.queue", guildID), getMessage("channel.queuenp", guildID), true);
                     success1.setFooter(getMessage("channel.setFooter", guildID));
                     channel.sendMessage(success1.build()).queue(message -> {
                         message.addReaction(getMessage("general.icon.nowplaying", guildID)).queue();
@@ -139,9 +139,9 @@ public class Channel implements ICommand {
                         message.addReaction(getMessage("general.icon.shuffle", guildID)).queue();
                         message.addReaction(getMessage("general.icon.next", guildID)).queue();
                         message.addReaction(getMessage("general.icon.previous", guildID)).queue();
-                        message.addReaction(getMessage("general.icon.queue", guildID)).queue();
                         message.addReaction(getMessage("general.icon.volumedown", guildID)).queue();
                         message.addReaction(getMessage("general.icon.volume", guildID)).queue();
+                        message.addReaction(getMessage("general.icon.queue", guildID)).queue();
                         HashMap<Long, Long> IDs = new HashMap<>();
                         IDs.put(channel.getIdLong(), message.getIdLong());
                         Config.MUSICCHANNELS.put(ctx.getGuild().getIdLong(), IDs);
