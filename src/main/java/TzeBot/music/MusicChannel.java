@@ -5,11 +5,8 @@ import com.sedmelluq.discord.lavaplayer.player.AudioPlayer;
 import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
 import com.sedmelluq.discord.lavaplayer.track.AudioTrackInfo;
 import net.dv8tion.jda.api.EmbedBuilder;
-import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.GuildVoiceState;
-import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.TextChannel;
-import net.dv8tion.jda.api.entities.VoiceChannel;
 import net.dv8tion.jda.api.events.message.guild.react.GuildMessageReactionAddEvent;
 import net.dv8tion.jda.api.managers.AudioManager;
 
@@ -27,13 +24,10 @@ import static TzeBot.utils.Formatter.formatURL;
 public class MusicChannel {
 
     public static void handle(GuildMessageReactionAddEvent event) {
-        final Member selfmember = event.getGuild().getSelfMember();
         final GuildVoiceState memberVoiceState = event.getMember().getVoiceState();
         final TextChannel channel = event.getChannel();
         final AudioManager audioManager = event.getGuild().getAudioManager();
         assert memberVoiceState != null;
-        final VoiceChannel voiceChannel = memberVoiceState.getChannel();
-        final VoiceChannel connectedVoiceChannel = audioManager.getConnectedChannel();
         final PlayerManager playerManager = PlayerManager.getInstance();
         final GuildMusicManager musicManager = playerManager.getGuildMusicManager(event.getGuild());
         final AudioPlayer player = musicManager.player;
@@ -44,122 +38,7 @@ public class MusicChannel {
 
         if (IDs.containsValue(event.getMessageIdLong())) {
             switch (event.getReactionEmote().getEmoji()) {
-                case "⏺️":
-                    if (audioManager.isConnected()) {
-                        event.getChannel().removeReactionById(event.getMessageId(), event.getReactionEmote().getEmoji(), event.getUser()).queueAfter(3, TimeUnit.SECONDS);
-                        EmbedBuilder error = new EmbedBuilder();
-                        error.setColor(0xff3923);
-                        error.setTitle(getMessage("general.icon.error", guildID) + getMessage("join.alreadyconnected.setTitle", guildID));
-                        error.setDescription(getMessage("join.alreadyconnected.setDescription", guildID));
-                        error.setTimestamp(Instant.now());
-
-                        channel.sendMessage(error.build()).queue(message -> {
-                            message.delete().queueAfter(3, TimeUnit.SECONDS);
-                        });
-                        return;
-                    }
-
-                    if (!memberVoiceState.inVoiceChannel()) {
-                        event.getChannel().removeReactionById(event.getMessageId(), event.getReactionEmote().getEmoji(), event.getUser()).queueAfter(3, TimeUnit.SECONDS);
-                        EmbedBuilder error = new EmbedBuilder();
-                        error.setColor(0xff3923);
-                        error.setTitle(getMessage("general.icon.error", guildID) + getMessage("join.joinchannel.setTitle", guildID));
-                        error.setDescription(getMessage("join.joinchannel.setDescription", guildID));
-                        error.setTimestamp(Instant.now());
-
-                        channel.sendMessage(error.build()).queue(message -> {
-                            message.delete().queueAfter(3, TimeUnit.SECONDS);
-                        });
-                        return;
-                    }
-
-                    if (!selfmember.hasPermission(voiceChannel, Permission.VOICE_CONNECT)) {
-                        event.getChannel().removeReactionById(event.getMessageId(), event.getReactionEmote().getEmoji(), event.getUser()).queueAfter(3, TimeUnit.SECONDS);
-                        EmbedBuilder error = new EmbedBuilder();
-                        error.setColor(0xff3923);
-                        error.setTitle(getMessage("general.icon.error", guildID) + getMessage("join.cannotjoin.setTitle", guildID));
-                        error.setDescription(getMessage("join.cannotjoin.setDescription", guildID));
-                        error.setTimestamp(Instant.now());
-
-                        channel.sendMessage(error.build()).queue(message -> {
-                            message.delete().queueAfter(3, TimeUnit.SECONDS);
-                        });
-                        return;
-                    }
-
-                    audioManager.openAudioConnection(voiceChannel);
-                    audioManager.setSelfDeafened(true);
-                    int volume = Config.VOLUMES.computeIfAbsent(event.getGuild().getIdLong(), (id) -> 50);
-                    playerManager.getGuildMusicManager(event.getGuild()).player.setVolume(volume);
-                    event.getChannel().removeReactionById(event.getMessageId(), event.getReactionEmote().getEmoji(), event.getUser()).queueAfter(3, TimeUnit.SECONDS);
-                    EmbedBuilder success = new EmbedBuilder();
-                    success.setColor(0x00ff00);
-                    success.setTitle(getMessage("general.icon.join", guildID) + getMessage("join.success.setTitle", guildID));
-                    success.setFooter(getMessage("general.bythecommand", guildID) + event.getMember().getUser().getName(), event.getMember().getUser().getAvatarUrl());
-                    success.setTimestamp(Instant.now());
-
-                    channel.sendMessage(success.build()).queue(message -> {
-                        message.delete().queueAfter(3, TimeUnit.SECONDS);
-                    });
-                    break;
-                case "⏏":
-                    if (!audioManager.isConnected()) {
-                        event.getChannel().removeReactionById(event.getMessageId(), event.getReactionEmote().getEmoji(), event.getUser()).queueAfter(3, TimeUnit.SECONDS);
-                        EmbedBuilder error = new EmbedBuilder();
-                        error.setColor(0xff3923);
-                        error.setTitle(getMessage("general.icon.error", guildID) + getMessage("leave.cannotleave.setTitle", guildID));
-                        error.setDescription(getMessage("leave.notconnected", guildID));
-                        error.setTimestamp(Instant.now());
-
-                        channel.sendMessage(error.build()).queue(message -> {
-                            message.delete().queueAfter(3, TimeUnit.SECONDS);
-                        });
-                        return;
-                    }
-                    if (!connectedVoiceChannel.getMembers().contains(event.getMember())) {
-                        event.getChannel().removeReactionById(event.getMessageId(), event.getReactionEmote().getEmoji(), event.getUser()).queueAfter(3, TimeUnit.SECONDS);
-                        EmbedBuilder error = new EmbedBuilder();
-                        error.setColor(0xff3923);
-                        error.setTitle(getMessage("general.icon.error", guildID) + getMessage("leave.cannotleave.setTitle", guildID));
-                        error.setDescription(getMessage("leave.notin", guildID));
-                        error.setTimestamp(Instant.now());
-
-                        channel.sendMessage(error.build()).queue(message -> {
-                            message.delete().queueAfter(3, TimeUnit.SECONDS);
-                        });
-                        return;
-                    }
-
-                    if (player.getPlayingTrack() != null) {
-                        musicManager.scheduler.getQueue().clear();
-                        musicManager.player.stopTrack();
-                        musicManager.player.setPaused(false);
-
-                        event.getChannel().removeReactionById(event.getMessageId(), event.getReactionEmote().getEmoji(), event.getUser()).queueAfter(3, TimeUnit.SECONDS);
-                        success = new EmbedBuilder();
-                        success.setColor(0x00ff00);
-                        success.setTitle(getMessage("general.icon.stop", guildID) + getMessage("stop.success.setTitle", guildID));
-                        success.setFooter(getMessage("general.bythecommand", guildID) + " " + event.getMember().getUser().getName(), event.getMember().getUser().getAvatarUrl());
-                        success.setTimestamp(Instant.now());
-
-                        channel.sendMessage(success.build()).queue(message -> {
-                            message.delete().queueAfter(3, TimeUnit.SECONDS);
-                        });
-                    }
-
-                    audioManager.closeAudioConnection();
-                    event.getChannel().removeReactionById(event.getMessageId(), event.getReactionEmote().getEmoji(), event.getUser()).queueAfter(3, TimeUnit.SECONDS);
-                    success = new EmbedBuilder();
-                    success.setColor(0x00ff00);
-                    success.setTitle(getMessage("general.icon.leave", guildID) + getMessage("leave.success.setTitle", guildID));
-                    success.setFooter(getMessage("general.bythecommand", guildID) + event.getMember().getUser().getName(), event.getMember().getUser().getAvatarUrl());
-                    success.setTimestamp(Instant.now());
-
-                    channel.sendMessage(success.build()).queue(message -> {
-                        message.delete().queueAfter(3, TimeUnit.SECONDS);
-                    });
-                    break;
-                case "⏸":
+                case "⏯":
                     if (player.getPlayingTrack() == null) {
                         event.getChannel().removeReactionById(event.getMessageId(), event.getReactionEmote().getEmoji(), event.getUser()).queueAfter(3, TimeUnit.SECONDS);
                         EmbedBuilder error = new EmbedBuilder();
@@ -171,12 +50,24 @@ public class MusicChannel {
                         channel.sendMessage(error.build()).queue(message -> {
                             message.delete().queueAfter(3, TimeUnit.SECONDS);
                         });
-                    } else {
+                    } else if (!player.isPaused()) {
                         player.setPaused(true);
                         event.getChannel().removeReactionById(event.getMessageId(), event.getReactionEmote().getEmoji(), event.getUser()).queueAfter(3, TimeUnit.SECONDS);
-                        success = new EmbedBuilder();
+                        EmbedBuilder success = new EmbedBuilder();
                         success.setColor(0x00ff00);
                         success.setTitle(getMessage("general.icon.pause", guildID) + getMessage("pause.success.setTitle", guildID) + player.getPlayingTrack().getInfo().title);
+                        success.setFooter(getMessage("general.bythecommand", guildID) + event.getMember().getUser().getName(), event.getMember().getUser().getAvatarUrl());
+                        success.setTimestamp(Instant.now());
+
+                        channel.sendMessage(success.build()).queue(message -> {
+                            message.delete().queueAfter(3, TimeUnit.SECONDS);
+                        });
+                    } else if (player.isPaused()) {
+                        player.setPaused(false);
+                        event.getChannel().removeReactionById(event.getMessageId(), event.getReactionEmote().getEmoji(), event.getUser()).queueAfter(3, TimeUnit.SECONDS);
+                        EmbedBuilder success = new EmbedBuilder();
+                        success.setColor(0x00ff00);
+                        success.setTitle(getMessage("general.icon.play", guildID) + getMessage("resume.success.setTitle", guildID) + player.getPlayingTrack().getInfo().title);
                         success.setFooter(getMessage("general.bythecommand", guildID) + event.getMember().getUser().getName(), event.getMember().getUser().getAvatarUrl());
                         success.setTimestamp(Instant.now());
 
@@ -190,7 +81,7 @@ public class MusicChannel {
                         audioManager.closeAudioConnection();
                         event.getChannel().removeReactionById(event.getMessageId(), event.getReactionEmote().getEmoji(), event.getUser()).queueAfter(3, TimeUnit.SECONDS);
 
-                        success = new EmbedBuilder();
+                        EmbedBuilder success = new EmbedBuilder();
                         success.setColor(0x00ff00);
                         success.setTitle(getMessage("general.icon.leave", guildID) + getMessage("leave.success.setTitle", guildID));
                         success.setFooter(getMessage("general.bythecommand", guildID) + event.getMember().getUser().getName(), event.getMember().getUser().getAvatarUrl());
@@ -206,7 +97,7 @@ public class MusicChannel {
                         musicManager.player.setPaused(false);
 
                         event.getChannel().removeReactionById(event.getMessageId(), event.getReactionEmote().getEmoji(), event.getUser()).queueAfter(3, TimeUnit.SECONDS);
-                        success = new EmbedBuilder();
+                        EmbedBuilder success = new EmbedBuilder();
                         success.setColor(0x00ff00);
                         success.setTitle(getMessage("general.icon.stop", guildID) + getMessage("stop.success.setTitle", guildID));
                         success.setFooter(getMessage("general.bythecommand", guildID) + " " + event.getMember().getUser().getName(), event.getMember().getUser().getAvatarUrl());
@@ -221,43 +112,6 @@ public class MusicChannel {
                         error.setColor(0xff3923);
                         error.setTitle(getMessage("general.icon.error", guildID) + getMessage("stop.error.setTitle", guildID));
                         error.setDescription(getMessage("stop.error.setDescription", guildID));
-                        error.setTimestamp(Instant.now());
-
-                        channel.sendMessage(error.build()).queue(message -> {
-                            message.delete().queueAfter(3, TimeUnit.SECONDS);
-                        });
-                    }
-                    break;
-                case "▶":
-                    if (player.getPlayingTrack() == null) {
-                        event.getChannel().removeReactionById(event.getMessageId(), event.getReactionEmote().getEmoji(), event.getUser()).queueAfter(3, TimeUnit.SECONDS);
-                        EmbedBuilder error = new EmbedBuilder();
-                        error.setColor(0xff3923);
-                        error.setTitle(getMessage("general.icon.error", guildID) + getMessage("nowplaying.error.setTitle", guildID));
-                        error.setDescription(getMessage("resume.error.setDescription", guildID));
-                        error.setTimestamp(Instant.now());
-
-                        channel.sendMessage(error.build()).queue(message -> {
-                            message.delete().queueAfter(3, TimeUnit.SECONDS);
-                        });
-                    } else if (player.isPaused()) {
-                        player.setPaused(false);
-                        event.getChannel().removeReactionById(event.getMessageId(), event.getReactionEmote().getEmoji(), event.getUser()).queueAfter(3, TimeUnit.SECONDS);
-                        success = new EmbedBuilder();
-                        success.setColor(0x00ff00);
-                        success.setTitle(getMessage("general.icon.play", guildID) + getMessage("resume.success.setTitle", guildID) + player.getPlayingTrack().getInfo().title);
-                        success.setFooter(getMessage("general.bythecommand", guildID) + event.getMember().getUser().getName(), event.getMember().getUser().getAvatarUrl());
-                        success.setTimestamp(Instant.now());
-
-                        channel.sendMessage(success.build()).queue(message -> {
-                            message.delete().queueAfter(3, TimeUnit.SECONDS);
-                        });
-                    } else {
-                        event.getChannel().removeReactionById(event.getMessageId(), event.getReactionEmote().getEmoji(), event.getUser()).queueAfter(3, TimeUnit.SECONDS);
-                        EmbedBuilder error = new EmbedBuilder();
-                        error.setColor(0xff3923);
-                        error.setTitle(getMessage("general.icon.error", guildID) + getMessage("nowplaying.error.setTitle", guildID));
-                        error.setDescription(getMessage("resume.nothingtoresumed.setDescription", guildID));
                         error.setTimestamp(Instant.now());
 
                         channel.sendMessage(error.build()).queue(message -> {
@@ -280,7 +134,7 @@ public class MusicChannel {
                         return;
                     }
                     event.getChannel().removeReactionById(event.getMessageId(), event.getReactionEmote().getEmoji(), event.getUser()).queueAfter(3, TimeUnit.SECONDS);
-                    success = new EmbedBuilder();
+                    EmbedBuilder success = new EmbedBuilder();
                     success.setColor(0x00ff00);
                     success.setTitle(getMessage("general.icon.skip", guildID) + getMessage("skip.success.setTitle1", guildID) + player.getPlayingTrack().getInfo().title + getMessage("skip.success.setTitle2", guildID));
                     success.setFooter(getMessage("general.bythecommand", guildID) + " " + event.getMember().getUser().getName(), event.getMember().getUser().getAvatarUrl());
@@ -445,37 +299,6 @@ public class MusicChannel {
                         message.delete().queueAfter(3, TimeUnit.SECONDS);
                     });
                     break;
-                case "⏯️":
-                    if (player.getPlayingTrack() == null) {
-                        event.getChannel().removeReactionById(event.getMessageId(), event.getReactionEmote().getEmoji(), event.getUser()).queueAfter(3, TimeUnit.SECONDS);
-                        EmbedBuilder error = new EmbedBuilder();
-                        error.setColor(0xff3923);
-                        error.setTitle(getMessage("general.icon.error", guildID) + getMessage("nowplaying.error.setTitle", guildID));
-                        error.setDescription(getMessage("nowplaying.error.setDescription", guildID));
-                        error.setTimestamp(Instant.now());
-
-                        channel.sendMessage(error.build()).queue(message -> {
-                            message.delete().queueAfter(3, TimeUnit.SECONDS);
-                        });
-                        return;
-                    }
-                    event.getChannel().removeReactionById(event.getMessageId(), event.getReactionEmote().getEmoji(), event.getUser()).queueAfter(3, TimeUnit.SECONDS);
-                    AudioTrackInfo info = player.getPlayingTrack().getInfo();
-
-                    EmbedBuilder nplaying = new EmbedBuilder();
-                    nplaying.setTitle(info.title, info.uri);
-                    nplaying.setAuthor(info.author);
-                    nplaying.setImage(formatURL("https://img.youtube.com/vi/" + info.uri, false) + "/0.jpg");
-                    nplaying.setDescription(String.format("%s %s - %s",
-                            player.isPaused() ? "\u23F8" : "▶",
-                            formatTime(player.getPlayingTrack().getPosition()),
-                            formatTime(player.getPlayingTrack().getDuration())));
-                    nplaying.setTimestamp(Instant.now());
-                    nplaying.setFooter(getMessage("general.bythecommand", guildID) + event.getMember().getUser().getName(), event.getMember().getUser().getAvatarUrl());
-                    channel.sendMessage(nplaying.build()).queue(message -> {
-                        message.delete().queueAfter(3, TimeUnit.SECONDS);
-                    });
-                    break;
                 case "↪️":
                     if (player.getPlayingTrack() == null) {
                         event.getChannel().removeReactionById(event.getMessageId(), event.getReactionEmote().getEmoji(), event.getUser()).queueAfter(3, TimeUnit.SECONDS);
@@ -488,10 +311,11 @@ public class MusicChannel {
                         channel.sendMessage(error.build()).queue(message -> {
                             message.delete().queueAfter(3, TimeUnit.SECONDS);
                         });
-                        return;
                     }
-                    event.getChannel().removeReactionById(event.getMessageId(), event.getReactionEmote().getEmoji(), event.getUser()).queueAfter(3, TimeUnit.SECONDS);
-                    scheduler.changePosition(15);
+                    else {
+                        event.getChannel().removeReactionById(event.getMessageId(), event.getReactionEmote().getEmoji(), event.getUser()).queueAfter(3, TimeUnit.SECONDS);
+                        scheduler.changePosition(15);
+                    }
                     break;
                 case "↩️":
                     if (player.getPlayingTrack() == null) {
@@ -505,10 +329,11 @@ public class MusicChannel {
                         channel.sendMessage(error.build()).queue(message -> {
                             message.delete().queueAfter(3, TimeUnit.SECONDS);
                         });
-                        return;
                     }
-                    event.getChannel().removeReactionById(event.getMessageId(), event.getReactionEmote().getEmoji(), event.getUser()).queueAfter(3, TimeUnit.SECONDS);
-                    scheduler.changePosition(-15);
+                    else {
+                        event.getChannel().removeReactionById(event.getMessageId(), event.getReactionEmote().getEmoji(), event.getUser()).queueAfter(3, TimeUnit.SECONDS);
+                        scheduler.changePosition(-15);
+                    }
                     break;
                 case "\uD83D\uDD00":
                     if (musicManager.scheduler.getQueue().isEmpty() && musicManager.player.getPlayingTrack() == null) {

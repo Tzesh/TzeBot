@@ -252,6 +252,8 @@ en_en,  channel.next,  Forwards the current song 15 seconds
 en_en,  channel.previous,  Backwards the current song 15 seconds
 en_en,  channel.volume,  Increases the volume 10%
 en_en,  channel.volumedown,  Decreases the volume 10%
+en_en,  channel.pauseresume,  Pauses or resumes the player
+en_en,  channel.queuenp,  Shows the queue included now playing song
 
 
 // Dil : Türkçe
@@ -482,7 +484,7 @@ tr_tr,  shuffle.success.setTitle,  Kuyruk karıştırıldı
 
 // Sar Komutu
 tr_tr,  seek.name,  sar
-tr_tr,  seek.gethelp,  Oynatıcıyı 15 saniye ileri veya geri sarar: `.sar ileri` veya `.sar geri`
+tr_tr,  seek.gethelp,  Mevcut şarkıyı 15 saniye ileri veya geri sarar: `.sar ileri` veya `.sar geri`
 tr_tr,  seek.error.setTitle,  Komutun yanlış kullanımı
 tr_tr,  seek.error.setDescription,  Lütfen sar komutunun kullanımına bakınız
 tr_tr,  seek.forward,  ileri
@@ -509,3 +511,5 @@ tr_tr,  channel.next,  Mevcut şarkıyı 15 saniye ileri sarar
 tr_tr,  channel.previous,  Mevcut şarkıyı 15 saniye geri sarar
 tr_tr,  channel.volume,  Sesi %10 yükseltir
 tr_tr,  channel.volumedown,  Sesi %10 azaltır
+tr_tr,  channel.pauseresume,  Oynatıcıyı duraklatır veya sürdürür
+tr_tr,  channel.queuenp,  Kuyruğu mevcut çalan şarkıyla beraber gösterir
