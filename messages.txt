@@ -2,12 +2,12 @@
 
 // General Errors
 en_en,  general.404,  Nothing found
-en_en,  general.404.description,  Are you sure looking for the right thing?
+en_en,  general.404.description,  Are you sure that looking for the right thing?
 en_en,  general.403,  None args specified
-en_en,  general.403.description,  Please retype command with its args
+en_en,  general.403.description,  Please retype command with its arguments
 en_en,  general.not_authorized,  Unauthorized person
 en_en,  general.not_authorized.description,  You must have manage server permission to use this command
-en_en,  general.nonperm,  TzeBot don't have required permissions
+en_en,  general.nonperm,  TzeBot doesn't have required permissions
 en_en,  general.nonperm.message_manage,  Be ensure that TzeBot has "Manage Messages" permission
 en_en,  general.nonperm.manage_emotes,  Be ensure that TzeBot has "Manage Emotes" permission
 en_en,  general.nonperm.manage_channel,  Be ensure that TzeBot has "Manage Channels" permission
@@ -80,12 +80,12 @@ en_en,  language.successful.setTitle,  Language has been changed to English
 en_en,  language.already.setTitle,  Language is already been set to English
 en_en,  language.already.setDescription,  You can choose another language if you want to
 en_en,  language.unsuitable.setTitle,  Non-supported language
-en_en,  language.unsuitable.setDescription,  You may only choose either Turkish or English
+en_en,  language.unsuitable.setDescription,  You may only choose either 'Turkish' or 'English'
 
 // Clear Command
 en_en,  clear.name,  clear
 en_en,  clear.gethelp,  Deletes the specified amounts of messages
-en_en,  clear.successful.setTitle,  message has been cleared
+en_en,  clear.successful.setTitle,  messages have been cleared
 en_en,  clear.unsuitable.setTitle,  Unsuitable amount of messages
 en_en,  clear.unsuitable.setDescription,  You may only choose 2-100 messages at once
 en_en,  clear.older.setTitle,  Selected messages are older than 2 weeks
@@ -122,26 +122,26 @@ en_en,  join.gethelp,  Makes the bot join your channnel
 en_en,  join.alreadyconnected.setTitle,  Already connected
 en_en,  join.alreadyconnected.setDescription,  Already connected to a voice channel
 en_en,  join.joinchannel.setTitle,  Please join a voice channel
-en_en,  join.joinchannel.setDescription,  You have to be connected to a voice channel to request me to join you
-en_en,  join.cannotjoin.setTitle,  I cannot join
-en_en,  join.cannotjoin.setDescription,  Because I don't have the permission to join your voice channel
+en_en,  join.joinchannel.setDescription,  You have to be connected to a voice channel
+en_en,  join.cannotjoin.setTitle,  Couldn't join
+en_en,  join.cannotjoin.setDescription,  Because TzeBot doesn't have the permission to join your voice channel
 en_en,  join.success.setTitle,  Joining your channel
 
 // Leave Command
 en_en,  leave.name,  leave
-en_en,  leave.gethelp,  Makes the bot leave your channel
-en_en,  leave.cannotleave.setTitle,  I cannot leave
-en_en,  leave.notconnected,  That may be caused I even didn't join a voice channel
-en_en,  leave.notin,  You have to be connected to the channel which I've connected
+en_en,  leave.gethelp,  TzeBot leaves your channel if connected
+en_en,  leave.cannotleave.setTitle,  Already not connected
+en_en,  leave.notconnected,  That may be caused that not connected to a voice channel
+en_en,  leave.notin,  You have to be connected to the voice channel which connected to
 en_en,  leave.success.setTitle,  Leaving your channel
 
 // Loop Command
 en_en,  loop.name,  loop
-en_en,  loop.gethelp,  Loops the current song
+en_en,  loop.gethelp,  Loops the current song again, again, and again
 en_en,  loop.error.setTitle,  There is nothing
 en_en,  loop.error.setDescription,  You might wanna add some songs
 en_en,  loop.success.on.setTitle,  Looped the current song
-en_en,  loop.success.off.setTitle,  Loop of the current song disabled
+en_en,  loop.success.off.setTitle,  Unlooped the current song
 
 // Nowplaying Command
 en_en,  nowplaying.name,  nowplaying
@@ -166,16 +166,16 @@ en_en,  play.noresults.setTitle,  YouTube returned no results
 en_en,  play.noresults.setDescription,  Please be ensure what you are looking for
 en_en,  play.noargs.setDescription1,  Please enter a url or song name as example: 
 en_en,  play.noargs.setDescription2,  play [song name/url]
-en_en,  play.success.setTitle,  Adding to queue 
+en_en,  play.success.setTitle,  Adding to queue:
 en_en,  play.error.setTitle,  Could not play
-en_en,  play.error.setDescription,  Could not play : 
+en_en,  play.error.setDescription,  Could not play:
 en_en,  play.nothing.setTitle,  Nothing found
 en_en,  play.nothing.setDescription,  Nothing found by 
 en_en,  play.playlist.setTitle1,  Adding to queue 
-en_en,  play.playlist.setTitle2,   (first track of the playlist
+en_en,  play.playlist.setTitle2,   (first track of the playlist:
 en_en,  play.playlist.size,  Songs in the playlist
 en_en,  play.playlist.error.setTitle,  You omitted the maximum playlist size
-en_en,  play.playlist.error.setDescription,  Maximum playlist size allowing is 200
+en_en,  play.playlist.error.setDescription,  Maximum playlist size allowed is 200
 
 // Queue Command
 en_en,  queue.name,  queue
@@ -200,7 +200,7 @@ en_en,  prefix.success.setTitle,  Prefix has been set to
 en_en,  skip.name,  skip
 en_en,  skip.gethelp,  Skips the current song
 en_en,  skip.error.setTitle,  Nothing is playing at this time
-en_en,  skip.error.setDescription,  Cannot skip the unplayed song
+en_en,  skip.error.setDescription,  Cannot skip the nothing
 en_en,  skip.success.setTitle1,  Current song `
 en_en,  skip.success.setTitle2,  ` is skipped
 
@@ -209,7 +209,7 @@ en_en,  stop.name,  stop
 en_en,  stop.gethelp,  Stops the music player and clears the queue
 en_en,  stop.success.setTitle,  Stopped and cleared the queue
 en_en,  stop.error.setTitle,  Nothing is playing at this time
-en_en,  stop.error.setDescription,  Cannot stop the song and clear the queue
+en_en,  stop.error.setDescription,  This means this process is unnecessary at least for now
 
 // Volume Command
 en_en,  volume.name,  volume
@@ -225,7 +225,7 @@ en_en,  shuffle.success.setTitle,  Shuffled the queue
 
 // Seek Command
 en_en,  seek.name,  seek
-en_en,  seek.gethelp,  Seeks the player backwards or forwards 15 seconds usage: `.seek forward` or `.seek backward`
+en_en,  seek.gethelp,  Seeks the player backwards or forwards 15 seconds usage: `seek forward` or `seek backward`
 en_en,  seek.error.setTitle,  Unsuitable usage of command
 en_en,  seek.error.setDescription,  Please look at the usage of the usage of seek command
 en_en,  seek.forward,  forward
@@ -233,8 +233,8 @@ en_en,  seek.backward,  backward
 
 // Channel Command
 en_en,  channel.name,  channel
-en_en,  channel.gethelp,  You can create an unique music channel with emote controls and clean looking. Just type `channel create` to begin setup.
-en_en,  channel.setTopic,  You can just type url or name of the song that you want to play. You can easily control the player with emotes, none of the music commands will not work on an another channel and if you want to reset music commands also music channel just delete this channel.
+en_en,  channel.gethelp,  You can create an unique music channel with emote controls and clean looking.
+en_en,  channel.setTopic,  You can just type url or name of the song that you want to play into this channel. You can easily control the player with emotes, none of the music commands will not work on an another channel and if you want to reset music commands also music channel just delete this channel.
 en_en,  channel.success.setTitle,  Music channel created and initialized
 en_en,  channel.wrongchannel.setTitle,  Wrong channel
 en_en,  channel.wrongchannel.setDescription,  You have to write `channel set` in the created music channel
@@ -245,15 +245,15 @@ en_en,  channel.set,  set
 en_en,  channel.firstMessage,  You can just message url or name of the song which you want to listen to queue:
 en_en,  channel.setTitle,  Music Channel
 en_en,  channel.success.setDescription,  You have to go to the created channel and write `channel set` once to finish the process
-en_en,  channel.setFooter,  All music commands will only work on this channel. You can delete this channel if you want to set or remove the music channel.
-en_en,  channel.already.setTitle,  Your server alreay has a music channel
+en_en,  channel.setFooter,  All music commands will only work on this channel. You can delete this channel if you want to reset or remove the music channel.
+en_en,  channel.already.setTitle,  Your server already has a music channel
 en_en,  channel.already.setDescription,  You can only have one music channel
 en_en,  channel.next,  Forwards the current song 15 seconds
 en_en,  channel.previous,  Backwards the current song 15 seconds
-en_en,  channel.volume,  Increases the volume 10%
-en_en,  channel.volumedown,  Decreases the volume 10%
+en_en,  channel.volume,  Increases the volume by 10%
+en_en,  channel.volumedown,  Decreases the volume by 10%
 en_en,  channel.pauseresume,  Pauses or resumes the player
-en_en,  channel.queuenp,  Shows the queue included now playing song
+en_en,  channel.queuenp,  Shows the queue with the now playing song
 
 
 // Dil : Türkçe
@@ -339,7 +339,7 @@ tr_tr,  language.successful.setTitle,  Dil Türkçe olarak değiştirildi
 tr_tr,  language.already.setTitle,  Dil zaten Türkçe olarak ayarlanmış
 tr_tr,  language.already.setDescription,  Eğer dilerseniz farklı bir dil de seçebilirsiniz
 tr_tr,  language.unsuitable.setTitle,  Desteklenmeyen dil
-tr_tr,  language.unsuitable.setDescription,  Sadece İngilizce veya Türkçe seçebilirsiniz
+tr_tr,  language.unsuitable.setDescription,  Sadece 'İngilizce' veya 'Türkçe' seçebilirsiniz
 
 // Temizle Komutu
 tr_tr,  clear.name,  temizle
@@ -381,17 +381,17 @@ tr_tr,  join.gethelp,  Bot kanalınıza katılır
 tr_tr,  join.alreadyconnected.setTitle,  Zaten bağlı
 tr_tr,  join.alreadyconnected.setDescription,  Halihazırda bir sesli kanala bağlı
 tr_tr,  join.joinchannel.setTitle,  Lütfen bir sesli kanala geçin
-tr_tr,  join.joinchannel.setDescription,  Katılmam için bir ses kanalına bağlı olmalısın
-tr_tr,  join.cannotjoin.setTitle,  Katılamıyorum
-tr_tr,  join.cannotjoin.setDescription,  Çünkü katılmak için gerekli izinlere sahip değilim
+tr_tr,  join.joinchannel.setDescription,  Bir ses kanalına bağlı olmalısın
+tr_tr,  join.cannotjoin.setTitle,  Katılınamadı
+tr_tr,  join.cannotjoin.setDescription,  Kanala katılmak için iznim yok
 tr_tr,  join.success.setTitle,  Kanalına katılıyor
 
 // Ayrıl Komutu
 tr_tr,  leave.name,  ayrıl
 tr_tr,  leave.gethelp,  Bot kanalınızdan ayrılır
 tr_tr,  leave.cannotleave.setTitle,  Ayrılamıyorum
-tr_tr,  leave.notconnected,  Belki de bir sesli kanala bağlı olmadığımdandır
-tr_tr,  leave.notin,  Bağlı olduğum kanala bağlı olman gerekiyor
+tr_tr,  leave.notconnected,  Zaten ses kanalına bağlı değil
+tr_tr,  leave.notin,  Bağlanılan kanalda olmanız gerekir
 tr_tr,  leave.success.setTitle,  Kanalından ayrılıyor
 
 // Döngü Komutu
@@ -404,17 +404,17 @@ tr_tr,  loop.success.off.setTitle,  Şarkı döngüden çıkarıldı
 
 // Oynatılan komutu
 tr_tr,  nowplaying.name,  oynatılan
-tr_tr,  nowplaying.gethelp,  Şu anki şarkıyı gösterir
-tr_tr,  nowplaying.error.setTitle,  Hiçbir şey yok
+tr_tr,  nowplaying.gethelp,  Şu an oynatılanı gösterir
+tr_tr,  nowplaying.error.setTitle,  Hiçbir şey oynatılmıyor
 tr_tr,  nowplaying.error.setDescription,  Şu anda hiçbir şey oynatılmıyor
 tr_tr,  nowplaying.nowplaying,  Oynatılıyor
 
 // Duraklat Komutu
 tr_tr,  pause.name,  duraklat
-tr_tr,  pause.gethelp,  Oynatılan şarkıyı duraklatır
+tr_tr,  pause.gethelp,  Oynatılanı duraklatır
 tr_tr,  pause.error.setTitle,  Duraklatılamadı
 tr_tr,  pause.error.setDescription,  Çünkü şu anda hiçbir şey oynatılmıyor
-tr_tr,  pause.success.setTitle,  Oynatılan şarkı duraklatıldı : 
+tr_tr,  pause.success.setTitle,  Oynatılan şarkı duraklatıldı:
 
 // Oynat Komutu
 tr_tr,  play.name,  oynat
@@ -423,11 +423,11 @@ tr_tr,  play.gethelp2,  Kullanım: `
 tr_tr,  play.gethelp3,   <şarkı urlsi/şarkı adı>`
 tr_tr,  play.noresults.setTitle,  YouTube sonuç bulamadı
 tr_tr,  play.noresults.setDescription,  Ne aradığınızdan emin olun lütfen
-tr_tr,  play.noargs.setDescription1,  Lütfen örnekteki gibi şarkı ismi veya urlsi veriniz : 
+tr_tr,  play.noargs.setDescription1,  Lütfen örnekteki gibi şarkı ismi veya urlsi veriniz:
 tr_tr,  play.noargs.setDescription2,  oynat [şarkı adı/url]
-tr_tr,  play.success.setTitle,  Kuyruğa eklendi 
+tr_tr,  play.success.setTitle,  Kuyruğa eklendi:
 tr_tr,  play.error.setTitle,  Oynatılamadı
-tr_tr,  play.error.setDescription,  Oynatılamadı : 
+tr_tr,  play.error.setDescription,  Oynatılamadı:
 tr_tr,  play.nothing.setTitle,  Hiçbir şey bulunamadı
 tr_tr,  play.nothing.setDescription,  Hiçbir şey bulunamadı 
 tr_tr,  play.playlist.setTitle1,  Kuyruğa eklendi 
@@ -468,7 +468,7 @@ tr_tr,  stop.name,  durdur
 tr_tr,  stop.gethelp,  Mevcut şarkıyı durdurur ve kuyruğu temizler
 tr_tr,  stop.success.setTitle,  Durduruldu ve kuyruk temizlendi
 tr_tr,  stop.error.setTitle,  Şu anda hiçbir şey oynatılmıyor
-tr_tr,  stop.error.setDescription,  Şarkıyı durdurup kuyruğu temizleyemiyorum
+tr_tr,  stop.error.setDescription,  Bu yüzden bu işlem gereksiz
 
 // Ses Komutu
 tr_tr,  volume.name,  ses
@@ -484,7 +484,7 @@ tr_tr,  shuffle.success.setTitle,  Kuyruk karıştırıldı
 
 // Sar Komutu
 tr_tr,  seek.name,  sar
-tr_tr,  seek.gethelp,  Mevcut şarkıyı 15 saniye ileri veya geri sarar: `.sar ileri` veya `.sar geri`
+tr_tr,  seek.gethelp,  Mevcut şarkıyı 15 saniye ileri veya geri sarar: `sar ileri` veya `sar geri`
 tr_tr,  seek.error.setTitle,  Komutun yanlış kullanımı
 tr_tr,  seek.error.setDescription,  Lütfen sar komutunun kullanımına bakınız
 tr_tr,  seek.forward,  ileri
@@ -492,7 +492,7 @@ tr_tr,  seek.backward,  geri
 
 // Kanal Komutu
 tr_tr,  channel.name,  kanal
-tr_tr,  channel.gethelp,  Emoji kontrolleriyle çalışan ve temiz görünen bir müzik kanalı oluşturabilirsiniz. `kanal oluştur` komutunu kullanıp işleme başlayabilirsiniz.
+tr_tr,  channel.gethelp,  Emoji kontrolleriyle çalışan ve temiz görünen bir müzik kanalı oluşturabilirsiniz.
 tr_tr,  channel.setTopic,  Oynatmak istediğiniz şarkının URL'sini veya adını yazabilirsiniz. Oynatıcıyı ifadelerle kolayca kontrol edebilirsiniz, müzik komutlarının hiçbiri başka bir kanalda çalışmaz ve müzik komutlarını beraberinde de müzik kanalını sıfırlamak isterseniz bu kanalı silin.
 tr_tr,  channel.success.setTitle,  Müzik kanalı oluşturuldu ve başlatıldı
 tr_tr,  channel.wrongchannel.setTitle,  Yanlış kanal
@@ -512,4 +512,4 @@ tr_tr,  channel.previous,  Mevcut şarkıyı 15 saniye geri sarar
 tr_tr,  channel.volume,  Sesi %10 yükseltir
 tr_tr,  channel.volumedown,  Sesi %10 azaltır
 tr_tr,  channel.pauseresume,  Oynatıcıyı duraklatır veya sürdürür
-tr_tr,  channel.queuenp,  Kuyruğu mevcut çalan şarkıyla beraber gösterir
+tr_tr,  channel.queuenp,  Oynatılanı ve kuyruğu gösterir
