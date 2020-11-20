@@ -171,7 +171,7 @@ en_en,  play.error.setTitle,  Could not play
 en_en,  play.error.setDescription,  Could not play:
 en_en,  play.nothing.setTitle,  Nothing found
 en_en,  play.nothing.setDescription,  Nothing found by 
-en_en,  play.playlist.setTitle1,  Adding to queue 
+en_en,  play.playlist.setTitle1,  Adding to queue:
 en_en,  play.playlist.setTitle2,   (first track of the playlist:
 en_en,  play.playlist.size,  Songs in the playlist
 en_en,  play.playlist.error.setTitle,  You omitted the maximum playlist size
@@ -425,12 +425,12 @@ tr_tr,  play.noresults.setTitle,  YouTube sonuç bulamadı
 tr_tr,  play.noresults.setDescription,  Ne aradığınızdan emin olun lütfen
 tr_tr,  play.noargs.setDescription1,  Lütfen örnekteki gibi şarkı ismi veya urlsi veriniz:
 tr_tr,  play.noargs.setDescription2,  oynat [şarkı adı/url]
-tr_tr,  play.success.setTitle,  Kuyruğa eklendi:
+tr_tr,  play.success.setTitle,  Kuyruğa ekleniyor:
 tr_tr,  play.error.setTitle,  Oynatılamadı
 tr_tr,  play.error.setDescription,  Oynatılamadı:
 tr_tr,  play.nothing.setTitle,  Hiçbir şey bulunamadı
 tr_tr,  play.nothing.setDescription,  Hiçbir şey bulunamadı 
-tr_tr,  play.playlist.setTitle1,  Kuyruğa eklendi 
+tr_tr,  play.playlist.setTitle1,  Kuyruğa ekleniyor:
 tr_tr,  play.playlist.setTitle2,   (kuyruğun ilk şarkısı
 tr_tr,  play.playlist.size,  Kuyruktaki toplam şarkı
 tr_tr,  play.playlist.error.setTitle,  İzin verilen maksimum şarkı sınırını aştınız

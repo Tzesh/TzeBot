@@ -79,6 +79,19 @@ public class MusicChannel {
                     }
                     break;
                 case "⏹️":
+                    if (player.getPlayingTrack() == null) {
+                        event.getChannel().removeReactionById(event.getMessageId(), event.getReactionEmote().getEmoji(), event.getUser()).queueAfter(3, TimeUnit.SECONDS);
+                        EmbedBuilder error = new EmbedBuilder();
+                        error.setColor(0xff3923);
+                        error.setTitle(getMessage("general.icon.error", guildID) + getMessage("pause.error.setTitle", guildID));
+                        error.setDescription(getMessage("pause.error.setDescription", guildID));
+                        error.setTimestamp(Instant.now());
+
+                        channel.sendMessage(error.build()).queue(message -> {
+                            message.delete().queueAfter(3, TimeUnit.SECONDS);
+                        });
+                        return;
+                    }
                     if (audioManager.isConnected()) {
                         audioManager.closeAudioConnection();
                         event.getChannel().removeReactionById(event.getMessageId(), event.getReactionEmote().getEmoji(), event.getUser()).queueAfter(3, TimeUnit.SECONDS);
@@ -265,7 +278,7 @@ public class MusicChannel {
                         nplaying.setTimestamp(Instant.now());
                         nplaying.setFooter(getMessage("general.bythecommand", guildID) + event.getMember().getUser().getName(), event.getMember().getUser().getAvatarUrl());
                         channel.sendMessage(nplaying.build()).queue(message -> {
-                            message.delete().queueAfter(3, TimeUnit.SECONDS);
+                            message.delete().queueAfter(10, TimeUnit.SECONDS);
                         });
                     }
                     if (queue.isEmpty()) {
@@ -298,7 +311,7 @@ public class MusicChannel {
                         ));
                     }
                     channel.sendMessage(builder.build()).queue(message -> {
-                        message.delete().queueAfter(3, TimeUnit.SECONDS);
+                        message.delete().queueAfter(10, TimeUnit.SECONDS);
                     });
                     break;
                 case "↪️":
