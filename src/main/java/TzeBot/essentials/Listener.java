@@ -9,6 +9,8 @@ import net.dv8tion.jda.api.entities.MessageEmbed;
 import net.dv8tion.jda.api.entities.TextChannel;
 import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.events.ReadyEvent;
+import net.dv8tion.jda.api.events.guild.GuildJoinEvent;
+import net.dv8tion.jda.api.events.guild.GuildLeaveEvent;
 import net.dv8tion.jda.api.events.guild.voice.GuildVoiceLeaveEvent;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageDeleteEvent;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
@@ -22,19 +24,22 @@ import org.slf4j.LoggerFactory;
 import javax.annotation.Nonnull;
 import java.util.HashMap;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import static TzeBot.essentials.LanguageManager.getMessage;
 import static TzeBot.moderation.VoteRole.onReactionAdd;
 import static TzeBot.moderation.VoteRole.onReactionRemove;
 
 public class Listener extends ListenerAdapter {
-
+    private BotListManager botListManager;
     private static final Logger LOGGER = LoggerFactory.getLogger(Listener.class);
     private final CommandManager manager = new CommandManager();
 
     @Override
     public void onReady(@Nonnull ReadyEvent event) {
         LOGGER.info("{} is ready", event.getJDA().getSelfUser().getAsTag());
+        botListManager = new BotListManager(event.getJDA().getToken(), event.getJDA().getSelfUser().getId());
+        botListManager.setStats(event.getJDA());
         for (Long guildID : Config.MUSICCHANNELS.keySet()) {
             HashMap<Long, Long> IDs = Config.MUSICCHANNELS.get(guildID);
             for (Long channelID : IDs.keySet()) {
@@ -59,7 +64,7 @@ public class Listener extends ListenerAdapter {
                 success1.setFooter(getMessage("channel.setFooter", guildID));
                 success1.build();
                 MessageEmbed messageEmbed = success1.build();
-                if (channel != null) channel.editMessageById(messageID, messageEmbed).queue(message -> {
+                if (channel != null) channel.editMessageById(messageID, messageEmbed).queueAfter(200, TimeUnit.MILLISECONDS, message -> {
                     message.clearReactions().queue();
                     message.addReaction(getMessage("general.icon.nowplaying", guildID)).queue();
                     message.addReaction(getMessage("general.icon.stop", guildID)).queue();
@@ -72,11 +77,6 @@ public class Listener extends ListenerAdapter {
                     message.addReaction(getMessage("general.icon.volume", guildID)).queue();
                     message.addReaction(getMessage("general.icon.queue", guildID)).queue();
                 });
-                try {
-                    wait(200);
-                } catch (InterruptedException exception) {
-                    exception.printStackTrace();
-                }
             }
         }
     }
@@ -158,5 +158,25 @@ public class Listener extends ListenerAdapter {
             }
             audioManager.closeAudioConnection();
         }
+    }
+
+    @Override
+    public void onGuildJoin(@Nonnull GuildJoinEvent event) {
+        botListManager.setStats(event.getJDA());
+        TextChannel defaultChannel = event.getGuild().getDefaultChannel();
+        if (defaultChannel != null && defaultChannel.canTalk(event.getGuild().getSelfMember()))
+        event.getGuild().getDefaultChannel().sendMessage("asdasd").queue();
+    }
+
+    @Override
+    public void onGuildLeave(@Nonnull GuildLeaveEvent event) {
+        long guildID = event.getGuild().getIdLong();
+        Config.PREFIXES.remove(guildID);
+        Config.CHANNELS.remove(guildID);
+        Config.LANGUAGES.remove(guildID);
+        Config.CHANNELCREATED.remove(guildID);
+        Config.MUSICCHANNELS.remove(guildID);
+        Config.VOTEROLES.remove(guildID);
+        Config.VOLUMES.remove(guildID);
     }
 }
