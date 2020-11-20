@@ -129,7 +129,7 @@ en_en,  join.success.setTitle,  Joining your channel
 
 // Leave Command
 en_en,  leave.name,  leave
-en_en,  leave.gethelp,  TzeBot leaves your channel if connected
+en_en,  leave.gethelp,  Leaves your channel if it is connected
 en_en,  leave.cannotleave.setTitle,  Already not connected
 en_en,  leave.notconnected,  That may be caused that not connected to a voice channel
 en_en,  leave.notin,  You have to be connected to the voice channel which connected to
