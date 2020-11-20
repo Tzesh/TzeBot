@@ -381,7 +381,7 @@ tr_tr,  join.gethelp,  Bot kanalınıza katılır
 tr_tr,  join.alreadyconnected.setTitle,  Zaten bağlı
 tr_tr,  join.alreadyconnected.setDescription,  Halihazırda bir sesli kanala bağlı
 tr_tr,  join.joinchannel.setTitle,  Lütfen bir sesli kanala geçin
-tr_tr,  join.joinchannel.setDescription,  Bir ses kanalına bağlı olmalısın
+tr_tr,  join.joinchannel.setDescription,  Bir ses kanala bağlı olmalısın
 tr_tr,  join.cannotjoin.setTitle,  Katılınamadı
 tr_tr,  join.cannotjoin.setDescription,  Kanala katılmak için iznim yok
 tr_tr,  join.success.setTitle,  Kanalına katılıyor
