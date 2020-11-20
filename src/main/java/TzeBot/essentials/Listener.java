@@ -165,7 +165,13 @@ public class Listener extends ListenerAdapter {
         botListManager.setStats(event.getJDA());
         TextChannel defaultChannel = event.getGuild().getDefaultChannel();
         if (defaultChannel != null && defaultChannel.canTalk(event.getGuild().getSelfMember()))
-        event.getGuild().getDefaultChannel().sendMessage("asdasd").queue();
+        event.getGuild().getDefaultChannel().sendMessage("Greetings " + defaultChannel.getGuild().getName() + "," +
+                "\n\uD83D\uDD33️ You can look at all categories of the commands of TzeBot by just typing `.help`" +
+                "\n\uD83D\uDD33️ You can setup music channel which allows you to play songs without `.play` and use player with reactions (emotes)" +
+                "\n\uD83D\uDD33️ Besides you can change language to Turkish by just typing: `.language Turkish`" +
+                "\n\uD83D\uDD33️ Feel free to join our support channel if you encounter any kind of problems" +
+                "\n\uD83D\uDD33️ You can always kick TzeBot to reset every single preference and data about your server" +
+                "\n\uD83D\uDD33️ Thank you for choosing TzeBot").queue();
     }
 
     @Override

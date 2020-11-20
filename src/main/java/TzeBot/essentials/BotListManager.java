@@ -3,7 +3,9 @@ package TzeBot.essentials;
 import net.dv8tion.jda.api.JDA;
 import org.discordbots.api.client.DiscordBotListAPI;
 
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Objects;
 
 public class BotListManager {
     DiscordBotListAPI api;
@@ -17,8 +19,8 @@ public class BotListManager {
     }
 
     void setStats(JDA jda) {
-        List<JDA> shards = jda.getShardManager().getShards();
-        List<Integer> shardServerCounts = null;
+        List<JDA> shards = Objects.requireNonNull(jda.getShardManager()).getShards();
+        List<Integer> shardServerCounts = new LinkedList<>();
         shards.forEach(shard -> {
             shardServerCounts.add(jda.getGuilds().size());
         });
