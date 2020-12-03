@@ -51,7 +51,9 @@ en_en,  general.icon.8,  8️⃣
 en_en,  general.icon.9,  9️⃣
 en_en,  general.icon.question,  ❔ 
 en_en,  general.icon.locked,  🔒 
-en_en,  general.icon.unlocked,  🔓 
+en_en,  general.icon.unlocked,  🔓
+en_en,  general.notvoted,  TzeBot needs you and requires your support
+en_en,  general.notvoted.description,  TzeBot just wants you to spend your 3-5 seconds to support us by just voting from the following link to use music channel: https://top.gg/bot/700416851678855168
 
 
 // Moderation Commands
@@ -311,7 +313,9 @@ tr_tr,  general.icon.8,  8️⃣
 tr_tr,  general.icon.9,  9️⃣
 tr_tr,  general.icon.question,  ❔ 
 tr_tr,  general.icon.locked,  🔒 
-tr_tr,  general.icon.unlocked,  🔓 
+tr_tr,  general.icon.unlocked,  🔓
+tr_tr,  general.notvoted,  TzeBot'un size ve yardımınıza ihtiyacı var
+tr_tr,  general.notvoted.description,  TzeBot müzik kanalını kullanmanız için sadece sizden 3-5 saniyenizi harcayıp yandaki bağlantıdan oy vererek destek olmanızı istiyor: https://top.gg/bot/700416851678855168
 
 // Moderasyon Komutları
 tr_tr,  moderation.name,  yönetim
