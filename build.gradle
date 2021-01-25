@@ -6,7 +6,7 @@ plugins {
 
 mainClassName = 'TzeBot.Main'
 
-version '2.48'
+version '2.50'
 
 sourceCompatibility = JavaVersion.VERSION_11
 
@@ -21,10 +21,10 @@ dependencies {
     compile group: 'com.jagrosh', name: 'jda-utilities', version: '+'
     compile group: 'ch.qos.logback', name: 'logback-classic', version: '+'
     compile group: 'org.xerial', name: 'sqlite-jdbc', version: '+'
+
     compile 'io.github.cdimascio:java-dotenv:+'
     compile 'com.google.apis:google-api-services-youtube:+'
     compile 'org.discordbots:DBL-Java-Library:+'
-
     implementation 'com.github.Devoxin:lavaplayer:+'
 }
 

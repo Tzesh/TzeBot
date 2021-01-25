@@ -6,14 +6,15 @@ import org.discordbots.api.client.DiscordBotListAPI;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 public class BotListManager {
     DiscordBotListAPI api;
 
-    BotListManager(String token, String botId) {
+    BotListManager() {
         DiscordBotListAPI api = new DiscordBotListAPI.Builder()
-                .token(token)
-                .botId(botId)
+                .token(Config.dblToken)
+                .botId(Config.botId)
                 .build();
         this.api = api;
     }
@@ -25,5 +26,14 @@ public class BotListManager {
             shardServerCounts.add(jda.getGuilds().size());
         });
         api.setStats(shardServerCounts);
+    }
+
+    public boolean checkVote(String userID) {
+        AtomicBoolean isVoted = new AtomicBoolean(false);
+        api.hasVoted(userID).whenComplete((hasVoted, e) -> {
+            if (hasVoted) isVoted.set(true);
+            else isVoted.set(false);
+        });
+        return isVoted.get();
     }
 }

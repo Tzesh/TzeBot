@@ -31,7 +31,8 @@ public class PlayerManager {
         this.playerManager = new DefaultAudioPlayerManager();
         AudioSourceManagers.registerRemoteSources(playerManager);
         AudioSourceManagers.registerLocalSource(playerManager);
-        YoutubeAudioSourceManager youtubeAudioSourceManager = new YoutubeAudioSourceManager();
+        this.playerManager.getConfiguration().setFilterHotSwapEnabled(true);
+        YoutubeAudioSourceManager youtubeAudioSourceManager = new YoutubeAudioSourceManager(false);
         youtubeAudioSourceManager.setPlaylistPageCount(2);
         playerManager.registerSourceManager(youtubeAudioSourceManager);
     }

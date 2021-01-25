@@ -5,6 +5,7 @@ import TzeBot.music.MusicChannel;
 import TzeBot.music.PlayerManager;
 import com.sedmelluq.discord.lavaplayer.player.AudioPlayer;
 import net.dv8tion.jda.api.EmbedBuilder;
+import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.MessageEmbed;
 import net.dv8tion.jda.api.entities.TextChannel;
 import net.dv8tion.jda.api.entities.User;
@@ -22,6 +23,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.annotation.Nonnull;
+import java.time.Instant;
 import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -31,14 +33,14 @@ import static TzeBot.moderation.VoteRole.onReactionAdd;
 import static TzeBot.moderation.VoteRole.onReactionRemove;
 
 public class Listener extends ListenerAdapter {
-    private BotListManager botListManager;
     private static final Logger LOGGER = LoggerFactory.getLogger(Listener.class);
     private final CommandManager manager = new CommandManager();
+    private BotListManager botListManager;
 
     @Override
     public void onReady(@Nonnull ReadyEvent event) {
         LOGGER.info("{} is ready", event.getJDA().getSelfUser().getAsTag());
-        botListManager = new BotListManager(event.getJDA().getToken(), event.getJDA().getSelfUser().getId());
+        botListManager = new BotListManager();
         botListManager.setStats(event.getJDA());
         for (Long guildID : Config.MUSICCHANNELS.keySet()) {
             HashMap<Long, Long> IDs = Config.MUSICCHANNELS.get(guildID);
@@ -64,19 +66,20 @@ public class Listener extends ListenerAdapter {
                 success1.setFooter(getMessage("channel.setFooter", guildID));
                 success1.build();
                 MessageEmbed messageEmbed = success1.build();
-                if (channel != null) channel.editMessageById(messageID, messageEmbed).queueAfter(200, TimeUnit.MILLISECONDS, message -> {
-                    message.clearReactions().queue();
-                    message.addReaction(getMessage("general.icon.nowplaying", guildID)).queue();
-                    message.addReaction(getMessage("general.icon.stop", guildID)).queue();
-                    message.addReaction(getMessage("general.icon.skip", guildID)).queue();
-                    message.addReaction(getMessage("general.icon.loop", guildID)).queue();
-                    message.addReaction(getMessage("general.icon.shuffle", guildID)).queue();
-                    message.addReaction(getMessage("general.icon.next", guildID)).queue();
-                    message.addReaction(getMessage("general.icon.previous", guildID)).queue();
-                    message.addReaction(getMessage("general.icon.volumedown", guildID)).queue();
-                    message.addReaction(getMessage("general.icon.volume", guildID)).queue();
-                    message.addReaction(getMessage("general.icon.queue", guildID)).queue();
-                });
+                if (channel != null)
+                    channel.editMessageById(messageID, messageEmbed).queueAfter(200, TimeUnit.MILLISECONDS, message -> {
+                        message.clearReactions().queue();
+                        message.addReaction(getMessage("general.icon.nowplaying", guildID)).queue();
+                        message.addReaction(getMessage("general.icon.stop", guildID)).queue();
+                        message.addReaction(getMessage("general.icon.skip", guildID)).queue();
+                        message.addReaction(getMessage("general.icon.loop", guildID)).queue();
+                        message.addReaction(getMessage("general.icon.shuffle", guildID)).queue();
+                        message.addReaction(getMessage("general.icon.next", guildID)).queue();
+                        message.addReaction(getMessage("general.icon.previous", guildID)).queue();
+                        message.addReaction(getMessage("general.icon.volumedown", guildID)).queue();
+                        message.addReaction(getMessage("general.icon.volume", guildID)).queue();
+                        message.addReaction(getMessage("general.icon.queue", guildID)).queue();
+                    });
             }
         }
     }
@@ -164,14 +167,14 @@ public class Listener extends ListenerAdapter {
     public void onGuildJoin(@Nonnull GuildJoinEvent event) {
         botListManager.setStats(event.getJDA());
         TextChannel defaultChannel = event.getGuild().getDefaultChannel();
-        if (defaultChannel != null && defaultChannel.canTalk(event.getGuild().getSelfMember()))
-        event.getGuild().getDefaultChannel().sendMessage("Greetings " + defaultChannel.getGuild().getName() + "," +
-                "\n\uD83D\uDD33️ You can look at all categories of the commands of TzeBot by just typing `.help`" +
-                "\n\uD83D\uDD33️ You can setup music channel which allows you to play songs without `.play` and use player with reactions (emotes)" +
-                "\n\uD83D\uDD33️ Besides you can change language to Turkish by just typing: `.language Turkish`" +
-                "\n\uD83D\uDD33️ Feel free to join our support channel if you encounter any kind of problems" +
-                "\n\uD83D\uDD33️ You can always kick TzeBot to reset every single preference and data about your server" +
-                "\n\uD83D\uDD33️ Thank you for choosing TzeBot").queue();
+        if (defaultChannel != null && event.getGuild().getSelfMember().hasPermission(defaultChannel, Permission.MESSAGE_WRITE))
+            event.getGuild().getDefaultChannel().sendMessage("Greetings " + defaultChannel.getGuild().getName() + "," +
+                    "\n\uD83D\uDD33️ You can look at all categories of the commands of TzeBot by just typing `.help`" +
+                    "\n\uD83D\uDD33️ You can setup music channel which allows you to play songs without `.play` and use player with reactions (emotes)" +
+                    "\n\uD83D\uDD33️ Besides you can change language to Turkish by just typing: `.language Turkish`" +
+                    "\n\uD83D\uDD33️ Feel free to join our support channel if you encounter any kind of problems" +
+                    "\n\uD83D\uDD33️ You can always kick TzeBot to reset every single preference and data about your server" +
+                    "\n\uD83D\uDD33️ Thank you for choosing TzeBot").queue();
     }
 
     @Override

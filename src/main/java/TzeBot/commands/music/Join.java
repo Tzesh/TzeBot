@@ -52,7 +52,7 @@ public class Join implements ICommand {
         VoiceChannel voiceChannel = memberVoiceState.getChannel();
         Member selfmember = ctx.getGuild().getSelfMember();
 
-        if (!selfmember.hasPermission(voiceChannel, Permission.VOICE_CONNECT)) {
+        if (!selfmember.hasPermission(voiceChannel, Permission.VOICE_CONNECT) || !selfmember.hasPermission(voiceChannel, Permission.VOICE_SPEAK)) {
             EmbedBuilder error = new EmbedBuilder();
             error.setColor(0xff3923);
             error.setTitle(getMessage("general.icon.error", guildID) + getMessage("join.cannotjoin.setTitle", guildID));

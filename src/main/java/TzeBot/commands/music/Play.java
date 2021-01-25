@@ -54,7 +54,6 @@ public class Play implements ICommand {
 
     @Override
     public void handle(CommandContext ctx) {
-
         final TextChannel channel = ctx.getChannel();
         String input = String.join(" ", ctx.getArgs());
         final GuildVoiceState memberVoiceState = ctx.getMember().getVoiceState();
@@ -89,6 +88,20 @@ public class Play implements ICommand {
                 }
 
                 input = ytSearched;
+            }
+
+            if (!selfmember.hasPermission(voiceChannel, Permission.VOICE_CONNECT) || !selfmember.hasPermission(voiceChannel, Permission.VOICE_SPEAK)) {
+                ctx.getMessage().delete().queue();
+                EmbedBuilder error = new EmbedBuilder();
+                error.setColor(0xff3923);
+                error.setTitle(getMessage("general.icon.error", guildID) + getMessage("join.cannotjoin.setTitle", guildID));
+                error.setDescription(getMessage("join.cannotjoin.setDescription", guildID));
+                error.setTimestamp(Instant.now());
+
+                channel.sendMessage(error.build()).queue(message -> {
+                    message.delete().queueAfter(3, TimeUnit.SECONDS);
+                });
+                return;
             }
 
             if (!memberVoiceState.inVoiceChannel()) {
@@ -163,6 +176,17 @@ public class Play implements ICommand {
                 error.setColor(0xff3923);
                 error.setTitle(getMessage("general.icon.error", guildID) + getMessage("general.403", guildID));
                 error.setDescription(getMessage("play.noargs.setDescription1", guildID) + prefix + getMessage("play.noargs.setDescription2", guildID));
+                error.setTimestamp(Instant.now());
+
+                channel.sendMessage(error.build()).queue();
+                return;
+            }
+
+            if (!selfmember.hasPermission(voiceChannel, Permission.VOICE_CONNECT) || !selfmember.hasPermission(voiceChannel, Permission.VOICE_SPEAK)) {
+                EmbedBuilder error = new EmbedBuilder();
+                error.setColor(0xff3923);
+                error.setTitle(getMessage("general.icon.error", guildID) + getMessage("join.cannotjoin.setTitle", guildID));
+                error.setDescription(getMessage("join.cannotjoin.setDescription", guildID));
                 error.setTimestamp(Instant.now());
 
                 channel.sendMessage(error.build()).queue();

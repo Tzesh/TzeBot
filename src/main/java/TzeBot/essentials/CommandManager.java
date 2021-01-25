@@ -87,7 +87,6 @@ public class CommandManager {
                         if (textChannelID == event.getChannel().getIdLong()) {
                             ICommand command = this.getCommand(invoke, guildID);
                             if (command != null) {
-                                event.getChannel().sendTyping().queue();
                                 List<String> args = List.of(split).subList(1, split.length);
                                 CommandContext ctx = new CommandContext(event, args);
                                 command.handle(ctx);
@@ -96,7 +95,6 @@ public class CommandManager {
                     } else {
                         ICommand command = this.getCommand(invoke, guildID);
                         if (command != null) {
-                            event.getChannel().sendTyping().queue();
                             List<String> args = List.of(split).subList(1, split.length);
                             CommandContext ctx = new CommandContext(event, args);
                             command.handle(ctx);
@@ -107,7 +105,6 @@ public class CommandManager {
         } else {
             ICommand command = this.getCommand(invoke, guildID);
             if (command != null) {
-                event.getChannel().sendTyping().queue();
                 List<String> args = List.of(split).subList(1, split.length);
                 CommandContext ctx = new CommandContext(event, args);
                 command.handle(ctx);
@@ -132,7 +129,6 @@ public class CommandManager {
                         if (textChannelID == event.getChannel().getIdLong()) {
                             ICommand command = this.getCommand(invoke, guildID);
                             if (command != null) {
-                                event.getChannel().sendTyping().queue();
                                 List<String> args = List.of(split).subList(1, split.length);
                                 CommandContext ctx = new CommandContext(event, args);
                                 command.handle(ctx);
@@ -141,7 +137,6 @@ public class CommandManager {
                     } else {
                         ICommand command = this.getCommand(invoke, guildID);
                         if (command != null) {
-                            event.getChannel().sendTyping().queue();
                             List<String> args = List.of(split).subList(1, split.length);
                             CommandContext ctx = new CommandContext(event, args);
                             command.handle(ctx);
@@ -152,7 +147,6 @@ public class CommandManager {
         } else {
             if (IDs != null && IDs.containsKey(event.getChannel().getIdLong())) {
                 ICommand command2 = this.getCommand(LanguageManager.getMessage("play.name", guildID), guildID);
-                event.getChannel().sendTyping().queue();
                 List<String> args = List.of(split).subList(0, split.length);
                 CommandContext ctx = new CommandContext(event, args);
                 command2.handle(ctx);
@@ -160,13 +154,11 @@ public class CommandManager {
             }
             ICommand command = this.getCommand(invoke, guildID);
             if (command != null) {
-                event.getChannel().sendTyping().queue();
                 List<String> args = List.of(split).subList(1, split.length);
                 CommandContext ctx = new CommandContext(event, args);
                 command.handle(ctx);
             } else {
                 ICommand command1 = this.getCommand(LanguageManager.getMessage("play.name", guildID), guildID);
-                event.getChannel().sendTyping().queue();
                 List<String> args = List.of(split).subList(0, split.length);
                 CommandContext ctx = new CommandContext(event, args);
                 command1.handle(ctx);

@@ -52,8 +52,10 @@ en_en,  general.icon.9,  9️⃣
 en_en,  general.icon.question,  ❔ 
 en_en,  general.icon.locked,  🔒 
 en_en,  general.icon.unlocked,  🔓
-en_en,  general.notvoted,  TzeBot needs you and requires your support
-en_en,  general.notvoted.description,  TzeBot just wants you to spend your 3-5 seconds to support us by just voting from the following link to use music channel: https://top.gg/bot/700416851678855168
+en_en,  general.icon.hello,  👋
+en_en,  general.notvoted,  Hello there,
+en_en,  general.notvoted.description,  TzeBot needs your support, you can **support TzeBot by just voting from the link attached to title (above)**...
+en_en,  general.notvoted.footer,  Thanks in advance, we're really appreciated have a good day!
 
 
 // Moderation Commands
@@ -314,8 +316,10 @@ tr_tr,  general.icon.9,  9️⃣
 tr_tr,  general.icon.question,  ❔ 
 tr_tr,  general.icon.locked,  🔒 
 tr_tr,  general.icon.unlocked,  🔓
-tr_tr,  general.notvoted,  TzeBot'un size ve yardımınıza ihtiyacı var
-tr_tr,  general.notvoted.description,  TzeBot müzik kanalını kullanmanız için sadece sizden 3-5 saniyenizi harcayıp yandaki bağlantıdan oy vererek destek olmanızı istiyor: https://top.gg/bot/700416851678855168
+tr_tr,  general.icon.hello,  👋
+tr_tr,  general.notvoted,  Merhaba,
+tr_tr,  general.notvoted.description,  TzeBot'un sizin yardımınıza ihtiyacı var, **TzeBot'u başlıktaki (yukarıdaki) linke tıklayarak destekleyebilirsiniz**...
+tr_tr,  general.notvoted.footer,  Şimdiden teşekkürler, gerçekten minnettarız, iyi günler dileriz!
 
 // Moderasyon Komutları
 tr_tr,  moderation.name,  yönetim
