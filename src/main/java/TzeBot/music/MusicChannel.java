@@ -215,9 +215,9 @@ public class MusicChannel {
 
     private static void volume(GuildMessageReactionAddEvent event, TextChannel channel, PlayerManager playerManager, long guildID, int volume) {
         EmbedBuilder success;
-        if (playerManager.getGuildMusicManager(event.getGuild()).player.getVolume() + volume < 0) {
-            playerManager.getGuildMusicManager(event.getGuild()).player.setVolume(0);
-            Config.VOLUMES.put(event.getGuild().getIdLong(), 0);
+        if (volume > 0 ? playerManager.getGuildMusicManager(event.getGuild()).player.getVolume() + volume > 100 : playerManager.getGuildMusicManager(event.getGuild()).player.getVolume() + volume < 0) {
+            playerManager.getGuildMusicManager(event.getGuild()).player.setVolume(volume > 0 ? 100 : 0);
+            Config.VOLUMES.put(event.getGuild().getIdLong(), volume > 0 ? 100 : 0);
 
             success = new EmbedBuilder();
             success.setColor(0x00ff00);
@@ -371,8 +371,8 @@ public class MusicChannel {
         EmbedBuilder message = new EmbedBuilder();
 
         message.setColor(0xffffff);
-        message.setTitle(getMessage("general.icon.hello") + getMessage("general.notvoted") + event.getMember().getAsMention(), "https://top.gg/bot/700416851678855168");
-        message.setDescription(getMessage("general.notvoted.description"));
+        message.setTitle(getMessage("general.icon.hello", event.getGuild().getIdLong()) + " " + getMessage("general.notvoted", event.getGuild().getIdLong()) + event.getMember().getNickname(), "https://top.gg/bot/700416851678855168");
+        message.setDescription(getMessage("general.notvoted.description", event.getGuild().getIdLong()));
         message.setFooter("general.notvoted.footer");
         message.setTimestamp(Instant.now());
 

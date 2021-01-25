@@ -66,8 +66,8 @@ public class Listener extends ListenerAdapter {
                 success1.setFooter(getMessage("channel.setFooter", guildID));
                 success1.build();
                 MessageEmbed messageEmbed = success1.build();
-                if (channel != null)
-                    channel.editMessageById(messageID, messageEmbed).queueAfter(200, TimeUnit.MILLISECONDS, message -> {
+                if (channel != null) {
+                    channel.editMessageById(messageID, messageEmbed).queueAfter(1000, TimeUnit.MILLISECONDS, message -> {
                         message.clearReactions().queue();
                         message.addReaction(getMessage("general.icon.nowplaying", guildID)).queue();
                         message.addReaction(getMessage("general.icon.stop", guildID)).queue();
@@ -80,6 +80,7 @@ public class Listener extends ListenerAdapter {
                         message.addReaction(getMessage("general.icon.volume", guildID)).queue();
                         message.addReaction(getMessage("general.icon.queue", guildID)).queue();
                     });
+                }
             }
         }
     }
