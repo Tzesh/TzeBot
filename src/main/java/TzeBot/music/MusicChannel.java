@@ -38,7 +38,7 @@ public class MusicChannel {
 
         if (IDs.containsValue(event.getMessageIdLong())) {
             removeReaction(event);
-            if (Math.random() > 0.80) voteUsMessage(event);
+            if (Math.random() > 0.90) voteUsMessage(event);
             switch (event.getReactionEmote().getEmoji()) {
                 case "⏯️":
                     playOrPause(event, channel, player, guildID);
@@ -373,7 +373,7 @@ public class MusicChannel {
         message.setColor(0xffffff);
         message.setTitle(getMessage("general.icon.hello", event.getGuild().getIdLong()) + " " + getMessage("general.notvoted", event.getGuild().getIdLong()) + event.getMember().getNickname(), "https://top.gg/bot/700416851678855168");
         message.setDescription(getMessage("general.notvoted.description", event.getGuild().getIdLong()));
-        message.setFooter("general.notvoted.footer");
+        message.setFooter(getMessage("general.notvoted.footer", event.getGuild().getIdLong()));
         message.setTimestamp(Instant.now());
 
         event.getChannel().sendMessage(message.build()).queue(msg -> {
