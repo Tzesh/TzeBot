@@ -25,7 +25,7 @@ dependencies {
     compile 'io.github.cdimascio:java-dotenv:+'
     compile 'com.google.apis:google-api-services-youtube:+'
     compile 'org.discordbots:DBL-Java-Library:+'
-    implementation 'com.github.Devoxin:lavaplayer:+'
+    implementation 'com.sedmelluq:lavaplayer:+'
 }
 
 compileJava.options.encoding = 'UTF-8'
