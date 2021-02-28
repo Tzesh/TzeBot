@@ -58,12 +58,15 @@ public class Main {
         }
         Scanner scanner = new Scanner(System.in);
         while (true) {
-            if (scanner.nextLine().toLowerCase().equals("save")) Config.saveDatabase();
+            if (scanner.nextLine().toLowerCase().equals("save")) {
+                Config.saveDatabase();
+            }
             if (scanner.nextLine().toLowerCase().equals("quit")) {
                 Config.saveDatabase();
                 System.exit(0);
             }
             else System.out.println("Invalid command, commands are 'quit' and 'save'");
+            scanner.nextLine();
         }
     }
 }
