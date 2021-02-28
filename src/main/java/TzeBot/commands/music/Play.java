@@ -90,12 +90,12 @@ public class Play implements ICommand {
                 input = ytSearched;
             }
 
-            if (!selfmember.hasPermission(voiceChannel, Permission.VOICE_CONNECT) || !selfmember.hasPermission(voiceChannel, Permission.VOICE_SPEAK)) {
+            if (!memberVoiceState.inVoiceChannel()) {
                 ctx.getMessage().delete().queue();
                 EmbedBuilder error = new EmbedBuilder();
                 error.setColor(0xff3923);
-                error.setTitle(getMessage("general.icon.error", guildID) + getMessage("join.cannotjoin.setTitle", guildID));
-                error.setDescription(getMessage("join.cannotjoin.setDescription", guildID));
+                error.setTitle(getMessage("general.icon.error", guildID) + getMessage("join.joinchannel.setTitle", guildID));
+                error.setDescription(getMessage("join.joinchannel.setDescription", guildID));
                 error.setTimestamp(Instant.now());
 
                 channel.sendMessage(error.build()).queue(message -> {
@@ -104,12 +104,12 @@ public class Play implements ICommand {
                 return;
             }
 
-            if (!memberVoiceState.inVoiceChannel()) {
+            if (!selfmember.hasPermission(voiceChannel, Permission.VOICE_CONNECT) || !selfmember.hasPermission(voiceChannel, Permission.VOICE_SPEAK)) {
                 ctx.getMessage().delete().queue();
                 EmbedBuilder error = new EmbedBuilder();
                 error.setColor(0xff3923);
-                error.setTitle(getMessage("general.icon.error", guildID) + getMessage("join.joinchannel.setTitle", guildID));
-                error.setDescription(getMessage("join.joinchannel.setDescription", guildID));
+                error.setTitle(getMessage("general.icon.error", guildID) + getMessage("join.cannotjoin.setTitle", guildID));
+                error.setDescription(getMessage("join.cannotjoin.setDescription", guildID));
                 error.setTimestamp(Instant.now());
 
                 channel.sendMessage(error.build()).queue(message -> {
@@ -147,6 +147,7 @@ public class Play implements ICommand {
                     message.delete().queueAfter(3, TimeUnit.SECONDS);
                 });
             }
+
             GuildMusicManager musicManager = manager.getGuildMusicManager(ctx.getGuild());
             AudioPlayer player = musicManager.player;
             if (player.isPaused()) player.setPaused(false);

@@ -6,13 +6,13 @@ import TzeBot.music.PlayerManager;
 import com.sedmelluq.discord.lavaplayer.player.AudioPlayer;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.Permission;
-import net.dv8tion.jda.api.entities.MessageEmbed;
-import net.dv8tion.jda.api.entities.TextChannel;
-import net.dv8tion.jda.api.entities.User;
+import net.dv8tion.jda.api.entities.*;
+import net.dv8tion.jda.api.events.Event;
 import net.dv8tion.jda.api.events.ReadyEvent;
 import net.dv8tion.jda.api.events.guild.GuildJoinEvent;
 import net.dv8tion.jda.api.events.guild.GuildLeaveEvent;
 import net.dv8tion.jda.api.events.guild.voice.GuildVoiceLeaveEvent;
+import net.dv8tion.jda.api.events.guild.voice.GuildVoiceMoveEvent;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageDeleteEvent;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.api.events.message.guild.react.GuildMessageReactionAddEvent;
@@ -148,13 +148,25 @@ public class Listener extends ListenerAdapter {
         }
     }
 
+
+
     @Override
     public void onGuildVoiceLeave(@Nonnull GuildVoiceLeaveEvent event) {
-        final AudioManager audioManager = event.getGuild().getAudioManager();
+        checkMembersAndLeave(event.getGuild(), event.getChannelLeft(), event);
+    }
+
+    @Override
+    public void onGuildVoiceMove(@Nonnull GuildVoiceMoveEvent event) {
+        checkMembersAndLeave(event.getGuild(), event.getChannelLeft(), event);
+    }
+
+    private void checkMembersAndLeave(Guild guild, VoiceChannel channelLeft, @Nonnull Event event) {
+        final AudioManager audioManager = guild.getAudioManager();
         final PlayerManager playerManager = PlayerManager.getInstance();
-        final GuildMusicManager musicManager = playerManager.getGuildMusicManager(event.getGuild());
+        final GuildMusicManager musicManager = playerManager.getGuildMusicManager(guild);
         final AudioPlayer player = musicManager.player;
-        if (audioManager.isConnected() && audioManager.getConnectedChannel() == event.getChannelLeft() && audioManager.getConnectedChannel().getMembers().size() == 1) {
+        if (!audioManager.isConnected()) return;
+        if (audioManager.getConnectedChannel() == channelLeft && channelLeft.getMembers().size() == 1) {
             if (player.getPlayingTrack() != null) {
                 musicManager.scheduler.getQueue().clear();
                 musicManager.player.stopTrack();

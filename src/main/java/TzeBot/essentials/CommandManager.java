@@ -81,27 +81,7 @@ public class CommandManager {
         Long textChannelID = Config.CHANNELS.computeIfAbsent(event.getGuild().getIdLong(), (id) -> 0L);
 
         if (textChannelID != 0L && isExists(event)) {
-            for (ICommand cmd : this.commands) {
-                if (cmd.getName(guildID).equals(searchLower)) {
-                    if (cmd.getClass().getPackage().getName().equals("TzeBot.commands.music")) {
-                        if (textChannelID == event.getChannel().getIdLong()) {
-                            ICommand command = this.getCommand(invoke, guildID);
-                            if (command != null) {
-                                List<String> args = List.of(split).subList(1, split.length);
-                                CommandContext ctx = new CommandContext(event, args);
-                                command.handle(ctx);
-                            }
-                        }
-                    } else {
-                        ICommand command = this.getCommand(invoke, guildID);
-                        if (command != null) {
-                            List<String> args = List.of(split).subList(1, split.length);
-                            CommandContext ctx = new CommandContext(event, args);
-                            command.handle(ctx);
-                        }
-                    }
-                }
-            }
+            handle(event, guildID, split, invoke, searchLower, textChannelID);
         } else {
             ICommand command = this.getCommand(invoke, guildID);
             if (command != null) {
@@ -123,27 +103,7 @@ public class CommandManager {
         Long textChannelID = Config.CHANNELS.computeIfAbsent(event.getGuild().getIdLong(), (id) -> 0L);
         HashMap<Long, Long> IDs = Config.MUSICCHANNELS.computeIfAbsent(event.getGuild().getIdLong(), (id) -> null);
         if (textChannelID != 0L && isExists(event) && IDs == null) {
-            for (ICommand cmd : this.commands) {
-                if (cmd.getName(guildID).equals(searchLower)) {
-                    if (cmd.getClass().getPackage().getName().equals("TzeBot.commands.music")) {
-                        if (textChannelID == event.getChannel().getIdLong()) {
-                            ICommand command = this.getCommand(invoke, guildID);
-                            if (command != null) {
-                                List<String> args = List.of(split).subList(1, split.length);
-                                CommandContext ctx = new CommandContext(event, args);
-                                command.handle(ctx);
-                            }
-                        }
-                    } else {
-                        ICommand command = this.getCommand(invoke, guildID);
-                        if (command != null) {
-                            List<String> args = List.of(split).subList(1, split.length);
-                            CommandContext ctx = new CommandContext(event, args);
-                            command.handle(ctx);
-                        }
-                    }
-                }
-            }
+            handle(event, guildID, split, invoke, searchLower, textChannelID);
         } else {
             if (IDs != null && IDs.containsKey(event.getChannel().getIdLong())) {
                 ICommand command2 = this.getCommand(LanguageManager.getMessage("play.name", guildID), guildID);
@@ -162,6 +122,30 @@ public class CommandManager {
                 List<String> args = List.of(split).subList(0, split.length);
                 CommandContext ctx = new CommandContext(event, args);
                 command1.handle(ctx);
+            }
+        }
+    }
+
+    private void handle(GuildMessageReceivedEvent event, long guildID, String[] split, String invoke, String searchLower, Long textChannelID) {
+        for (ICommand cmd : this.commands) {
+            if (cmd.getName(guildID).equals(searchLower)) {
+                if (cmd.getClass().getPackage().getName().equals("TzeBot.commands.music")) {
+                    if (textChannelID == event.getChannel().getIdLong()) {
+                        ICommand command = this.getCommand(invoke, guildID);
+                        if (command != null) {
+                            List<String> args = List.of(split).subList(1, split.length);
+                            CommandContext ctx = new CommandContext(event, args);
+                            command.handle(ctx);
+                        }
+                    }
+                } else {
+                    ICommand command = this.getCommand(invoke, guildID);
+                    if (command != null) {
+                        List<String> args = List.of(split).subList(1, split.length);
+                        CommandContext ctx = new CommandContext(event, args);
+                        command.handle(ctx);
+                    }
+                }
             }
         }
     }

@@ -38,7 +38,31 @@ public class MusicChannel {
 
         if (IDs.containsValue(event.getMessageIdLong())) {
             removeReaction(event);
-            if (Math.random() > 0.90) voteUsMessage(event);
+            if (Math.random() > 0.85) voteUsMessage(event);
+            if (!event.getMember().getVoiceState().inVoiceChannel()) {
+                EmbedBuilder error = new EmbedBuilder();
+                error.setColor(0xff3923);
+                error.setTitle(getMessage("general.icon.error", guildID) + getMessage("join.joinchannel.setTitle", guildID));
+                error.setDescription(getMessage("join.joinchannel.setDescription", guildID));
+                error.setTimestamp(Instant.now());
+
+                channel.sendMessage(error.build()).queue(message -> {
+                    message.delete().queueAfter(3, TimeUnit.SECONDS);
+                });
+                return;
+            }
+            if (event.getMember().getVoiceState().getChannel() != audioManager.getConnectedChannel()) {
+                EmbedBuilder error = new EmbedBuilder();
+                error.setColor(0xff3923);
+                error.setTitle(getMessage("general.icon.error", guildID) + getMessage("channel.same.setTitle", guildID));
+                error.setDescription(getMessage("channel.same.setDescription", guildID));
+                error.setTimestamp(Instant.now());
+
+                channel.sendMessage(error.build()).queue(message -> {
+                    message.delete().queueAfter(3, TimeUnit.SECONDS);
+                });
+                return;
+            }
             switch (event.getReactionEmote().getEmoji()) {
                 case "⏯️":
                     playOrPause(event, channel, player, guildID);
@@ -371,7 +395,7 @@ public class MusicChannel {
         EmbedBuilder message = new EmbedBuilder();
 
         message.setColor(0xffffff);
-        message.setTitle(getMessage("general.icon.hello", event.getGuild().getIdLong()) + " " + getMessage("general.notvoted", event.getGuild().getIdLong()) + event.getMember().getNickname(), "https://top.gg/bot/700416851678855168");
+        message.setTitle(getMessage("general.icon.hello", event.getGuild().getIdLong()) + " " + getMessage("general.notvoted", event.getGuild().getIdLong()) + event.getUser().getName(), "https://top.gg/bot/700416851678855168");
         message.setDescription(getMessage("general.notvoted.description", event.getGuild().getIdLong()));
         message.setFooter(getMessage("general.notvoted.footer", event.getGuild().getIdLong()));
         message.setTimestamp(Instant.now());

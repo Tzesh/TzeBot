@@ -24,9 +24,9 @@ public class Config {
     public static Map<Long, HashMap<Long, Long>> MUSICCHANNELS = new HashMap<>(); // All of the music channels that are created and initialized.
     public static Map<Long, Integer> VOLUMES = new HashMap<>(); // Volumes of the servers default is 50%
     public static Map<Long, Long> CHANNELCREATED = new HashMap<>(); // All of the music channels that are created but either initialized or not. It's important value for preventing some kind of abusing of channel creation.
-    public static double currentVersion = 2.50; // Check if there's an update or not.
-    public static String dblToken = ""; // DBL token of the bot
-    public static String botId = ""; // DBL botID of the bot
+    public static double currentVersion = 2.51; // Check if there's an update or not.
+    public static String dblToken = "";
+    public static String botId = "";
 
     public static String get(String key) {
         return dotenv.get(key.toUpperCase());
