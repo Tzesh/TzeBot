@@ -258,6 +258,8 @@ en_en,  channel.volume,  Increases the volume by 10%
 en_en,  channel.volumedown,  Decreases the volume by 10%
 en_en,  channel.pauseresume,  Pauses or resumes the player
 en_en,  channel.queuenp,  Shows the queue with the now playing song
+en_en,  channel.same.setTitle,  You have to be connected to the same channel
+en_en,  channel.same.setDescription,  TzeBot is currently connected to a voice channel, without being a participant you cannot give commands
 
 
 // Dil : Türkçe
@@ -521,3 +523,5 @@ tr_tr,  channel.volume,  Sesi %10 yükseltir
 tr_tr,  channel.volumedown,  Sesi %10 azaltır
 tr_tr,  channel.pauseresume,  Oynatıcıyı duraklatır veya sürdürür
 tr_tr,  channel.queuenp,  Oynatılanı ve kuyruğu gösterir
+tr_tr,  channel.same.setTitle,  Aynı kanala bağlı olmalısınız
+tr_tr,  channel.same.setDescription,  TzeBot şu anda bir kanala bağlı, katılımcı olmadan komut veremezsiniz.
