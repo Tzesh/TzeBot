@@ -54,7 +54,7 @@ public class Main {
                     .setLargeThreshold(50)
                     .build();
         } catch (LoginException exception) {
-            System.out.println("An error occured please make sure you have set all variables properly and you have a sufficient internet connection.");
+            System.out.println("An error occurred please make sure you have set all variables properly and you have a sufficient internet connection.");
         }
         Scanner scanner = new Scanner(System.in);
         while (true) {

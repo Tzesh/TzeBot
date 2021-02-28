@@ -412,7 +412,7 @@ public class TzeGUI extends javax.swing.JFrame {
                     .setLargeThreshold(50)
                     .build();
         } catch (LoginException exception) {
-            System.out.println("An error occured please make sure you have set all variables properly and you have a sufficient internet connection.");
+            System.out.println("An error occurred please make sure you have set all variables properly and you have a sufficient internet connection.");
         }
     }//GEN-LAST:event_startButtonActionPerformed
 
@@ -420,7 +420,7 @@ public class TzeGUI extends javax.swing.JFrame {
         try {
             java.awt.Desktop.getDesktop().browse(java.net.URI.create("https://github.com/Tzesh/TzeBot/releases"));
         } catch (Exception e) {
-            System.out.println("An error occured during opening the update page.");
+            System.out.println("An error occurred during opening the update page.");
         }
     }//GEN-LAST:event_updateButtonActionPerformed
 

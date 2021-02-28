@@ -40,7 +40,7 @@ public class Config {
                     + "\nKEY=" + key
                     + "\nSHARD=" + shards);
         } catch (IOException exception) {
-            System.out.println("An error occured during saving the .env");
+            System.out.println("An error occurred during saving the .env");
         }
         Dotenv.load();
         System.out.println("All .env settings have been saved.");
@@ -56,7 +56,7 @@ public class Config {
                         + "\nKEY="
                         + "\nSHARD=");
             } catch (IOException exception) {
-                System.out.println("An error occured during saving the .env");
+                System.out.println("An error occurred during saving the .env");
             }
             System.out.println("All .env settings have been saved.");
         }
@@ -98,7 +98,7 @@ public class Config {
                 CHANNELCREATED = (HashMap<Long, Long>) in.readObject();
                 in.reset();
             } catch (IOException exception) {
-                System.out.println("An error occured during process...");
+                System.out.println("An error occurred during process...");
             } catch (ClassNotFoundException exception) {
                 System.out.println("Class not found.");
             }
@@ -139,7 +139,7 @@ public class Config {
             }
             in.close();
         } catch (Exception e) {
-            System.out.println("An error occured during the version control.");
+            System.out.println("An error occurred during the version control.");
         }
         return true;
     }
