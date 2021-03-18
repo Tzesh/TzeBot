@@ -40,8 +40,10 @@ public class Listener extends ListenerAdapter {
     @Override
     public void onReady(@Nonnull ReadyEvent event) {
         LOGGER.info("{} is ready", event.getJDA().getSelfUser().getAsTag());
-        botListManager = new BotListManager();
-        botListManager.setStats(event.getJDA());
+        if (Config.get("dbltoken").length() != 0) {
+            botListManager = new BotListManager();
+            botListManager.setStats(event.getJDA());
+        }
         for (Long guildID : Config.MUSICCHANNELS.keySet()) {
             HashMap<Long, Long> IDs = Config.MUSICCHANNELS.get(guildID);
             for (Long channelID : IDs.keySet()) {
@@ -178,6 +180,7 @@ public class Listener extends ListenerAdapter {
 
     @Override
     public void onGuildJoin(@Nonnull GuildJoinEvent event) {
+        if (this.botListManager != null)
         botListManager.setStats(event.getJDA());
         TextChannel defaultChannel = event.getGuild().getDefaultChannel();
         if (defaultChannel != null && event.getGuild().getSelfMember().hasPermission(defaultChannel, Permission.MESSAGE_WRITE))

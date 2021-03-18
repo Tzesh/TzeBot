@@ -48,7 +48,6 @@ public class TzeGUI extends javax.swing.JFrame {
 
     public TzeGUI() {
         Config.createENV();
-        Config.getDatabase();
         initComponents();
         updateButton.setVisible(false);
         TextAreaOutputStream taos = new TextAreaOutputStream(console, 60);
@@ -57,6 +56,7 @@ public class TzeGUI extends javax.swing.JFrame {
         System.setErr(ps);
         checkVariables();
         checkVersion();
+        Config.getDatabase();
         addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
