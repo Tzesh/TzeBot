@@ -100,6 +100,7 @@ en_en,  ban.success.description1,  No reasons specified
 en_en,  ban.success.description2,  Reason(s):
 en_en,  ban.banned.with,  Banned by: %#s, with reason: %s
 en_en,  ban.banned.without,  Banned by: %#s, without reason
+en_en,  ban.hierarchy.setDescription,  The person that you want to ban should be below from both TzeBot and you at the same time in hierarchy
 
 
 // Clear Command
@@ -380,6 +381,7 @@ tr_tr,  ban.success.description1,  Herhangi bir sebep belirtilmedi
 tr_tr,  ban.success.description2,  Sebep(ler):
 tr_tr,  ban.banned.with,  %#s tarafından, şu sebeple yasaklandı %s
 tr_tr,  ban.banned.without,  %#s tarafından, sebepsizce yasaklandı
+tr_tr,  ban.hierarchy.setDescription,  Yasaklayacağınız kişi hiyerarşide aynı anda hem sizden hem de TzeBot'tan aşağı olmalıdır
 
 // Temizle Komutu
 tr_tr,  clear.name,  temizle
