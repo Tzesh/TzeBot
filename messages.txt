@@ -98,6 +98,8 @@ en_en,  ban.wrong.description,  Please correct your usage of ban command
 en_en,  ban.success.title,  has been banned successfully!
 en_en,  ban.success.description1,  No reasons specified
 en_en,  ban.success.description2,  Reason(s):
+en_en,  ban.banned.with,  Banned by: %#s, with reason: %s
+en_en,  ban.banned.without,  Banned by: %#s, without reason
 
 
 // Clear Command
@@ -376,6 +378,8 @@ tr_tr,  ban.wrong.description,  Lütfen yasakla komutunu kullanımınızı düze
 tr_tr,  ban.success.title,  başarıyla yasaklandı!
 tr_tr,  ban.success.description1,  Herhangi bir sebep belirtilmedi
 tr_tr,  ban.success.description2,  Sebep(ler):
+tr_tr,  ban.banned.with,  %#s tarafından, şu sebeple yasaklandı %s
+tr_tr,  ban.banned.without,  %#s tarafından, sebepsizce yasaklandı
 
 // Temizle Komutu
 tr_tr,  clear.name,  temizle
