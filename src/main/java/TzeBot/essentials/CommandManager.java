@@ -24,6 +24,7 @@ public class CommandManager {
         addCommand(new Language());
         addCommand(new Prefix());
         addCommand(new Clear());
+        addCommand(new Ban());
         addCommand(new Vote());
         addCommand(new Play());
         addCommand(new Pause());

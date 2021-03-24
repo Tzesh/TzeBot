@@ -6,7 +6,7 @@ plugins {
 
 mainClassName = 'TzeBot.Main'
 
-version '2.51'
+version '2.53'
 
 sourceCompatibility = JavaVersion.VERSION_14
 

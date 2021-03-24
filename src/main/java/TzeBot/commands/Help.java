@@ -74,6 +74,7 @@ public class Help implements ICommand {
             info.setDescription(getMessage("help.moderation.info.setDescription", guildID));
             info.addField(getMessage("general.icon.prefix", guildID) + "`" + prefix + getMessage("prefix.name", guildID) + "`", getMessage("prefix.gethelp1", guildID) + " " + getMessage("prefix.gethelp2", guildID) + prefix + getMessage("prefix.gethelp3", guildID), true);
             info.addField(getMessage("general.icon.clear", guildID) + "`" + prefix + getMessage("clear.name", guildID) + "`", getMessage("clear.gethelp", guildID), true);
+            info.addField(getMessage("general.icon.ban", guildID) + "`" + prefix + getMessage("ban.name", guildID) + "`", getMessage("ban.description", guildID), true);
             info.addField(getMessage("general.icon.language", guildID) + "`" + prefix + getMessage("language.name", guildID) + "`", getMessage("language.gethelp", guildID), true);
             info.addField(getMessage("general.icon.vote", guildID) + "`" + prefix + getMessage("vote.name", guildID) + "`", getMessage("vote.gethelp", guildID), true);
             info.addField(getMessage("general.icon.vote", guildID) + "`" + prefix + getMessage("voterole.name", guildID) + "`", getMessage("voterole.gethelp", guildID), true);
