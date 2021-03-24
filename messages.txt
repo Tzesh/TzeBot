@@ -373,7 +373,7 @@ tr_tr,  ban.permission2.title,  TzeBot gerekli yetkiye sahip değil
 tr_tr,  ban.permission2.description,  Eğer bu komutu kullanmak istiyorsanız TzeBot'a yasaklama yetkisini vermelisiniz
 tr_tr,  ban.wrong.title,  Yanlış kullanım
 tr_tr,  ban.wrong.description,  Lütfen yasakla komutunu kullanımınızı düzeltin
-tr_tr,  ban.success.title,  başarıyla banlandı!
+tr_tr,  ban.success.title,  başarıyla yasaklandı!
 tr_tr,  ban.success.description1,  Herhangi bir sebep belirtilmedi
 tr_tr,  ban.success.description2,  Sebep(ler):
 
