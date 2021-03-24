@@ -33,7 +33,8 @@ en_en,  general.icon.loop,  🔁
 en_en,  general.icon.nowplaying,  ⏯️ 
 en_en,  general.icon.shuffle,  🔀 
 en_en,  general.icon.prefix,  🔧️ 
-en_en,  general.icon.clear,  🧻️ 
+en_en,  general.icon.clear,  🧻️
+en_en,  general.icon.ban,  🚫
 en_en,  general.icon.language,  🏳️ 
 en_en,  general.icon.tzebot,  🤖 
 en_en,  general.icon.patreon,  💰 
@@ -315,7 +316,8 @@ tr_tr,  general.icon.loop,  🔁
 tr_tr,  general.icon.nowplaying,  ⏯️ 
 tr_tr,  general.icon.shuffle,  🔀 
 tr_tr,  general.icon.prefix,  🔧️ 
-tr_tr,  general.icon.clear,  🧻️ 
+tr_tr,  general.icon.clear,  🧻️
+tr_tr,  general.icon.ban,  🚫
 tr_tr,  general.icon.language,  🏳️ 
 tr_tr,  general.icon.tzebot,  🤖 
 tr_tr,  general.icon.patreon,  💰 
