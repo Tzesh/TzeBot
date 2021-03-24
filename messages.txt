@@ -86,6 +86,20 @@ en_en,  language.already.setDescription,  You can choose another language if you
 en_en,  language.unsuitable.setTitle,  Non-supported language
 en_en,  language.unsuitable.setDescription,  You may only choose either 'Turkish' or 'English'
 
+// Ban Command
+en_en,  ban.name,  ban
+en_en,  ban.description,  You can ban a user if and only if you can
+en_en,  ban.permission1.title,  You don't have permission to ban members
+en_en,  ban.permission1.description,  If you want to ban a person then you should have the required permission
+en_en,  ban.permission2.title,  TzeBot doesn't have the required permission
+en_en,  ban.permission2.description,  You have to give ban permission in the first place in order to use this command
+en_en,  ban.wrong.title,  Wrong usage
+en_en,  ban.wrong.description,  Please correct your usage of ban command
+en_en,  ban.success.title,  has been banned successfully!
+en_en,  ban.success.description1,  No reasons specified
+en_en,  ban.success.description2,  Reason(s):
+
+
 // Clear Command
 en_en,  clear.name,  clear
 en_en,  clear.gethelp,  Deletes the specified amounts of messages
@@ -350,6 +364,19 @@ tr_tr,  language.already.setTitle,  Dil zaten Türkçe olarak ayarlanmış
 tr_tr,  language.already.setDescription,  Eğer dilerseniz farklı bir dil de seçebilirsiniz
 tr_tr,  language.unsuitable.setTitle,  Desteklenmeyen dil
 tr_tr,  language.unsuitable.setDescription,  Sadece 'İngilizce' veya 'Türkçe' seçebilirsiniz
+
+// Yasakla Komutu
+en_en,  ban.name,  yasakla
+en_en,  ban.description,  Eğer bir kullanıcıyı yasaklayabiliyorsanız, yasaklayabilirsiniz
+en_en,  ban.permission1.title,  Kullanıcıları yasaklamak için gerekli yetkiye sahip değilsiniz
+en_en,  ban.permission1.description,  Eğer birilerini yasaklamak istiyorsanız gerekli yetkiye sahip olmalısınız
+en_en,  ban.permission2.title,  TzeBot gerekli yetkiye sahip değil
+en_en,  ban.permission2.description,  Eğer bu komutu kullanmak istiyorsanız TzeBot'a yasaklama yetkisini vermelisiniz
+en_en,  ban.wrong.title,  Yanlış kullanım
+en_en,  ban.wrong.description,  Lütfen yasakla komutunu kullanımınızı düzeltin
+en_en,  ban.success.title,  başarıyla banlandı!
+en_en,  ban.success.description1,  Herhangi bir sebep belirtilmedi
+en_en,  ban.success.description2,  Sebep(ler):
 
 // Temizle Komutu
 tr_tr,  clear.name,  temizle
