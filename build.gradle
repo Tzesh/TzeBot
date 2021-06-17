@@ -23,7 +23,7 @@ dependencies {
     compile group: 'org.xerial', name: 'sqlite-jdbc', version: '+'
 
     compile 'io.github.cdimascio:dotenv-java:2.2.0'
-    compile 'com.google.apis:google-api-services-youtube:+'
+    compile 'com.google.apis:google-api-services-youtube:v3-rev222-1.25.0'
     compile 'org.discordbots:DBL-Java-Library:+'
     implementation 'com.sedmelluq:lavaplayer:+'
 }
