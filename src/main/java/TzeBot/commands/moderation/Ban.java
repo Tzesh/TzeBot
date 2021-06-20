@@ -8,7 +8,6 @@ import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.TextChannel;
 
 import java.time.Instant;
-import java.util.Arrays;
 import java.util.List;
 
 import static TzeBot.essentials.LanguageManager.getMessage;
