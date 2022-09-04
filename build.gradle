@@ -6,7 +6,7 @@ plugins {
 
 mainClassName = 'TzeBot.Main'
 
-version '2.53'
+version '2.6'
 
 repositories {
     jcenter()
