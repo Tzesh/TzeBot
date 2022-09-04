@@ -7,6 +7,8 @@ import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.TextChannel;
+import net.dv8tion.jda.api.entities.emoji.Emoji;
+import net.dv8tion.jda.api.utils.messages.MessageCreateData;
 
 import java.time.Instant;
 import java.util.List;
@@ -30,7 +32,7 @@ public class Vote implements ICommand {
             error.setDescription(LanguageManager.getMessage("general.not_authorized.description", guildID));
             error.setTimestamp(Instant.now());
 
-            channel.sendMessage(error.build()).queue();
+            channel.sendMessage(MessageCreateData.fromEmbeds(error.build())).queue();
 
             return;
         }
@@ -41,7 +43,7 @@ public class Vote implements ICommand {
             error.setDescription(LanguageManager.getMessage("general.403.description", guildID));
             error.setTimestamp(Instant.now());
 
-            channel.sendMessage(error.build()).queue();
+            channel.sendMessage(MessageCreateData.fromEmbeds(error.build())).queue();
 
         } else {
             String space = " ";
@@ -56,9 +58,9 @@ public class Vote implements ICommand {
                             + "\n" + LanguageManager.getMessage("general.icon.2", guildID) + " " + variables[2]);
                     vote3.setFooter(LanguageManager.getMessage("vote.setFooter", guildID));
 
-                    channel.sendMessage(vote3.build()).queue(message -> {
-                        message.addReaction(LanguageManager.getMessage("general.icon.1", guildID)).queue();
-                        message.addReaction(LanguageManager.getMessage("general.icon.2", guildID)).queue();
+                    channel.sendMessage(MessageCreateData.fromEmbeds(vote3.build())).queue(message -> {
+                        message.addReaction(Emoji.fromUnicode(LanguageManager.getMessage("general.icon.1", guildID))).queue();
+                        message.addReaction(Emoji.fromUnicode(LanguageManager.getMessage("general.icon.2", guildID))).queue();
                     });
                     break;
                 case 4:
@@ -70,10 +72,10 @@ public class Vote implements ICommand {
                             + "\n" + LanguageManager.getMessage("general.icon.3", guildID) + " " + variables[3]);
                     vote4.setFooter(LanguageManager.getMessage("vote.setFooter", guildID));
 
-                    channel.sendMessage(vote4.build()).queue(message -> {
-                        message.addReaction(LanguageManager.getMessage("general.icon.1", guildID)).queue();
-                        message.addReaction(LanguageManager.getMessage("general.icon.2", guildID)).queue();
-                        message.addReaction(LanguageManager.getMessage("general.icon.3", guildID)).queue();
+                    channel.sendMessage(MessageCreateData.fromEmbeds(vote4.build())).queue(message -> {
+                        message.addReaction(Emoji.fromUnicode(LanguageManager.getMessage("general.icon.1", guildID))).queue();
+                        message.addReaction(Emoji.fromUnicode(LanguageManager.getMessage("general.icon.2", guildID))).queue();
+                        message.addReaction(Emoji.fromUnicode(LanguageManager.getMessage("general.icon.3", guildID))).queue();
                     });
                     break;
                 case 5:
@@ -86,11 +88,11 @@ public class Vote implements ICommand {
                             + "\n" + LanguageManager.getMessage("general.icon.4", guildID) + " " + variables[4]);
                     vote5.setFooter(LanguageManager.getMessage("vote.setFooter", guildID));
 
-                    channel.sendMessage(vote5.build()).queue(message -> {
-                        message.addReaction(LanguageManager.getMessage("general.icon.1", guildID)).queue();
-                        message.addReaction(LanguageManager.getMessage("general.icon.2", guildID)).queue();
-                        message.addReaction(LanguageManager.getMessage("general.icon.3", guildID)).queue();
-                        message.addReaction(LanguageManager.getMessage("general.icon.4", guildID)).queue();
+                    channel.sendMessage(MessageCreateData.fromEmbeds(vote5.build())).queue(message -> {
+                        message.addReaction(Emoji.fromUnicode(LanguageManager.getMessage("general.icon.1", guildID))).queue();
+                        message.addReaction(Emoji.fromUnicode(LanguageManager.getMessage("general.icon.2", guildID))).queue();
+                        message.addReaction(Emoji.fromUnicode(LanguageManager.getMessage("general.icon.3", guildID))).queue();
+                        message.addReaction(Emoji.fromUnicode(LanguageManager.getMessage("general.icon.4", guildID))).queue();
                     });
                     break;
                 case 6:
@@ -104,12 +106,12 @@ public class Vote implements ICommand {
                             + "\n" + LanguageManager.getMessage("general.icon.5", guildID) + " " + variables[5]);
                     vote6.setFooter(LanguageManager.getMessage("vote.setFooter", guildID));
 
-                    channel.sendMessage(vote6.build()).queue(message -> {
-                        message.addReaction(LanguageManager.getMessage("general.icon.1", guildID)).queue();
-                        message.addReaction(LanguageManager.getMessage("general.icon.2", guildID)).queue();
-                        message.addReaction(LanguageManager.getMessage("general.icon.3", guildID)).queue();
-                        message.addReaction(LanguageManager.getMessage("general.icon.4", guildID)).queue();
-                        message.addReaction(LanguageManager.getMessage("general.icon.5", guildID)).queue();
+                    channel.sendMessage(MessageCreateData.fromEmbeds(vote6.build())).queue(message -> {
+                        message.addReaction(Emoji.fromUnicode(LanguageManager.getMessage("general.icon.1", guildID))).queue();
+                        message.addReaction(Emoji.fromUnicode(LanguageManager.getMessage("general.icon.2", guildID))).queue();
+                        message.addReaction(Emoji.fromUnicode(LanguageManager.getMessage("general.icon.3", guildID))).queue();
+                        message.addReaction(Emoji.fromUnicode(LanguageManager.getMessage("general.icon.4", guildID))).queue();
+                        message.addReaction(Emoji.fromUnicode(LanguageManager.getMessage("general.icon.5", guildID))).queue();
                     });
                     break;
                 case 7:
@@ -124,13 +126,13 @@ public class Vote implements ICommand {
                             + "\n" + LanguageManager.getMessage("general.icon.6", guildID) + " " + variables[6]);
                     vote7.setFooter(LanguageManager.getMessage("vote.setFooter", guildID));
 
-                    channel.sendMessage(vote7.build()).queue(message -> {
-                        message.addReaction(LanguageManager.getMessage("general.icon.1", guildID)).queue();
-                        message.addReaction(LanguageManager.getMessage("general.icon.2", guildID)).queue();
-                        message.addReaction(LanguageManager.getMessage("general.icon.3", guildID)).queue();
-                        message.addReaction(LanguageManager.getMessage("general.icon.4", guildID)).queue();
-                        message.addReaction(LanguageManager.getMessage("general.icon.5", guildID)).queue();
-                        message.addReaction(LanguageManager.getMessage("general.icon.6", guildID)).queue();
+                    channel.sendMessage(MessageCreateData.fromEmbeds(vote7.build())).queue(message -> {
+                        message.addReaction(Emoji.fromUnicode(LanguageManager.getMessage("general.icon.1", guildID))).queue();
+                        message.addReaction(Emoji.fromUnicode(LanguageManager.getMessage("general.icon.2", guildID))).queue();
+                        message.addReaction(Emoji.fromUnicode(LanguageManager.getMessage("general.icon.3", guildID))).queue();
+                        message.addReaction(Emoji.fromUnicode(LanguageManager.getMessage("general.icon.4", guildID))).queue();
+                        message.addReaction(Emoji.fromUnicode(LanguageManager.getMessage("general.icon.5", guildID))).queue();
+                        message.addReaction(Emoji.fromUnicode(LanguageManager.getMessage("general.icon.6", guildID))).queue();
                     });
                     break;
                 case 8:
@@ -146,14 +148,14 @@ public class Vote implements ICommand {
                             + "\n" + LanguageManager.getMessage("general.icon.7", guildID) + " " + variables[7]);
                     vote8.setFooter(LanguageManager.getMessage("vote.setFooter", guildID));
 
-                    channel.sendMessage(vote8.build()).queue(message -> {
-                        message.addReaction(LanguageManager.getMessage("general.icon.1", guildID)).queue();
-                        message.addReaction(LanguageManager.getMessage("general.icon.2", guildID)).queue();
-                        message.addReaction(LanguageManager.getMessage("general.icon.3", guildID)).queue();
-                        message.addReaction(LanguageManager.getMessage("general.icon.4", guildID)).queue();
-                        message.addReaction(LanguageManager.getMessage("general.icon.5", guildID)).queue();
-                        message.addReaction(LanguageManager.getMessage("general.icon.6", guildID)).queue();
-                        message.addReaction(LanguageManager.getMessage("general.icon.7", guildID)).queue();
+                    channel.sendMessage(MessageCreateData.fromEmbeds(vote8.build())).queue(message -> {
+                        message.addReaction(Emoji.fromUnicode(LanguageManager.getMessage("general.icon.1", guildID))).queue();
+                        message.addReaction(Emoji.fromUnicode(LanguageManager.getMessage("general.icon.2", guildID))).queue();
+                        message.addReaction(Emoji.fromUnicode(LanguageManager.getMessage("general.icon.3", guildID))).queue();
+                        message.addReaction(Emoji.fromUnicode(LanguageManager.getMessage("general.icon.4", guildID))).queue();
+                        message.addReaction(Emoji.fromUnicode(LanguageManager.getMessage("general.icon.5", guildID))).queue();
+                        message.addReaction(Emoji.fromUnicode(LanguageManager.getMessage("general.icon.6", guildID))).queue();
+                        message.addReaction(Emoji.fromUnicode(LanguageManager.getMessage("general.icon.7", guildID))).queue();
                     });
                     break;
                 case 9:
@@ -170,15 +172,15 @@ public class Vote implements ICommand {
                             + "\n" + LanguageManager.getMessage("general.icon.8", guildID) + " " + variables[8]);
                     vote9.setFooter(LanguageManager.getMessage("vote.setFooter", guildID));
 
-                    channel.sendMessage(vote9.build()).queue(message -> {
-                        message.addReaction(LanguageManager.getMessage("general.icon.1", guildID)).queue();
-                        message.addReaction(LanguageManager.getMessage("general.icon.2", guildID)).queue();
-                        message.addReaction(LanguageManager.getMessage("general.icon.3", guildID)).queue();
-                        message.addReaction(LanguageManager.getMessage("general.icon.4", guildID)).queue();
-                        message.addReaction(LanguageManager.getMessage("general.icon.5", guildID)).queue();
-                        message.addReaction(LanguageManager.getMessage("general.icon.6", guildID)).queue();
-                        message.addReaction(LanguageManager.getMessage("general.icon.7", guildID)).queue();
-                        message.addReaction(LanguageManager.getMessage("general.icon.8", guildID)).queue();
+                    channel.sendMessage(MessageCreateData.fromEmbeds(vote9.build())).queue(message -> {
+                        message.addReaction(Emoji.fromUnicode(LanguageManager.getMessage("general.icon.1", guildID))).queue();
+                        message.addReaction(Emoji.fromUnicode(LanguageManager.getMessage("general.icon.2", guildID))).queue();
+                        message.addReaction(Emoji.fromUnicode(LanguageManager.getMessage("general.icon.3", guildID))).queue();
+                        message.addReaction(Emoji.fromUnicode(LanguageManager.getMessage("general.icon.4", guildID))).queue();
+                        message.addReaction(Emoji.fromUnicode(LanguageManager.getMessage("general.icon.5", guildID))).queue();
+                        message.addReaction(Emoji.fromUnicode(LanguageManager.getMessage("general.icon.6", guildID))).queue();
+                        message.addReaction(Emoji.fromUnicode(LanguageManager.getMessage("general.icon.7", guildID))).queue();
+                        message.addReaction(Emoji.fromUnicode(LanguageManager.getMessage("general.icon.8", guildID))).queue();
                     });
                     break;
                 case 10:
@@ -196,16 +198,16 @@ public class Vote implements ICommand {
                             + "\n" + LanguageManager.getMessage("general.icon.9", guildID) + " " + variables[9]);
                     vote10.setFooter(LanguageManager.getMessage("vote.setFooter", guildID));
 
-                    channel.sendMessage(vote10.build()).queue(message -> {
-                        message.addReaction(LanguageManager.getMessage("general.icon.1", guildID)).queue();
-                        message.addReaction(LanguageManager.getMessage("general.icon.2", guildID)).queue();
-                        message.addReaction(LanguageManager.getMessage("general.icon.3", guildID)).queue();
-                        message.addReaction(LanguageManager.getMessage("general.icon.4", guildID)).queue();
-                        message.addReaction(LanguageManager.getMessage("general.icon.5", guildID)).queue();
-                        message.addReaction(LanguageManager.getMessage("general.icon.6", guildID)).queue();
-                        message.addReaction(LanguageManager.getMessage("general.icon.7", guildID)).queue();
-                        message.addReaction(LanguageManager.getMessage("general.icon.8", guildID)).queue();
-                        message.addReaction(LanguageManager.getMessage("general.icon.9", guildID)).queue();
+                    channel.sendMessage(MessageCreateData.fromEmbeds(vote10.build())).queue(message -> {
+                        message.addReaction(Emoji.fromUnicode(LanguageManager.getMessage("general.icon.1", guildID))).queue();
+                        message.addReaction(Emoji.fromUnicode(LanguageManager.getMessage("general.icon.2", guildID))).queue();
+                        message.addReaction(Emoji.fromUnicode(LanguageManager.getMessage("general.icon.3", guildID))).queue();
+                        message.addReaction(Emoji.fromUnicode(LanguageManager.getMessage("general.icon.4", guildID))).queue();
+                        message.addReaction(Emoji.fromUnicode(LanguageManager.getMessage("general.icon.5", guildID))).queue();
+                        message.addReaction(Emoji.fromUnicode(LanguageManager.getMessage("general.icon.6", guildID))).queue();
+                        message.addReaction(Emoji.fromUnicode(LanguageManager.getMessage("general.icon.7", guildID))).queue();
+                        message.addReaction(Emoji.fromUnicode(LanguageManager.getMessage("general.icon.8", guildID))).queue();
+                        message.addReaction(Emoji.fromUnicode(LanguageManager.getMessage("general.icon.9", guildID))).queue();
                     });
                 default:
                     EmbedBuilder error = new EmbedBuilder();
@@ -214,7 +216,7 @@ public class Vote implements ICommand {
                     error.setDescription(LanguageManager.getMessage("vote.error.setDescription", guildID));
                     error.setTimestamp(Instant.now());
 
-                    channel.sendMessage(error.build()).queue();
+                    channel.sendMessage(MessageCreateData.fromEmbeds(error.build())).queue();
                     break;
             }
         }

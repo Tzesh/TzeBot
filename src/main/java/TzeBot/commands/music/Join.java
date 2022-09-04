@@ -6,11 +6,9 @@ import TzeBot.essentials.ICommand;
 import TzeBot.music.PlayerManager;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.Permission;
-import net.dv8tion.jda.api.entities.GuildVoiceState;
-import net.dv8tion.jda.api.entities.Member;
-import net.dv8tion.jda.api.entities.TextChannel;
-import net.dv8tion.jda.api.entities.VoiceChannel;
+import net.dv8tion.jda.api.entities.*;
 import net.dv8tion.jda.api.managers.AudioManager;
+import net.dv8tion.jda.api.utils.messages.MessageCreateData;
 
 import java.time.Instant;
 
@@ -32,24 +30,24 @@ public class Join implements ICommand {
             error.setDescription(getMessage("join.alreadyconnected.setDescription", guildID));
             error.setTimestamp(Instant.now());
 
-            channel.sendMessage(error.build()).queue();
+            channel.sendMessage(MessageCreateData.fromEmbeds(error.build())).queue();
             return;
         }
 
         GuildVoiceState memberVoiceState = ctx.getMember().getVoiceState();
 
-        if (!memberVoiceState.inVoiceChannel()) {
+        if (!memberVoiceState.inAudioChannel()) {
             EmbedBuilder error = new EmbedBuilder();
             error.setColor(0xff3923);
             error.setTitle(getMessage("general.icon.error", guildID) + getMessage("join.joinchannel.setTitle", guildID));
             error.setDescription(getMessage("join.joinchannel.setDescription", guildID));
             error.setTimestamp(Instant.now());
 
-            channel.sendMessage(error.build()).queue();
+            channel.sendMessage(MessageCreateData.fromEmbeds(error.build())).queue();
             return;
         }
 
-        VoiceChannel voiceChannel = memberVoiceState.getChannel();
+        AudioChannel voiceChannel = memberVoiceState.getChannel();
         Member selfmember = ctx.getGuild().getSelfMember();
 
         if (!selfmember.hasPermission(voiceChannel, Permission.VOICE_CONNECT) || !selfmember.hasPermission(voiceChannel, Permission.VOICE_SPEAK)) {
@@ -59,7 +57,7 @@ public class Join implements ICommand {
             error.setDescription(getMessage("join.cannotjoin.setDescription", guildID));
             error.setTimestamp(Instant.now());
 
-            channel.sendMessage(error.build()).queue();
+            channel.sendMessage(MessageCreateData.fromEmbeds(error.build())).queue();
             return;
         }
 
@@ -73,7 +71,7 @@ public class Join implements ICommand {
         success.setFooter(getMessage("general.bythecommand", guildID) + ctx.getMember().getUser().getName(), ctx.getMember().getUser().getAvatarUrl());
         success.setTimestamp(Instant.now());
 
-        channel.sendMessage(success.build()).queue();
+        channel.sendMessage(MessageCreateData.fromEmbeds(success.build())).queue();
     }
 
     @Override

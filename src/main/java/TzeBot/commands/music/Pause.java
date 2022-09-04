@@ -7,6 +7,7 @@ import TzeBot.music.PlayerManager;
 import com.sedmelluq.discord.lavaplayer.player.AudioPlayer;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.TextChannel;
+import net.dv8tion.jda.api.utils.messages.MessageCreateData;
 
 import java.time.Instant;
 
@@ -29,7 +30,7 @@ public class Pause implements ICommand {
             error.setDescription(getMessage("pause.error.setDescription", guildID));
             error.setTimestamp(Instant.now());
 
-            channel.sendMessage(error.build()).queue();
+            channel.sendMessage(MessageCreateData.fromEmbeds(error.build())).queue();
             error.clear();
         } else {
             player.setPaused(true);
@@ -39,7 +40,7 @@ public class Pause implements ICommand {
             success.setFooter(getMessage("general.bythecommand", guildID) + ctx.getMember().getUser().getName(), ctx.getMember().getUser().getAvatarUrl());
             success.setTimestamp(Instant.now());
 
-            channel.sendMessage(success.build()).queue();
+            channel.sendMessage(MessageCreateData.fromEmbeds(success.build())).queue();
         }
     }
 

@@ -1,16 +1,16 @@
 package TzeBot.essentials;
 
 import net.dv8tion.jda.api.entities.Guild;
-import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
+import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 
 import java.util.List;
 
 public class CommandContext implements ICommandContext {
 
-    private final GuildMessageReceivedEvent event;
+    private final MessageReceivedEvent event;
     private final List<String> args;
 
-    public CommandContext(GuildMessageReceivedEvent event, List<String> args) {
+    public CommandContext(MessageReceivedEvent event, List<String> args) {
         this.event = event;
         this.args = args;
     }
@@ -21,7 +21,7 @@ public class CommandContext implements ICommandContext {
     }
 
     @Override
-    public GuildMessageReceivedEvent getEvent() {
+    public MessageReceivedEvent getEvent() {
         return this.event;
     }
 

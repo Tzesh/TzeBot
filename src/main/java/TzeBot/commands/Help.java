@@ -6,6 +6,7 @@ import TzeBot.essentials.Config;
 import TzeBot.essentials.ICommand;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.TextChannel;
+import net.dv8tion.jda.api.utils.messages.MessageCreateData;
 
 import java.time.Instant;
 import java.util.List;
@@ -39,7 +40,7 @@ public class Help implements ICommand {
             info.setTimestamp(Instant.now());
             info.setFooter(getMessage("help.info.setFooter", guildID), ctx.getSelfMember().getUser().getAvatarUrl());
 
-            channel.sendMessage(info.build()).queue();
+            channel.sendMessage(MessageCreateData.fromEmbeds(info.build())).queue();
             return;
         }
 
@@ -64,7 +65,7 @@ public class Help implements ICommand {
             info.setTimestamp(Instant.now());
 
             info.setFooter(getMessage("help.info.setFooter", guildID), ctx.getSelfMember().getUser().getAvatarUrl());
-            channel.sendMessage(info.build()).queue();
+            channel.sendMessage(MessageCreateData.fromEmbeds(info.build())).queue();
             return;
         }
 
@@ -82,7 +83,7 @@ public class Help implements ICommand {
             info.setTimestamp(Instant.now());
             info.setFooter(getMessage("help.info.setFooter", guildID), ctx.getSelfMember().getUser().getAvatarUrl());
 
-            channel.sendMessage(info.build()).queue();
+            channel.sendMessage(MessageCreateData.fromEmbeds(info.build())).queue();
             return;
         }
 
@@ -96,7 +97,7 @@ public class Help implements ICommand {
             error.setDescription(getMessage("general.404.description", guildID));
             error.setTimestamp(Instant.now());
 
-            channel.sendMessage(error.build()).queue();
+            channel.sendMessage(MessageCreateData.fromEmbeds(error.build())).queue();
         } else {
             EmbedBuilder help = new EmbedBuilder();
             help.setColor(0xffffff);
@@ -105,7 +106,7 @@ public class Help implements ICommand {
             help.setFooter(getMessage("general.bythecommand", guildID) + ctx.getMember().getUser().getName(), ctx.getMember().getUser().getAvatarUrl());
             help.setTimestamp(Instant.now());
 
-            channel.sendMessage(help.build()).queue();
+            channel.sendMessage(MessageCreateData.fromEmbeds(help.build())).queue();
         }
     }
 

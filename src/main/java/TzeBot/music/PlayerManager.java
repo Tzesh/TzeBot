@@ -11,6 +11,7 @@ import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.TextChannel;
+import net.dv8tion.jda.api.utils.messages.MessageCreateData;
 
 import java.time.Instant;
 import java.util.HashMap;
@@ -74,7 +75,7 @@ public class PlayerManager {
                     success.setImage(formatURL("https://img.youtube.com/vi/" + track.getInfo().uri, false) + "/0.jpg");
                     success.setTimestamp(Instant.now());
 
-                    channel.sendMessage(success.build()).queue(message -> {
+                    channel.sendMessage(MessageCreateData.fromEmbeds(success.build())).queue(message -> {
                         message.delete().queueAfter(3, TimeUnit.SECONDS);
                     });
 
@@ -88,7 +89,7 @@ public class PlayerManager {
                     success.setImage(formatURL("https://img.youtube.com/vi/" + track.getInfo().uri, false) + "/0.jpg");
                     success.setTimestamp(Instant.now());
 
-                    channel.sendMessage(success.build()).queue();
+                    channel.sendMessage(MessageCreateData.fromEmbeds(success.build())).queue();
 
                     play(musicManager, track);
                 }
@@ -110,7 +111,7 @@ public class PlayerManager {
                         error.setDescription(getMessage("play.playlist.error.setDescription", guildID));
                         error.setTimestamp(Instant.now());
 
-                        channel.sendMessage(error.build()).queue(message -> {
+                        channel.sendMessage(MessageCreateData.fromEmbeds(error.build())).queue(message -> {
                             message.delete().queueAfter(3, TimeUnit.SECONDS);
                         });
                         return;
@@ -121,7 +122,7 @@ public class PlayerManager {
                         error.setDescription(getMessage("play.nothing.setDescription", guildID));
                         error.setTimestamp(Instant.now());
 
-                        channel.sendMessage(error.build()).queue();
+                        channel.sendMessage(MessageCreateData.fromEmbeds(error.build())).queue();
                         return;
                     }
                 }
@@ -135,7 +136,7 @@ public class PlayerManager {
                     success.setFooter(getMessage("general.bythecommand", guildID) + name, avatarURL);
                     success.setTimestamp(Instant.now());
 
-                    channel.sendMessage(success.build()).queue(message -> {
+                    channel.sendMessage(MessageCreateData.fromEmbeds(success.build())).queue(message -> {
                         message.delete().queueAfter(3, TimeUnit.SECONDS);
                     });
 
@@ -150,7 +151,7 @@ public class PlayerManager {
                     success.setFooter(getMessage("general.bythecommand", guildID) + name, avatarURL);
                     success.setTimestamp(Instant.now());
 
-                    channel.sendMessage(success.build()).queue(message -> {
+                    channel.sendMessage(MessageCreateData.fromEmbeds(success.build())).queue(message -> {
                         message.delete().queueAfter(3, TimeUnit.SECONDS);
                     });
 
@@ -170,7 +171,7 @@ public class PlayerManager {
                     error.setDescription(getMessage("play.nothing.setDescription", guildID));
                     error.setTimestamp(Instant.now());
 
-                    channel.sendMessage(error.build()).queue(message -> {
+                    channel.sendMessage(MessageCreateData.fromEmbeds(error.build())).queue(message -> {
                         message.delete().queueAfter(3, TimeUnit.SECONDS);
                     });
                 } else {
@@ -180,7 +181,7 @@ public class PlayerManager {
                     error.setDescription(getMessage("play.nothing.setDescription", guildID));
                     error.setTimestamp(Instant.now());
 
-                    channel.sendMessage(error.build()).queue();
+                    channel.sendMessage(MessageCreateData.fromEmbeds(error.build())).queue();
                 }
 
             }
@@ -194,7 +195,7 @@ public class PlayerManager {
                     error.setDescription(getMessage("play.error.setDescription", guildID) + exception.getMessage());
                     error.setTimestamp(Instant.now());
 
-                    channel.sendMessage(error.build()).queue(message -> {
+                    channel.sendMessage(MessageCreateData.fromEmbeds(error.build())).queue(message -> {
                         message.delete().queueAfter(3, TimeUnit.SECONDS);
                     });
                 } else {
@@ -204,7 +205,7 @@ public class PlayerManager {
                     error.setDescription(getMessage("play.error.setDescription", guildID) + exception.getMessage());
                     error.setTimestamp(Instant.now());
 
-                    channel.sendMessage(error.build()).queue();
+                    channel.sendMessage(MessageCreateData.fromEmbeds(error.build())).queue();
                 }
             }
         });

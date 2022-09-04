@@ -7,6 +7,8 @@ import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.TextChannel;
+import net.dv8tion.jda.api.entities.emoji.Emoji;
+import net.dv8tion.jda.api.utils.messages.MessageCreateData;
 
 import java.time.Instant;
 import java.util.HashMap;
@@ -37,7 +39,7 @@ public class Channel implements ICommand {
             error.setDescription(getMessage("general.not_authorized.description", guildID));
             error.setTimestamp(Instant.now());
 
-            channel.sendMessage(error.build()).queue();
+            channel.sendMessage(MessageCreateData.fromEmbeds(error.build())).queue();
             return;
         }
         if (!selfmember.hasPermission(Permission.MANAGE_CHANNEL)) {
@@ -47,7 +49,7 @@ public class Channel implements ICommand {
             error.setDescription(getMessage("general.nonperm.manage_channel", guildID));
             error.setTimestamp(Instant.now());
 
-            channel.sendMessage(error.build()).queue();
+            channel.sendMessage(MessageCreateData.fromEmbeds(error.build())).queue();
         }
         if (!selfmember.hasPermission(Permission.MESSAGE_MANAGE)) {
             EmbedBuilder error = new EmbedBuilder();
@@ -56,7 +58,7 @@ public class Channel implements ICommand {
             error.setDescription(getMessage("general.nonperm.message_manage", guildID));
             error.setTimestamp(Instant.now());
 
-            channel.sendMessage(error.build()).queue();
+            channel.sendMessage(MessageCreateData.fromEmbeds(error.build())).queue();
             return;
         }
         if (args.isEmpty()) {
@@ -66,7 +68,7 @@ public class Channel implements ICommand {
             error.setDescription(getMessage("channel.noargs.setDescription", guildID));
             error.setTimestamp(Instant.now());
 
-            channel.sendMessage(error.build()).queue();
+            channel.sendMessage(MessageCreateData.fromEmbeds(error.build())).queue();
         } else {
             if (args.size() > 1) {
                 EmbedBuilder error = new EmbedBuilder();
@@ -75,7 +77,7 @@ public class Channel implements ICommand {
                 error.setDescription(getMessage("general.403.description", guildID));
                 error.setTimestamp(Instant.now());
 
-                channel.sendMessage(error.build()).queue();
+                channel.sendMessage(MessageCreateData.fromEmbeds(error.build())).queue();
                 return;
             }
             if (input.equals(getMessage("channel.create", guildID))) {
@@ -86,7 +88,7 @@ public class Channel implements ICommand {
                     error.setDescription(getMessage("channel.already.setDescription", guildID));
                     error.setTimestamp(Instant.now());
 
-                    channel.sendMessage(error.build()).queue();
+                    channel.sendMessage(MessageCreateData.fromEmbeds(error.build())).queue();
                     return;
                 }
                 ctx.getGuild().createTextChannel(getMessage("music.icon", guildID) + getMessage("music.name", guildID))
@@ -102,7 +104,7 @@ public class Channel implements ICommand {
                 success.setFooter(getMessage("general.bythecommand", guildID) + ctx.getMember().getUser().getName(), ctx.getMember().getUser().getAvatarUrl());
                 success.setTimestamp(Instant.now());
 
-                channel.sendMessage(success.build()).queue();
+                channel.sendMessage(MessageCreateData.fromEmbeds(success.build())).queue();
                 success.clear();
                 return;
             }
@@ -128,17 +130,17 @@ public class Channel implements ICommand {
                     success1.addField(getMessage("general.icon.queue", guildID), getMessage("channel.queuenp", guildID), true);
                     success1.addBlankField(true);
                     success1.setFooter(getMessage("channel.setFooter", guildID));
-                    channel.sendMessage(success1.build()).queue(message -> {
-                        message.addReaction(getMessage("general.icon.nowplaying", guildID)).queue();
-                        message.addReaction(getMessage("general.icon.stop", guildID)).queue();
-                        message.addReaction(getMessage("general.icon.skip", guildID)).queue();
-                        message.addReaction(getMessage("general.icon.loop", guildID)).queue();
-                        message.addReaction(getMessage("general.icon.shuffle", guildID)).queue();
-                        message.addReaction(getMessage("general.icon.next", guildID)).queue();
-                        message.addReaction(getMessage("general.icon.previous", guildID)).queue();
-                        message.addReaction(getMessage("general.icon.volumedown", guildID)).queue();
-                        message.addReaction(getMessage("general.icon.volume", guildID)).queue();
-                        message.addReaction(getMessage("general.icon.queue", guildID)).queue();
+                    channel.sendMessage(MessageCreateData.fromEmbeds(success1.build())).queue(message -> {
+                        message.addReaction(Emoji.fromUnicode(getMessage("general.icon.nowplaying", guildID))).queue();
+                        message.addReaction(Emoji.fromUnicode(getMessage("general.icon.stop", guildID))).queue();
+                        message.addReaction(Emoji.fromUnicode(getMessage("general.icon.skip", guildID))).queue();
+                        message.addReaction(Emoji.fromUnicode(getMessage("general.icon.loop", guildID))).queue();
+                        message.addReaction(Emoji.fromUnicode(getMessage("general.icon.shuffle", guildID))).queue();
+                        message.addReaction(Emoji.fromUnicode(getMessage("general.icon.next", guildID))).queue();
+                        message.addReaction(Emoji.fromUnicode(getMessage("general.icon.previous", guildID))).queue();
+                        message.addReaction(Emoji.fromUnicode(getMessage("general.icon.volumedown", guildID))).queue();
+                        message.addReaction(Emoji.fromUnicode(getMessage("general.icon.volume", guildID))).queue();
+                        message.addReaction(Emoji.fromUnicode(getMessage("general.icon.queue", guildID))).queue();
                         HashMap<Long, Long> IDs = new HashMap<>();
                         IDs.put(channel.getIdLong(), message.getIdLong());
                         Config.MUSICCHANNELS.put(ctx.getGuild().getIdLong(), IDs);
@@ -151,7 +153,7 @@ public class Channel implements ICommand {
                     error.setTitle(getMessage("general.icon.error", guildID) + getMessage("channel.wrongchannel.setTitle", guildID));
                     error.setDescription(getMessage("channel.wrongchannel.setDescription", guildID));
                     error.setTimestamp(Instant.now());
-                    channel.sendMessage(error.build()).queue();
+                    channel.sendMessage(MessageCreateData.fromEmbeds(error.build())).queue();
 
                 }
             } else {
@@ -160,7 +162,7 @@ public class Channel implements ICommand {
                 error.setTitle(getMessage("general.icon.error", guildID) + getMessage("channel.noargs.setTitle", guildID));
                 error.setDescription(getMessage("channel.noargs.setDescription", guildID));
                 error.setTimestamp(Instant.now());
-                channel.sendMessage(error.build()).queue();
+                channel.sendMessage(MessageCreateData.fromEmbeds(error.build())).queue();
             }
         }
     }

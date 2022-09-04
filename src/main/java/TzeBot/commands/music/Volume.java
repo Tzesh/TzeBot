@@ -6,6 +6,7 @@ import TzeBot.essentials.ICommand;
 import TzeBot.music.PlayerManager;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.TextChannel;
+import net.dv8tion.jda.api.utils.messages.MessageCreateData;
 
 import java.time.Instant;
 
@@ -30,7 +31,7 @@ public class Volume implements ICommand {
                 error.setDescription(getMessage("volume.error.setDescription", guildID) + manager.getGuildMusicManager(ctx.getGuild()).player.getVolume() + "%");
                 error.setTimestamp(Instant.now());
 
-                channel.sendMessage(error.build()).queue();
+                channel.sendMessage(MessageCreateData.fromEmbeds(error.build())).queue();
             } else {
                 manager.getGuildMusicManager(ctx.getGuild()).player.setVolume(Integer.parseInt(input));
                 Config.VOLUMES.put(ctx.getGuild().getIdLong(), Integer.parseInt(input));
@@ -40,7 +41,7 @@ public class Volume implements ICommand {
                 success.setFooter(getMessage("general.bythecommand", guildID) + " " + ctx.getMember().getUser().getName(), ctx.getMember().getUser().getAvatarUrl());
                 success.setTimestamp(Instant.now());
 
-                channel.sendMessage(success.build()).queue();
+                channel.sendMessage(MessageCreateData.fromEmbeds(success.build())).queue();
             }
         } else {
             if (input.equals("")) {
@@ -50,7 +51,7 @@ public class Volume implements ICommand {
                 error.setDescription(getMessage("volume.error.setDescription", guildID) + manager.getGuildMusicManager(ctx.getGuild()).player.getVolume() + "%");
                 error.setTimestamp(Instant.now());
 
-                channel.sendMessage(error.build()).queue();
+                channel.sendMessage(MessageCreateData.fromEmbeds(error.build())).queue();
                 return;
             }
             if (ctx.getArgs().size() > 1) {
@@ -60,7 +61,7 @@ public class Volume implements ICommand {
                 error.setDescription(getMessage("play.noargs.setDescription1", guildID) + Config.get("pre") + getMessage("play.noargs.setDescription2", guildID));
                 error.setTimestamp(Instant.now());
 
-                channel.sendMessage(error.build()).queue();
+                channel.sendMessage(MessageCreateData.fromEmbeds(error.build())).queue();
             }
         }
     }

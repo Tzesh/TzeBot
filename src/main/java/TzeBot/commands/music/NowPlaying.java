@@ -8,6 +8,7 @@ import com.sedmelluq.discord.lavaplayer.player.AudioPlayer;
 import com.sedmelluq.discord.lavaplayer.track.AudioTrackInfo;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.TextChannel;
+import net.dv8tion.jda.api.utils.messages.MessageCreateData;
 
 import java.time.Instant;
 
@@ -32,7 +33,7 @@ public class NowPlaying implements ICommand {
             error.setDescription(getMessage("nowplaying.error.setDescription", guildID));
             error.setTimestamp(Instant.now());
 
-            channel.sendMessage(error.build()).queue();
+            channel.sendMessage(MessageCreateData.fromEmbeds(error.build())).queue();
             return;
         }
 
@@ -49,7 +50,7 @@ public class NowPlaying implements ICommand {
         message.setFooter(getMessage("general.bythecommand", guildID) + ctx.getMember().getUser().getName(), ctx.getMember().getUser().getAvatarUrl());
         message.setTimestamp(Instant.now());
 
-        channel.sendMessage(message.build()).queue();
+        channel.sendMessage(MessageCreateData.fromEmbeds(message.build())).queue();
     }
 
     @Override

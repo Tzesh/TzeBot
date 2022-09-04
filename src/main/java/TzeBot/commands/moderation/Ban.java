@@ -6,6 +6,7 @@ import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.TextChannel;
+import net.dv8tion.jda.api.utils.messages.MessageCreateData;
 
 import java.time.Instant;
 import java.util.List;
@@ -23,14 +24,14 @@ public class Ban implements ICommand {
         final long guildID = ctx.getGuild().getIdLong();
         final String message = String.join(" ", args);
 
-        if (args.isEmpty() || ctx.getMessage().getMentionedMembers().isEmpty() || ctx.getMessage().getMentionedMembers().size() != 1 || args.size() < 1) {
+        if (args.isEmpty() || ctx.getMessage().getMentions().getMembers().isEmpty() || ctx.getMessage().getMentions().getMembers().size() != 1 || args.size() < 1) {
             EmbedBuilder error = new EmbedBuilder();
             error.setColor(0xff3923);
             error.setTitle(getMessage("general.icon.error", guildID) + getMessage("ban.wrong.title", guildID));
             error.setDescription(getMessage("ban.wrong.description", guildID));
             error.setTimestamp(Instant.now());
 
-            channel.sendMessage(error.build()).queue();
+            channel.sendMessage(MessageCreateData.fromEmbeds(error.build())).queue();
             return;
         }
 
@@ -41,7 +42,7 @@ public class Ban implements ICommand {
             error.setDescription(getMessage("ban.permission1.description", guildID));
             error.setTimestamp(Instant.now());
 
-            channel.sendMessage(error.build()).queue();
+            channel.sendMessage(MessageCreateData.fromEmbeds(error.build())).queue();
             return;
         }
 
@@ -52,11 +53,11 @@ public class Ban implements ICommand {
             error.setDescription(getMessage("ban.permission2.description", guildID));
             error.setTimestamp(Instant.now());
 
-            channel.sendMessage(error.build()).queue();
+            channel.sendMessage(MessageCreateData.fromEmbeds(error.build())).queue();
             return;
         }
 
-        Member banRequested = ctx.getMessage().getMentionedMembers().get(0);
+        Member banRequested = ctx.getMessage().getMentions().getMembers().get(0);
 
         if (!selfmember.canInteract(banRequested) || !member.canInteract(banRequested)) {
             EmbedBuilder error = new EmbedBuilder();
@@ -65,7 +66,7 @@ public class Ban implements ICommand {
             error.setDescription(getMessage("ban.hierarchy.setDescription", guildID));
             error.setTimestamp(Instant.now());
 
-            channel.sendMessage(error.build()).queue();
+            channel.sendMessage(MessageCreateData.fromEmbeds(error.build())).queue();
             return;
         }
 
@@ -83,7 +84,7 @@ public class Ban implements ICommand {
         success.setFooter(getMessage("general.bythecommand", guildID) + " " + ctx.getMember().getUser().getName(), ctx.getMember().getUser().getAvatarUrl());
         success.setTimestamp(Instant.now());
 
-        channel.sendMessage(success.build()).queue();
+        channel.sendMessage(MessageCreateData.fromEmbeds(success.build())).queue();
         success.clear();
     }
 

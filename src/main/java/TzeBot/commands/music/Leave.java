@@ -6,9 +6,11 @@ import TzeBot.music.GuildMusicManager;
 import TzeBot.music.PlayerManager;
 import com.sedmelluq.discord.lavaplayer.player.AudioPlayer;
 import net.dv8tion.jda.api.EmbedBuilder;
+import net.dv8tion.jda.api.entities.AudioChannel;
 import net.dv8tion.jda.api.entities.TextChannel;
 import net.dv8tion.jda.api.entities.VoiceChannel;
 import net.dv8tion.jda.api.managers.AudioManager;
+import net.dv8tion.jda.api.utils.messages.MessageCreateData;
 
 import java.time.Instant;
 
@@ -32,11 +34,11 @@ public class Leave implements ICommand {
             error.setDescription(getMessage("leave.notconnected", guildID));
             error.setTimestamp(Instant.now());
 
-            channel.sendMessage(error.build()).queue();
+            channel.sendMessage(MessageCreateData.fromEmbeds(error.build())).queue();
             return;
         }
 
-        VoiceChannel voiceChannel = audioManager.getConnectedChannel();
+        AudioChannel voiceChannel = audioManager.getConnectedChannel();
 
         if (!voiceChannel.getMembers().contains(ctx.getMember())) {
             EmbedBuilder error = new EmbedBuilder();
@@ -45,7 +47,7 @@ public class Leave implements ICommand {
             error.setDescription(getMessage("leave.notin", guildID));
             error.setTimestamp(Instant.now());
 
-            channel.sendMessage(error.build()).queue();
+            channel.sendMessage(MessageCreateData.fromEmbeds(error.build())).queue();
             return;
         }
 
@@ -60,7 +62,7 @@ public class Leave implements ICommand {
             success.setFooter(getMessage("general.bythecommand", guildID) + " " + ctx.getMember().getUser().getName(), ctx.getMember().getUser().getAvatarUrl());
             success.setTimestamp(Instant.now());
 
-            channel.sendMessage(success.build()).queue();
+            channel.sendMessage(MessageCreateData.fromEmbeds(success.build())).queue();
         }
 
         audioManager.closeAudioConnection();
@@ -70,7 +72,7 @@ public class Leave implements ICommand {
         success.setFooter(getMessage("general.bythecommand", guildID) + ctx.getMember().getUser().getName(), ctx.getMember().getUser().getAvatarUrl());
         success.setTimestamp(Instant.now());
 
-        channel.sendMessage(success.build()).queue();
+        channel.sendMessage(MessageCreateData.fromEmbeds(success.build())).queue();
     }
 
     @Override

@@ -10,6 +10,8 @@ import TzeBot.music.TrackScheduler;
 import com.sedmelluq.discord.lavaplayer.player.AudioPlayer;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.TextChannel;
+import net.dv8tion.jda.api.entities.emoji.Emoji;
+import net.dv8tion.jda.api.utils.messages.MessageCreateData;
 
 import java.time.Instant;
 import java.util.List;
@@ -34,7 +36,7 @@ public class Seek implements ICommand {
             error.setDescription(getMessage("nowplaying.error.setDescription", guildID));
             error.setTimestamp(Instant.now());
 
-            channel.sendMessage(error.build()).queue();
+            channel.sendMessage(MessageCreateData.fromEmbeds(error.build())).queue();
             return;
         }
         if (args.size() != 1) {
@@ -44,14 +46,14 @@ public class Seek implements ICommand {
             error.setDescription(LanguageManager.getMessage("seek.error.setDescription", guildID));
             error.setTimestamp(Instant.now());
 
-            channel.sendMessage(error.build()).queue();
+            channel.sendMessage(MessageCreateData.fromEmbeds(error.build())).queue();
         } else {
             if (args.get(0).equals(getMessage("seek.forward", guildID))) {
                 scheduler.changePosition(15);
-                ctx.getMessage().addReaction("\uD83D\uDC4D").queue();
+                ctx.getMessage().addReaction(Emoji.fromUnicode("\uD83D\uDC4D")).queue();
             } else if (args.get(0).equals(getMessage("seek.backward", guildID))) {
                 scheduler.changePosition(-15);
-                ctx.getMessage().addReaction("\uD83D\uDC4D").queue();
+                ctx.getMessage().addReaction(Emoji.fromUnicode("\uD83D\uDC4D")).queue();
             } else {
                 EmbedBuilder error = new EmbedBuilder();
                 error.setColor(0xff3923);
@@ -59,7 +61,7 @@ public class Seek implements ICommand {
                 error.setDescription(LanguageManager.getMessage("seek.error.setDescription", guildID));
                 error.setTimestamp(Instant.now());
 
-                channel.sendMessage(error.build()).queue();
+                channel.sendMessage(MessageCreateData.fromEmbeds(error.build())).queue();
             }
         }
     }

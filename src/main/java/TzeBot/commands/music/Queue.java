@@ -8,6 +8,7 @@ import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
 import com.sedmelluq.discord.lavaplayer.track.AudioTrackInfo;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.TextChannel;
+import net.dv8tion.jda.api.utils.messages.MessageCreateData;
 
 import java.time.Instant;
 import java.util.ArrayList;
@@ -34,7 +35,7 @@ public class Queue implements ICommand {
             error.setDescription(getMessage("loop.error.setDescription", guildID));
             error.setTimestamp(Instant.now());
 
-            channel.sendMessage(error.build()).queue();
+            channel.sendMessage(MessageCreateData.fromEmbeds(error.build())).queue();
             return;
         }
 
@@ -53,7 +54,7 @@ public class Queue implements ICommand {
                     info.author
             ));
         }
-        channel.sendMessage(message.build()).queue();
+        channel.sendMessage(MessageCreateData.fromEmbeds(message.build())).queue();
     }
 
     @Override

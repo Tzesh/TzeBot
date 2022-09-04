@@ -1,14 +1,17 @@
 package TzeBot.music;
 
 import TzeBot.essentials.Config;
+import TzeBot.utils.EmojiUnicodes;
 import com.sedmelluq.discord.lavaplayer.player.AudioPlayer;
 import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
 import com.sedmelluq.discord.lavaplayer.track.AudioTrackInfo;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.GuildVoiceState;
 import net.dv8tion.jda.api.entities.TextChannel;
-import net.dv8tion.jda.api.events.message.guild.react.GuildMessageReactionAddEvent;
+import net.dv8tion.jda.api.entities.emoji.UnicodeEmoji;
+import net.dv8tion.jda.api.events.message.react.MessageReactionAddEvent;
 import net.dv8tion.jda.api.managers.AudioManager;
+import net.dv8tion.jda.api.utils.messages.MessageCreateData;
 
 import java.time.Instant;
 import java.util.ArrayList;
@@ -23,9 +26,9 @@ import static TzeBot.utils.Formatter.formatURL;
 
 public class MusicChannel {
 
-    public static void handle(GuildMessageReactionAddEvent event) {
+    public static void handle(MessageReactionAddEvent event) {
         final GuildVoiceState memberVoiceState = event.getMember().getVoiceState();
-        final TextChannel channel = event.getChannel();
+        final TextChannel channel = event.getChannel().asTextChannel();
         final AudioManager audioManager = event.getGuild().getAudioManager();
         assert memberVoiceState != null;
         final PlayerManager playerManager = PlayerManager.getInstance();
@@ -39,14 +42,14 @@ public class MusicChannel {
         if (IDs.containsValue(event.getMessageIdLong())) {
             removeReaction(event);
             if (Math.random() > 0.85) voteUsMessage(event);
-            if (!event.getMember().getVoiceState().inVoiceChannel()) {
+            if (!event.getMember().getVoiceState().inAudioChannel()) {
                 EmbedBuilder error = new EmbedBuilder();
                 error.setColor(0xff3923);
                 error.setTitle(getMessage("general.icon.error", guildID) + getMessage("join.joinchannel.setTitle", guildID));
                 error.setDescription(getMessage("join.joinchannel.setDescription", guildID));
                 error.setTimestamp(Instant.now());
 
-                channel.sendMessage(error.build()).queue(message -> {
+                channel.sendMessage(MessageCreateData.fromEmbeds(error.build())).queue(message -> {
                     message.delete().queueAfter(3, TimeUnit.SECONDS);
                 });
                 return;
@@ -58,47 +61,37 @@ public class MusicChannel {
                 error.setDescription(getMessage("channel.same.setDescription", guildID));
                 error.setTimestamp(Instant.now());
 
-                channel.sendMessage(error.build()).queue(message -> {
+                channel.sendMessage(MessageCreateData.fromEmbeds(error.build())).queue(message -> {
                     message.delete().queueAfter(3, TimeUnit.SECONDS);
                 });
                 return;
             }
-            switch (event.getReactionEmote().getEmoji()) {
-                case "⏯️":
-                    playOrPause(event, channel, player, guildID);
-                    break;
-                case "⏹️":
-                    stopAndLeave(event, channel, audioManager, musicManager, player, guildID);
-                    break;
-                case "⏭️":
-                    skip(event, channel, player, scheduler, guildID);
-                    break;
-                case "\uD83D\uDD0A":
-                    volume(event, channel, playerManager, guildID, 25);
-                    break;
-                case "\uD83D\uDD09":
-                    volume(event, channel, playerManager, guildID, -25);
-                    break;
-                case "\uD83D\uDD01":
-                    loop(event, channel, musicManager, scheduler, guildID);
-                    break;
-                case "\uD83D\uDCDC":
-                    queue(event, channel, player, queue, guildID);
-                    break;
-                case "↪️":
-                    forwards(channel, player, scheduler, guildID, 15);
-                    break;
-                case "↩️":
-                    forwards(channel, player, scheduler, guildID, -15);
-                    break;
-                case "\uD83D\uDD00":
-                    shuffle(event, channel, musicManager, scheduler, guildID);
-                    break;
+            UnicodeEmoji unicodeEmoji = event.getEmoji().asUnicode();
+            if (EmojiUnicodes.nowPlaying.getUnicode().equals(unicodeEmoji)) {
+                playOrPause(event, channel, player, guildID);
+            } else if (EmojiUnicodes.stop.getUnicode().equals(unicodeEmoji)) {
+                stopAndLeave(event, channel, audioManager, musicManager, player, guildID);
+            } else if (EmojiUnicodes.skip.getUnicode().equals(unicodeEmoji)) {
+                skip(event, channel, player, scheduler, guildID);
+            } else if (EmojiUnicodes.volumeup.getUnicode().equals(unicodeEmoji)) {
+                volume(event, channel, playerManager, guildID, 25);
+            } else if (EmojiUnicodes.volumedown.getUnicode().equals(unicodeEmoji)) {
+                volume(event, channel, playerManager, guildID, -25);
+            } else if (EmojiUnicodes.loop.getUnicode().equals(unicodeEmoji)) {
+                loop(event, channel, musicManager, scheduler, guildID);
+            } else if (EmojiUnicodes.queue.getUnicode().equals(unicodeEmoji)) {
+                queue(event, channel, player, queue, guildID);
+            } else if (EmojiUnicodes.next.getUnicode().equals(unicodeEmoji)) {
+                forwards(channel, player, scheduler, guildID, 15);
+            } else if (EmojiUnicodes.previous.getUnicode().equals(unicodeEmoji)) {
+                forwards(channel, player, scheduler, guildID, -15);
+            } else if (EmojiUnicodes.shuffle.getUnicode().equals(unicodeEmoji)) {
+                shuffle(event, channel, musicManager, scheduler, guildID);
             }
         }
     }
 
-    private static void shuffle(GuildMessageReactionAddEvent event, TextChannel channel, GuildMusicManager musicManager, TrackScheduler scheduler, long guildID) {
+    private static void shuffle(MessageReactionAddEvent event, TextChannel channel, GuildMusicManager musicManager, TrackScheduler scheduler, long guildID) {
         EmbedBuilder success;
         if (musicManager.scheduler.getQueue().isEmpty() && musicManager.player.getPlayingTrack() == null) {
 
@@ -108,7 +101,7 @@ public class MusicChannel {
             error.setDescription(getMessage("loop.error.setDescription", guildID));
             error.setTimestamp(Instant.now());
 
-            channel.sendMessage(error.build()).queue(message -> {
+            channel.sendMessage(MessageCreateData.fromEmbeds(error.build())).queue(message -> {
                 message.delete().queueAfter(3, TimeUnit.SECONDS);
             });
         } else {
@@ -120,7 +113,7 @@ public class MusicChannel {
             success.setFooter(getMessage("general.bythecommand", guildID) + event.getMember().getUser().getName(), event.getMember().getUser().getAvatarUrl());
             success.setTimestamp(Instant.now());
 
-            channel.sendMessage(success.build()).queue(message -> {
+            channel.sendMessage(MessageCreateData.fromEmbeds(success.build())).queue(message -> {
                 message.delete().queueAfter(3, TimeUnit.SECONDS);
             });
         }
@@ -134,7 +127,7 @@ public class MusicChannel {
             error.setDescription(getMessage("nowplaying.error.setDescription", guildID));
             error.setTimestamp(Instant.now());
 
-            channel.sendMessage(error.build()).queue(message -> {
+            channel.sendMessage(MessageCreateData.fromEmbeds(error.build())).queue(message -> {
                 message.delete().queueAfter(3, TimeUnit.SECONDS);
             });
         } else {
@@ -143,7 +136,7 @@ public class MusicChannel {
         }
     }
 
-    private static void queue(GuildMessageReactionAddEvent event, TextChannel channel, AudioPlayer player, BlockingQueue<AudioTrack> queue, long guildID) {
+    private static void queue(MessageReactionAddEvent event, TextChannel channel, AudioPlayer player, BlockingQueue<AudioTrack> queue, long guildID) {
         if (player.getPlayingTrack() != null) {
             AudioTrackInfo info = player.getPlayingTrack().getInfo();
 
@@ -157,7 +150,7 @@ public class MusicChannel {
                     formatTime(player.getPlayingTrack().getDuration())));
             nplaying.setTimestamp(Instant.now());
             nplaying.setFooter(getMessage("general.bythecommand", guildID) + event.getMember().getUser().getName(), event.getMember().getUser().getAvatarUrl());
-            channel.sendMessage(nplaying.build()).queue(message -> {
+            channel.sendMessage(MessageCreateData.fromEmbeds(nplaying.build())).queue(message -> {
                 message.delete().queueAfter(10, TimeUnit.SECONDS);
             });
         }
@@ -168,7 +161,7 @@ public class MusicChannel {
             error.setDescription(getMessage("loop.error.setDescription", guildID));
             error.setTimestamp(Instant.now());
 
-            channel.sendMessage(error.build()).queue(message -> {
+            channel.sendMessage(MessageCreateData.fromEmbeds(error.build())).queue(message -> {
                 message.delete().queueAfter(3, TimeUnit.SECONDS);
             });
             return;
@@ -188,12 +181,12 @@ public class MusicChannel {
                     info.author
             ));
         }
-        channel.sendMessage(builder.build()).queue(message -> {
+        channel.sendMessage(MessageCreateData.fromEmbeds(builder.build())).queue(message -> {
             message.delete().queueAfter(10, TimeUnit.SECONDS);
         });
     }
 
-    private static void loop(GuildMessageReactionAddEvent event, TextChannel channel, GuildMusicManager musicManager, TrackScheduler scheduler, long guildID) {
+    private static void loop(MessageReactionAddEvent event, TextChannel channel, GuildMusicManager musicManager, TrackScheduler scheduler, long guildID) {
         EmbedBuilder success;
         if (musicManager.scheduler.getQueue().isEmpty() && musicManager.player.getPlayingTrack() == null) {
 
@@ -203,7 +196,7 @@ public class MusicChannel {
             error.setDescription(getMessage("loop.error.setDescription", guildID));
             error.setTimestamp(Instant.now());
 
-            channel.sendMessage(error.build()).queue(message -> {
+            channel.sendMessage(MessageCreateData.fromEmbeds(error.build())).queue(message -> {
                 message.delete().queueAfter(3, TimeUnit.SECONDS);
             });
         } else {
@@ -217,7 +210,7 @@ public class MusicChannel {
                 success.setFooter(getMessage("general.bythecommand", guildID) + event.getMember().getUser().getName(), event.getMember().getUser().getAvatarUrl());
                 success.setTimestamp(Instant.now());
 
-                channel.sendMessage(success.build()).queue(message -> {
+                channel.sendMessage(MessageCreateData.fromEmbeds(success.build())).queue(message -> {
                     message.delete().queueAfter(3, TimeUnit.SECONDS);
                 });
             } else {
@@ -230,14 +223,14 @@ public class MusicChannel {
                 success.setFooter(getMessage("general.bythecommand", guildID) + event.getMember().getUser().getName(), event.getMember().getUser().getAvatarUrl());
                 success.setTimestamp(Instant.now());
 
-                channel.sendMessage(success.build()).queue(message -> {
+                channel.sendMessage(MessageCreateData.fromEmbeds(success.build())).queue(message -> {
                     message.delete().queueAfter(3, TimeUnit.SECONDS);
                 });
             }
         }
     }
 
-    private static void volume(GuildMessageReactionAddEvent event, TextChannel channel, PlayerManager playerManager, long guildID, int volume) {
+    private static void volume(MessageReactionAddEvent event, TextChannel channel, PlayerManager playerManager, long guildID, int volume) {
         EmbedBuilder success;
         if (volume > 0 ? playerManager.getGuildMusicManager(event.getGuild()).player.getVolume() + volume > 100 : playerManager.getGuildMusicManager(event.getGuild()).player.getVolume() + volume < 0) {
             playerManager.getGuildMusicManager(event.getGuild()).player.setVolume(volume > 0 ? 100 : 0);
@@ -249,7 +242,7 @@ public class MusicChannel {
             success.setFooter(getMessage("general.bythecommand", guildID) + " " + event.getMember().getUser().getName(), event.getMember().getUser().getAvatarUrl());
             success.setTimestamp(Instant.now());
 
-            channel.sendMessage(success.build()).queue(message -> {
+            channel.sendMessage(MessageCreateData.fromEmbeds(success.build())).queue(message -> {
                 message.delete().queueAfter(3, TimeUnit.SECONDS);
             });
             return;
@@ -262,12 +255,12 @@ public class MusicChannel {
         success.setFooter(getMessage("general.bythecommand", guildID) + " " + event.getMember().getUser().getName(), event.getMember().getUser().getAvatarUrl());
         success.setTimestamp(Instant.now());
 
-        channel.sendMessage(success.build()).queue(message -> {
+        channel.sendMessage(MessageCreateData.fromEmbeds(success.build())).queue(message -> {
             message.delete().queueAfter(3, TimeUnit.SECONDS);
         });
     }
 
-    private static void skip(GuildMessageReactionAddEvent event, TextChannel channel, AudioPlayer player, TrackScheduler scheduler, long guildID) {
+    private static void skip(MessageReactionAddEvent event, TextChannel channel, AudioPlayer player, TrackScheduler scheduler, long guildID) {
         if (player.getPlayingTrack() == null) {
             EmbedBuilder error = new EmbedBuilder();
             error.setColor(0xff3923);
@@ -275,7 +268,7 @@ public class MusicChannel {
             error.setDescription(getMessage("skip.error.setDescription", guildID));
             error.setTimestamp(Instant.now());
 
-            channel.sendMessage(error.build()).queue(message -> {
+            channel.sendMessage(MessageCreateData.fromEmbeds(error.build())).queue(message -> {
                 message.delete().queueAfter(3, TimeUnit.SECONDS);
             });
             return;
@@ -286,14 +279,14 @@ public class MusicChannel {
         success.setFooter(getMessage("general.bythecommand", guildID) + " " + event.getMember().getUser().getName(), event.getMember().getUser().getAvatarUrl());
         success.setTimestamp(Instant.now());
 
-        channel.sendMessage(success.build()).queue(message -> {
+        channel.sendMessage(MessageCreateData.fromEmbeds(success.build())).queue(message -> {
             message.delete().queueAfter(3, TimeUnit.SECONDS);
         });
 
         scheduler.nextTrack();
     }
 
-    private static void stopAndLeave(GuildMessageReactionAddEvent event, TextChannel channel, AudioManager audioManager, GuildMusicManager musicManager, AudioPlayer player, long guildID) {
+    private static void stopAndLeave(MessageReactionAddEvent event, TextChannel channel, AudioManager audioManager, GuildMusicManager musicManager, AudioPlayer player, long guildID) {
         if (player.getPlayingTrack() == null) {
             EmbedBuilder error = new EmbedBuilder();
             error.setColor(0xff3923);
@@ -301,7 +294,7 @@ public class MusicChannel {
             error.setDescription(getMessage("pause.error.setDescription", guildID));
             error.setTimestamp(Instant.now());
 
-            channel.sendMessage(error.build()).queue(message -> {
+            channel.sendMessage(MessageCreateData.fromEmbeds(error.build())).queue(message -> {
                 message.delete().queueAfter(3, TimeUnit.SECONDS);
             });
             return;
@@ -315,7 +308,7 @@ public class MusicChannel {
             success.setFooter(getMessage("general.bythecommand", guildID) + event.getMember().getUser().getName(), event.getMember().getUser().getAvatarUrl());
             success.setTimestamp(Instant.now());
 
-            channel.sendMessage(success.build()).queue(message -> {
+            channel.sendMessage(MessageCreateData.fromEmbeds(success.build())).queue(message -> {
                 message.delete().queueAfter(3, TimeUnit.SECONDS);
             });
         }
@@ -330,7 +323,7 @@ public class MusicChannel {
             success.setFooter(getMessage("general.bythecommand", guildID) + " " + event.getMember().getUser().getName(), event.getMember().getUser().getAvatarUrl());
             success.setTimestamp(Instant.now());
 
-            channel.sendMessage(success.build()).queue(message -> {
+            channel.sendMessage(MessageCreateData.fromEmbeds(success.build())).queue(message -> {
                 message.delete().queueAfter(3, TimeUnit.SECONDS);
             });
         } else {
@@ -340,13 +333,13 @@ public class MusicChannel {
             error.setDescription(getMessage("stop.error.setDescription", guildID));
             error.setTimestamp(Instant.now());
 
-            channel.sendMessage(error.build()).queue(message -> {
+            channel.sendMessage(MessageCreateData.fromEmbeds(error.build())).queue(message -> {
                 message.delete().queueAfter(3, TimeUnit.SECONDS);
             });
         }
     }
 
-    private static void playOrPause(GuildMessageReactionAddEvent event, TextChannel channel, AudioPlayer player, long guildID) {
+    private static void playOrPause(MessageReactionAddEvent event, TextChannel channel, AudioPlayer player, long guildID) {
         if (player.getPlayingTrack() == null) {
             EmbedBuilder error = new EmbedBuilder();
 
@@ -355,7 +348,7 @@ public class MusicChannel {
             error.setDescription(getMessage("pause.error.setDescription", guildID));
             error.setTimestamp(Instant.now());
 
-            channel.sendMessage(error.build()).queue(message -> {
+            channel.sendMessage(MessageCreateData.fromEmbeds(error.build())).queue(message -> {
                 message.delete().queueAfter(3, TimeUnit.SECONDS);
             });
             return;
@@ -369,7 +362,7 @@ public class MusicChannel {
             success.setFooter(getMessage("general.bythecommand", guildID) + event.getMember().getUser().getName(), event.getMember().getUser().getAvatarUrl());
             success.setTimestamp(Instant.now());
 
-            channel.sendMessage(success.build()).queue(message -> {
+            channel.sendMessage(MessageCreateData.fromEmbeds(success.build())).queue(message -> {
                 message.delete().queueAfter(3, TimeUnit.SECONDS);
             });
         } else {
@@ -381,17 +374,17 @@ public class MusicChannel {
             success.setFooter(getMessage("general.bythecommand", guildID) + event.getMember().getUser().getName(), event.getMember().getUser().getAvatarUrl());
             success.setTimestamp(Instant.now());
 
-            channel.sendMessage(success.build()).queue(message -> {
+            channel.sendMessage(MessageCreateData.fromEmbeds(success.build())).queue(message -> {
                 message.delete().queueAfter(3, TimeUnit.SECONDS);
             });
         }
     }
 
-    private static void removeReaction(GuildMessageReactionAddEvent event) {
-        event.getChannel().removeReactionById(event.getMessageId(), event.getReactionEmote().getEmoji(), event.getUser()).queueAfter(3, TimeUnit.SECONDS);
+    private static void removeReaction(MessageReactionAddEvent event) {
+        event.getReaction().removeReaction(event.getUser()).queueAfter(3, TimeUnit.SECONDS);
     }
 
-    private static void voteUsMessage(GuildMessageReactionAddEvent event) {
+    private static void voteUsMessage(MessageReactionAddEvent event) {
         EmbedBuilder message = new EmbedBuilder();
 
         message.setColor(0xffffff);
@@ -400,7 +393,7 @@ public class MusicChannel {
         message.setFooter(getMessage("general.notvoted.footer", event.getGuild().getIdLong()));
         message.setTimestamp(Instant.now());
 
-        event.getChannel().sendMessage(message.build()).queue(msg -> {
+        event.getChannel().sendMessage(MessageCreateData.fromEmbeds(message.build())).queue(msg -> {
             msg.delete().queueAfter(10, TimeUnit.SECONDS);
         });
     }

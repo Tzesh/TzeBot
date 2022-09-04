@@ -5,7 +5,7 @@ import TzeBot.commands.Support;
 import TzeBot.commands.moderation.*;
 import TzeBot.commands.music.*;
 import net.dv8tion.jda.api.entities.GuildChannel;
-import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
+import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
@@ -70,7 +70,7 @@ public class CommandManager {
         return null;
     }
 
-    void handle(GuildMessageReceivedEvent event, String prefix) {
+    void handle(MessageReceivedEvent event, String prefix) {
         final long guildID = event.getGuild().getIdLong();
         this.guildID = guildID;
         String[] split = event.getMessage().getContentRaw()
@@ -93,7 +93,7 @@ public class CommandManager {
         }
     }
 
-    void handle(GuildMessageReceivedEvent event) {
+    void handle(MessageReceivedEvent event) {
         final long guildID = event.getGuild().getIdLong();
         this.guildID = guildID;
         String[] split = event.getMessage().getContentRaw()
@@ -127,7 +127,7 @@ public class CommandManager {
         }
     }
 
-    private void handle(GuildMessageReceivedEvent event, long guildID, String[] split, String invoke, String searchLower, Long textChannelID) {
+    private void handle(MessageReceivedEvent event, long guildID, String[] split, String invoke, String searchLower, Long textChannelID) {
         for (ICommand cmd : this.commands) {
             if (cmd.getName(guildID).equals(searchLower)) {
                 if (cmd.getClass().getPackage().getName().equals("TzeBot.commands.music")) {
@@ -151,7 +151,7 @@ public class CommandManager {
         }
     }
 
-    public boolean isExists(GuildMessageReceivedEvent event) {
+    public boolean isExists(MessageReceivedEvent event) {
         Iterator<GuildChannel> iterator = event.getGuild().getChannels().iterator();
         while (iterator.hasNext()) {
             if (iterator.next().getIdLong() == Config.CHANNELS.get(event.getGuild().getIdLong())) {

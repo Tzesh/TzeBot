@@ -4,6 +4,7 @@ import TzeBot.essentials.CommandContext;
 import TzeBot.essentials.ICommand;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.TextChannel;
+import net.dv8tion.jda.api.utils.messages.MessageCreateData;
 
 import java.time.Instant;
 
@@ -34,7 +35,7 @@ public class Support implements ICommand {
         support.setFooter(getMessage("support.setFooter", guildID));
         support.setTimestamp(Instant.now());
 
-        channel.sendMessage(support.build()).queue();
+        channel.sendMessage(MessageCreateData.fromEmbeds(support.build())).queue();
         support.clear();
     }
 

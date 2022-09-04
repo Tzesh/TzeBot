@@ -12,6 +12,7 @@ import TzeBot.music.PlayerManager;
 import TzeBot.music.TrackScheduler;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.TextChannel;
+import net.dv8tion.jda.api.utils.messages.MessageCreateData;
 
 import java.time.Instant;
 
@@ -38,7 +39,7 @@ public class Shuffle implements ICommand {
             error.setDescription(getMessage("loop.error.setDescription", guildID));
             error.setTimestamp(Instant.now());
 
-            channel.sendMessage(error.build()).queue();
+            channel.sendMessage(MessageCreateData.fromEmbeds(error.build())).queue();
         } else {
             scheduler.shufflePlaylist();
             EmbedBuilder success = new EmbedBuilder();
@@ -47,7 +48,7 @@ public class Shuffle implements ICommand {
             success.setFooter(getMessage("general.bythecommand", guildID) + ctx.getMember().getUser().getName(), ctx.getMember().getUser().getAvatarUrl());
             success.setTimestamp(Instant.now());
 
-            channel.sendMessage(success.build()).queue();
+            channel.sendMessage(MessageCreateData.fromEmbeds(success.build())).queue();
         }
     }
 

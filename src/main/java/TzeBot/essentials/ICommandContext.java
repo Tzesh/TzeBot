@@ -4,16 +4,16 @@ import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.TextChannel;
-import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
+import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 
 public interface ICommandContext {
 
     Guild getGuild();
 
-    GuildMessageReceivedEvent getEvent();
+    MessageReceivedEvent getEvent();
 
     default TextChannel getChannel() {
-        return this.getEvent().getChannel();
+        return this.getEvent().getGuildChannel().asTextChannel();
     }
 
     default Message getMessage() {

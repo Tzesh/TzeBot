@@ -8,6 +8,7 @@ import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.TextChannel;
+import net.dv8tion.jda.api.utils.messages.MessageCreateData;
 
 import java.util.List;
 
@@ -26,7 +27,7 @@ public class Prefix implements ICommand {
             error.setTitle(LanguageManager.getMessage("general.icon.error", guildID) + LanguageManager.getMessage("general.not_authorized", guildID));
             error.setDescription(LanguageManager.getMessage("general.not_authorized.description", guildID));
 
-            channel.sendMessage(error.build()).queue();
+            channel.sendMessage(MessageCreateData.fromEmbeds(error.build())).queue();
             return;
         }
 
@@ -36,7 +37,7 @@ public class Prefix implements ICommand {
             error.setTitle(LanguageManager.getMessage("general.icon.error", guildID) + LanguageManager.getMessage("general.403", guildID));
             error.setDescription(LanguageManager.getMessage("general.403.description", guildID));
 
-            channel.sendMessage(error.build()).queue();
+            channel.sendMessage(MessageCreateData.fromEmbeds(error.build())).queue();
             return;
         }
 
@@ -48,7 +49,7 @@ public class Prefix implements ICommand {
         success.setTitle(LanguageManager.getMessage("general.icon.success", guildID) + " " + LanguageManager.getMessage("prefix.success.setTitle", guildID) + "`" + newPrefix + "`");
         success.setFooter(LanguageManager.getMessage("general.bythecommand", guildID) + " " + ctx.getMember().getUser().getName(), ctx.getMember().getUser().getAvatarUrl());
 
-        channel.sendMessage(success.build()).queue();
+        channel.sendMessage(MessageCreateData.fromEmbeds(success.build())).queue();
     }
 
     @Override

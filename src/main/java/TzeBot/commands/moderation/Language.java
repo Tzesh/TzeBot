@@ -8,6 +8,7 @@ import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.TextChannel;
+import net.dv8tion.jda.api.utils.messages.MessageCreateData;
 
 import java.time.Instant;
 import java.util.List;
@@ -33,7 +34,7 @@ public class Language implements ICommand {
             error.setDescription(LanguageManager.getMessage("general.not_authorized.description", guildID));
             error.setTimestamp(Instant.now());
 
-            channel.sendMessage(error.build()).queue();
+            channel.sendMessage(MessageCreateData.fromEmbeds(error.build())).queue();
             return;
         }
         if (args.isEmpty()) {
@@ -43,7 +44,7 @@ public class Language implements ICommand {
             error.setDescription(LanguageManager.getMessage("general.403.description", guildID));
             error.setTimestamp(Instant.now());
 
-            channel.sendMessage(error.build()).queue();
+            channel.sendMessage(MessageCreateData.fromEmbeds(error.build())).queue();
 
         } else {
             if (Config.LANGUAGES.get(ctx.getGuild().getIdLong()).equals("en_en")) {
@@ -56,7 +57,7 @@ public class Language implements ICommand {
                     success.setFooter(LanguageManager.getMessage("general.bythecommand", guildID) + " " + ctx.getMember().getUser().getName(), ctx.getMember().getUser().getAvatarUrl());
                     success.setTimestamp(Instant.now());
 
-                    channel.sendMessage(success.build()).queue();
+                    channel.sendMessage(MessageCreateData.fromEmbeds(success.build())).queue();
                     return;
                 }
                 if (args.get(0).toLowerCase().equals("english")) {
@@ -66,7 +67,7 @@ public class Language implements ICommand {
                     error.setDescription(LanguageManager.getMessage("language.already.setDescription", guildID));
                     error.setTimestamp(Instant.now());
 
-                    channel.sendMessage(error.build()).queue();
+                    channel.sendMessage(MessageCreateData.fromEmbeds(error.build())).queue();
                     return;
                 } else {
                     EmbedBuilder error = new EmbedBuilder();
@@ -75,7 +76,7 @@ public class Language implements ICommand {
                     error.setDescription(LanguageManager.getMessage("language.unsuitable.setDescription", guildID));
                     error.setTimestamp(Instant.now());
 
-                    channel.sendMessage(error.build()).queue();
+                    channel.sendMessage(MessageCreateData.fromEmbeds(error.build())).queue();
                     return;
                 }
             }
@@ -88,7 +89,7 @@ public class Language implements ICommand {
                     success.setDescription("You can use `" + prefix + "help` command to look at the commands in English, if you want to revert language back to Turkish just type `" + prefix + "language turkish`.");
                     success.setFooter(LanguageManager.getMessage("general.bythecommand", guildID) + " " + ctx.getMember().getUser().getName(), ctx.getMember().getUser().getAvatarUrl());
                     success.setTimestamp(Instant.now());
-                    channel.sendMessage(success.build()).queue();
+                    channel.sendMessage(MessageCreateData.fromEmbeds(success.build())).queue();
                     return;
                 }
                 if (LanguageManager.normalizer(args.get(0)).toLowerCase().equals("turkce")) {
@@ -98,7 +99,7 @@ public class Language implements ICommand {
                     error.setDescription(LanguageManager.getMessage("language.already.setDescription", guildID));
                     error.setTimestamp(Instant.now());
 
-                    channel.sendMessage(error.build()).queue();
+                    channel.sendMessage(MessageCreateData.fromEmbeds(error.build())).queue();
                 } else {
                     EmbedBuilder error = new EmbedBuilder();
                     error.setColor(0xff3923);
@@ -106,7 +107,7 @@ public class Language implements ICommand {
                     error.setDescription(LanguageManager.getMessage("language.unsuitable.setDescription", guildID));
                     error.setTimestamp(Instant.now());
 
-                    channel.sendMessage(error.build()).queue();
+                    channel.sendMessage(MessageCreateData.fromEmbeds(error.build())).queue();
                 }
             }
         }

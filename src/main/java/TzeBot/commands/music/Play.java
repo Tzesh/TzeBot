@@ -13,11 +13,9 @@ import com.sedmelluq.discord.lavaplayer.player.AudioPlayer;
 import com.sedmelluq.discord.lavaplayer.track.AudioTrackInfo;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.Permission;
-import net.dv8tion.jda.api.entities.GuildVoiceState;
-import net.dv8tion.jda.api.entities.Member;
-import net.dv8tion.jda.api.entities.TextChannel;
-import net.dv8tion.jda.api.entities.VoiceChannel;
+import net.dv8tion.jda.api.entities.*;
 import net.dv8tion.jda.api.managers.AudioManager;
+import net.dv8tion.jda.api.utils.messages.MessageCreateData;
 
 import javax.annotation.Nullable;
 import java.net.MalformedURLException;
@@ -57,7 +55,7 @@ public class Play implements ICommand {
         final TextChannel channel = ctx.getChannel();
         String input = String.join(" ", ctx.getArgs());
         final GuildVoiceState memberVoiceState = ctx.getMember().getVoiceState();
-        final VoiceChannel voiceChannel = memberVoiceState.getChannel();
+        final AudioChannel voiceChannel = memberVoiceState.getChannel();
         final Member selfmember = ctx.getGuild().getSelfMember();
         final AudioManager audioManager = ctx.getGuild().getAudioManager();
         final PlayerManager manager = PlayerManager.getInstance();
@@ -81,7 +79,7 @@ public class Play implements ICommand {
                     error.setDescription(getMessage("play.noresults.setDescription", guildID));
                     error.setTimestamp(Instant.now());
 
-                    channel.sendMessage(error.build()).queue(message -> {
+                    channel.sendMessage(MessageCreateData.fromEmbeds(error.build())).queue(message -> {
                         message.delete().queueAfter(3, TimeUnit.SECONDS);
                     });
                     return;
@@ -90,7 +88,7 @@ public class Play implements ICommand {
                 input = ytSearched;
             }
 
-            if (!memberVoiceState.inVoiceChannel()) {
+            if (!memberVoiceState.inAudioChannel()) {
                 ctx.getMessage().delete().queue();
                 EmbedBuilder error = new EmbedBuilder();
                 error.setColor(0xff3923);
@@ -98,7 +96,7 @@ public class Play implements ICommand {
                 error.setDescription(getMessage("join.joinchannel.setDescription", guildID));
                 error.setTimestamp(Instant.now());
 
-                channel.sendMessage(error.build()).queue(message -> {
+                channel.sendMessage(MessageCreateData.fromEmbeds(error.build())).queue(message -> {
                     message.delete().queueAfter(3, TimeUnit.SECONDS);
                 });
                 return;
@@ -112,7 +110,7 @@ public class Play implements ICommand {
                 error.setDescription(getMessage("join.cannotjoin.setDescription", guildID));
                 error.setTimestamp(Instant.now());
 
-                channel.sendMessage(error.build()).queue(message -> {
+                channel.sendMessage(MessageCreateData.fromEmbeds(error.build())).queue(message -> {
                     message.delete().queueAfter(3, TimeUnit.SECONDS);
                 });
                 return;
@@ -126,7 +124,7 @@ public class Play implements ICommand {
                 error.setDescription(getMessage("join.cannotjoin.setDescription", guildID));
                 error.setTimestamp(Instant.now());
 
-                channel.sendMessage(error.build()).queue(message -> {
+                channel.sendMessage(MessageCreateData.fromEmbeds(error.build())).queue(message -> {
                     message.delete().queueAfter(3, TimeUnit.SECONDS);
                 });
                 return;
@@ -143,7 +141,7 @@ public class Play implements ICommand {
                 success.setFooter(getMessage("general.bythecommand", guildID) + ctx.getMember().getUser().getName(), ctx.getMember().getUser().getAvatarUrl());
                 success.setTimestamp(Instant.now());
 
-                channel.sendMessage(success.build()).queue(message -> {
+                channel.sendMessage(MessageCreateData.fromEmbeds(success.build())).queue(message -> {
                     message.delete().queueAfter(3, TimeUnit.SECONDS);
                 });
             }
@@ -165,7 +163,7 @@ public class Play implements ICommand {
                     error.setDescription(getMessage("play.noresults.setDescription", guildID));
                     error.setTimestamp(Instant.now());
 
-                    channel.sendMessage(error.build()).queue();
+                    channel.sendMessage(MessageCreateData.fromEmbeds(error.build())).queue();
                     return;
                 }
 
@@ -179,7 +177,7 @@ public class Play implements ICommand {
                 error.setDescription(getMessage("play.noargs.setDescription1", guildID) + prefix + getMessage("play.noargs.setDescription2", guildID));
                 error.setTimestamp(Instant.now());
 
-                channel.sendMessage(error.build()).queue();
+                channel.sendMessage(MessageCreateData.fromEmbeds(error.build())).queue();
                 return;
             }
 
@@ -190,18 +188,18 @@ public class Play implements ICommand {
                 error.setDescription(getMessage("join.cannotjoin.setDescription", guildID));
                 error.setTimestamp(Instant.now());
 
-                channel.sendMessage(error.build()).queue();
+                channel.sendMessage(MessageCreateData.fromEmbeds(error.build())).queue();
                 return;
             }
 
-            if (!memberVoiceState.inVoiceChannel()) {
+            if (!memberVoiceState.inAudioChannel()) {
                 EmbedBuilder error = new EmbedBuilder();
                 error.setColor(0xff3923);
                 error.setTitle(getMessage("general.icon.error", guildID) + getMessage("join.joinchannel.setTitle", guildID));
                 error.setDescription(getMessage("join.joinchannel.setDescription", guildID));
                 error.setTimestamp(Instant.now());
 
-                channel.sendMessage(error.build()).queue();
+                channel.sendMessage(MessageCreateData.fromEmbeds(error.build())).queue();
                 return;
             }
 
@@ -212,7 +210,7 @@ public class Play implements ICommand {
                 error.setDescription(getMessage("join.cannotjoin.setDescription", guildID));
                 error.setTimestamp(Instant.now());
 
-                channel.sendMessage(error.build()).queue();
+                channel.sendMessage(MessageCreateData.fromEmbeds(error.build())).queue();
                 return;
             }
 
@@ -227,7 +225,7 @@ public class Play implements ICommand {
                 success.setFooter(getMessage("general.bythecommand", guildID) + ctx.getMember().getUser().getName(), ctx.getMember().getUser().getAvatarUrl());
                 success.setTimestamp(Instant.now());
 
-                channel.sendMessage(success.build()).queue();
+                channel.sendMessage(MessageCreateData.fromEmbeds(success.build())).queue();
             }
             GuildMusicManager musicManager = manager.getGuildMusicManager(ctx.getGuild());
             AudioPlayer player = musicManager.player;
@@ -249,7 +247,7 @@ public class Play implements ICommand {
                 message.setFooter(getMessage("general.bythecommand", guildID) + ctx.getMember().getUser().getName(), ctx.getMember().getUser().getAvatarUrl());
                 message.setTimestamp(Instant.now());
 
-                channel.sendMessage(message.build()).queue();
+                channel.sendMessage(MessageCreateData.fromEmbeds(message.build())).queue();
             }
         }
     }

@@ -8,6 +8,7 @@ import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.TextChannel;
+import net.dv8tion.jda.api.utils.messages.MessageCreateData;
 
 import java.time.Instant;
 import java.util.List;
@@ -29,7 +30,7 @@ public class Clear implements ICommand {
             error.setDescription(LanguageManager.getMessage("general.not_authorized.description", guildID));
             error.setTimestamp(Instant.now());
 
-            channel.sendMessage(error.build()).queue();
+            channel.sendMessage(MessageCreateData.fromEmbeds(error.build())).queue();
             return;
         }
         if (!selfmember.hasPermission(Permission.MESSAGE_MANAGE)) {
@@ -39,7 +40,7 @@ public class Clear implements ICommand {
             error.setDescription(LanguageManager.getMessage("general.nonperm.message_manage", guildID));
             error.setTimestamp(Instant.now());
 
-            channel.sendMessage(error.build()).queue();
+            channel.sendMessage(MessageCreateData.fromEmbeds(error.build())).queue();
 
         } else if (args.isEmpty()) {
             EmbedBuilder error = new EmbedBuilder();
@@ -48,7 +49,7 @@ public class Clear implements ICommand {
             error.setDescription(LanguageManager.getMessage("general.403.description", guildID));
             error.setTimestamp(Instant.now());
 
-            channel.sendMessage(error.build()).queue();
+            channel.sendMessage(MessageCreateData.fromEmbeds(error.build())).queue();
         } else {
             try {
                 List<Message> messages = channel.getHistory().retrievePast(Integer.parseInt(String.join(" ", args)) + 1).complete();
@@ -60,7 +61,7 @@ public class Clear implements ICommand {
                 success.setFooter(LanguageManager.getMessage("general.bythecommand", guildID) + " " + ctx.getMember().getUser().getName(), ctx.getMember().getUser().getAvatarUrl());
                 success.setTimestamp(Instant.now());
 
-                channel.sendMessage(success.build()).queue();
+                channel.sendMessage(MessageCreateData.fromEmbeds(success.build())).queue();
                 success.clear();
             } catch (IllegalArgumentException exception) {
                 if (exception.toString().startsWith("java.lang.IllegalArgumentException")) {
@@ -70,7 +71,7 @@ public class Clear implements ICommand {
                     error.setDescription(LanguageManager.getMessage("clear.unsuitable.setDescription", guildID));
                     error.setTimestamp(Instant.now());
 
-                    channel.sendMessage(error.build()).queue();
+                    channel.sendMessage(MessageCreateData.fromEmbeds(error.build())).queue();
                 } else {
                     EmbedBuilder error = new EmbedBuilder();
                     error.setColor(0xff3923);
@@ -78,7 +79,7 @@ public class Clear implements ICommand {
                     error.setDescription(LanguageManager.getMessage("clear.older.setDescription", guildID));
                     error.setTimestamp(Instant.now());
 
-                    channel.sendMessage(error.build()).queue();
+                    channel.sendMessage(MessageCreateData.fromEmbeds(error.build())).queue();
                 }
             }
         }

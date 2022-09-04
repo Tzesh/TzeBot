@@ -8,6 +8,7 @@ import TzeBot.music.TrackScheduler;
 import com.sedmelluq.discord.lavaplayer.player.AudioPlayer;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.TextChannel;
+import net.dv8tion.jda.api.utils.messages.MessageCreateData;
 
 import java.time.Instant;
 
@@ -31,7 +32,7 @@ public class Skip implements ICommand {
             error.setDescription(getMessage("skip.error.setDescription", guildID));
             error.setTimestamp(Instant.now());
 
-            channel.sendMessage(error.build()).queue();
+            channel.sendMessage(MessageCreateData.fromEmbeds(error.build())).queue();
             return;
         }
 
@@ -42,7 +43,7 @@ public class Skip implements ICommand {
         success.setTimestamp(Instant.now());
 
         scheduler.nextTrack();
-        channel.sendMessage(success.build()).queue();
+        channel.sendMessage(MessageCreateData.fromEmbeds(success.build())).queue();
     }
 
     @Override

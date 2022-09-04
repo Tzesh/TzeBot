@@ -7,6 +7,7 @@ import TzeBot.music.PlayerManager;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.TextChannel;
 import net.dv8tion.jda.api.managers.AudioManager;
+import net.dv8tion.jda.api.utils.messages.MessageCreateData;
 
 import java.time.Instant;
 
@@ -31,7 +32,7 @@ public class Stop implements ICommand {
             success.setFooter(getMessage("general.bythecommand", guildID) + ctx.getMember().getUser().getName(), ctx.getMember().getUser().getAvatarUrl());
             success.setTimestamp(Instant.now());
 
-            channel.sendMessage(success.build()).queue();
+            channel.sendMessage(MessageCreateData.fromEmbeds(success.build())).queue();
         }
         if (!musicManager.player.isPaused()) {
             musicManager.scheduler.getQueue().clear();
@@ -44,7 +45,7 @@ public class Stop implements ICommand {
             success.setFooter(getMessage("general.bythecommand", guildID) + " " + ctx.getMember().getUser().getName(), ctx.getMember().getUser().getAvatarUrl());
             success.setTimestamp(Instant.now());
 
-            channel.sendMessage(success.build()).queue();
+            channel.sendMessage(MessageCreateData.fromEmbeds(success.build())).queue();
         } else {
             EmbedBuilder error = new EmbedBuilder();
             error.setColor(0xff3923);
@@ -52,7 +53,7 @@ public class Stop implements ICommand {
             error.setDescription(getMessage("stop.error.setDescription", guildID));
             error.setTimestamp(Instant.now());
 
-            channel.sendMessage(error.build()).queue();
+            channel.sendMessage(MessageCreateData.fromEmbeds(error.build())).queue();
         }
 
     }

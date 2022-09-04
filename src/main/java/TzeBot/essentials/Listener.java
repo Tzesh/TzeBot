@@ -3,27 +3,32 @@ package TzeBot.essentials;
 import TzeBot.music.GuildMusicManager;
 import TzeBot.music.MusicChannel;
 import TzeBot.music.PlayerManager;
+import TzeBot.utils.EmojiUnicodes;
 import com.sedmelluq.discord.lavaplayer.player.AudioPlayer;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.*;
+import net.dv8tion.jda.api.entities.emoji.CustomEmoji;
+import net.dv8tion.jda.api.entities.emoji.Emoji;
 import net.dv8tion.jda.api.events.Event;
 import net.dv8tion.jda.api.events.ReadyEvent;
 import net.dv8tion.jda.api.events.guild.GuildJoinEvent;
 import net.dv8tion.jda.api.events.guild.GuildLeaveEvent;
 import net.dv8tion.jda.api.events.guild.voice.GuildVoiceLeaveEvent;
 import net.dv8tion.jda.api.events.guild.voice.GuildVoiceMoveEvent;
-import net.dv8tion.jda.api.events.message.guild.GuildMessageDeleteEvent;
-import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
-import net.dv8tion.jda.api.events.message.guild.react.GuildMessageReactionAddEvent;
-import net.dv8tion.jda.api.events.message.guild.react.GuildMessageReactionRemoveEvent;
+import net.dv8tion.jda.api.events.message.MessageDeleteEvent;
+import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
+import net.dv8tion.jda.api.events.message.react.MessageReactionAddEvent;
+import net.dv8tion.jda.api.events.message.react.MessageReactionRemoveEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import net.dv8tion.jda.api.managers.AudioManager;
+import net.dv8tion.jda.api.requests.restaction.MessageEditAction;
+import net.dv8tion.jda.api.utils.messages.MessageEditData;
+import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.annotation.Nonnull;
-import java.time.Instant;
 import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -68,28 +73,29 @@ public class Listener extends ListenerAdapter {
                 success1.setFooter(getMessage("channel.setFooter", guildID));
                 success1.build();
                 MessageEmbed messageEmbed = success1.build();
+                MessageEditData editData = MessageEditData.fromEmbeds(messageEmbed);
                 if (channel != null) {
-                    channel.editMessageById(messageID, messageEmbed).queueAfter(1000, TimeUnit.MILLISECONDS, message -> {
-                        message.clearReactions().queue();
-                        message.addReaction(getMessage("general.icon.nowplaying", guildID)).queue();
-                        message.addReaction(getMessage("general.icon.stop", guildID)).queue();
-                        message.addReaction(getMessage("general.icon.skip", guildID)).queue();
-                        message.addReaction(getMessage("general.icon.loop", guildID)).queue();
-                        message.addReaction(getMessage("general.icon.shuffle", guildID)).queue();
-                        message.addReaction(getMessage("general.icon.next", guildID)).queue();
-                        message.addReaction(getMessage("general.icon.previous", guildID)).queue();
-                        message.addReaction(getMessage("general.icon.volumedown", guildID)).queue();
-                        message.addReaction(getMessage("general.icon.volume", guildID)).queue();
-                        message.addReaction(getMessage("general.icon.queue", guildID)).queue();
+                    channel.editMessageById(messageID, editData).queueAfter(1000, TimeUnit.MILLISECONDS, message -> {
+                        if (message.getReactions().size() > 0) message.clearReactions().queue();
+                        message.addReaction(EmojiUnicodes.nowPlaying.getUnicode()).queue();
+                        message.addReaction(EmojiUnicodes.stop.getUnicode()).queue();
+                        message.addReaction(EmojiUnicodes.skip.getUnicode()).queue();
+                        message.addReaction(EmojiUnicodes.loop.getUnicode()).queue();
+                        message.addReaction(EmojiUnicodes.shuffle.getUnicode()).queue();
+                        message.addReaction(EmojiUnicodes.next.getUnicode()).queue();
+                        message.addReaction(EmojiUnicodes.previous.getUnicode()).queue();
+                        message.addReaction(EmojiUnicodes.volumedown.getUnicode()).queue();
+                        message.addReaction(EmojiUnicodes.volumeup.getUnicode()).queue();
+                        message.addReaction(EmojiUnicodes.queue.getUnicode()).queue();
                     });
                 }
             }
         }
     }
 
-    @Override
-    public void onGuildMessageReceived(@Nonnull GuildMessageReceivedEvent event) {
 
+    @Override
+    public void onMessageReceived(@NotNull MessageReceivedEvent event) {
         String raw = event.getMessage().getContentRaw();
         User user = event.getAuthor();
 
@@ -111,14 +117,20 @@ public class Listener extends ListenerAdapter {
     }
 
     @Override
-    public void onGuildMessageReactionRemove(GuildMessageReactionRemoveEvent event) {
-        if (Config.VOTEROLES.containsKey(event.getMessageIdLong())) {
-            onReactionRemove(event);
+    public void onMessageDelete(@NotNull MessageDeleteEvent event) {
+        Config.VOTEROLES.remove(event.getMessageIdLong());
+        if (Config.MUSICCHANNELS.containsKey(event.getMessageIdLong())) {
+            Config.MUSICCHANNELS.remove(event.getGuild().getIdLong());
+        }
+
+        HashMap<Long, Long> IDs = Config.MUSICCHANNELS.computeIfAbsent(event.getGuild().getIdLong(), (id) -> null);
+        if (IDs != null && IDs.containsValue(event.getMessageIdLong())) {
+            Config.MUSICCHANNELS.remove(event.getGuild().getIdLong());
         }
     }
 
     @Override
-    public void onGuildMessageReactionAdd(GuildMessageReactionAddEvent event) {
+    public void onMessageReactionAdd(@NotNull MessageReactionAddEvent event) {
         if (event.getUser().isBot()) {
             return;
         }
@@ -138,19 +150,11 @@ public class Listener extends ListenerAdapter {
     }
 
     @Override
-    public void onGuildMessageDelete(GuildMessageDeleteEvent event) {
-        Config.VOTEROLES.remove(event.getMessageIdLong());
-        if (Config.MUSICCHANNELS.containsKey(event.getMessageIdLong())) {
-            Config.MUSICCHANNELS.remove(event.getGuild().getIdLong());
-        }
-
-        HashMap<Long, Long> IDs = Config.MUSICCHANNELS.computeIfAbsent(event.getGuild().getIdLong(), (id) -> null);
-        if (IDs != null && IDs.containsValue(event.getMessageIdLong())) {
-            Config.MUSICCHANNELS.remove(event.getGuild().getIdLong());
+    public void onMessageReactionRemove(@NotNull MessageReactionRemoveEvent event) {
+        if (Config.VOTEROLES.containsKey(event.getMessageIdLong())) {
+            onReactionRemove(event);
         }
     }
-
-
 
     @Override
     public void onGuildVoiceLeave(@Nonnull GuildVoiceLeaveEvent event) {
@@ -162,7 +166,7 @@ public class Listener extends ListenerAdapter {
         checkMembersAndLeave(event.getGuild(), event.getChannelLeft(), event);
     }
 
-    private void checkMembersAndLeave(Guild guild, VoiceChannel channelLeft, @Nonnull Event event) {
+    private void checkMembersAndLeave(Guild guild, AudioChannel channelLeft, @Nonnull Event event) {
         final AudioManager audioManager = guild.getAudioManager();
         final PlayerManager playerManager = PlayerManager.getInstance();
         final GuildMusicManager musicManager = playerManager.getGuildMusicManager(guild);
@@ -182,9 +186,9 @@ public class Listener extends ListenerAdapter {
     public void onGuildJoin(@Nonnull GuildJoinEvent event) {
         if (this.botListManager != null)
         botListManager.setStats(event.getJDA());
-        TextChannel defaultChannel = event.getGuild().getDefaultChannel();
-        if (defaultChannel != null && event.getGuild().getSelfMember().hasPermission(defaultChannel, Permission.MESSAGE_WRITE))
-            event.getGuild().getDefaultChannel().sendMessage("Greetings " + defaultChannel.getGuild().getName() + "," +
+        TextChannel defaultChannel = event.getGuild().getDefaultChannel().asTextChannel();
+        if (defaultChannel != null && event.getGuild().getSelfMember().hasPermission(defaultChannel, Permission.MESSAGE_SEND))
+            event.getGuild().getDefaultChannel().asTextChannel().sendMessage("Greetings " + defaultChannel.getGuild().getName() + "," +
                     "\n\uD83D\uDD33️ You can look at all categories of the commands of TzeBot by just typing `.help`" +
                     "\n\uD83D\uDD33️ You can setup music channel which allows you to play songs without `.play` and use player with reactions (emotes)" +
                     "\n\uD83D\uDD33️ Besides you can change language to Turkish by just typing: `.language Turkish`" +
