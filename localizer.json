@@ -1,0 +1,902 @@
+{
+  "resume.success.setTitle": {
+    "tr_tr": "Şarkı sürdürülüyor: ",
+    "en_en": "Resumed the current song: "
+  },
+  "join.alreadyconnected.setTitle": {
+    "tr_tr": "Zaten bağlı",
+    "en_en": "Already connected"
+  },
+  "help.gethelp1": {
+    "tr_tr": "Komutların listesini gösterir",
+    "en_en": "Shows the list with the commands in the bot"
+  },
+  "pause.error.setTitle": {
+    "tr_tr": "Duraklatılamadı",
+    "en_en": "Cannot paused"
+  },
+  "ban.hierarchy.setDescription": {
+    "tr_tr": "Yasaklayacağınız kişi hiyerarşide aynı anda hem sizden hem de TzeBot\u0027tan aşağı olmalıdır",
+    "en_en": "The person that you want to ban should be below from both TzeBot and you at the same time in hierarchy"
+  },
+  "play.playlist.error.setTitle": {
+    "tr_tr": "İzin verilen maksimum şarkı sınırını aştınız",
+    "en_en": "You omitted the maximum playlist size"
+  },
+  "help.gethelp3": {
+    "tr_tr": "yardım [komut]`",
+    "en_en": "help [commmand]`"
+  },
+  "help.gethelp2": {
+    "tr_tr": "Kullanım: `",
+    "en_en": "Usage: `"
+  },
+  "general.icon.shuffle": {
+    "tr_tr": "🔀 ",
+    "en_en": "🔀 "
+  },
+  "volume.gethelp": {
+    "tr_tr": "Oynatıcının sesini ayarlar",
+    "en_en": "Sets the volume of the player"
+  },
+  "clear.name": {
+    "tr_tr": "temizle",
+    "en_en": "clear"
+  },
+  "pause.error.setDescription": {
+    "tr_tr": "Çünkü şu anda hiçbir şey oynatılmıyor",
+    "en_en": "Because nothing is playing right now"
+  },
+  "shuffle.name": {
+    "tr_tr": "karıştır",
+    "en_en": "shuffle"
+  },
+  "language.gethelp": {
+    "tr_tr": "Botun dilini \u0027İngilizce\u0027 ya da \u0027Türkçe\u0027 olarak seçebilirsiniz",
+    "en_en": "You can select the language of bot `English` or `Turkish`"
+  },
+  "general.icon.success": {
+    "tr_tr": "✅ ",
+    "en_en": "✅ "
+  },
+  "channel.wrongchannel.setDescription": {
+    "tr_tr": "Oluşturulan müzik kanalında `kanal ayarla` komutunu girmeniz gerekmekte",
+    "en_en": "You have to write `channel set` in the created music channel"
+  },
+  "channel.success.setDescription": {
+    "tr_tr": "Şimdi oluşturulan kanala gidip `kanal ayarla` yazmalısınız ki işleminiz tamamlansın",
+    "en_en": "You have to go to the created channel and write `channel set` once to finish the process"
+  },
+  "general.hierarchy.setDescription": {
+    "tr_tr": "Lütfen TzeBot\u0027un verdiğiniz rollerden daha üstte olduğuna emin olun",
+    "en_en": "Please make sure TzeBot is on top of the given roles in hierarchy"
+  },
+  "loop.success.off.setTitle": {
+    "tr_tr": "Şarkı döngüden çıkarıldı",
+    "en_en": "Unlooped the current song"
+  },
+  "skip.error.setDescription": {
+    "tr_tr": "Oynatılamayan bir şarkıyı atlayamam",
+    "en_en": "Cannot skip the nothing"
+  },
+  "queue.setTitle": {
+    "tr_tr": "Mevcut Kuyruk (Toplam: ",
+    "en_en": "Current Queue (Total: "
+  },
+  "channel.noargs.setDescription": {
+    "tr_tr": "Eğer müzik kanalını kurmak istiyorsanız, `kanal oluştur` dedikten sonra talimatları izleyiniz",
+    "en_en": "If you want to setup music channel, just type `channel create` and then follow the instructions"
+  },
+  "general.icon.skip": {
+    "tr_tr": "⏭️ ",
+    "en_en": "⏭️ "
+  },
+  "general.icon.previous": {
+    "tr_tr": "↩️ ",
+    "en_en": "↩️ "
+  },
+  "play.success.setTitle": {
+    "tr_tr": "Kuyruğa ekleniyor:",
+    "en_en": "Adding to queue:"
+  },
+  "channel.previous": {
+    "tr_tr": "Mevcut şarkıyı 15 saniye geri sarar",
+    "en_en": "Backwards the current song 15 seconds"
+  },
+  "skip.gethelp": {
+    "tr_tr": "Mevcut şarkıyı atlar",
+    "en_en": "Skips the current song"
+  },
+  "clear.unsuitable.setTitle": {
+    "tr_tr": "Kabul edilemez mesaj aralığı",
+    "en_en": "Unsuitable amount of messages"
+  },
+  "stop.success.setTitle": {
+    "tr_tr": "Durduruldu ve kuyruk temizlendi",
+    "en_en": "Stopped and cleared the queue"
+  },
+  "join.success.setTitle": {
+    "tr_tr": "Kanalına katılıyor",
+    "en_en": "Joining your channel"
+  },
+  "loop.error.setDescription": {
+    "tr_tr": "Belki biraz şarkı eklemek istersin",
+    "en_en": "You might wanna add some songs"
+  },
+  "stop.error.setDescription": {
+    "tr_tr": "Bu yüzden bu işlem gereksiz",
+    "en_en": "This means this process is unnecessary at least for now"
+  },
+  "general.icon.ban": {
+    "tr_tr": "🚫",
+    "en_en": "🚫"
+  },
+  "general.icon.patreon": {
+    "tr_tr": "💰 ",
+    "en_en": "💰 "
+  },
+  "play.noargs.setDescription1": {
+    "tr_tr": "Lütfen örnekteki gibi şarkı ismi veya urlsi veriniz:",
+    "en_en": "Please enter a url or song name as example: "
+  },
+  "general.icon.pause": {
+    "tr_tr": "⏸ ",
+    "en_en": "⏸ "
+  },
+  "help.moderation.info.setDescription": {
+    "tr_tr": "Bütün yönetim komutları kullanımları ve fonksiyonlarıyla beraber aşağıdaki gibidir:",
+    "en_en": "All of the moderation commands are listed with their usages and functions below:"
+  },
+  "play.noresults.setDescription": {
+    "tr_tr": "Ne aradığınızdan emin olun lütfen",
+    "en_en": "Please be ensure what you are looking for"
+  },
+  "play.noargs.setDescription2": {
+    "tr_tr": "oynat [şarkı adı/url]",
+    "en_en": "play [song name/url]"
+  },
+  "skip.success.setTitle1": {
+    "tr_tr": "Mevcut şarkı `",
+    "en_en": "Current song `"
+  },
+  "language.already.setTitle": {
+    "tr_tr": "Dil zaten Türkçe olarak ayarlanmış",
+    "en_en": "Language is already been set to English"
+  },
+  "ban.permission1.description": {
+    "tr_tr": "Eğer birilerini yasaklamak istiyorsanız gerekli yetkiye sahip olmalısınız",
+    "en_en": "If you want to ban a person then you should have the required permission"
+  },
+  "play.name": {
+    "tr_tr": "oynat",
+    "en_en": "play"
+  },
+  "skip.success.setTitle2": {
+    "tr_tr": "` atlandı",
+    "en_en": "` is skipped"
+  },
+  "general.icon.volume": {
+    "tr_tr": "🔊 ",
+    "en_en": "🔊 "
+  },
+  "ban.permission2.description": {
+    "tr_tr": "Eğer bu komutu kullanmak istiyorsanız TzeBot\u0027a yasaklama yetkisini vermelisiniz",
+    "en_en": "You have to give ban permission in the first place in order to use this command"
+  },
+  "clear.unsuitable.setDescription": {
+    "tr_tr": "Tek seferde 2-100 arası mesaj silebilirsiniz",
+    "en_en": "You may only choose 2-100 messages at once"
+  },
+  "music.icon": {
+    "tr_tr": "🎵",
+    "en_en": "🎵"
+  },
+  "play.playlist.setTitle1": {
+    "tr_tr": "Kuyruğa ekleniyor:",
+    "en_en": "Adding to queue:"
+  },
+  "help.info.setFooter": {
+    "tr_tr": "Tzesh tarafından frankensteinlandı",
+    "en_en": "Frankensteined by Tzesh"
+  },
+  "play.playlist.setTitle2": {
+    "tr_tr": " (kuyruğun ilk şarkısı",
+    "en_en": " (first track of the playlist:"
+  },
+  "channel.wrongchannel.setTitle": {
+    "tr_tr": "Yanlış kanal",
+    "en_en": "Wrong channel"
+  },
+  "general.icon.play": {
+    "tr_tr": "▶ ",
+    "en_en": "▶ "
+  },
+  "support.name": {
+    "tr_tr": "destek",
+    "en_en": "support"
+  },
+  "language.successful.setTitle": {
+    "tr_tr": "Dil Türkçe olarak değiştirildi",
+    "en_en": "Language has been changed to English"
+  },
+  "general.not_authorized": {
+    "tr_tr": "Yetkisiz kullanıcı",
+    "en_en": "Unauthorized person"
+  },
+  "music.name": {
+    "tr_tr": "müzik",
+    "en_en": "music"
+  },
+  "moderation.name": {
+    "tr_tr": "yönetim",
+    "en_en": "moderation"
+  },
+  "nowplaying.gethelp": {
+    "tr_tr": "Şu an oynatılanı gösterir",
+    "en_en": "Shows the current song"
+  },
+  "seek.gethelp": {
+    "tr_tr": "Mevcut şarkıyı 15 saniye ileri veya geri sarar: `sar ileri` veya `sar geri`",
+    "en_en": "Seeks the player backwards or forwards 15 seconds usage: `seek forward` or `seek backward`"
+  },
+  "general.nonperm.manage_channel": {
+    "tr_tr": "Lütfen TzeBot\u0027un \"Kanalları Yönet\" yetkisine sahip olduğundan emin olun",
+    "en_en": "Be ensure that TzeBot has \"Manage Channels\" permission"
+  },
+  "leave.gethelp": {
+    "tr_tr": "Bot kanalınızdan ayrılır",
+    "en_en": "Leaves your channel if it is connected"
+  },
+  "stop.name": {
+    "tr_tr": "durdur",
+    "en_en": "stop"
+  },
+  "ban.success.description2": {
+    "tr_tr": "Sebep(ler):",
+    "en_en": "Reason(s):"
+  },
+  "general.notvoted": {
+    "tr_tr": "Merhaba,",
+    "en_en": "Hello there,"
+  },
+  "channel.next": {
+    "tr_tr": "Mevcut şarkıyı 15 saniye ileri sarar",
+    "en_en": "Forwards the current song 15 seconds"
+  },
+  "channel.same.setDescription": {
+    "tr_tr": "TzeBot şu anda bir kanala bağlı, katılımcı olmadan komut veremezsiniz.",
+    "en_en": "TzeBot is currently connected to a voice channel, without being a participant you cannot give commands"
+  },
+  "join.gethelp": {
+    "tr_tr": "Bot kanalınıza katılır",
+    "en_en": "Makes the bot join your channnel"
+  },
+  "vote.name": {
+    "tr_tr": "oylama",
+    "en_en": "vote"
+  },
+  "ban.wrong.description": {
+    "tr_tr": "Lütfen yasakla komutunu kullanımınızı düzeltin",
+    "en_en": "Please correct your usage of ban command"
+  },
+  "queue.name": {
+    "tr_tr": "kuyruk",
+    "en_en": "queue"
+  },
+  "general.icon.stop": {
+    "tr_tr": "⏹️ ",
+    "en_en": "⏹️ "
+  },
+  "channel.create": {
+    "tr_tr": "oluştur",
+    "en_en": "create"
+  },
+  "general.icon.link": {
+    "tr_tr": "🔗 ",
+    "en_en": "🔗 "
+  },
+  "play.nothing.setDescription": {
+    "tr_tr": "Hiçbir şey bulunamadı ",
+    "en_en": "Nothing found by "
+  },
+  "channel.pauseresume": {
+    "tr_tr": "Oynatıcıyı duraklatır veya sürdürür",
+    "en_en": "Pauses or resumes the player"
+  },
+  "help.info.setTitle": {
+    "tr_tr": "TzeBOT BOT",
+    "en_en": "TzeBOT"
+  },
+  "join.cannotjoin.setDescription": {
+    "tr_tr": "Kanala katılmak için iznim yok",
+    "en_en": "Because TzeBot doesn\u0027t have the permission to join your voice channel"
+  },
+  "channel.set": {
+    "tr_tr": "ayarla",
+    "en_en": "set"
+  },
+  "general.icon.tzebot": {
+    "tr_tr": "🤖 ",
+    "en_en": "🤖 "
+  },
+  "general.hierarchy": {
+    "tr_tr": "Hiyerarşiyi ihlal ediyoruz",
+    "en_en": "We\u0027re breaking the hierarchy"
+  },
+  "general.notvoted.footer": {
+    "tr_tr": "Şimdiden teşekkürler, gerçekten minnettarız, iyi günler dileriz!",
+    "en_en": "Thanks in advance, we\u0027re really appreciated have a good day!"
+  },
+  "loop.name": {
+    "tr_tr": "döngü",
+    "en_en": "loop"
+  },
+  "join.joinchannel.setDescription": {
+    "tr_tr": "Bir ses kanala bağlı olmalısın",
+    "en_en": "You have to be connected to a voice channel"
+  },
+  "pause.success.setTitle": {
+    "tr_tr": "Oynatılan şarkı duraklatıldı:",
+    "en_en": "Paused the current song : "
+  },
+  "resume.gethelp": {
+    "tr_tr": "Mevcut şarkıyı sürdürür",
+    "en_en": "Resumes the current song"
+  },
+  "ban.permission1.title": {
+    "tr_tr": "Kullanıcıları yasaklamak için gerekli yetkiye sahip değilsiniz",
+    "en_en": "You don\u0027t have permission to ban members"
+  },
+  "play.gethelp1": {
+    "tr_tr": "Bir şarkı oynatır",
+    "en_en": "Plays a song"
+  },
+  "play.gethelp2": {
+    "tr_tr": "Kullanım: `",
+    "en_en": "Usage: `"
+  },
+  "play.gethelp3": {
+    "tr_tr": " \u003cşarkı urlsi/şarkı adı\u003e`",
+    "en_en": " \u003csong url/name\u003e`"
+  },
+  "general.nonperm.message_manage": {
+    "tr_tr": "Lütfen TzeBot\u0027un \"Mesajları Yönet\" yetkisine sahip olduğundan emin olun",
+    "en_en": "Be ensure that TzeBot has \"Manage Messages\" permission"
+  },
+  "shuffle.gethelp": {
+    "tr_tr": "Kuyruğu karıştırır",
+    "en_en": "Shuffles the queue"
+  },
+  "general.not_authorized.description": {
+    "tr_tr": "Bu komutu kullanmak için sunucuyu yönetme yetkisine sahip olman gerek",
+    "en_en": "You must have manage server permission to use this command"
+  },
+  "channel.setTitle": {
+    "tr_tr": "Müzik Kanalı",
+    "en_en": "Music Channel"
+  },
+  "language.unsuitable.setDescription": {
+    "tr_tr": "Sadece \u0027İngilizce\u0027 veya \u0027Türkçe\u0027 seçebilirsiniz",
+    "en_en": "You may only choose either \u0027Turkish\u0027 or \u0027English\u0027"
+  },
+  "channel.firstMessage": {
+    "tr_tr": "Oynatmak istediğiniz şarkının URL\u0027ini veya adını yazarak kuyruğa ekleyebilirsiniz:",
+    "en_en": "You can just message url or name of the song which you want to listen to queue:"
+  },
+  "clear.gethelp": {
+    "tr_tr": "İstenilen miktarda mesajı temizler",
+    "en_en": "Deletes the specified amounts of messages"
+  },
+  "channel.name": {
+    "tr_tr": "kanal",
+    "en_en": "channel"
+  },
+  "help.music.info.setTitle": {
+    "tr_tr": "🎵 Müzik Komutları",
+    "en_en": "🎵 Music Commands"
+  },
+  "ban.permission2.title": {
+    "tr_tr": "TzeBot gerekli yetkiye sahip değil",
+    "en_en": "TzeBot doesn\u0027t have the required permission"
+  },
+  "leave.name": {
+    "tr_tr": "ayrıl",
+    "en_en": "leave"
+  },
+  "volume.success.setTitle": {
+    "tr_tr": "Ses ayarlandı: ",
+    "en_en": "Volume is set to: "
+  },
+  "clear.older.setTitle": {
+    "tr_tr": "Seçilen mesajlar 2 haftadan eski",
+    "en_en": "Selected messages are older than 2 weeks"
+  },
+  "general.icon.leave": {
+    "tr_tr": "⏏ ",
+    "en_en": "⏏ "
+  },
+  "general.nonperm.manage_roles": {
+    "tr_tr": "Lütfen TzeBot\u0027un \"Rolleri Yönet\" yetkisine sahip olduğundan emin olun",
+    "en_en": "Be ensure that TzeBot has \"Manage Roles\" permission"
+  },
+  "ban.name": {
+    "tr_tr": "yasakla",
+    "en_en": "ban"
+  },
+  "ban.description": {
+    "tr_tr": "Eğer bir kullanıcıyı yasaklayabiliyorsanız, yasaklayabilirsiniz",
+    "en_en": "You can ban a user if and only if you can"
+  },
+  "channel.already.setDescription": {
+    "tr_tr": "Sadece tek bir müzik kanalınız olabilir",
+    "en_en": "You can only have one music channel"
+  },
+  "general.nonperm": {
+    "tr_tr": "TzeBot gerekli izinlere sahip değil",
+    "en_en": "TzeBot doesn\u0027t have required permissions"
+  },
+  "help.info.setDescription2": {
+    "tr_tr": "🎵 müzik komutları: ",
+    "en_en": "🎵 music commands: "
+  },
+  "help.info.setDescription1": {
+    "tr_tr": "⚙️ yönetim komutları: ",
+    "en_en": "⚙️ moderation commands: "
+  },
+  "help.info.setDescription3": {
+    "tr_tr": "ℹ️ destek komutu: ",
+    "en_en": "ℹ️ support command: "
+  },
+  "ban.success.description1": {
+    "tr_tr": "Herhangi bir sebep belirtilmedi",
+    "en_en": "No reasons specified"
+  },
+  "channel.volumedown": {
+    "tr_tr": "Sesi %10 azaltır",
+    "en_en": "Decreases the volume by 10%"
+  },
+  "seek.error.setDescription": {
+    "tr_tr": "Lütfen sar komutunun kullanımına bakınız",
+    "en_en": "Please look at the usage of the usage of seek command"
+  },
+  "seek.name": {
+    "tr_tr": "sar",
+    "en_en": "seek"
+  },
+  "voterole.name": {
+    "tr_tr": "roloyla",
+    "en_en": "voterole"
+  },
+  "volume.error.setDescription": {
+    "tr_tr": "Mevcut ses: ",
+    "en_en": "Current volume is: "
+  },
+  "channel.setTopic": {
+    "tr_tr": "Oynatmak istediğiniz şarkının URL\u0027sini veya adını yazabilirsiniz. Oynatıcıyı ifadelerle kolayca kontrol edebilirsiniz, müzik komutlarının hiçbiri başka bir kanalda çalışmaz ve müzik komutlarını beraberinde de müzik kanalını sıfırlamak isterseniz bu kanalı silin.",
+    "en_en": "You can just type url or name of the song that you want to play into this channel. You can easily control the player with emotes, none of the music commands will not work on an another channel and if you want to reset music commands also music channel just delete this channel."
+  },
+  "support.setDescription": {
+    "tr_tr": "TzeBot bir discord botu ve altyapısı.",
+    "en_en": "TzeBot is a discord bot \u0026 substructure."
+  },
+  "general.403.description": {
+    "tr_tr": "Lütfen komutu argümanıyla tekrar yaz",
+    "en_en": "Please retype command with its arguments"
+  },
+  "prefix.name": {
+    "tr_tr": "önek",
+    "en_en": "prefix"
+  },
+  "seek.error.setTitle": {
+    "tr_tr": "Komutun yanlış kullanımı",
+    "en_en": "Unsuitable usage of command"
+  },
+  "general.icon.hello": {
+    "tr_tr": "👋",
+    "en_en": "👋"
+  },
+  "join.name": {
+    "tr_tr": "katıl",
+    "en_en": "join"
+  },
+  "help.moderation.info.setTitle": {
+    "tr_tr": "⚙️ Yönetim Komutları",
+    "en_en": "⚙️ Moderation Commands"
+  },
+  "general.icon.loop": {
+    "tr_tr": "🔁 ",
+    "en_en": "🔁 "
+  },
+  "ban.wrong.title": {
+    "tr_tr": "Yanlış kullanım",
+    "en_en": "Wrong usage"
+  },
+  "play.playlist.error.setDescription": {
+    "tr_tr": "En fazla 200 şarkılık bir oynatma listesi oynatabilirsiniz",
+    "en_en": "Maximum playlist size allowed is 200"
+  },
+  "channel.noargs.setTitle": {
+    "tr_tr": "Argüman verilmedi",
+    "en_en": "No args given"
+  },
+  "loop.error.setTitle": {
+    "tr_tr": "Hiçbir şey yok",
+    "en_en": "There is nothing"
+  },
+  "channel.queuenp": {
+    "tr_tr": "Oynatılanı ve kuyruğu gösterir",
+    "en_en": "Shows the queue with the now playing song"
+  },
+  "play.playlist.size": {
+    "tr_tr": "Kuyruktaki toplam şarkı",
+    "en_en": "Songs in the playlist"
+  },
+  "join.joinchannel.setTitle": {
+    "tr_tr": "Lütfen bir sesli kanala geçin",
+    "en_en": "Please join a voice channel"
+  },
+  "play.error.setDescription": {
+    "tr_tr": "Oynatılamadı:",
+    "en_en": "Could not play:"
+  },
+  "leave.notconnected": {
+    "tr_tr": "Zaten ses kanalına bağlı değil",
+    "en_en": "That may be caused that not connected to a voice channel"
+  },
+  "ban.banned.with": {
+    "tr_tr": "%#s tarafından, şu sebeple yasaklandı %s",
+    "en_en": "Banned by: %#s, with reason: %s"
+  },
+  "nowplaying.error.setDescription": {
+    "tr_tr": "Şu anda hiçbir şey oynatılmıyor",
+    "en_en": "Nothing is playing right now"
+  },
+  "general.icon.locked": {
+    "tr_tr": "🔒 ",
+    "en_en": "🔒 "
+  },
+  "leave.success.setTitle": {
+    "tr_tr": "Kanalından ayrılıyor",
+    "en_en": "Leaving your channel"
+  },
+  "vote.setFooter": {
+    "tr_tr": "Oylamayı oylamak istediğiniz cevaba tepki ekleyerek yapabilirsiniz",
+    "en_en": "You can vote by adding reaction to the answer that you want to vote"
+  },
+  "resume.name": {
+    "tr_tr": "sürdür",
+    "en_en": "resume"
+  },
+  "channel.success.setTitle": {
+    "tr_tr": "Müzik kanalı oluşturuldu ve başlatıldı",
+    "en_en": "Music channel created and initialized"
+  },
+  "seek.backward": {
+    "tr_tr": "geri",
+    "en_en": "backward"
+  },
+  "general.icon.question": {
+    "tr_tr": "❔ ",
+    "en_en": "❔ "
+  },
+  "join.alreadyconnected.setDescription": {
+    "tr_tr": "Halihazırda bir sesli kanala bağlı",
+    "en_en": "Already connected to a voice channel"
+  },
+  "nowplaying.nowplaying": {
+    "tr_tr": "Oynatılıyor",
+    "en_en": "Now Playing"
+  },
+  "channel.volume": {
+    "tr_tr": "Sesi %10 yükseltir",
+    "en_en": "Increases the volume by 10%"
+  },
+  "prefix.gethelp3": {
+    "tr_tr": "önek \u003cönek\u003e`",
+    "en_en": "prefix \u003cprefix\u003e`"
+  },
+  "support.setFooter": {
+    "tr_tr": "Desteğiniz için şimdiden teşekkür ederiz, minnettarız.",
+    "en_en": "Thanks in advance for your support we are really appreciated."
+  },
+  "channel.same.setTitle": {
+    "tr_tr": "Aynı kanala bağlı olmalısınız",
+    "en_en": "You have to be connected to the same channel"
+  },
+  "vote.error.setTitle": {
+    "tr_tr": "Yanlış kullanım",
+    "en_en": "Uncorrect usage"
+  },
+  "prefix.gethelp2": {
+    "tr_tr": "Kullanım: `",
+    "en_en": "Usage: `"
+  },
+  "prefix.gethelp1": {
+    "tr_tr": "Bu sunucu için komutların öneklerini ayarlar",
+    "en_en": "Sets the prefix for this server"
+  },
+  "general.icon.queue": {
+    "tr_tr": "📜 ",
+    "en_en": "📜 "
+  },
+  "general.403": {
+    "tr_tr": "Argüman belirtilmedi",
+    "en_en": "None args specified"
+  },
+  "general.404": {
+    "tr_tr": "Hiçbir şey bulunamadı",
+    "en_en": "Nothing found"
+  },
+  "general.icon.language": {
+    "tr_tr": "🏳️ ",
+    "en_en": "🏳️ "
+  },
+  "general.nonperm.manage_emotes": {
+    "tr_tr": "Lütfen TzeBot\u0027un \"Emojileri Yönet\" yetkisine sahip olduğundan emin olun",
+    "en_en": "Be ensure that TzeBot has \"Manage Emotes\" permission"
+  },
+  "queue.gethelp": {
+    "tr_tr": "Mevcut kuyruğu gösterir",
+    "en_en": "Shows the current queue"
+  },
+  "channel.setFooter": {
+    "tr_tr": "Bütün müzik komutları sadece bu kanalda çalışacaktır, eğer bunu kaldırmak veya başka bir kanal ayarlamak isterseniz kanalı silebilirsiniz.",
+    "en_en": "All music commands will only work on this channel. You can delete this channel if you want to reset or remove the music channel."
+  },
+  "general.icon.unlocked": {
+    "tr_tr": "🔓",
+    "en_en": "🔓"
+  },
+  "general.404.description": {
+    "tr_tr": "Doğru şeye baktığından emin misin?",
+    "en_en": "Are you sure that looking for the right thing?"
+  },
+  "nowplaying.error.setTitle": {
+    "tr_tr": "Hiçbir şey oynatılmıyor",
+    "en_en": "There is nothing"
+  },
+  "general.bythecommand": {
+    "tr_tr": "Komutu veren ",
+    "en_en": "By the command of "
+  },
+  "shuffle.success.setTitle": {
+    "tr_tr": "Kuyruk karıştırıldı",
+    "en_en": "Shuffled the queue"
+  },
+  "prefix.success.setTitle": {
+    "tr_tr": "Önek ayarlandı: ",
+    "en_en": "Prefix has been set to"
+  },
+  "leave.notin": {
+    "tr_tr": "Bağlanılan kanalda olmanız gerekir",
+    "en_en": "You have to be connected to the voice channel which connected to"
+  },
+  "general.icon.volumedown": {
+    "tr_tr": "🔉 ",
+    "en_en": "🔉 "
+  },
+  "help.name": {
+    "tr_tr": "yardım",
+    "en_en": "help"
+  },
+  "join.cannotjoin.setTitle": {
+    "tr_tr": "Katılınamadı",
+    "en_en": "Couldn\u0027t join"
+  },
+  "play.error.setTitle": {
+    "tr_tr": "Oynatılamadı",
+    "en_en": "Could not play"
+  },
+  "general.icon.prefix": {
+    "tr_tr": "🔧️ ",
+    "en_en": "🔧️ "
+  },
+  "language.unsuitable.setTitle": {
+    "tr_tr": "Desteklenmeyen dil",
+    "en_en": "Non-supported language"
+  },
+  "stop.gethelp": {
+    "tr_tr": "Mevcut şarkıyı durdurur ve kuyruğu temizler",
+    "en_en": "Stops the music player and clears the queue"
+  },
+  "general.icon.2": {
+    "tr_tr": "2️⃣",
+    "en_en": "2️⃣"
+  },
+  "general.icon.1": {
+    "tr_tr": "1️⃣",
+    "en_en": "1️⃣"
+  },
+  "general.icon.4": {
+    "tr_tr": "4️⃣",
+    "en_en": "4️⃣"
+  },
+  "general.icon.join": {
+    "tr_tr": "⏺️ ",
+    "en_en": "⏺️ "
+  },
+  "general.icon.3": {
+    "tr_tr": "3️⃣",
+    "en_en": "3️⃣"
+  },
+  "general.icon.6": {
+    "tr_tr": "6️⃣",
+    "en_en": "6️⃣"
+  },
+  "general.icon.5": {
+    "tr_tr": "5️⃣",
+    "en_en": "5️⃣"
+  },
+  "general.icon.8": {
+    "tr_tr": "8️⃣",
+    "en_en": "8️⃣"
+  },
+  "general.icon.7": {
+    "tr_tr": "7️⃣",
+    "en_en": "7️⃣"
+  },
+  "general.icon.9": {
+    "tr_tr": "9️⃣",
+    "en_en": "9️⃣"
+  },
+  "help.music.info.setDescription": {
+    "tr_tr": "Bütün müzik komutları kullanımları ve fonksiyonlarıyla beraber aşağıdaki gibidir:",
+    "en_en": "All of the music commands are listed with their usages and functions below:"
+  },
+  "nowplaying.name": {
+    "tr_tr": "oynatılan",
+    "en_en": "nowplaying"
+  },
+  "loop.success.on.setTitle": {
+    "tr_tr": "Şarkı döngüye alındı",
+    "en_en": "Looped the current song"
+  },
+  "loop.gethelp": {
+    "tr_tr": "Mevcut şarkıyı döngüye alır",
+    "en_en": "Loops the current song again, again, and again"
+  },
+  "support.gethelp": {
+    "tr_tr": "Belki TzeBot\u0027u desteklemek istersiniz, lütfen?",
+    "en_en": "Maybe you want to support TzeBot, please?"
+  },
+  "general.notvoted.description": {
+    "tr_tr": "TzeBot\u0027un sizin yardımınıza ihtiyacı var, **TzeBot\u0027u başlıktaki (yukarıdaki) linke tıklayarak destekleyebilirsiniz**...",
+    "en_en": "TzeBot needs your support, you can **support TzeBot by just voting from the link attached to title (above)**..."
+  },
+  "general.icon.next": {
+    "tr_tr": "↪️ ",
+    "en_en": "↪️ "
+  },
+  "clear.successful.setTitle": {
+    "tr_tr": "mesaj temizlendi",
+    "en_en": "messages have been cleared"
+  },
+  "pause.gethelp": {
+    "tr_tr": "Oynatılanı duraklatır",
+    "en_en": "Pauses the current playing song"
+  },
+  "help.info.setDescription": {
+    "tr_tr": "Çoklu dil desteği, müzik oynatıcı, tamamıyla fonksiyonel, 7/24 aktif...",
+    "en_en": "24/7 uptime, multi language support, fully functional, music player, and so on..."
+  },
+  "vote.error.setDescription": {
+    "tr_tr": "Tek seferde sadece 2-9 cevap ekleyebilirsiniz",
+    "en_en": "You can only use 2-9 different answers once"
+  },
+  "channel.gethelp": {
+    "tr_tr": "Emoji kontrolleriyle çalışan ve temiz görünen bir müzik kanalı oluşturabilirsiniz",
+    "en_en": "You can create an unique music channel with emote controls and clean looking"
+  },
+  "support.channel": {
+    "tr_tr": "TzeBot Discord Destek Kanalı",
+    "en_en": "TzeBot Discord Support Channel"
+  },
+  "skip.name": {
+    "tr_tr": "atla",
+    "en_en": "skip"
+  },
+  "language.already.setDescription": {
+    "tr_tr": "Eğer dilerseniz farklı bir dil de seçebilirsiniz",
+    "en_en": "You can choose another language if you want to"
+  },
+  "stop.error.setTitle": {
+    "tr_tr": "Şu anda hiçbir şey oynatılmıyor",
+    "en_en": "Nothing is playing at this time"
+  },
+  "support.setDescription3": {
+    "tr_tr": "Eğer geliştirme sürecinde yer almak istiyorsanız patreon\u0027dan destek verebilirsiniz:",
+    "en_en": "But if you want to take part in our development progress you can help us in patreon:"
+  },
+  "support.setDescription2": {
+    "tr_tr": "TzeBot\u0027u sunucunuzda kullanabilir veya kendi botunuzu oluşturabilirsiniz.",
+    "en_en": "You can use TzeBot in your server(s) or just create your own bot on TzeBot\u0027s substructure."
+  },
+  "vote.gethelp": {
+    "tr_tr": "9 farklı cevaba kadar oylama yapabilirsiniz: `oylama [soru] : [cevap1] : [cevap2]...`",
+    "en_en": "You can vote to the 9 different answers as shown: `vote [question] : [answer1] : [answer2]...`"
+  },
+  "support.discordbots": {
+    "tr_tr": "İsterseniz bizi oylayarak da destekleyebilirsiniz: ",
+    "en_en": "You can also support us by upvoting: "
+  },
+  "resume.error.setDescription": {
+    "tr_tr": "Sürdürülecek bir şey yok",
+    "en_en": "There is nothing to be resumed"
+  },
+  "skip.error.setTitle": {
+    "tr_tr": "Şu anda hiçbir şey oynatılmıyor",
+    "en_en": "Nothing is playing at this time"
+  },
+  "general.icon.error": {
+    "tr_tr": "❌ ",
+    "en_en": "❌ "
+  },
+  "general.icon.vote": {
+    "tr_tr": "🗳️ ",
+    "en_en": "🗳️ "
+  },
+  "ban.banned.without": {
+    "tr_tr": "%#s tarafından, sebepsizce yasaklandı",
+    "en_en": "Banned by: %#s, without reason"
+  },
+  "language.name": {
+    "tr_tr": "dil",
+    "en_en": "language"
+  },
+  "channel.already.setTitle": {
+    "tr_tr": "Sunucunuzun zaten müzik kanalı mevcut",
+    "en_en": "Your server already has a music channel"
+  },
+  "voterole.gethelp": {
+    "tr_tr": "Kolayca üyelerinize oylama ile rol verebilirsiniz: `roloyla soru : cevap1 : @roladı1 : cevap2 : @roladı2...`",
+    "en_en": "You can easily add a vote to automatically give roles to your members as shown: `voterole question : answer1 : @rolename1 : answer2 : @rolename2...`"
+  },
+  "play.noresults.setTitle": {
+    "tr_tr": "YouTube sonuç bulamadı",
+    "en_en": "YouTube returned no results"
+  },
+  "leave.cannotleave.setTitle": {
+    "tr_tr": "Ayrılamıyorum",
+    "en_en": "Already not connected"
+  },
+  "general.icon.nowplaying": {
+    "tr_tr": "⏯️ ",
+    "en_en": "⏯️ "
+  },
+  "clear.older.setDescription": {
+    "tr_tr": "2 haftadan eski mesajlar silinemez",
+    "en_en": "Messages older than 2 weeks cannot be deleted"
+  },
+  "general.icon.clear": {
+    "tr_tr": "🧻️",
+    "en_en": "🧻️"
+  },
+  "play.nothing.setTitle": {
+    "tr_tr": "Hiçbir şey bulunamadı",
+    "en_en": "Nothing found"
+  },
+  "ban.success.title": {
+    "tr_tr": "başarıyla yasaklandı!",
+    "en_en": "has been banned successfully!"
+  },
+  "volume.error.setTitle": {
+    "tr_tr": "Sesi [1-100]% arasında ayarlayabilirsiniz",
+    "en_en": "You can arrange the volume between [1-100]%"
+  },
+  "volume.name": {
+    "tr_tr": "ses",
+    "en_en": "volume"
+  },
+  "pause.name": {
+    "tr_tr": "duraklat",
+    "en_en": "pause"
+  },
+  "resume.nothingtoresumed.setDescription": {
+    "tr_tr": "Şu anki şarkıyı durdurmanız gerek",
+    "en_en": "You have to pause the current song"
+  },
+  "seek.forward": {
+    "tr_tr": "ileri",
+    "en_en": "forward"
+  }
+}
