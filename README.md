@@ -13,7 +13,7 @@ Then I just wonder why was I not developing a really good one to publish it for 
 
 Just download the latest version of TzeBot <a href="https://github.com/Tzesh/TzeBot/releases">**in this link**</a>. And extract TzeBot-x.x.rar to a directory then open TzeBot-x.x.jar. If you want to use TzeBot as a substructure of your bot, you'll need 3 things that have to be filled:
 
-![GUI](https://tzesh.github.io/TzeBot/img/GUI.PNG)
+![GUI](https://user-images.githubusercontent.com/55401127/195959210-35b938f3-2851-410d-bc76-f0dd588ecf8e.png)
 
 1. Discord ID of Owner: Just enable developer mode in Discord and then just message an arbitrary channel and then right click on yourself then "Copy ID".
 2. Discord Bot Token: You propably have it already, if you don't just search in google "how to create discord bot in discord developer portal?".
