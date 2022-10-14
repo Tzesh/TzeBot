@@ -40,6 +40,8 @@ public class LanguageManager extends ListenerAdapter {
                 localizer = gson.fromJson(jsonString, map.getType());
                 System.out.println("All messages are loaded from 'localizer.json'. Supported languages are 'English' and 'Turkish'.");
             }
+        } else {
+            getMessagesFromRepository();
         }
     }
 
@@ -54,6 +56,7 @@ public class LanguageManager extends ListenerAdapter {
             FileUtils.copyURLToFile(localizerURL, Files.createFile(Paths.get("localizer.json")).toFile());
         } catch (IOException ignored) {
         }
+        getMessages();
     }
 
     public static String getMessage(String key, long guildID) {
