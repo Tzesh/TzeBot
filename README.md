@@ -1,6 +1,6 @@
-# <a href="https://tzesh.github.io/TzeBot/">Discord Bot & Substructure</a>
+# Discord Bot & Substructure
 ![GitHub issues](https://img.shields.io/github/issues/Tzesh/TzeBot) ![GitHub pull requests](https://img.shields.io/github/issues-pr/Tzesh/TzeBot) ![GitHub top language](https://img.shields.io/github/languages/top/Tzesh/TzeBot) ![GitHub repo size](https://img.shields.io/github/repo-size/Tzesh/TzeBot) ![GitHub All Releases](https://img.shields.io/github/downloads/Tzesh/TzeBot/total) ![GitHub last commit](https://img.shields.io/github/last-commit/Tzesh/TzeBot) ![GitHub Release Date](https://img.shields.io/github/release-date/Tzesh/TzeBot)
-#### Click on title above to go to the github.io page of TzeBot
+
 ## What is TzeBot?
 TzeBot, is a discord bot project that I've started about 6th month of 2020. The reasons that I started to develop TzeBot were:
 1. There was not a such discord bot substructure that runs properly at all. Some of them were broken completely, some of them were just worked terribly.
@@ -19,7 +19,7 @@ Just download the latest version of TzeBot <a href="https://github.com/Tzesh/Tze
 2. Discord Bot Token: You propably have it already, if you don't just search in google "how to create discord bot in discord developer portal?".
 3. Youtube API Key: Just follow the instructions <a href="https://developers.google.com/youtube/v3/getting-started">in this page</a>.
 
-Now you are ready to go. Just hit start button to make your bot online. And then create a invite link to invite your bot into your channel.
+Now you are ready to go. Just hit start button to make your bot online. And then create a invite link to invite your bot into your channel. You can change every single message by editing localizer.json located once you started the bot. Also you can add new features/commands or improve existing ones by forking the repository.
 
 When it came your server first time, it's prefix will be "**.**" and it's language will be "**English**". You can change it's language and prefix if you want to, before that shall we just look at the commands of TzeBot? Type "**.help**":
 ![Help Command](https://i.imgur.com/WlFcuRG.png)
@@ -45,9 +45,12 @@ Then all you have to do is just go to the created music channel and type "**.cha
 After you wrote "**.channel set**" into the music channel you will have been noticed that your message is deleted and 2 messages added into music channel. First one is banner of TzeBot, the other one is the reaction-control panel or at least the name that I put into it. It allows you to control music player with emotes. And all the functions of the emotes is above of themselves. You can just type name of the song or URL of the song that you want to play into channel.
 
 #### Features of TzeBot substructure
-* Automatic saving-loading: Don't worry about losing datas of your servers. All of the database is saving per 15 minutes and also on close and loading every start.
+* Automatic saving-loading: Don't worry about losing 
+of your servers. All of the database is saving per 15 minutes and also on close and loading every start.
 * Version control: If you are encountering some problems when using TzeBot substructure, just give us a feedback and then wait for a new version. In every start TzeBot will check if there is an update or not.
 * Sharding: This is a feature that allows you to use your bot too many of servers. 1 shard unofficially equals about 1500 server load.
 
 #### Requirements
-Please make sure you have at least JDK (13.0.2) or newer version to use TzeBot. TzeBot averagely uses 125-225 MB RAM and %0.1 CPU while working, it's really resource friendly. If you have any questions you are always free to ask me if you encounter any errors or something that might has to be feedbacked please open an issue in issue section and ask in there...
+- Java Version (18.0+)
+
+TzeBot averagely uses 125-225 MB RAM and %0.1 CPU while working, it's really resource friendly. If you have any questions you are always free to ask me if you encounter any errors or something that might has to be feedbacked please open an issue in issue section and ask in there...
