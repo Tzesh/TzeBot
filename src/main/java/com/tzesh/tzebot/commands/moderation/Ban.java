@@ -6,11 +6,12 @@ import com.tzesh.tzebot.essentials.LanguageManager;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.Member;
-import net.dv8tion.jda.api.entities.TextChannel;
+import net.dv8tion.jda.api.entities.channel.concrete.TextChannel;
 import net.dv8tion.jda.api.utils.messages.MessageCreateData;
 
 import java.time.Instant;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import static com.tzesh.tzebot.essentials.LanguageManager.getMessage;
 
@@ -73,9 +74,9 @@ public class Ban implements ICommand {
 
         String reason = message.replace(banRequested.toString() + " ", "");
 
-        if (args.size() != 1) banRequested.ban(1)
+        if (args.size() != 1) banRequested.ban(1, TimeUnit.DAYS)
                 .reason(String.format(LanguageManager.getMessage("ban.banned.with"), member, reason)).queue();
-        else banRequested.ban(1)
+        else banRequested.ban(1, TimeUnit.DAYS)
                 .reason(String.format(LanguageManager.getMessage("ban.banned.without"), member)).queue();
 
         EmbedBuilder success = new EmbedBuilder();

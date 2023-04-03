@@ -11,7 +11,7 @@ import com.tzesh.tzebot.music.GuildMusicManager;
 import com.tzesh.tzebot.music.PlayerManager;
 import com.tzesh.tzebot.music.TrackScheduler;
 import net.dv8tion.jda.api.EmbedBuilder;
-import net.dv8tion.jda.api.entities.TextChannel;
+import net.dv8tion.jda.api.entities.channel.concrete.TextChannel;
 import net.dv8tion.jda.api.utils.messages.MessageCreateData;
 
 import java.time.Instant;

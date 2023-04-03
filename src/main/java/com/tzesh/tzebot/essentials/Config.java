@@ -23,6 +23,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
+@SuppressWarnings({"deprecation", "unchecked"})
 public class Config {
 
     private static final Dotenv dotenv = Dotenv.configure()

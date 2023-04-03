@@ -4,7 +4,7 @@ import com.tzesh.tzebot.commands.Help;
 import com.tzesh.tzebot.commands.Support;
 import com.tzesh.tzebot.commands.moderation.*;
 import com.tzesh.tzebot.commands.music.*;
-import net.dv8tion.jda.api.entities.GuildChannel;
+import net.dv8tion.jda.api.entities.channel.middleman.GuildChannel;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 
 import javax.annotation.Nullable;
