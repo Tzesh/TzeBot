@@ -9,16 +9,18 @@ import com.tzesh.tzebot.moderation.VoteRole;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.*;
+import net.dv8tion.jda.api.entities.channel.concrete.TextChannel;
+import net.dv8tion.jda.api.entities.channel.middleman.AudioChannel;
 import net.dv8tion.jda.api.events.Event;
-import net.dv8tion.jda.api.events.ReadyEvent;
 import net.dv8tion.jda.api.events.guild.GuildJoinEvent;
 import net.dv8tion.jda.api.events.guild.GuildLeaveEvent;
-import net.dv8tion.jda.api.events.guild.voice.GuildVoiceLeaveEvent;
-import net.dv8tion.jda.api.events.guild.voice.GuildVoiceMoveEvent;
+import net.dv8tion.jda.api.events.guild.voice.GuildVoiceUpdateEvent;
 import net.dv8tion.jda.api.events.message.MessageDeleteEvent;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.events.message.react.MessageReactionAddEvent;
 import net.dv8tion.jda.api.events.message.react.MessageReactionRemoveEvent;
+import net.dv8tion.jda.api.events.session.ReadyEvent;
+import net.dv8tion.jda.api.events.thread.member.ThreadMemberLeaveEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import net.dv8tion.jda.api.managers.AudioManager;
 import net.dv8tion.jda.api.utils.messages.MessageEditData;
@@ -148,13 +150,8 @@ public class Listener extends ListenerAdapter {
     }
 
     @Override
-    public void onGuildVoiceLeave(@Nonnull GuildVoiceLeaveEvent event) {
-        checkMembersAndLeave(event.getGuild(), event.getChannelLeft(), event);
-    }
-
-    @Override
-    public void onGuildVoiceMove(@Nonnull GuildVoiceMoveEvent event) {
-        checkMembersAndLeave(event.getGuild(), event.getChannelLeft(), event);
+    public void onGuildVoiceUpdate(@NotNull GuildVoiceUpdateEvent event) {
+        checkMembersAndLeave(event.getGuild(), event.getChannelJoined(), event);
     }
 
     private void checkMembersAndLeave(Guild guild, AudioChannel channelLeft, @Nonnull Event event) {

@@ -5,7 +5,7 @@ import com.tzesh.tzebot.essentials.Config;
 import com.tzesh.tzebot.essentials.ICommand;
 import com.tzesh.tzebot.music.PlayerManager;
 import net.dv8tion.jda.api.EmbedBuilder;
-import net.dv8tion.jda.api.entities.TextChannel;
+import net.dv8tion.jda.api.entities.channel.concrete.TextChannel;
 import net.dv8tion.jda.api.utils.messages.MessageCreateData;
 
 import java.time.Instant;
