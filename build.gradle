@@ -27,4 +27,4 @@ dependencies {
 
 compileJava.options.encoding = 'UTF-8'
 mainClassName = 'com.tzesh.tzebot.Main'
-version '3.01'
+version '3.02'
