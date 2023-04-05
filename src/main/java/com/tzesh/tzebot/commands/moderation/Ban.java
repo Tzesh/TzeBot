@@ -13,8 +13,6 @@ import java.time.Instant;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-import static com.tzesh.tzebot.essentials.LanguageManager.getMessage;
-
 public class Ban implements ICommand {
 
     @Override
@@ -72,7 +70,7 @@ public class Ban implements ICommand {
             return;
         }
 
-        String reason = message.replace(banRequested.toString() + " ", "");
+        String reason = message.replace(banRequested + " ", "");
 
         if (args.size() != 1) banRequested.ban(1, TimeUnit.DAYS)
                 .reason(String.format(LanguageManager.getMessage("ban.banned.with"), member, reason)).queue();

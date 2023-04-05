@@ -36,7 +36,8 @@ public class LanguageManager extends ListenerAdapter {
 
             if (jsonString.isBlank() || jsonString.isEmpty()) getMessagesFromRepository();
             else {
-                TypeToken<Map<String, Map<String, String>>> map = new TypeToken<>(){};
+                TypeToken<Map<String, Map<String, String>>> map = new TypeToken<>() {
+                };
                 localizer = gson.fromJson(jsonString, map.getType());
                 System.out.println("All messages are loaded from 'localizer.json'. Supported languages are 'English' and 'Turkish'.");
             }
@@ -63,8 +64,7 @@ public class LanguageManager extends ListenerAdapter {
         String shortening = Config.LANGUAGES.computeIfAbsent(guildID, (id) -> "en_en");
         if (shortening.equals("en_en")) {
             return localizer.get(key).get("en_en");
-        }
-        else if (shortening.equals("tr_tr")) {
+        } else if (shortening.equals("tr_tr")) {
             return localizer.get(key).get("tr_tr");
         } else {
             return "Error_Message_Not_Found";

@@ -1,5 +1,6 @@
 package com.tzesh.tzebot.commands.music;
 
+import com.sedmelluq.discord.lavaplayer.player.AudioPlayer;
 import com.tzesh.tzebot.essentials.CommandContext;
 import com.tzesh.tzebot.essentials.Config;
 import com.tzesh.tzebot.essentials.ICommand;
@@ -7,7 +8,6 @@ import com.tzesh.tzebot.essentials.LanguageManager;
 import com.tzesh.tzebot.music.GuildMusicManager;
 import com.tzesh.tzebot.music.PlayerManager;
 import com.tzesh.tzebot.music.TrackScheduler;
-import com.sedmelluq.discord.lavaplayer.player.AudioPlayer;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.channel.concrete.TextChannel;
 import net.dv8tion.jda.api.entities.emoji.Emoji;
