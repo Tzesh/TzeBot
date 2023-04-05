@@ -15,7 +15,6 @@ import java.time.Instant;
 import java.util.HashMap;
 import java.util.List;
 
-import static com.tzesh.tzebot.essentials.LanguageManager.getMessage;
 import static com.tzesh.tzebot.utils.Controller.isExists;
 
 

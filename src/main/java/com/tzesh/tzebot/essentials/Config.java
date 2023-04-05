@@ -36,7 +36,7 @@ public class Config {
     public static Map<Long, HashMap<Long, Long>> MUSICCHANNELS = new HashMap<>(); // Music channels that are created and initialized.
     public static Map<Long, Integer> VOLUMES = new HashMap<>(); // Volumes of the servers default is 50%
     public static Map<Long, Long> CHANNELCREATED = new HashMap<>(); // Music channels that are created but either initialized or not. It's important value for preventing some kind of abusing of channel creation.
-    public static double currentVersion = 3.01; // Check if there's an update or not.
+    public static double currentVersion = 3.02; // Check if there's an update or not.
     public static String downloadURL = ""; // to download the latest release
 
     public static String get(String key) {

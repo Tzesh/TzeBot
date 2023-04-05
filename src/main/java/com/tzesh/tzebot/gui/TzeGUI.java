@@ -122,7 +122,7 @@ public class TzeGUI extends javax.swing.JFrame {
 
     public void checkVersion() {
         versionNumber.setText("v" + Config.currentVersion);
-        if (Config.versionControl() == true) {
+        if (Config.versionControl()) {
             System.out.println("You are using the latest version of TzeBot v" + Config.currentVersion);
         } else {
             updateButton.setVisible(true);

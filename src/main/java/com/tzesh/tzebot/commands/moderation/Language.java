@@ -48,7 +48,7 @@ public class Language implements ICommand {
 
         } else {
             if (Config.LANGUAGES.get(ctx.getGuild().getIdLong()).equals("en_en")) {
-                if (args.get(0).toLowerCase().equals("turkish")) {
+                if (args.get(0).equalsIgnoreCase("turkish")) {
                     Config.LANGUAGES.put(ctx.getGuild().getIdLong(), "tr_tr");
                     EmbedBuilder success = new EmbedBuilder();
                     success.setColor(0x00ff00);
@@ -60,7 +60,7 @@ public class Language implements ICommand {
                     channel.sendMessage(MessageCreateData.fromEmbeds(success.build())).queue();
                     return;
                 }
-                if (args.get(0).toLowerCase().equals("english")) {
+                if (args.get(0).equalsIgnoreCase("english")) {
                     EmbedBuilder error = new EmbedBuilder();
                     error.setColor(0xff3923);
                     error.setTitle(LanguageManager.getMessage("general.icon.error", guildID) + LanguageManager.getMessage("language.already.setTitle", guildID));
@@ -92,7 +92,7 @@ public class Language implements ICommand {
                     channel.sendMessage(MessageCreateData.fromEmbeds(success.build())).queue();
                     return;
                 }
-                if (LanguageManager.normalizer(args.get(0)).toLowerCase().equals("turkce")) {
+                if (LanguageManager.normalizer(args.get(0)).equalsIgnoreCase("turkce")) {
                     EmbedBuilder error = new EmbedBuilder();
                     error.setColor(0xff3923);
                     error.setTitle(LanguageManager.getMessage("general.icon.error", guildID) + LanguageManager.getMessage("language.already.setTitle", guildID));

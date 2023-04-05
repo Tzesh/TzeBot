@@ -1,14 +1,16 @@
 package com.tzesh.tzebot.essentials;
 
+import com.sedmelluq.discord.lavaplayer.player.AudioPlayer;
+import com.tzesh.tzebot.moderation.VoteRole;
 import com.tzesh.tzebot.music.GuildMusicManager;
 import com.tzesh.tzebot.music.MusicChannel;
 import com.tzesh.tzebot.music.PlayerManager;
 import com.tzesh.tzebot.utils.EmojiUnicodes;
-import com.sedmelluq.discord.lavaplayer.player.AudioPlayer;
-import com.tzesh.tzebot.moderation.VoteRole;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.Permission;
-import net.dv8tion.jda.api.entities.*;
+import net.dv8tion.jda.api.entities.Guild;
+import net.dv8tion.jda.api.entities.MessageEmbed;
+import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.entities.channel.concrete.TextChannel;
 import net.dv8tion.jda.api.entities.channel.middleman.AudioChannel;
 import net.dv8tion.jda.api.events.Event;
@@ -20,7 +22,7 @@ import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.events.message.react.MessageReactionAddEvent;
 import net.dv8tion.jda.api.events.message.react.MessageReactionRemoveEvent;
 import net.dv8tion.jda.api.events.session.ReadyEvent;
-import net.dv8tion.jda.api.events.thread.member.ThreadMemberLeaveEvent;
+import net.dv8tion.jda.api.events.session.SessionDisconnectEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import net.dv8tion.jda.api.managers.AudioManager;
 import net.dv8tion.jda.api.utils.messages.MessageEditData;
@@ -150,8 +152,12 @@ public class Listener extends ListenerAdapter {
     }
 
     @Override
+    public void onSessionDisconnect(@NotNull SessionDisconnectEvent event) {
+    }
+
+    @Override
     public void onGuildVoiceUpdate(@NotNull GuildVoiceUpdateEvent event) {
-        checkMembersAndLeave(event.getGuild(), event.getChannelJoined(), event);
+        checkMembersAndLeave(event.getGuild(), event.getChannelLeft(), event);
     }
 
     private void checkMembersAndLeave(Guild guild, AudioChannel channelLeft, @Nonnull Event event) {
@@ -160,7 +166,7 @@ public class Listener extends ListenerAdapter {
         final GuildMusicManager musicManager = playerManager.getGuildMusicManager(guild);
         final AudioPlayer player = musicManager.player;
         if (!audioManager.isConnected()) return;
-        if (audioManager.getConnectedChannel() == channelLeft && channelLeft.getMembers().size() == 1) {
+        if (audioManager.getConnectedChannel() == channelLeft && channelLeft.getMembers().size() == 1 || (!channelLeft.getMembers().contains(channelLeft.getGuild().getSelfMember()))) {
             if (player.getPlayingTrack() != null) {
                 musicManager.scheduler.getQueue().clear();
                 musicManager.player.stopTrack();

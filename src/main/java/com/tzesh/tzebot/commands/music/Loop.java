@@ -32,7 +32,7 @@ public class Loop implements ICommand {
 
             channel.sendMessage(MessageCreateData.fromEmbeds(error.build())).queue();
         } else {
-            if (scheduler.isRepeating() == false) {
+            if (!scheduler.isRepeating()) {
                 scheduler.setRepeating(!scheduler.isRepeating());
 
                 EmbedBuilder success = new EmbedBuilder();

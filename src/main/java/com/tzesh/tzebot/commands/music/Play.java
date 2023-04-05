@@ -1,19 +1,20 @@
 package com.tzesh.tzebot.commands.music;
 
-import com.tzesh.tzebot.essentials.CommandContext;
-import com.tzesh.tzebot.essentials.Config;
-import com.tzesh.tzebot.essentials.ICommand;
-import com.tzesh.tzebot.music.GuildMusicManager;
-import com.tzesh.tzebot.music.PlayerManager;
 import com.google.api.client.googleapis.javanet.GoogleNetHttpTransport;
 import com.google.api.client.json.gson.GsonFactory;
 import com.google.api.services.youtube.YouTube;
 import com.google.api.services.youtube.model.SearchResult;
 import com.sedmelluq.discord.lavaplayer.player.AudioPlayer;
 import com.sedmelluq.discord.lavaplayer.track.AudioTrackInfo;
+import com.tzesh.tzebot.essentials.CommandContext;
+import com.tzesh.tzebot.essentials.Config;
+import com.tzesh.tzebot.essentials.ICommand;
+import com.tzesh.tzebot.music.GuildMusicManager;
+import com.tzesh.tzebot.music.PlayerManager;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.Permission;
-import net.dv8tion.jda.api.entities.*;
+import net.dv8tion.jda.api.entities.GuildVoiceState;
+import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.channel.concrete.TextChannel;
 import net.dv8tion.jda.api.entities.channel.middleman.AudioChannel;
 import net.dv8tion.jda.api.managers.AudioManager;
@@ -183,7 +184,7 @@ public class Play implements ICommand {
                 return;
             }
 
-            if (!selfmember.hasPermission(voiceChannel, Permission.VOICE_CONNECT) || !selfmember.hasPermission(voiceChannel, Permission.VOICE_SPEAK)) {
+            if (voiceChannel == null || !selfmember.hasPermission(voiceChannel, Permission.VOICE_CONNECT) || !selfmember.hasPermission(voiceChannel, Permission.VOICE_SPEAK)) {
                 EmbedBuilder error = new EmbedBuilder();
                 error.setColor(0xff3923);
                 error.setTitle(getMessage("general.icon.error", guildID) + getMessage("join.cannotjoin.setTitle", guildID));
