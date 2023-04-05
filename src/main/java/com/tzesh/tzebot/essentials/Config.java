@@ -36,7 +36,7 @@ public class Config {
     public static Map<Long, HashMap<Long, Long>> MUSICCHANNELS = new HashMap<>(); // Music channels that are created and initialized.
     public static Map<Long, Integer> VOLUMES = new HashMap<>(); // Volumes of the servers default is 50%
     public static Map<Long, Long> CHANNELCREATED = new HashMap<>(); // Music channels that are created but either initialized or not. It's important value for preventing some kind of abusing of channel creation.
-    public static double currentVersion = 3.02; // Check if there's an update or not.
+    public static double currentVersion = 3.03; // Check if there's an update or not.
     public static String downloadURL = ""; // to download the latest release
 
     public static String get(String key) {
@@ -128,7 +128,7 @@ public class Config {
             URL url = new URL("https://api.github.com/repos/tzesh/TzeBot/releases/latest");
             JSONTokener tokener = new JSONTokener(url.openStream());
             JSONObject release = new JSONObject(tokener);
-            String tagName = release.getString("tag_name");
+            String tagName = release.getString("tag_name").replace("v", "");
             JSONArray assets = release.getJSONArray("assets");
             JSONObject obj1 = (JSONObject) assets.get(0);
             downloadURL = obj1.get("browser_download_url").toString();
