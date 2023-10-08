@@ -27,7 +27,7 @@ public class Language extends AbstractCommand<MessageReceivedEvent> {
         if (!doesMemberHavePermission) return;
 
         boolean doesSelfMemberHavePermission = selfMember.hasPermission(Permission.MANAGE_SERVER);
-        addPreRequisite(doesSelfMemberHavePermission, "general.nonperm", "general.nonperm.manage_server");
+        addPreRequisite(doesSelfMemberHavePermission, "general.nonperm", "general.nonperm.message_manage");
         if (!doesSelfMemberHavePermission) return;
 
         initializeLanguages();
@@ -49,6 +49,7 @@ public class Language extends AbstractCommand<MessageReceivedEvent> {
     }
 
     private void initializeLanguages() {
+        this.languages = new java.util.HashMap<>();
         languages.put("english", "en_en");
         languages.put("turkish", "tr_tr");
     }

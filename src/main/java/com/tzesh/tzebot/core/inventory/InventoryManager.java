@@ -1,6 +1,5 @@
 package com.tzesh.tzebot.core.inventory;
 
-import com.tzesh.tzebot.core.adapter.EventAdapter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -18,7 +17,7 @@ import static com.tzesh.tzebot.core.inventory.Inventory.INITIALIZED_MUSIC_CHANNE
  * @author tzesh
  */
 public class InventoryManager {
-    private final Logger LOGGER = LoggerFactory.getLogger(EventAdapter.class);
+    private final Logger LOGGER = LoggerFactory.getLogger(InventoryManager.class);
     private final String DATABASE_PATH = "database.bin";
 
     public void saveInventory() {
