@@ -1,116 +1,60 @@
 package com.tzesh.tzebot.commands.moderation;
 
-import com.tzesh.tzebot.essentials.CommandContext;
-import com.tzesh.tzebot.essentials.Config;
-import com.tzesh.tzebot.essentials.ICommand;
-import com.tzesh.tzebot.essentials.LanguageManager;
-import net.dv8tion.jda.api.EmbedBuilder;
+import com.tzesh.tzebot.commands.abstracts.AbstractCommand;
+import com.tzesh.tzebot.core.LanguageManager;
+import com.tzesh.tzebot.core.inventory.Inventory;
+import com.tzesh.tzebot.utils.EmbedMessageBuilder;
 import net.dv8tion.jda.api.Permission;
-import net.dv8tion.jda.api.entities.Member;
-import net.dv8tion.jda.api.entities.channel.concrete.TextChannel;
-import net.dv8tion.jda.api.utils.messages.MessageCreateData;
+import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 
-import java.time.Instant;
-import java.util.List;
-import java.util.Locale;
+import java.util.Map;
 
 /**
+ * Language command to change the language of the bot in a guild
  * @author Tzesh
  */
-public class Language implements ICommand {
+public class Language extends AbstractCommand<MessageReceivedEvent> {
+    Map<String, String> languages;
 
     @Override
-    public void handle(CommandContext ctx) {
-        final TextChannel channel = ctx.getChannel();
-        final List<String> args = ctx.getArgs();
-        final Member member = ctx.getMember();
-        final long guildID = ctx.getGuild().getIdLong();
-        final String prefix = Config.PREFIXES.get(ctx.getGuild().getIdLong());
+    protected void initializePreRequisites() {
+        boolean isArgsCorrect = args.size() == 1;
+        addPreRequisite(isArgsCorrect, "general.403", "general.403.description");
+        if (!isArgsCorrect) return;
 
-        if (!member.hasPermission(Permission.MANAGE_SERVER)) {
-            EmbedBuilder error = new EmbedBuilder();
-            error.setColor(0xff3923);
-            error.setTitle(LanguageManager.getMessage("general.icon.error", guildID) + LanguageManager.getMessage("general.not_authorized", guildID));
-            error.setDescription(LanguageManager.getMessage("general.not_authorized.description", guildID));
-            error.setTimestamp(Instant.now());
+        boolean doesMemberHavePermission = member.hasPermission(Permission.MANAGE_SERVER);
+        addPreRequisite(doesMemberHavePermission, "general.not_authorized", "general.not_authorized.description");
+        if (!doesMemberHavePermission) return;
 
-            channel.sendMessage(MessageCreateData.fromEmbeds(error.build())).queue();
-            return;
-        }
-        if (args.isEmpty()) {
-            EmbedBuilder error = new EmbedBuilder();
-            error.setColor(0xff3923);
-            error.setTitle(LanguageManager.getMessage("general.icon.error", guildID) + LanguageManager.getMessage("general.403", guildID));
-            error.setDescription(LanguageManager.getMessage("general.403.description", guildID));
-            error.setTimestamp(Instant.now());
+        boolean doesSelfMemberHavePermission = selfMember.hasPermission(Permission.MANAGE_SERVER);
+        addPreRequisite(doesSelfMemberHavePermission, "general.nonperm", "general.nonperm.manage_server");
+        if (!doesSelfMemberHavePermission) return;
 
-            channel.sendMessage(MessageCreateData.fromEmbeds(error.build())).queue();
+        initializeLanguages();
+        boolean isLanguageCorrect = checkLanguage(args.get(0));
+        addPreRequisite(isLanguageCorrect, "general.403", "general.403.description");
+        if (!isLanguageCorrect) return;
 
-        } else {
-            if (Config.LANGUAGES.get(ctx.getGuild().getIdLong()).equals("en_en")) {
-                if (args.get(0).equalsIgnoreCase("turkish")) {
-                    Config.LANGUAGES.put(ctx.getGuild().getIdLong(), "tr_tr");
-                    EmbedBuilder success = new EmbedBuilder();
-                    success.setColor(0x00ff00);
-                    success.setTitle(LanguageManager.getMessage("general.icon.success", guildID) + LanguageManager.getMessage("language.successful.setTitle", guildID));
-                    success.setDescription("Türkçe olarak komutlara göz atmak dilerseniz `" + prefix + "yardım` komudunu kullanabilirsiniz, if you want to revert language back to English just type `" + prefix + "dil ingilizce`.");
-                    success.setFooter(LanguageManager.getMessage("general.bythecommand", guildID) + " " + ctx.getMember().getUser().getName(), ctx.getMember().getUser().getAvatarUrl());
-                    success.setTimestamp(Instant.now());
+        boolean isLanguageAlreadySet = !languages.get(args.get(0).toLowerCase()).equals(Inventory.LANGUAGES.get(guildID).toLowerCase());
+        addPreRequisite(isLanguageAlreadySet, "language.already.setTitle", "language.already.setDescription");
+    }
 
-                    channel.sendMessage(MessageCreateData.fromEmbeds(success.build())).queue();
-                    return;
-                }
-                if (args.get(0).equalsIgnoreCase("english")) {
-                    EmbedBuilder error = new EmbedBuilder();
-                    error.setColor(0xff3923);
-                    error.setTitle(LanguageManager.getMessage("general.icon.error", guildID) + LanguageManager.getMessage("language.already.setTitle", guildID));
-                    error.setDescription(LanguageManager.getMessage("language.already.setDescription", guildID));
-                    error.setTimestamp(Instant.now());
+    @Override
+    public void handleCommand() {
+        String languageAlias = args.get(0).toLowerCase();
+        String desiredLanguage = languages.get(languageAlias);
 
-                    channel.sendMessage(MessageCreateData.fromEmbeds(error.build())).queue();
-                    return;
-                } else {
-                    EmbedBuilder error = new EmbedBuilder();
-                    error.setColor(0xff3923);
-                    error.setTitle(LanguageManager.getMessage("general.icon.error", guildID) + LanguageManager.getMessage("language.unsuitable.setTitle", guildID));
-                    error.setDescription(LanguageManager.getMessage("language.unsuitable.setDescription", guildID));
-                    error.setTimestamp(Instant.now());
+        Inventory.LANGUAGES.put(guildID, desiredLanguage);
+        sendMessage(EmbedMessageBuilder.createSuccessMessage("language.successful.setTitle", "", user, guildID));
+    }
 
-                    channel.sendMessage(MessageCreateData.fromEmbeds(error.build())).queue();
-                    return;
-                }
-            }
-            if (Config.LANGUAGES.get(ctx.getGuild().getIdLong()).equals("tr_tr")) {
-                if (args.get(0).toLowerCase(new Locale("tr", "TR")).equals("ingilizce")) {
-                    Config.LANGUAGES.put(ctx.getGuild().getIdLong(), "en_en");
-                    EmbedBuilder success = new EmbedBuilder();
-                    success.setColor(0x00ff00);
-                    success.setTitle(LanguageManager.getMessage("general.icon.success", guildID) + LanguageManager.getMessage("language.successful.setTitle", guildID));
-                    success.setDescription("You can use `" + prefix + "help` command to look at the commands in English, if you want to revert language back to Turkish just type `" + prefix + "language turkish`.");
-                    success.setFooter(LanguageManager.getMessage("general.bythecommand", guildID) + " " + ctx.getMember().getUser().getName(), ctx.getMember().getUser().getAvatarUrl());
-                    success.setTimestamp(Instant.now());
-                    channel.sendMessage(MessageCreateData.fromEmbeds(success.build())).queue();
-                    return;
-                }
-                if (LanguageManager.normalizer(args.get(0)).equalsIgnoreCase("turkce")) {
-                    EmbedBuilder error = new EmbedBuilder();
-                    error.setColor(0xff3923);
-                    error.setTitle(LanguageManager.getMessage("general.icon.error", guildID) + LanguageManager.getMessage("language.already.setTitle", guildID));
-                    error.setDescription(LanguageManager.getMessage("language.already.setDescription", guildID));
-                    error.setTimestamp(Instant.now());
+    private void initializeLanguages() {
+        languages.put("english", "en_en");
+        languages.put("turkish", "tr_tr");
+    }
 
-                    channel.sendMessage(MessageCreateData.fromEmbeds(error.build())).queue();
-                } else {
-                    EmbedBuilder error = new EmbedBuilder();
-                    error.setColor(0xff3923);
-                    error.setTitle(LanguageManager.getMessage("general.icon.error", guildID) + LanguageManager.getMessage("language.unsuitable.setTitle", guildID));
-                    error.setDescription(LanguageManager.getMessage("language.unsuitable.setDescription", guildID));
-                    error.setTimestamp(Instant.now());
-
-                    channel.sendMessage(MessageCreateData.fromEmbeds(error.build())).queue();
-                }
-            }
-        }
+    private boolean checkLanguage(String arg) {
+        return languages.containsKey(arg.toLowerCase());
     }
 
     @Override

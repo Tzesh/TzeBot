@@ -1,58 +1,29 @@
 package com.tzesh.tzebot.commands.music;
 
-import com.sedmelluq.discord.lavaplayer.player.AudioPlayer;
-import com.tzesh.tzebot.essentials.CommandContext;
-import com.tzesh.tzebot.essentials.ICommand;
-import com.tzesh.tzebot.music.GuildMusicManager;
-import com.tzesh.tzebot.music.PlayerManager;
-import net.dv8tion.jda.api.EmbedBuilder;
-import net.dv8tion.jda.api.entities.channel.concrete.TextChannel;
-import net.dv8tion.jda.api.utils.messages.MessageCreateData;
+import com.tzesh.tzebot.commands.music.abstracts.AbstractMusicCommand;
+import net.dv8tion.jda.api.events.message.GenericMessageEvent;
 
-import java.time.Instant;
+import static com.tzesh.tzebot.core.LanguageManager.getMessage;
 
-import static com.tzesh.tzebot.essentials.LanguageManager.getMessage;
-
-
-public class Resume implements ICommand {
+/**
+ * A class to manage the resume command
+ * @author tzesh
+ */
+public class Resume<T extends GenericMessageEvent> extends AbstractMusicCommand<T> {
 
     @Override
-    public void handle(CommandContext ctx) {
-        final TextChannel channel = ctx.getChannel();
-        final PlayerManager playerManager = PlayerManager.getInstance();
-        final GuildMusicManager musicManager = playerManager.getGuildMusicManager(ctx.getGuild());
-        final AudioPlayer player = musicManager.player;
-        final long guildID = ctx.getGuild().getIdLong();
+    protected void initializePreRequisites() {
+        boolean isPlaying = audioPlayer.getPlayingTrack() != null;
+        addPreRequisite(isPlaying, "nowplaying.error.setTitle", "resume.error.setDescription");
+        if (!isPlaying) return;
 
-        if (player.getPlayingTrack() == null) {
-            EmbedBuilder error = new EmbedBuilder();
-            error.setColor(0xff3923);
-            error.setTitle(getMessage("general.icon.error", guildID) + getMessage("nowplaying.error.setTitle", guildID));
-            error.setDescription(getMessage("resume.error.setDescription", guildID));
-            error.setTimestamp(Instant.now());
+        boolean isPaused = audioPlayer.isPaused();
+        addPreRequisite(isPaused, "nowplaying.error.setTitle", "resume.nothingtoresumed.setDescription");
+    }
 
-            channel.sendMessage(MessageCreateData.fromEmbeds(error.build())).queue();
-            error.clear();
-        } else if (player.isPaused()) {
-            player.setPaused(false);
-            EmbedBuilder success = new EmbedBuilder();
-            success.setColor(0x00ff00);
-            success.setTitle(getMessage("general.icon.play", guildID) + getMessage("resume.success.setTitle", guildID) + player.getPlayingTrack().getInfo().title);
-            success.setFooter(getMessage("general.bythecommand", guildID) + ctx.getMember().getUser().getName(), ctx.getMember().getUser().getAvatarUrl());
-            success.setTimestamp(Instant.now());
-
-            channel.sendMessage(MessageCreateData.fromEmbeds(success.build())).queue();
-            success.clear();
-        } else {
-            EmbedBuilder error = new EmbedBuilder();
-            error.setColor(0xff3923);
-            error.setTitle(getMessage("general.icon.error", guildID) + getMessage("nowplaying.error.setTitle", guildID));
-            error.setDescription(getMessage("resume.nothingtoresumed.setDescription", guildID));
-            error.setTimestamp(Instant.now());
-
-            channel.sendMessage(MessageCreateData.fromEmbeds(error.build())).queue();
-            error.clear();
-        }
+    @Override
+    public void handleCommand() {
+        audioPlayer.setPaused(false);
     }
 
     @Override

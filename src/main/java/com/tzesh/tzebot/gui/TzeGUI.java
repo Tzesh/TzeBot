@@ -1,100 +1,120 @@
 package com.tzesh.tzebot.gui;
 
-import com.tzesh.tzebot.essentials.Config;
+import com.tzesh.tzebot.core.config.ConfigurationManager;
+import com.tzesh.tzebot.gui.utils.TextAreaOutputStream;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.security.auth.login.LoginException;
+import javax.swing.*;
 import java.awt.event.*;
 import java.io.PrintStream;
 
-import static com.tzesh.tzebot.essentials.Config.PREFIXES;
+import static com.tzesh.tzebot.core.inventory.Inventory.PREFIXES;
 
+/**
+ * This is the GUI for TzeBot
+ * @author tzesh
+ */
 public class TzeGUI extends javax.swing.JFrame {
+    private javax.swing.JLabel labelApiKey;
+    private javax.swing.JLabel labelBotToken;
+    private javax.swing.JLabel labelConsole;
+    private javax.swing.JLabel labelDiscordID;
+    private javax.swing.JLabel labelTzeshIcon;
+    private javax.swing.JLabel labelGithubLink;
+    private javax.swing.JLabel labelPrefix;
+    private javax.swing.JLabel labelProgressInfo;
+    private javax.swing.JLabel labelProgress;
+    private javax.swing.JLabel labelShard;
+    private javax.swing.JLabel labelTitle;
+    private javax.swing.JLabel labelVersionNumber;
+    private javax.swing.JTextField textFieldApiKey;
+    private javax.swing.JTextField textFieldOwnerID;
+    private javax.swing.JTextField textFieldPrefix;
+    private javax.swing.JTextField textFieldToken;
+    private javax.swing.JFormattedTextField formattedTextFieldShard;
+    private javax.swing.JTextArea textAreaConsole;
+    private javax.swing.JScrollPane scrollPaneConsole;
+    private javax.swing.JButton buttonStart;
+    private javax.swing.JButton buttonUpdate;
+    private int shards = 1;
+    private final Logger LOGGER = LoggerFactory.getLogger(ConfigurationManager.class);
 
-    int shards = 1;
-    private javax.swing.JTextField apiKEY;
-    private javax.swing.JLabel apiKeyText;
-    private javax.swing.JLabel botTokenText;
-    private javax.swing.JTextArea console;
-    private javax.swing.JLabel consoleText;
-    private javax.swing.JLabel discordIDText;
-    private javax.swing.JLabel tzeshIcon;
-    private javax.swing.JLabel githubLink;
-    private javax.swing.JScrollPane consolePane;
-    private javax.swing.JTextField ownerID;
-    private javax.swing.JTextField prefix;
-    private javax.swing.JLabel prefixText;
-    private javax.swing.JLabel progressInfo;
-    private javax.swing.JLabel progressText;
-    private javax.swing.JFormattedTextField shard;
-    private javax.swing.JLabel shardText;
-    private javax.swing.JButton startButton;
-    private javax.swing.JLabel titleText;
-    private javax.swing.JTextField token;
-    private javax.swing.JButton updateButton;
-    private javax.swing.JLabel versionNumber;
 
     public TzeGUI() {
-        Config.createENV();
+        ConfigurationManager.createENV();
         initComponents();
-        updateButton.setVisible(false);
-        TextAreaOutputStream taos = new TextAreaOutputStream(console, 60);
+        initializeConsole();
+        checkVariables();
+        checkVersion();
+        ConfigurationManager.loadInventory();
+        addWindowListener();
+        addButtonStartEventListener();
+        LOGGER.info("GUI has been initialized");
+    }
+
+    private void initializeConsole() {
+        TextAreaOutputStream taos = new TextAreaOutputStream(textAreaConsole, 60);
         PrintStream ps = new PrintStream(taos);
         System.setOut(ps);
         System.setErr(ps);
-        checkVariables();
-        checkVersion();
-        Config.getDatabase();
+    }
+
+    private void addWindowListener() {
         addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
-                Config.saveDatabase();
+                ConfigurationManager.saveInventory();
                 System.exit(0);
             }
         });
-        startButton.addActionListener(new ActionListener() {
+    }
+
+    private void addButtonStartEventListener() {
+        buttonStart.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (startButton == e.getSource()) {
-                    startButton.setEnabled(false);
-                    token.setEnabled(false);
-                    ownerID.setEnabled(false);
-                    prefix.setEnabled(false);
-                    apiKEY.setEnabled(false);
-                    shard.setEnabled(false);
+                if (buttonStart == e.getSource()) {
+                    buttonStart.setEnabled(false);
+                    textFieldToken.setEnabled(false);
+                    textFieldOwnerID.setEnabled(false);
+                    textFieldPrefix.setEnabled(false);
+                    textFieldApiKey.setEnabled(false);
+                    formattedTextFieldShard.setEnabled(false);
                 }
             }
         });
-        System.out.println("GUI has been initialized.");
     }
 
-    public final void checkVariables() {
-        if (Config.get("token") == null || Config.get("token").equals("")) {
-            token.setText("Not-installed");
+    private void checkVariables() {
+        if (ConfigurationManager.getEnvKey("token") == null || ConfigurationManager.getEnvKey("token").equals("")) {
+            textFieldToken.setText("Not-installed");
         } else {
-            token.setText(Config.get("token"));
+            textFieldToken.setText(ConfigurationManager.getEnvKey("token"));
         }
-        if (Config.get("Owner") == null || Config.get("Owner").equals("")) {
-            ownerID.setText("Not-installed");
+        if (ConfigurationManager.getEnvKey("Owner") == null || ConfigurationManager.getEnvKey("Owner").equals("")) {
+            textFieldOwnerID.setText("Not-installed");
         } else {
-            ownerID.setText(Config.get("Owner"));
+            textFieldOwnerID.setText(ConfigurationManager.getEnvKey("Owner"));
         }
-        if (Config.get("Pre") == null || Config.get("pre").equals("")) {
-            prefix.setText(".");
+        if (ConfigurationManager.getEnvKey("Pre") == null || ConfigurationManager.getEnvKey("pre").equals("")) {
+            textFieldPrefix.setText(".");
         } else {
-            prefix.setText(Config.get("Pre"));
+            textFieldPrefix.setText(ConfigurationManager.getEnvKey("Pre"));
         }
-        if (Config.get("Key") == null || Config.get("Key").equals("")) {
-            apiKEY.setText("Not-installed");
+        if (ConfigurationManager.getEnvKey("Key") == null || ConfigurationManager.getEnvKey("Key").equals("")) {
+            textFieldApiKey.setText("Not-installed");
         } else {
-            apiKEY.setText(Config.get("Key"));
+            textFieldApiKey.setText(ConfigurationManager.getEnvKey("Key"));
         }
-        if (Config.get("shard") == null || Config.get("shard").equals("")) {
-            shard.setText("1");
+        if (ConfigurationManager.getEnvKey("shard") == null || ConfigurationManager.getEnvKey("shard").equals("")) {
+            formattedTextFieldShard.setText("1");
         } else {
-            shard.setText(Integer.toString((PREFIXES.size() / 1500) + 1));
+            formattedTextFieldShard.setText(Integer.toString((PREFIXES.size() / 1500) + 1));
         }
 
-        shard.addKeyListener(new KeyAdapter() {
+        formattedTextFieldShard.addKeyListener(new KeyAdapter() {
             public void keyTyped(KeyEvent e) {
                 char c = e.getKeyChar();
                 if (!((c >= '0') && (c <= '9')
@@ -106,7 +126,7 @@ public class TzeGUI extends javax.swing.JFrame {
             }
         });
 
-        ownerID.addKeyListener(new KeyAdapter() {
+        textFieldOwnerID.addKeyListener(new KeyAdapter() {
             public void keyTyped(KeyEvent e) {
                 char c = e.getKeyChar();
                 if (!((c >= '0') && (c <= '9')
@@ -117,53 +137,52 @@ public class TzeGUI extends javax.swing.JFrame {
                 }
             }
         });
-        progressInfo.setText("All .env variables have been checked.");
+        labelProgressInfo.setText("All .env variables have been checked.");
     }
 
-    public void checkVersion() {
-        versionNumber.setText("v" + Config.currentVersion);
-        if (Config.versionControl()) {
-            System.out.println("You are using the latest version of TzeBot v" + Config.currentVersion);
+    private void checkVersion() {
+        labelVersionNumber.setText("v" + ConfigurationManager.getCurrentVersion());
+        if (ConfigurationManager.isLatestVersion()) {
+            LOGGER.info("You are using the latest version of TzeBot v" + ConfigurationManager.getCurrentVersion());
         } else {
-            updateButton.setVisible(true);
+            buttonUpdate.setVisible(true);
         }
     }
 
-    public void getvariables() {
-        shards = Integer.parseInt(shard.getText());
+    private void getVariables() {
+        shards = Integer.parseInt(formattedTextFieldShard.getText());
         if (shards <= 1) {
             shards = 1;
         }
-        Config.save(token.getText(), prefix.getText(), ownerID.getText(), apiKEY.getText(), shard.getText());
-        progressInfo.setText("All .env variables have been saved.");
+        ConfigurationManager.saveEnv(textFieldToken.getText(), textFieldPrefix.getText(), textFieldOwnerID.getText(), textFieldApiKey.getText(), formattedTextFieldShard.getText());
+        labelProgressInfo.setText("All .env variables have been saved.");
     }
 
     private void initComponents() {
-
-        startButton = new javax.swing.JButton();
-        titleText = new javax.swing.JLabel();
-        discordIDText = new javax.swing.JLabel();
-        prefixText = new javax.swing.JLabel();
-        botTokenText = new javax.swing.JLabel();
-        apiKeyText = new javax.swing.JLabel();
-        ownerID = new javax.swing.JTextField();
-        prefix = new javax.swing.JTextField();
-        token = new javax.swing.JTextField();
-        apiKEY = new javax.swing.JTextField();
-        consolePane = new javax.swing.JScrollPane();
-        console = new javax.swing.JTextArea();
-        progressText = new javax.swing.JLabel();
-        progressInfo = new javax.swing.JLabel();
-        consoleText = new javax.swing.JLabel();
-        githubLink = new javax.swing.JLabel();
-        shardText = new javax.swing.JLabel();
-        shard = new javax.swing.JFormattedTextField();
-        tzeshIcon = new javax.swing.JLabel();
-        updateButton = new javax.swing.JButton();
-        versionNumber = new javax.swing.JLabel();
+        buttonStart = new javax.swing.JButton();
+        labelTitle = new javax.swing.JLabel();
+        labelDiscordID = new javax.swing.JLabel();
+        labelPrefix = new javax.swing.JLabel();
+        labelBotToken = new javax.swing.JLabel();
+        labelApiKey = new javax.swing.JLabel();
+        textFieldOwnerID = new javax.swing.JTextField();
+        textFieldPrefix = new javax.swing.JTextField();
+        textFieldToken = new javax.swing.JTextField();
+        textFieldApiKey = new javax.swing.JTextField();
+        scrollPaneConsole = new javax.swing.JScrollPane();
+        textAreaConsole = new javax.swing.JTextArea();
+        labelProgress = new javax.swing.JLabel();
+        labelProgressInfo = new javax.swing.JLabel();
+        labelConsole = new javax.swing.JLabel();
+        labelGithubLink = new javax.swing.JLabel();
+        labelShard = new javax.swing.JLabel();
+        formattedTextFieldShard = new javax.swing.JFormattedTextField();
+        labelTzeshIcon = new javax.swing.JLabel();
+        buttonUpdate = new javax.swing.JButton();
+        labelVersionNumber = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("TzeBot - Discord Bot for Public Use");
+        setTitle("TzeBot - Advanced Discord Bot & Substructure");
         setIconImage(new javax.swing.ImageIcon(getClass().getResource("/tzesh-icon.png")).getImage());
         setMaximizedBounds(new java.awt.Rectangle(0, 0, 1000, 500));
         setMaximumSize(new java.awt.Dimension(1000, 500));
@@ -171,78 +190,79 @@ public class TzeGUI extends javax.swing.JFrame {
         setName("mainWindow"); // NOI18N
         setResizable(false);
 
-        startButton.setText("Start");
-        startButton.setToolTipText("You can start TzeBot after you've managed to set all necessary settings.");
-        startButton.addActionListener(new java.awt.event.ActionListener() {
+        buttonStart.setText("Start");
+        buttonStart.setToolTipText("You can start the bot after making sure that all variables are correct");
+        buttonStart.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 startButtonActionPerformed(evt);
             }
         });
 
-        titleText.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        titleText.setText("TzeBot - Discord Bot for Public Use");
-        titleText.setToolTipText("");
+        labelTitle.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        labelTitle.setText("TzeBot - Advanced Discord Bot & Substructure");
+        labelTitle.setToolTipText("");
 
-        discordIDText.setText("Discord ID of Owner:");
+        labelDiscordID.setText("Owner Discord ID:");
 
-        prefixText.setText("Default Prefix: ");
+        labelPrefix.setText("Default Prefix: ");
 
-        botTokenText.setText("Discord Bot Token:");
+        labelBotToken.setText("Discord Bot Token:");
 
-        apiKeyText.setText("Youtube API Key:");
+        labelApiKey.setText("Youtube API Key:");
 
-        ownerID.setText("Discord ID");
-        ownerID.setMaximumSize(new java.awt.Dimension(420, 30));
-        ownerID.setMinimumSize(new java.awt.Dimension(420, 30));
-        ownerID.setPreferredSize(new java.awt.Dimension(420, 30));
+        textFieldOwnerID.setText("Discord ID");
+        textFieldOwnerID.setMaximumSize(new java.awt.Dimension(420, 30));
+        textFieldOwnerID.setMinimumSize(new java.awt.Dimension(420, 30));
+        textFieldOwnerID.setPreferredSize(new java.awt.Dimension(420, 30));
 
-        prefix.setText(".");
-        prefix.setMaximumSize(new java.awt.Dimension(16, 30));
-        prefix.setMinimumSize(new java.awt.Dimension(16, 30));
-        prefix.setPreferredSize(new java.awt.Dimension(16, 30));
+        textFieldPrefix.setText(".");
+        textFieldPrefix.setMaximumSize(new java.awt.Dimension(16, 30));
+        textFieldPrefix.setMinimumSize(new java.awt.Dimension(16, 30));
+        textFieldPrefix.setPreferredSize(new java.awt.Dimension(16, 30));
 
-        token.setText("Bot_TOKEN");
-        token.setMaximumSize(new java.awt.Dimension(420, 30));
-        token.setMinimumSize(new java.awt.Dimension(420, 30));
-        token.setPreferredSize(new java.awt.Dimension(420, 30));
+        textFieldToken.setText("Bot_TOKEN");
+        textFieldToken.setMaximumSize(new java.awt.Dimension(420, 30));
+        textFieldToken.setMinimumSize(new java.awt.Dimension(420, 30));
+        textFieldToken.setPreferredSize(new java.awt.Dimension(420, 30));
 
-        apiKEY.setText("API_KEY");
-        apiKEY.setMaximumSize(new java.awt.Dimension(420, 30));
-        apiKEY.setMinimumSize(new java.awt.Dimension(420, 30));
-        apiKEY.setPreferredSize(new java.awt.Dimension(420, 30));
+        textFieldApiKey.setText("API_KEY");
+        textFieldApiKey.setMaximumSize(new java.awt.Dimension(420, 30));
+        textFieldApiKey.setMinimumSize(new java.awt.Dimension(420, 30));
+        textFieldApiKey.setPreferredSize(new java.awt.Dimension(420, 30));
 
-        console.setEditable(false);
-        console.setColumns(30);
-        console.setFont(new java.awt.Font("Dialog", 0, 10)); // NOI18N
-        console.setRows(30);
-        console.setTabSize(5);
-        consolePane.setViewportView(console);
+        textAreaConsole.setEditable(false);
+        textAreaConsole.setColumns(30);
+        textAreaConsole.setFont(new java.awt.Font("Dialog", 0, 10)); // NOI18N
+        textAreaConsole.setRows(30);
+        textAreaConsole.setTabSize(5);
+        scrollPaneConsole.setViewportView(textAreaConsole);
 
-        progressText.setText("Progress:");
+        labelProgress.setText("Progress:");
 
-        progressInfo.setText("Waiting to be started.");
+        labelProgressInfo.setText("Waiting to be started");
 
-        consoleText.setText("Console:");
+        labelConsole.setText("Console:");
 
-        githubLink.setText("github.com/Tzesh/TzeBot");
+        labelGithubLink.setText("github.com/Tzesh/TzeBot");
 
-        shardText.setText("Shard(s):");
+        labelShard.setText("Shard(s):");
 
-        shard.setText("Shard");
-        shard.setMaximumSize(new java.awt.Dimension(30, 30));
-        shard.setMinimumSize(new java.awt.Dimension(30, 30));
-        shard.setPreferredSize(new java.awt.Dimension(30, 30));
+        formattedTextFieldShard.setText("Shard");
+        formattedTextFieldShard.setMaximumSize(new java.awt.Dimension(30, 30));
+        formattedTextFieldShard.setMinimumSize(new java.awt.Dimension(30, 30));
+        formattedTextFieldShard.setPreferredSize(new java.awt.Dimension(30, 30));
 
-        tzeshIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tzesh-icon.png")));
+        labelTzeshIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tzesh-icon.png")));
 
-        updateButton.setText("Update");
-        updateButton.addActionListener(new java.awt.event.ActionListener() {
+        buttonUpdate.setText("Update");
+        buttonUpdate.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 updateButtonActionPerformed(evt);
             }
         });
+        buttonUpdate.setVisible(false);
 
-        versionNumber.setText("v" + Config.currentVersion);
+        labelVersionNumber.setText("v" + ConfigurationManager.getCurrentVersion());
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -255,46 +275,46 @@ public class TzeGUI extends javax.swing.JFrame {
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                                         .addGroup(layout.createSequentialGroup()
-                                                                .addComponent(discordIDText)
+                                                                .addComponent(labelDiscordID)
                                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                                .addComponent(consoleText))
+                                                                .addComponent(labelConsole))
                                                         .addGroup(layout.createSequentialGroup()
                                                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                                                        .addComponent(token, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                                        .addComponent(ownerID, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                                        .addComponent(prefixText)
-                                                                        .addComponent(titleText)
-                                                                        .addComponent(prefix, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                                        .addComponent(botTokenText)
-                                                                        .addComponent(apiKeyText)
-                                                                        .addComponent(apiKEY, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                                        .addComponent(textFieldToken, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                                        .addComponent(textFieldOwnerID, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                                        .addComponent(labelPrefix)
+                                                                        .addComponent(labelTitle)
+                                                                        .addComponent(textFieldPrefix, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                                        .addComponent(labelBotToken)
+                                                                        .addComponent(labelApiKey)
+                                                                        .addComponent(textFieldApiKey, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                                                                 .addGap(0, 0, Short.MAX_VALUE))
                                                         .addGroup(layout.createSequentialGroup()
                                                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                                                         .addGroup(layout.createSequentialGroup()
-                                                                                .addComponent(shardText)
+                                                                                .addComponent(labelShard)
                                                                                 .addGap(0, 0, Short.MAX_VALUE))
                                                                         .addGroup(layout.createSequentialGroup()
                                                                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                                                        .addComponent(shard, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                                                        .addComponent(formattedTextFieldShard, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                                                         .addGroup(layout.createSequentialGroup()
-                                                                                                .addComponent(startButton)
+                                                                                                .addComponent(buttonStart)
                                                                                                 .addGap(18, 18, 18)
-                                                                                                .addComponent(updateButton))
+                                                                                                .addComponent(buttonUpdate))
                                                                                         .addGroup(layout.createSequentialGroup()
-                                                                                                .addComponent(progressText)
+                                                                                                .addComponent(labelProgress)
                                                                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                                                                .addComponent(progressInfo)))
+                                                                                                .addComponent(labelProgressInfo)))
                                                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 11, Short.MAX_VALUE)))
-                                                                .addComponent(tzeshIcon)
+                                                                .addComponent(labelTzeshIcon)
                                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                                .addComponent(githubLink)))
+                                                                .addComponent(labelGithubLink)))
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
                                         .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                .addComponent(versionNumber)
+                                                .addComponent(labelVersionNumber)
                                                 .addGap(65, 65, 65)))
-                                .addComponent(consolePane, javax.swing.GroupLayout.PREFERRED_SIZE, 698, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(scrollPaneConsole, javax.swing.GroupLayout.PREFERRED_SIZE, 698, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -304,51 +324,51 @@ public class TzeGUI extends javax.swing.JFrame {
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                         .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                        .addComponent(consoleText)
+                                                        .addComponent(labelConsole)
                                                         .addGroup(layout.createSequentialGroup()
                                                                 .addGap(13, 13, 13)
-                                                                .addComponent(discordIDText)))
+                                                                .addComponent(labelDiscordID)))
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addComponent(ownerID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addComponent(textFieldOwnerID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addComponent(prefixText)
+                                                .addComponent(labelPrefix)
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addComponent(prefix, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addComponent(textFieldPrefix, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addComponent(botTokenText)
+                                                .addComponent(labelBotToken)
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addComponent(token, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addComponent(textFieldToken, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addComponent(apiKeyText)
+                                                .addComponent(labelApiKey)
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addComponent(apiKEY, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addComponent(textFieldApiKey, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addComponent(shardText)
+                                                .addComponent(labelShard)
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                                         .addGroup(layout.createSequentialGroup()
-                                                                .addComponent(shard, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                                .addComponent(formattedTextFieldShard, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                                 .addGap(18, 18, 18)
                                                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                                                        .addComponent(startButton)
-                                                                        .addComponent(updateButton))
+                                                                        .addComponent(buttonStart)
+                                                                        .addComponent(buttonUpdate))
                                                                 .addGap(0, 0, Short.MAX_VALUE))
                                                         .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                                                        .addComponent(tzeshIcon)
-                                                                        .addComponent(githubLink))
+                                                                        .addComponent(labelTzeshIcon)
+                                                                        .addComponent(labelGithubLink))
                                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                                .addComponent(versionNumber)
+                                                                .addComponent(labelVersionNumber)
                                                                 .addGap(11, 11, 11))))
-                                        .addComponent(consolePane, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 463, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addComponent(scrollPaneConsole, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 463, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addContainerGap())
                         .addGroup(layout.createSequentialGroup()
                                 .addGap(14, 14, 14)
-                                .addComponent(titleText)
+                                .addComponent(labelTitle)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                        .addComponent(progressText)
-                                        .addComponent(progressInfo))
+                                        .addComponent(labelProgress)
+                                        .addComponent(labelProgressInfo))
                                 .addGap(39, 39, 39))
         );
 
@@ -359,33 +379,26 @@ public class TzeGUI extends javax.swing.JFrame {
     }
 
     private void startButtonActionPerformed(java.awt.event.ActionEvent evt) {
-        getvariables();
-        String apiKey = apiKEY.getText();
-        String botToken = token.getText();
-        progressInfo.setText("Bot started.");
+        getVariables();
+        String apiKey = textFieldApiKey.getText();
+        String botToken = textFieldToken.getText();
+        labelProgressInfo.setText("Bot started.");
         try {
-            Config.startBot(apiKey, botToken, shards);
+            ConfigurationManager.startBot(apiKey, botToken, shards);
         } catch (LoginException e) {
-            System.out.println("An error occurred while bot was trying to start.");
+            LOGGER.error("An error occurred while bot was trying to start: " +  e.getMessage());
         }
 
     }
 
-    private void updateButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateButtonActionPerformed
+    private void updateButtonActionPerformed(java.awt.event.ActionEvent evt) {
         try {
-            java.awt.Desktop.getDesktop().browse(java.net.URI.create(Config.downloadURL));
+            java.awt.Desktop.getDesktop().browse(java.net.URI.create(ConfigurationManager.getDownloadURL()));
         } catch (Exception e) {
-            System.out.println("An error occurred during opening the update page.");
+            LOGGER.error("An error occurred during opening the update page: " +  e.getMessage());
         }
-    }//GEN-LAST:event_updateButtonActionPerformed
-
-    public void appendText(String text) {
-        console.append(text);
     }
 
-    /**
-     * Starts the boot
-     */
     public void start() {
 
         try {
@@ -395,14 +408,9 @@ public class TzeGUI extends javax.swing.JFrame {
                     break;
                 }
             }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(TzeGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(TzeGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(TzeGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(TzeGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException |
+                 UnsupportedLookAndFeelException ex) {
+            LOGGER.error(ex.toString());
         }
 
         java.awt.EventQueue.invokeLater(new Runnable() {

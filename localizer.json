@@ -363,6 +363,10 @@
     "tr_tr": "Lütfen TzeBot\u0027un \"Mesajları Yönet\" yetkisine sahip olduğundan emin olun",
     "en_en": "Be ensure that TzeBot has \"Manage Messages\" permission"
   },
+  "general.cannot_talk.setTitle": {
+    "tr_tr": "Lütfen TzeBot\u0027un \"Mesaj Gönder\" yetkisine sahip olduğundan emin olun",
+    "en_en": "Be ensure that TzeBot has \"Send Messages\" permission"
+  },
   "shuffle.gethelp": {
     "tr_tr": "Kuyruğu karıştırır",
     "en_en": "Shuffles the queue"

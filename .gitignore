@@ -7,3 +7,6 @@ database.bin
 # Ignore Gradle build output directory
 build
 out/
+
+# Ignore logs directory
+logs

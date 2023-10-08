@@ -1,55 +1,39 @@
 package com.tzesh.tzebot.commands.moderation;
 
-import com.tzesh.tzebot.essentials.CommandContext;
-import com.tzesh.tzebot.essentials.Config;
-import com.tzesh.tzebot.essentials.ICommand;
-import com.tzesh.tzebot.essentials.LanguageManager;
-import net.dv8tion.jda.api.EmbedBuilder;
+import com.tzesh.tzebot.commands.abstracts.AbstractCommand;
+import com.tzesh.tzebot.core.config.ConfigurationManager;
+import com.tzesh.tzebot.commands.abstracts.Command;
+import com.tzesh.tzebot.core.LanguageManager;
+import com.tzesh.tzebot.core.inventory.Inventory;
+import com.tzesh.tzebot.utils.EmbedMessageBuilder;
 import net.dv8tion.jda.api.Permission;
-import net.dv8tion.jda.api.entities.Member;
-import net.dv8tion.jda.api.entities.channel.concrete.TextChannel;
-import net.dv8tion.jda.api.utils.messages.MessageCreateData;
+import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 
-import java.util.List;
-
-public class Prefix implements ICommand {
+/**
+ * A command to change the prefix of the bot in a guild
+ * @author tzesh
+ * @see Command
+ * @see AbstractCommand
+ */
+public class Prefix extends AbstractCommand<MessageReceivedEvent> {
 
     @Override
-    public void handle(CommandContext ctx) {
-        final TextChannel channel = ctx.getChannel();
-        final List<String> args = ctx.getArgs();
-        final Member member = ctx.getMember();
-        final long guildID = ctx.getGuild().getIdLong();
+    protected void initializePreRequisites() {
+        boolean memberHasPermission = member.hasPermission(Permission.MANAGE_SERVER);
+        addPreRequisite(memberHasPermission, "general.not_authorized", "general.not_authorized.description");
+        if (!memberHasPermission) return;
 
-        if (!member.hasPermission(Permission.MANAGE_SERVER)) {
-            EmbedBuilder error = new EmbedBuilder();
-            error.setColor(0xff3923);
-            error.setTitle(LanguageManager.getMessage("general.icon.error", guildID) + LanguageManager.getMessage("general.not_authorized", guildID));
-            error.setDescription(LanguageManager.getMessage("general.not_authorized.description", guildID));
+        boolean isArgsCorrect = args.size() == 1;
+        addPreRequisite(isArgsCorrect, "general.403", "general.403.description");
+    }
 
-            channel.sendMessage(MessageCreateData.fromEmbeds(error.build())).queue();
-            return;
-        }
+    @Override
+    public void handleCommand() {
+        final String newPrefix = args.get(0);
+        Inventory.PREFIXES.put(guildID, newPrefix);
+        String successTitle = LanguageManager.getMessage("prefix.success.setTitle", guildID) + "`" + newPrefix + "`";
 
-        if (args.isEmpty()) {
-            EmbedBuilder error = new EmbedBuilder();
-            error.setColor(0xff3923);
-            error.setTitle(LanguageManager.getMessage("general.icon.error", guildID) + LanguageManager.getMessage("general.403", guildID));
-            error.setDescription(LanguageManager.getMessage("general.403.description", guildID));
-
-            channel.sendMessage(MessageCreateData.fromEmbeds(error.build())).queue();
-            return;
-        }
-
-        final String newPrefix = String.join("", args);
-        Config.PREFIXES.put(ctx.getGuild().getIdLong(), newPrefix);
-
-        EmbedBuilder success = new EmbedBuilder();
-        success.setColor(0x00ff00);
-        success.setTitle(LanguageManager.getMessage("general.icon.success", guildID) + " " + LanguageManager.getMessage("prefix.success.setTitle", guildID) + "`" + newPrefix + "`");
-        success.setFooter(LanguageManager.getMessage("general.bythecommand", guildID) + " " + ctx.getMember().getUser().getName(), ctx.getMember().getUser().getAvatarUrl());
-
-        channel.sendMessage(MessageCreateData.fromEmbeds(success.build())).queue();
+        sendMessage(EmbedMessageBuilder.createCustomSuccessMessage(successTitle, "", user, guildID));
     }
 
     @Override
@@ -60,6 +44,6 @@ public class Prefix implements ICommand {
     @Override
     public String getHelp(long guildID) {
         return LanguageManager.getMessage("prefix.gethelp1", guildID)
-                + "\n" + LanguageManager.getMessage("prefix.gethelp2", guildID) + Config.get("pre") + LanguageManager.getMessage("prefix.gethelp3", guildID);
+                + "\n" + LanguageManager.getMessage("prefix.gethelp2", guildID) + ConfigurationManager.getEnvKey("pre") + LanguageManager.getMessage("prefix.gethelp3", guildID);
     }
 }

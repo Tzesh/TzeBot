@@ -1,77 +1,37 @@
 package com.tzesh.tzebot.commands.music;
 
-import com.sedmelluq.discord.lavaplayer.player.AudioPlayer;
-import com.tzesh.tzebot.essentials.CommandContext;
-import com.tzesh.tzebot.essentials.ICommand;
-import com.tzesh.tzebot.music.GuildMusicManager;
-import com.tzesh.tzebot.music.PlayerManager;
-import net.dv8tion.jda.api.EmbedBuilder;
-import net.dv8tion.jda.api.entities.channel.concrete.TextChannel;
-import net.dv8tion.jda.api.entities.channel.middleman.AudioChannel;
-import net.dv8tion.jda.api.managers.AudioManager;
-import net.dv8tion.jda.api.utils.messages.MessageCreateData;
+import com.tzesh.tzebot.commands.music.abstracts.AbstractMusicCommand;
+import com.tzesh.tzebot.utils.EmbedMessageBuilder;
+import net.dv8tion.jda.api.events.message.GenericMessageEvent;
 
-import java.time.Instant;
+import static com.tzesh.tzebot.core.LanguageManager.getMessage;
 
-import static com.tzesh.tzebot.essentials.LanguageManager.getMessage;
-
-public class Leave implements ICommand {
+/**
+ * A class to manage the leave command
+ * @author tzesh
+ */
+public class Leave<T extends GenericMessageEvent> extends AbstractMusicCommand<T> {
 
     @Override
-    public void handle(CommandContext ctx) {
-        final TextChannel channel = ctx.getChannel();
-        final AudioManager audioManager = ctx.getGuild().getAudioManager();
-        final PlayerManager playerManager = PlayerManager.getInstance();
-        final GuildMusicManager musicManager = playerManager.getGuildMusicManager(ctx.getGuild());
-        final AudioPlayer player = musicManager.player;
-        final long guildID = ctx.getGuild().getIdLong();
+    protected void initializePreRequisites() {
+        boolean isConnected = audioManager.isConnected();
+        addPreRequisite(isConnected, "leave.cannotleave.setTitle", "leave.notin");
+        if (!isConnected) return;
 
-        if (!audioManager.isConnected()) {
-            EmbedBuilder error = new EmbedBuilder();
-            error.setColor(0xff3923);
-            error.setTitle(getMessage("general.icon.error", guildID) + getMessage("leave.cannotleave.setTitle", guildID));
-            error.setDescription(getMessage("leave.notconnected", guildID));
-            error.setTimestamp(Instant.now());
+        boolean memberIsInVoiceChannel = voiceChannel.getMembers().contains(member);
+        addPreRequisite(memberIsInVoiceChannel, "leave.cannotleave.setTitle", "leave.notin");
+    }
 
-            channel.sendMessage(MessageCreateData.fromEmbeds(error.build())).queue();
-            return;
-        }
+    @Override
+    public void handleCommand() {
+        if (audioPlayer.getPlayingTrack() != null) {
+            musicManager.stopAndClearQueue();
 
-        AudioChannel voiceChannel = audioManager.getConnectedChannel();
-
-        if (!voiceChannel.getMembers().contains(ctx.getMember())) {
-            EmbedBuilder error = new EmbedBuilder();
-            error.setColor(0xff3923);
-            error.setTitle(getMessage("general.icon.error", guildID) + getMessage("leave.cannotleave.setTitle", guildID));
-            error.setDescription(getMessage("leave.notin", guildID));
-            error.setTimestamp(Instant.now());
-
-            channel.sendMessage(MessageCreateData.fromEmbeds(error.build())).queue();
-            return;
-        }
-
-        if (player.getPlayingTrack() != null) {
-            musicManager.scheduler.getQueue().clear();
-            musicManager.player.stopTrack();
-            musicManager.player.setPaused(false);
-
-            EmbedBuilder success = new EmbedBuilder();
-            success.setColor(0x00ff00);
-            success.setTitle(getMessage("general.icon.stop", guildID) + getMessage("stop.success.setTitle", guildID));
-            success.setFooter(getMessage("general.bythecommand", guildID) + " " + ctx.getMember().getUser().getName(), ctx.getMember().getUser().getAvatarUrl());
-            success.setTimestamp(Instant.now());
-
-            channel.sendMessage(MessageCreateData.fromEmbeds(success.build())).queue();
+            sendMessage(EmbedMessageBuilder.createSuccessMessage("stop.success.setTitle", "", user, guildID));
         }
 
         audioManager.closeAudioConnection();
-        EmbedBuilder success = new EmbedBuilder();
-        success.setColor(0x00ff00);
-        success.setTitle(getMessage("general.icon.leave", guildID) + getMessage("leave.success.setTitle", guildID));
-        success.setFooter(getMessage("general.bythecommand", guildID) + ctx.getMember().getUser().getName(), ctx.getMember().getUser().getAvatarUrl());
-        success.setTimestamp(Instant.now());
-
-        channel.sendMessage(MessageCreateData.fromEmbeds(success.build())).queue();
+        sendMessage(EmbedMessageBuilder.createSuccessMessage("leave.success.setTitle", "", user, guildID));
     }
 
     @Override

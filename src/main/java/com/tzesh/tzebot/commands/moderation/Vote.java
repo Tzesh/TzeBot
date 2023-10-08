@@ -1,225 +1,58 @@
 package com.tzesh.tzebot.commands.moderation;
 
-import com.tzesh.tzebot.essentials.CommandContext;
-import com.tzesh.tzebot.essentials.ICommand;
-import com.tzesh.tzebot.essentials.LanguageManager;
-import net.dv8tion.jda.api.EmbedBuilder;
+import com.tzesh.tzebot.commands.abstracts.AbstractCommand;
+import com.tzesh.tzebot.core.LanguageManager;
+import com.tzesh.tzebot.utils.EmbedMessageBuilder;
 import net.dv8tion.jda.api.Permission;
-import net.dv8tion.jda.api.entities.Member;
-import net.dv8tion.jda.api.entities.channel.concrete.TextChannel;
+import net.dv8tion.jda.api.entities.MessageEmbed;
 import net.dv8tion.jda.api.entities.emoji.Emoji;
+import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.utils.messages.MessageCreateData;
 
-import java.time.Instant;
-import java.util.List;
-
 /**
+ * A command to vote on a question
  * @author Tzesh
  */
-public class Vote implements ICommand {
+public class Vote extends AbstractCommand<MessageReceivedEvent> {
 
     @Override
-    public void handle(CommandContext ctx) {
-        final TextChannel channel = ctx.getChannel();
-        final List<String> args = ctx.getArgs();
-        final Member member = ctx.getMember();
-        final long guildID = ctx.getGuild().getIdLong();
+    protected void initializePreRequisites() {
+        boolean memberHasPermission = member.hasPermission(Permission.MANAGE_SERVER);
+        addPreRequisite(memberHasPermission, "general.not_authorized", "general.not_authorized.description");
+        if (!memberHasPermission) return;
 
-        if (!member.hasPermission(Permission.MANAGE_SERVER)) {
-            EmbedBuilder error = new EmbedBuilder();
-            error.setColor(0xff3923);
-            error.setTitle(LanguageManager.getMessage("general.icon.error", guildID) + LanguageManager.getMessage("general.not_authorized", guildID));
-            error.setDescription(LanguageManager.getMessage("general.not_authorized.description", guildID));
-            error.setTimestamp(Instant.now());
+        boolean selfMemberHasPermission = selfMember.hasPermission(Permission.MANAGE_SERVER);
+        addPreRequisite(selfMemberHasPermission, "general.nonperm", "general.nonperm.message_manage");
+        if (!selfMemberHasPermission) return;
 
-            channel.sendMessage(MessageCreateData.fromEmbeds(error.build())).queue();
+        String[] variables = rawMessage.split(" : ");
+        boolean isArgsCorrect = variables.length >= 3 && variables.length <= 10;
+        addPreRequisite(isArgsCorrect, "general.403", "general.403.description");
+    }
 
-            return;
-        }
-        if (args.isEmpty()) {
-            EmbedBuilder error = new EmbedBuilder();
-            error.setColor(0xff3923);
-            error.setTitle(LanguageManager.getMessage("general.icon.error", guildID) + LanguageManager.getMessage("general.403", guildID));
-            error.setDescription(LanguageManager.getMessage("general.403.description", guildID));
-            error.setTimestamp(Instant.now());
+    @Override
+    public void handleCommand() {
+        String[] variables = rawMessage.split(" : ");
+        String question = variables[0];
+        String iconKey = "general.icon.vote";
+        String title = question + LanguageManager.getMessage("general.icon.question", guildID);
+        String description = buildDescription(variables);
 
-            channel.sendMessage(MessageCreateData.fromEmbeds(error.build())).queue();
-
-        } else {
-            String space = " ";
-            String res = String.join(space, args);
-            String[] variables = res.split(" : ");
-            switch (variables.length) {
-                case 3:
-                    EmbedBuilder vote3 = new EmbedBuilder();
-                    vote3.setColor(0x0087ff);
-                    vote3.setTitle(LanguageManager.getMessage("general.icon.vote", guildID) + variables[0] + LanguageManager.getMessage("general.icon.question", guildID));
-                    vote3.setDescription(LanguageManager.getMessage("general.icon.1", guildID) + " " + variables[1]
-                            + "\n" + LanguageManager.getMessage("general.icon.2", guildID) + " " + variables[2]);
-                    vote3.setFooter(LanguageManager.getMessage("vote.setFooter", guildID));
-
-                    channel.sendMessage(MessageCreateData.fromEmbeds(vote3.build())).queue(message -> {
-                        message.addReaction(Emoji.fromUnicode(LanguageManager.getMessage("general.icon.1", guildID))).queue();
-                        message.addReaction(Emoji.fromUnicode(LanguageManager.getMessage("general.icon.2", guildID))).queue();
-                    });
-                    break;
-                case 4:
-                    EmbedBuilder vote4 = new EmbedBuilder();
-                    vote4.setColor(0x0087ff);
-                    vote4.setTitle(LanguageManager.getMessage("general.icon.vote", guildID) + variables[0] + LanguageManager.getMessage("general.icon.question", guildID));
-                    vote4.setDescription(LanguageManager.getMessage("general.icon.1", guildID) + " " + variables[1]
-                            + "\n" + LanguageManager.getMessage("general.icon.2", guildID) + " " + variables[2]
-                            + "\n" + LanguageManager.getMessage("general.icon.3", guildID) + " " + variables[3]);
-                    vote4.setFooter(LanguageManager.getMessage("vote.setFooter", guildID));
-
-                    channel.sendMessage(MessageCreateData.fromEmbeds(vote4.build())).queue(message -> {
-                        message.addReaction(Emoji.fromUnicode(LanguageManager.getMessage("general.icon.1", guildID))).queue();
-                        message.addReaction(Emoji.fromUnicode(LanguageManager.getMessage("general.icon.2", guildID))).queue();
-                        message.addReaction(Emoji.fromUnicode(LanguageManager.getMessage("general.icon.3", guildID))).queue();
-                    });
-                    break;
-                case 5:
-                    EmbedBuilder vote5 = new EmbedBuilder();
-                    vote5.setColor(0x0087ff);
-                    vote5.setTitle(LanguageManager.getMessage("general.icon.vote", guildID) + variables[0] + LanguageManager.getMessage("general.icon.question", guildID));
-                    vote5.setDescription(LanguageManager.getMessage("general.icon.1", guildID) + " " + variables[1]
-                            + "\n" + LanguageManager.getMessage("general.icon.2", guildID) + " " + variables[2]
-                            + "\n" + LanguageManager.getMessage("general.icon.3", guildID) + " " + variables[3]
-                            + "\n" + LanguageManager.getMessage("general.icon.4", guildID) + " " + variables[4]);
-                    vote5.setFooter(LanguageManager.getMessage("vote.setFooter", guildID));
-
-                    channel.sendMessage(MessageCreateData.fromEmbeds(vote5.build())).queue(message -> {
-                        message.addReaction(Emoji.fromUnicode(LanguageManager.getMessage("general.icon.1", guildID))).queue();
-                        message.addReaction(Emoji.fromUnicode(LanguageManager.getMessage("general.icon.2", guildID))).queue();
-                        message.addReaction(Emoji.fromUnicode(LanguageManager.getMessage("general.icon.3", guildID))).queue();
-                        message.addReaction(Emoji.fromUnicode(LanguageManager.getMessage("general.icon.4", guildID))).queue();
-                    });
-                    break;
-                case 6:
-                    EmbedBuilder vote6 = new EmbedBuilder();
-                    vote6.setColor(0x0087ff);
-                    vote6.setTitle(LanguageManager.getMessage("general.icon.vote", guildID) + variables[0] + LanguageManager.getMessage("general.icon.question", guildID));
-                    vote6.setDescription(LanguageManager.getMessage("general.icon.1", guildID) + " " + variables[1]
-                            + "\n" + LanguageManager.getMessage("general.icon.2", guildID) + " " + variables[2]
-                            + "\n" + LanguageManager.getMessage("general.icon.3", guildID) + " " + variables[3]
-                            + "\n" + LanguageManager.getMessage("general.icon.4", guildID) + " " + variables[4]
-                            + "\n" + LanguageManager.getMessage("general.icon.5", guildID) + " " + variables[5]);
-                    vote6.setFooter(LanguageManager.getMessage("vote.setFooter", guildID));
-
-                    channel.sendMessage(MessageCreateData.fromEmbeds(vote6.build())).queue(message -> {
-                        message.addReaction(Emoji.fromUnicode(LanguageManager.getMessage("general.icon.1", guildID))).queue();
-                        message.addReaction(Emoji.fromUnicode(LanguageManager.getMessage("general.icon.2", guildID))).queue();
-                        message.addReaction(Emoji.fromUnicode(LanguageManager.getMessage("general.icon.3", guildID))).queue();
-                        message.addReaction(Emoji.fromUnicode(LanguageManager.getMessage("general.icon.4", guildID))).queue();
-                        message.addReaction(Emoji.fromUnicode(LanguageManager.getMessage("general.icon.5", guildID))).queue();
-                    });
-                    break;
-                case 7:
-                    EmbedBuilder vote7 = new EmbedBuilder();
-                    vote7.setColor(0x0087ff);
-                    vote7.setTitle(LanguageManager.getMessage("general.icon.vote", guildID) + variables[0] + LanguageManager.getMessage("general.icon.question", guildID));
-                    vote7.setDescription(LanguageManager.getMessage("general.icon.1", guildID) + " " + variables[1]
-                            + "\n" + LanguageManager.getMessage("general.icon.2", guildID) + " " + variables[2]
-                            + "\n" + LanguageManager.getMessage("general.icon.3", guildID) + " " + variables[3]
-                            + "\n" + LanguageManager.getMessage("general.icon.4", guildID) + " " + variables[4]
-                            + "\n" + LanguageManager.getMessage("general.icon.5", guildID) + " " + variables[5]
-                            + "\n" + LanguageManager.getMessage("general.icon.6", guildID) + " " + variables[6]);
-                    vote7.setFooter(LanguageManager.getMessage("vote.setFooter", guildID));
-
-                    channel.sendMessage(MessageCreateData.fromEmbeds(vote7.build())).queue(message -> {
-                        message.addReaction(Emoji.fromUnicode(LanguageManager.getMessage("general.icon.1", guildID))).queue();
-                        message.addReaction(Emoji.fromUnicode(LanguageManager.getMessage("general.icon.2", guildID))).queue();
-                        message.addReaction(Emoji.fromUnicode(LanguageManager.getMessage("general.icon.3", guildID))).queue();
-                        message.addReaction(Emoji.fromUnicode(LanguageManager.getMessage("general.icon.4", guildID))).queue();
-                        message.addReaction(Emoji.fromUnicode(LanguageManager.getMessage("general.icon.5", guildID))).queue();
-                        message.addReaction(Emoji.fromUnicode(LanguageManager.getMessage("general.icon.6", guildID))).queue();
-                    });
-                    break;
-                case 8:
-                    EmbedBuilder vote8 = new EmbedBuilder();
-                    vote8.setColor(0x0087ff);
-                    vote8.setTitle(LanguageManager.getMessage("general.icon.vote", guildID) + variables[0] + LanguageManager.getMessage("general.icon.question", guildID));
-                    vote8.setDescription(LanguageManager.getMessage("general.icon.1", guildID) + " " + variables[1]
-                            + "\n" + LanguageManager.getMessage("general.icon.2", guildID) + " " + variables[2]
-                            + "\n" + LanguageManager.getMessage("general.icon.3", guildID) + " " + variables[3]
-                            + "\n" + LanguageManager.getMessage("general.icon.4", guildID) + " " + variables[4]
-                            + "\n" + LanguageManager.getMessage("general.icon.5", guildID) + " " + variables[5]
-                            + "\n" + LanguageManager.getMessage("general.icon.6", guildID) + " " + variables[6]
-                            + "\n" + LanguageManager.getMessage("general.icon.7", guildID) + " " + variables[7]);
-                    vote8.setFooter(LanguageManager.getMessage("vote.setFooter", guildID));
-
-                    channel.sendMessage(MessageCreateData.fromEmbeds(vote8.build())).queue(message -> {
-                        message.addReaction(Emoji.fromUnicode(LanguageManager.getMessage("general.icon.1", guildID))).queue();
-                        message.addReaction(Emoji.fromUnicode(LanguageManager.getMessage("general.icon.2", guildID))).queue();
-                        message.addReaction(Emoji.fromUnicode(LanguageManager.getMessage("general.icon.3", guildID))).queue();
-                        message.addReaction(Emoji.fromUnicode(LanguageManager.getMessage("general.icon.4", guildID))).queue();
-                        message.addReaction(Emoji.fromUnicode(LanguageManager.getMessage("general.icon.5", guildID))).queue();
-                        message.addReaction(Emoji.fromUnicode(LanguageManager.getMessage("general.icon.6", guildID))).queue();
-                        message.addReaction(Emoji.fromUnicode(LanguageManager.getMessage("general.icon.7", guildID))).queue();
-                    });
-                    break;
-                case 9:
-                    EmbedBuilder vote9 = new EmbedBuilder();
-                    vote9.setColor(0x0087ff);
-                    vote9.setTitle(LanguageManager.getMessage("general.icon.vote", guildID) + variables[0] + LanguageManager.getMessage("general.icon.question", guildID));
-                    vote9.setDescription(LanguageManager.getMessage("general.icon.1", guildID) + " " + variables[1]
-                            + "\n" + LanguageManager.getMessage("general.icon.2", guildID) + " " + variables[2]
-                            + "\n" + LanguageManager.getMessage("general.icon.3", guildID) + " " + variables[3]
-                            + "\n" + LanguageManager.getMessage("general.icon.4", guildID) + " " + variables[4]
-                            + "\n" + LanguageManager.getMessage("general.icon.5", guildID) + " " + variables[5]
-                            + "\n" + LanguageManager.getMessage("general.icon.6", guildID) + " " + variables[6]
-                            + "\n" + LanguageManager.getMessage("general.icon.7", guildID) + " " + variables[7]
-                            + "\n" + LanguageManager.getMessage("general.icon.8", guildID) + " " + variables[8]);
-                    vote9.setFooter(LanguageManager.getMessage("vote.setFooter", guildID));
-
-                    channel.sendMessage(MessageCreateData.fromEmbeds(vote9.build())).queue(message -> {
-                        message.addReaction(Emoji.fromUnicode(LanguageManager.getMessage("general.icon.1", guildID))).queue();
-                        message.addReaction(Emoji.fromUnicode(LanguageManager.getMessage("general.icon.2", guildID))).queue();
-                        message.addReaction(Emoji.fromUnicode(LanguageManager.getMessage("general.icon.3", guildID))).queue();
-                        message.addReaction(Emoji.fromUnicode(LanguageManager.getMessage("general.icon.4", guildID))).queue();
-                        message.addReaction(Emoji.fromUnicode(LanguageManager.getMessage("general.icon.5", guildID))).queue();
-                        message.addReaction(Emoji.fromUnicode(LanguageManager.getMessage("general.icon.6", guildID))).queue();
-                        message.addReaction(Emoji.fromUnicode(LanguageManager.getMessage("general.icon.7", guildID))).queue();
-                        message.addReaction(Emoji.fromUnicode(LanguageManager.getMessage("general.icon.8", guildID))).queue();
-                    });
-                    break;
-                case 10:
-                    EmbedBuilder vote10 = new EmbedBuilder();
-                    vote10.setColor(0x0087ff);
-                    vote10.setTitle(LanguageManager.getMessage("general.icon.vote", guildID) + variables[0] + LanguageManager.getMessage("general.icon.question", guildID));
-                    vote10.setDescription(LanguageManager.getMessage("general.icon.1", guildID) + " " + variables[1]
-                            + "\n" + LanguageManager.getMessage("general.icon.2", guildID) + " " + variables[2]
-                            + "\n" + LanguageManager.getMessage("general.icon.3", guildID) + " " + variables[3]
-                            + "\n" + LanguageManager.getMessage("general.icon.4", guildID) + " " + variables[4]
-                            + "\n" + LanguageManager.getMessage("general.icon.5", guildID) + " " + variables[5]
-                            + "\n" + LanguageManager.getMessage("general.icon.6", guildID) + " " + variables[6]
-                            + "\n" + LanguageManager.getMessage("general.icon.7", guildID) + " " + variables[7]
-                            + "\n" + LanguageManager.getMessage("general.icon.8", guildID) + " " + variables[8]
-                            + "\n" + LanguageManager.getMessage("general.icon.9", guildID) + " " + variables[9]);
-                    vote10.setFooter(LanguageManager.getMessage("vote.setFooter", guildID));
-
-                    channel.sendMessage(MessageCreateData.fromEmbeds(vote10.build())).queue(message -> {
-                        message.addReaction(Emoji.fromUnicode(LanguageManager.getMessage("general.icon.1", guildID))).queue();
-                        message.addReaction(Emoji.fromUnicode(LanguageManager.getMessage("general.icon.2", guildID))).queue();
-                        message.addReaction(Emoji.fromUnicode(LanguageManager.getMessage("general.icon.3", guildID))).queue();
-                        message.addReaction(Emoji.fromUnicode(LanguageManager.getMessage("general.icon.4", guildID))).queue();
-                        message.addReaction(Emoji.fromUnicode(LanguageManager.getMessage("general.icon.5", guildID))).queue();
-                        message.addReaction(Emoji.fromUnicode(LanguageManager.getMessage("general.icon.6", guildID))).queue();
-                        message.addReaction(Emoji.fromUnicode(LanguageManager.getMessage("general.icon.7", guildID))).queue();
-                        message.addReaction(Emoji.fromUnicode(LanguageManager.getMessage("general.icon.8", guildID))).queue();
-                        message.addReaction(Emoji.fromUnicode(LanguageManager.getMessage("general.icon.9", guildID))).queue();
-                    });
-                default:
-                    EmbedBuilder error = new EmbedBuilder();
-                    error.setColor(0xff3923);
-                    error.setTitle(LanguageManager.getMessage("general.icon.error", guildID) + LanguageManager.getMessage("vote.error.setTitle", guildID));
-                    error.setDescription(LanguageManager.getMessage("vote.error.setDescription", guildID));
-                    error.setTimestamp(Instant.now());
-
-                    channel.sendMessage(MessageCreateData.fromEmbeds(error.build())).queue();
-                    break;
+        MessageEmbed embedMessage = EmbedMessageBuilder.createCustomMessageWithoutReadyMessage(0x0087ff, title, description, iconKey, user, guildID);
+        channel.sendMessage(MessageCreateData.fromEmbeds(embedMessage)).queue(message -> {
+            for (int i = 1; i < variables.length; i++) {
+                message.addReaction(Emoji.fromUnicode(LanguageManager.getMessage("general.icon." + i, guildID))).queue();
             }
+        });
+    }
+
+    private String buildDescription(String[] variables) {
+        StringBuilder description = new StringBuilder();
+        for (int i = 1; i < variables.length; i++) {
+            description.append(LanguageManager.getMessage("general.icon." + i, guildID)).append(" ").append(variables[i]).append("\n");
         }
+
+        return description.toString();
     }
 
     @Override
