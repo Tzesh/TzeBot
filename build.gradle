@@ -17,6 +17,14 @@ repositories {
     }
 }
 
+jar {
+    manifest {
+        attributes(
+                'Main-Class': 'com.tzesh.tzebot.Main'
+        )
+    }
+}
+
 dependencies {
     implementation 'ch.qos.logback:logback-classic:1.4.11'
     implementation 'io.github.cdimascio:dotenv-java:2.3.1'

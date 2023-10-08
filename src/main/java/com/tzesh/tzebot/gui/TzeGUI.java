@@ -39,7 +39,7 @@ public class TzeGUI extends javax.swing.JFrame {
     private javax.swing.JButton buttonStart;
     private javax.swing.JButton buttonUpdate;
     private int shards = 1;
-    private final Logger LOGGER = LoggerFactory.getLogger(ConfigurationManager.class);
+    private final Logger LOGGER = LoggerFactory.getLogger(TzeGUI.class);
 
 
     public TzeGUI() {
