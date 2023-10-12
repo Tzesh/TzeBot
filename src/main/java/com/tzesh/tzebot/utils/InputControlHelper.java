@@ -39,4 +39,9 @@ public class InputControlHelper {
             return false;
         }
     }
+
+    public static boolean isYouTubeUrl(String input) {
+        if (!isUrl(input)) return false;
+        return input.contains("youtube.com") || input.contains("youtu.be");
+    }
 }

@@ -10,6 +10,7 @@ import net.dv8tion.jda.api.events.message.GenericMessageEvent;
 import static com.tzesh.tzebot.core.LanguageManager.getMessage;
 import static com.tzesh.tzebot.core.music.constants.MusicCommonConstants.DEFAULT_VOLUME;
 import static com.tzesh.tzebot.utils.InputControlHelper.isUrl;
+import static com.tzesh.tzebot.utils.InputControlHelper.isYouTubeUrl;
 
 /**
  * A class to manage the play command
@@ -33,6 +34,11 @@ public class Play<T extends GenericMessageEvent> extends AbstractMusicCommand<T>
         addPreRequisite(isSelfMemberHasPermission, "join.cannotjoin.setTitle", "join.cannotjoin.setDescription");
         if (!isSelfMemberHasPermission) return;
 
+        boolean isYouTubeUrl = isYouTubeUrl(rawMessage);
+        if (isYouTubeUrl) {
+            this.searchResult = rawMessage;
+            return;
+        }
         this.searchResult = youTube.searchAudio(rawMessage);
         boolean isFound = isUrl(rawMessage) || searchResult != null;
         addPreRequisite(isFound, "play.noresults.setTitle", "play.noresults.setDescription");
