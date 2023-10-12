@@ -116,6 +116,7 @@ public class CommandManager {
         if (boundedMusicChannelSet) {
             AbstractMusicCommand<MessageReceivedEvent> abstractMusicCommand = (AbstractMusicCommand<MessageReceivedEvent>) command;
             abstractMusicCommand.setBounded();
+            split = event.getMessage().getContentRaw().split("\\s+");
         }
 
         // starting index of arguments list

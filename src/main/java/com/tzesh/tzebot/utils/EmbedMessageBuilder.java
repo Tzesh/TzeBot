@@ -4,7 +4,9 @@ import com.sedmelluq.discord.lavaplayer.player.AudioPlayer;
 import com.sedmelluq.discord.lavaplayer.track.AudioPlaylist;
 import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
 import com.sedmelluq.discord.lavaplayer.track.AudioTrackInfo;
+import com.tzesh.tzebot.core.music.enums.MusicEmoteUnicodes;
 import net.dv8tion.jda.api.EmbedBuilder;
+import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.MessageEmbed;
 import net.dv8tion.jda.api.entities.User;
 
@@ -148,5 +150,18 @@ public class EmbedMessageBuilder {
                 .setTimestamp(Instant.now());
 
         return success.build();
+    }
+
+    public static void initializeMusicChannelEmojiControls(Message message) {
+        message.addReaction(MusicEmoteUnicodes.nowPlaying.getUnicode()).queue();
+        message.addReaction(MusicEmoteUnicodes.stop.getUnicode()).queue();
+        message.addReaction(MusicEmoteUnicodes.skip.getUnicode()).queue();
+        message.addReaction(MusicEmoteUnicodes.loop.getUnicode()).queue();
+        message.addReaction(MusicEmoteUnicodes.shuffle.getUnicode()).queue();
+        message.addReaction(MusicEmoteUnicodes.next.getUnicode()).queue();
+        message.addReaction(MusicEmoteUnicodes.previous.getUnicode()).queue();
+        message.addReaction(MusicEmoteUnicodes.volumedown.getUnicode()).queue();
+        message.addReaction(MusicEmoteUnicodes.volumeup.getUnicode()).queue();
+        message.addReaction(MusicEmoteUnicodes.queue.getUnicode()).queue();
     }
 }

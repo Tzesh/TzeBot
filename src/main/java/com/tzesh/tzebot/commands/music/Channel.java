@@ -3,7 +3,6 @@ package com.tzesh.tzebot.commands.music;
 import com.tzesh.tzebot.commands.music.abstracts.AbstractMusicCommand;
 import com.tzesh.tzebot.core.inventory.Inventory;
 import com.tzesh.tzebot.utils.EmbedMessageBuilder;
-import com.tzesh.tzebot.core.music.enums.MusicEmoteUnicodes;
 import com.tzesh.tzebot.core.LanguageManager;
 import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.MessageEmbed;
@@ -11,6 +10,7 @@ import net.dv8tion.jda.api.events.message.GenericMessageEvent;
 import net.dv8tion.jda.api.utils.messages.MessageCreateData;
 import java.util.HashMap;
 
+import static com.tzesh.tzebot.core.music.constants.MusicCommonConstants.BANNER_URL;
 import static com.tzesh.tzebot.utils.InputControlHelper.isMusicChannelPresent;
 
 
@@ -63,26 +63,14 @@ public class Channel<T extends GenericMessageEvent> extends AbstractMusicCommand
                 sendMessage(EmbedMessageBuilder.createErrorMessage("channel.wrongchannel.setTitle", "channel.wrongchannel.setDescription", user, guildID));
                 return;
             }
-
-            // delete message
+            // delete the message
             message.delete().queue();
 
-            // set channel
-            channel.sendMessage("https://raw.githubusercontent.com/Tzesh/TzeBot/master/banner.PNG").queue();
+            channel.sendMessage(BANNER_URL).queue();
 
             MessageEmbed musicChannelEmbedMessage = EmbedMessageBuilder.createMusicChannelEmbeddedMessage(guildID);
-
             channel.sendMessage(MessageCreateData.fromEmbeds(musicChannelEmbedMessage)).queue(message -> {
-                message.addReaction(MusicEmoteUnicodes.nowPlaying.getUnicode()).queue();
-                message.addReaction(MusicEmoteUnicodes.stop.getUnicode()).queue();
-                message.addReaction(MusicEmoteUnicodes.skip.getUnicode()).queue();
-                message.addReaction(MusicEmoteUnicodes.loop.getUnicode()).queue();
-                message.addReaction(MusicEmoteUnicodes.shuffle.getUnicode()).queue();
-                message.addReaction(MusicEmoteUnicodes.next.getUnicode()).queue();
-                message.addReaction(MusicEmoteUnicodes.previous.getUnicode()).queue();
-                message.addReaction(MusicEmoteUnicodes.volumedown.getUnicode()).queue();
-                message.addReaction(MusicEmoteUnicodes.volumeup.getUnicode()).queue();
-                message.addReaction(MusicEmoteUnicodes.queue.getUnicode()).queue();
+                EmbedMessageBuilder.initializeMusicChannelEmojiControls(message);
 
                 HashMap<Long, Long> IDs = new HashMap<>();
                 IDs.put(channel.getIdLong(), message.getIdLong());
