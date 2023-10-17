@@ -49,6 +49,7 @@ After you wrote "**.channel set**" into the music channel you will have been not
 of your servers. All of the database is saving per 15 minutes and also on close and loading every start.
 * Version control: If you are encountering some problems when using TzeBot substructure, just give us a feedback and then wait for a new version. In every start TzeBot will check if there is an update or not.
 * Sharding: This is a feature that allows you to use your bot too many of servers. 1 shard unofficially equals about 1500 server load.
+* MongoDB: TzeBot can use MongoDB as a database. It's really easy to setup, you can just change variables in .env file, and then you are ready to go.
 
 #### Requirements
 - Java Version (18.0+)
