@@ -1,10 +1,10 @@
 package com.tzesh.tzebot.listeners.guild.voice;
 
 import com.sedmelluq.discord.lavaplayer.player.AudioPlayer;
-import com.tzesh.tzebot.listeners.abstracts.AbstractEventListener;
 import com.tzesh.tzebot.core.music.audio.GuildMusicManager;
 import com.tzesh.tzebot.core.music.audio.PlayerManager;
 import com.tzesh.tzebot.core.music.audio.TrackScheduler;
+import com.tzesh.tzebot.listeners.abstracts.AbstractEventListener;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.channel.unions.AudioChannelUnion;
 import net.dv8tion.jda.api.events.guild.voice.GuildVoiceUpdateEvent;

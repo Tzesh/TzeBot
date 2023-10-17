@@ -4,8 +4,6 @@ import com.tzesh.tzebot.core.inventory.Inventory;
 import com.tzesh.tzebot.listeners.abstracts.AbstractEventListener;
 import net.dv8tion.jda.api.events.guild.GuildLeaveEvent;
 
-import static com.tzesh.tzebot.core.inventory.Inventory.*;
-
 /**
  * This is a simple class for event guild leave listeners
  * @author tzesh

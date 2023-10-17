@@ -1,8 +1,8 @@
 package com.tzesh.tzebot.commands.music;
 
 import com.tzesh.tzebot.commands.music.abstracts.AbstractMusicCommand;
-import com.tzesh.tzebot.utils.EmbedMessageBuilder;
 import com.tzesh.tzebot.core.language.LanguageManager;
+import com.tzesh.tzebot.utils.EmbedMessageBuilder;
 import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.MessageEmbed;
 import net.dv8tion.jda.api.events.message.GenericMessageEvent;

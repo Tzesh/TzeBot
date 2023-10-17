@@ -1,12 +1,12 @@
 package com.tzesh.tzebot.core.config;
 
+import com.tzesh.tzebot.core.adapter.EventAdapter;
 import com.tzesh.tzebot.core.config.properties.ConfigurationProperties;
 import com.tzesh.tzebot.core.inventory.Inventory;
+import com.tzesh.tzebot.core.inventory.local.LocalInventoryManager;
 import com.tzesh.tzebot.core.inventory.strategy.LocalStoreStrategy;
 import com.tzesh.tzebot.core.inventory.strategy.MongoDBStoreStrategy;
 import com.tzesh.tzebot.core.language.LanguageManager;
-import com.tzesh.tzebot.core.adapter.EventAdapter;
-import com.tzesh.tzebot.core.inventory.local.LocalInventoryManager;
 import com.tzesh.tzebot.core.version.VersionController;
 import io.github.cdimascio.dotenv.Dotenv;
 import net.dv8tion.jda.api.JDABuilder;
@@ -21,7 +21,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.security.auth.login.LoginException;
-import java.io.*;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;

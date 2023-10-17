@@ -1,8 +1,8 @@
 package com.tzesh.tzebot.commands.moderation;
 
 import com.tzesh.tzebot.commands.abstracts.AbstractCommand;
-import com.tzesh.tzebot.core.config.ConfigurationManager;
 import com.tzesh.tzebot.commands.abstracts.Command;
+import com.tzesh.tzebot.core.config.ConfigurationManager;
 import com.tzesh.tzebot.core.language.LanguageManager;
 import com.tzesh.tzebot.utils.EmbedMessageBuilder;
 import net.dv8tion.jda.api.Permission;

@@ -5,24 +5,14 @@ import com.mongodb.MongoClientSettings;
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoCollection;
-import com.mongodb.client.MongoDatabase;
-import com.mongodb.connection.ConnectionPoolSettings;
-import com.tzesh.tzebot.core.channel.abstracts.GuildChannel;
 import com.tzesh.tzebot.core.channel.impl.GuildChannelImpl;
 import com.tzesh.tzebot.core.database.abstracts.AbstractDatabaseManager;
 import org.bson.codecs.configuration.CodecRegistry;
-import org.bson.codecs.pojo.Conventions;
 import org.bson.codecs.pojo.PojoCodecProvider;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.concurrent.TimeUnit;
-
 import static com.mongodb.client.model.Filters.eq;
-import static java.util.Arrays.asList;
 import static org.bson.codecs.configuration.CodecRegistries.fromProviders;
 import static org.bson.codecs.configuration.CodecRegistries.fromRegistries;
-import static org.bson.codecs.pojo.Conventions.ANNOTATION_CONVENTION;
 
 /**
  * This manager is used to manage the database for guild channels

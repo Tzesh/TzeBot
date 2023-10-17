@@ -1,7 +1,6 @@
 package com.tzesh.tzebot.core.music.client.abstracts;
 
 import java.io.IOException;
-import java.security.GeneralSecurityException;
 
 /**
  * An abstract class to manage the platform clients (YouTube, Spotify, etc.) and their API calls

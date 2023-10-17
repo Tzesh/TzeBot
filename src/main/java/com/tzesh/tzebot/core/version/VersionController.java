@@ -1,6 +1,5 @@
 package com.tzesh.tzebot.core.version;
 
-import com.tzesh.tzebot.core.config.ConfigurationManager;
 import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

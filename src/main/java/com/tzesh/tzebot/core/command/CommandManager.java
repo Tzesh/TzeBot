@@ -1,6 +1,5 @@
 package com.tzesh.tzebot.core.command;
 
-import com.tzesh.tzebot.commands.moderation.Help;
 import com.tzesh.tzebot.commands.abstracts.Command;
 import com.tzesh.tzebot.commands.moderation.*;
 import com.tzesh.tzebot.commands.music.*;

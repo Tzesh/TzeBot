@@ -5,7 +5,6 @@ import com.tzesh.tzebot.core.common.CommonConstants;
 import com.tzesh.tzebot.core.inventory.Inventory;
 import com.tzesh.tzebot.core.music.constants.MusicCommonConstants;
 import org.bson.codecs.pojo.annotations.BsonCreator;
-import org.bson.codecs.pojo.annotations.BsonId;
 import org.bson.codecs.pojo.annotations.BsonProperty;
 
 import java.io.Serializable;
