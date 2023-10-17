@@ -1,6 +1,7 @@
 package com.tzesh.tzebot.commands.abstracts;
 
-import com.tzesh.tzebot.core.CommandContextImpl;
+import com.tzesh.tzebot.core.command.CommandContextImpl;
+import com.tzesh.tzebot.core.channel.abstracts.GuildChannel;
 import com.tzesh.tzebot.core.inventory.Inventory;
 import com.tzesh.tzebot.utils.EmbedMessageBuilder;
 import net.dv8tion.jda.api.entities.*;
@@ -31,6 +32,7 @@ public abstract class AbstractCommand<T extends GenericMessageEvent> implements 
     protected Message message;
     protected String rawMessage;
     protected String prefix;
+    protected GuildChannel guildChannel;
 
     protected abstract void initializePreRequisites();
 
@@ -38,7 +40,7 @@ public abstract class AbstractCommand<T extends GenericMessageEvent> implements 
 
     protected boolean canHandle() {
         if (!canTalk()) {
-            sendMessage(EmbedMessageBuilder.createErrorMessage("general.cannot_talk.setTitle", "", user, this.guildID));
+            sendMessage(EmbedMessageBuilder.createErrorMessage("general.cannot_talk.setTitle", "", user, this.guildChannel));
             return false;
         }
 
@@ -77,7 +79,8 @@ public abstract class AbstractCommand<T extends GenericMessageEvent> implements 
         this.selfMember = commandContext.getSelfMember();
         this.guild = commandContext.getGuild();
         this.guildID = guild.getIdLong();
-        this.prefix = Inventory.PREFIXES.getOrDefault(guildID, ".");
+        this.guildChannel = Inventory.get(guildID);
+        this.prefix = guildChannel.getPrefix();
         this.rawMessage = String.join(" ", args);
         if (commandContext.getEvent() instanceof MessageReceivedEvent) {
             this.message = ((MessageReceivedEvent) commandContext.getEvent()).getMessage();
@@ -94,14 +97,18 @@ public abstract class AbstractCommand<T extends GenericMessageEvent> implements 
     }
 
     protected void addPreRequisite(boolean condition, String titleKey, String descriptionKey) {
-        this.preRequisites.put(condition, EmbedMessageBuilder.createErrorMessage(titleKey, descriptionKey, user, this.guildID));
+        this.preRequisites.put(condition, EmbedMessageBuilder.createErrorMessage(titleKey, descriptionKey, user, this.guildChannel));
     }
 
     protected void addPreRequisite(boolean condition, String titleKey) {
-        this.preRequisites.put(condition, EmbedMessageBuilder.createErrorMessage(titleKey, "", user, this.guildID));
+        this.preRequisites.put(condition, EmbedMessageBuilder.createErrorMessage(titleKey, "", user, this.guildChannel));
     }
 
     protected void sendMessage(MessageEmbed message) {
         this.channel.sendMessage(MessageCreateData.fromEmbeds(message)).queue();
+    }
+
+    private String getClassName() {
+        return this.getClass().getSimpleName();
     }
 }

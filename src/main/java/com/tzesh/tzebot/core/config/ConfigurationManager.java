@@ -1,8 +1,12 @@
 package com.tzesh.tzebot.core.config;
 
-import com.tzesh.tzebot.core.LanguageManager;
+import com.tzesh.tzebot.core.config.properties.ConfigurationProperties;
+import com.tzesh.tzebot.core.inventory.Inventory;
+import com.tzesh.tzebot.core.inventory.strategy.LocalStoreStrategy;
+import com.tzesh.tzebot.core.inventory.strategy.MongoDBStoreStrategy;
+import com.tzesh.tzebot.core.language.LanguageManager;
 import com.tzesh.tzebot.core.adapter.EventAdapter;
-import com.tzesh.tzebot.core.inventory.InventoryManager;
+import com.tzesh.tzebot.core.inventory.local.LocalInventoryManager;
 import com.tzesh.tzebot.core.version.VersionController;
 import io.github.cdimascio.dotenv.Dotenv;
 import net.dv8tion.jda.api.JDABuilder;
@@ -27,15 +31,17 @@ import static com.tzesh.tzebot.core.common.CommonConstants.SAVE_INTERVAL;
 
 /**
  * This class is for managing the configuration of the bot
+ *
  * @author tzesh
  */
 public class ConfigurationManager {
     private static final Dotenv dotenv = Dotenv.configure()
             .ignoreIfMissing()
             .load(); // to get .env file properties which are unique for bot
-    private final static InventoryManager inventoryManager = new InventoryManager(); // inventory manager
+    private final static LocalInventoryManager inventoryManager = new LocalInventoryManager(); // inventory manager
     private final static VersionController versionController = new VersionController(); // version controller
     private final static Logger LOGGER = LoggerFactory.getLogger(ConfigurationManager.class); // logger
+    private final static ConfigurationProperties configurationProperties = new ConfigurationProperties(); // configuration properties
 
     public static String getEnvKey(String key) {
         return dotenv.get(key.toUpperCase());
@@ -47,7 +53,11 @@ public class ConfigurationManager {
                     + "\nPRE=" + pre
                     + "\nOWNER=" + owner
                     + "\nKEY=" + key
-                    + "\nSHARD=" + shards);
+                    + "\nSHARD=" + shards
+                    + "\nUSE_MONGODB=" + getEnvKey("USE_MONGODB")
+                    + "\nMONGODB_URI=" + getEnvKey("MONGODB_URI")
+                    + "\nMONGODB_DATABASE=" + getEnvKey("MONGODB_DATABASE")
+                    + "\nMONGODB_COLLECTION=" + getEnvKey("MONGODB_COLLECTION"));
         } catch (IOException exception) {
             LOGGER.info("An error occurred during saving the .env: " + exception.getMessage());
         }
@@ -64,7 +74,11 @@ public class ConfigurationManager {
                         + "\nPRE=" + DEFAULT_PREFIX
                         + "\nOWNER="
                         + "\nKEY="
-                        + "\nSHARD=");
+                        + "\nSHARD="
+                        + "\nUSE_MONGODB=" + false
+                        + "\nMONGODB_URI="
+                        + "\nMONGODB_DATABASE="
+                        + "\nMONGODB_COLLECTION=");
             } catch (IOException exception) {
                 LOGGER.info("An error occurred during creating the .env: " + exception.getMessage());
             }
@@ -78,7 +92,12 @@ public class ConfigurationManager {
     }
 
     public static void startBot(String apiKey, String token, int shards) throws LoginException {
-        ConfigurationManager.saveForAQuarter();
+        ConfigurationProperties configurationProperties = new ConfigurationProperties();
+        if (configurationProperties.isUseMongoDB()) {
+            Inventory.setInventoryStrategy(new MongoDBStoreStrategy());
+        } else {
+            Inventory.setInventoryStrategy(new LocalStoreStrategy());
+        }
         LanguageManager.getMessages();
         JDABuilder.createDefault(apiKey)
                 .addEventListeners(new EventAdapter())
@@ -110,10 +129,12 @@ public class ConfigurationManager {
     }
 
     public static void saveInventory() {
-        inventoryManager.saveInventory();
+        if (!configurationProperties.isUseMongoDB())
+            inventoryManager.saveInventory();
     }
 
     public static void loadInventory() {
-        inventoryManager.getInventory();
+        if (!configurationProperties.isUseMongoDB())
+            inventoryManager.getInventory();
     }
 }

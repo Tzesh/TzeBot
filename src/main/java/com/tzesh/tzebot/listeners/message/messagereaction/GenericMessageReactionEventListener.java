@@ -1,6 +1,6 @@
 package com.tzesh.tzebot.listeners.message.messagereaction;
 
-import com.tzesh.tzebot.core.LanguageManager;
+import com.tzesh.tzebot.core.language.LanguageManager;
 import com.tzesh.tzebot.listeners.abstracts.AbstractEventListener;
 import net.dv8tion.jda.api.events.message.react.GenericMessageReactionEvent;
 

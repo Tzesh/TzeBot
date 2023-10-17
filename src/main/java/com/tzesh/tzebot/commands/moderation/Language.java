@@ -1,8 +1,7 @@
 package com.tzesh.tzebot.commands.moderation;
 
 import com.tzesh.tzebot.commands.abstracts.AbstractCommand;
-import com.tzesh.tzebot.core.LanguageManager;
-import com.tzesh.tzebot.core.inventory.Inventory;
+import com.tzesh.tzebot.core.language.LanguageManager;
 import com.tzesh.tzebot.utils.EmbedMessageBuilder;
 import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
@@ -35,7 +34,7 @@ public class Language extends AbstractCommand<MessageReceivedEvent> {
         addPreRequisite(isLanguageCorrect, "general.403", "general.403.description");
         if (!isLanguageCorrect) return;
 
-        boolean isLanguageAlreadySet = !languages.get(args.get(0).toLowerCase()).equals(Inventory.LANGUAGES.get(guildID).toLowerCase());
+        boolean isLanguageAlreadySet = !languages.get(args.get(0).toLowerCase()).equals(this.guildChannel.getLanguage().toLowerCase());
         addPreRequisite(isLanguageAlreadySet, "language.already.setTitle", "language.already.setDescription");
     }
 
@@ -44,8 +43,10 @@ public class Language extends AbstractCommand<MessageReceivedEvent> {
         String languageAlias = args.get(0).toLowerCase();
         String desiredLanguage = languages.get(languageAlias);
 
-        Inventory.LANGUAGES.put(guildID, desiredLanguage);
-        sendMessage(EmbedMessageBuilder.createSuccessMessage("language.successful.setTitle", "", user, guildID));
+        this.guildChannel.setLanguage(desiredLanguage);
+        this.guildChannel.save();
+
+        sendMessage(EmbedMessageBuilder.createSuccessMessage("language.successful.setTitle", "", user, this.guildChannel));
     }
 
     private void initializeLanguages() {

@@ -3,7 +3,7 @@ package com.tzesh.tzebot.commands.music;
 import com.tzesh.tzebot.commands.music.abstracts.AbstractMusicCommand;
 import net.dv8tion.jda.api.events.message.GenericMessageEvent;
 
-import static com.tzesh.tzebot.core.LanguageManager.getMessage;
+import static com.tzesh.tzebot.core.language.LanguageManager.getMessage;
 
 /**
  * A class to manage the resume command

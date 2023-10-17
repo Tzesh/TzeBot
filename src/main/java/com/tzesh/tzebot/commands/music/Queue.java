@@ -5,7 +5,7 @@ import com.tzesh.tzebot.commands.abstracts.Command;
 import com.tzesh.tzebot.utils.EmbedMessageBuilder;
 import net.dv8tion.jda.api.events.message.GenericMessageEvent;
 
-import static com.tzesh.tzebot.core.LanguageManager.getMessage;
+import static com.tzesh.tzebot.core.language.LanguageManager.getMessage;
 
 /**
  * A class that represents the queue command
@@ -22,8 +22,8 @@ public class Queue<T extends GenericMessageEvent> extends AbstractMusicCommand<T
 
     @Override
     public void handleCommand() {
-        sendMessage(EmbedMessageBuilder.createNowPlayingEmbeddedMessage(audioPlayer, user, guildID));
-        sendMessage(EmbedMessageBuilder.createQueueEmbeddedMessage(queue, user, guildID));
+        sendMessage(EmbedMessageBuilder.createNowPlayingEmbeddedMessage(audioPlayer, user, this.guildChannel));
+        sendMessage(EmbedMessageBuilder.createQueueEmbeddedMessage(queue, user, this.guildChannel));
     }
 
     @Override

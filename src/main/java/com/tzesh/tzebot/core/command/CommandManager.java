@@ -1,19 +1,17 @@
-package com.tzesh.tzebot.core;
+package com.tzesh.tzebot.core.command;
 
 import com.tzesh.tzebot.commands.moderation.Help;
 import com.tzesh.tzebot.commands.abstracts.Command;
 import com.tzesh.tzebot.commands.moderation.*;
 import com.tzesh.tzebot.commands.music.*;
 import com.tzesh.tzebot.commands.music.abstracts.AbstractMusicCommand;
+import com.tzesh.tzebot.core.channel.abstracts.GuildChannel;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Pattern;
-
-import static com.tzesh.tzebot.core.inventory.Inventory.EMOJI_CONTROLLED_MUSIC_CHANNELS;
-import static com.tzesh.tzebot.core.inventory.Inventory.INITIALIZED_MUSIC_CHANNELS;
 
 /**
  * A class to manage commands and their execution
@@ -25,15 +23,17 @@ import static com.tzesh.tzebot.core.inventory.Inventory.INITIALIZED_MUSIC_CHANNE
 public class CommandManager {
 
     private final List<Command<MessageReceivedEvent>> commands = new ArrayList<>();
-    private final long guildID;
-
+    private final GuildChannel guildChannel;
+    private final Long guildID;
     private final String prefix;
 
-    public CommandManager(long guildID, String prefix) {
-        this.guildID = guildID;
-        this.prefix = prefix;
+    public CommandManager(GuildChannel guildChannel) {
+        this.guildChannel = guildChannel;
+        this.guildID = guildChannel.getGuildID();
+        this.prefix = guildChannel.getPrefix();
         initializeCommands();
     }
+
     private void initializeCommands() {
         addCommand(new Help(this));
         addCommand(new Language());
@@ -59,17 +59,18 @@ public class CommandManager {
     }
 
     private void addCommand(Command<MessageReceivedEvent> cmd) {
-        boolean nameFound = this.commands.stream().anyMatch((it) -> it.getName(guildID).equalsIgnoreCase(cmd.getName(guildID)));
-
-        if (nameFound) {
-            throw new IllegalArgumentException("A command with this name is already present.");
+        // control every single command is unique by class name
+        for (Command<MessageReceivedEvent> command : this.commands) {
+            if (command.getClass().getName().equals(cmd.getClass().getName())) {
+                throw new IllegalArgumentException("Command already exists");
+            }
         }
 
         commands.add(cmd);
     }
 
     @Nullable
-    public Command<MessageReceivedEvent> getCommand(String search, long guildID) {
+    public Command<MessageReceivedEvent> getCommand(String search) {
         String searchLower = search.toLowerCase();
 
         for (Command<MessageReceivedEvent> cmd : this.commands) {
@@ -90,17 +91,14 @@ public class CommandManager {
                 .replaceFirst("(?i)" + Pattern.quote(prefix), "")
                 .split("\\s+");
 
-        // get music channel id
-        Long musicChannelID = INITIALIZED_MUSIC_CHANNELS.computeIfAbsent(event.getGuild().getIdLong(), (id) -> 0L);
-
         // control if this is a music channel
-        boolean isMusicChannel = musicChannelID != 0L && isExists(event);
+        boolean isMusicChannel = isMusicChannel(event);
 
         // get command alias
         String commandAlias = split[0].toLowerCase();
 
         // get command
-        Command<MessageReceivedEvent> command = this.getCommand(commandAlias, guildID);
+        Command<MessageReceivedEvent> command = this.getCommand(commandAlias);
 
         // check if command exists
         if (command == null && !isMusicChannel) return;
@@ -110,23 +108,23 @@ public class CommandManager {
         boolean isMusicCommand = command.getClass().getPackage().getName().contains("music");
 
         // control if bounded music channel is set
-        boolean boundedMusicChannelSet = isMusicCommand && isMusicChannel;
+        boolean boundedMusicChannelCommand = isMusicCommand && isMusicChannel;
 
         // if bounded music channel is set, set command as bounded
-        if (boundedMusicChannelSet) {
+        if (boundedMusicChannelCommand) {
             AbstractMusicCommand<MessageReceivedEvent> abstractMusicCommand = (AbstractMusicCommand<MessageReceivedEvent>) command;
             abstractMusicCommand.setBounded();
             split = event.getMessage().getContentRaw().split("\\s+");
         }
 
         // starting index of arguments list
-        int startIndex = boundedMusicChannelSet ? 0 : 1;
+        int startIndex = boundedMusicChannelCommand ? 0 : 1;
 
         // get arguments list (music channel is 0 due to there is no prefix)
         List<String> args = List.of(split).subList(startIndex, split.length);
 
         // create command context
-        CommandContextImpl<MessageReceivedEvent> ctx = new CommandContextImpl<>(event, args);
+        CommandContextImpl<MessageReceivedEvent> ctx = new CommandContextImpl<>(event, args, guildChannel);
 
         // handle command
         command.handle(ctx);
@@ -137,8 +135,7 @@ public class CommandManager {
      * @param event the event to check
      * @return true if exists, false otherwise
      */
-    public boolean isExists(MessageReceivedEvent event) {
-        long guildId = event.getGuild().getIdLong();
-        return EMOJI_CONTROLLED_MUSIC_CHANNELS.containsKey(guildId) && EMOJI_CONTROLLED_MUSIC_CHANNELS.get(guildId).containsKey(event.getChannel().getIdLong());
+    public boolean isMusicChannel(MessageReceivedEvent event) {
+        return this.guildChannel.doesMusicChannelExist() && this.guildChannel.getMusicChannelMessageID() != null && this.guildChannel.getBoundedMusicChannelID().equals(event.getChannel().getIdLong());
     }
 }

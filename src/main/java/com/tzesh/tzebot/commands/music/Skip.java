@@ -4,7 +4,7 @@ import com.tzesh.tzebot.commands.music.abstracts.AbstractMusicCommand;
 import com.tzesh.tzebot.utils.EmbedMessageBuilder;
 import net.dv8tion.jda.api.events.message.GenericMessageEvent;
 
-import static com.tzesh.tzebot.core.LanguageManager.getMessage;
+import static com.tzesh.tzebot.core.language.LanguageManager.getMessage;
 
 public class Skip<T extends GenericMessageEvent> extends AbstractMusicCommand<T> {
 
@@ -17,8 +17,8 @@ public class Skip<T extends GenericMessageEvent> extends AbstractMusicCommand<T>
     @Override
     public void handleCommand() {
         scheduler.nextTrack();
-        String title = getMessage("skip.success.setTitle1", guildID) + audioTrackInfo.title + getMessage("skip.success.setTitle2", guildID);
-        sendMessage(EmbedMessageBuilder.createCustomSuccessMessage(title, "", user, guildID));
+        String title = getMessage("skip.success.setTitle1", this.guildChannel.getLanguage()) + audioTrackInfo.title + getMessage("skip.success.setTitle2", this.guildChannel.getLanguage());
+        sendMessage(EmbedMessageBuilder.createCustomSuccessMessage(title, "", user, this.guildChannel));
     }
 
     @Override

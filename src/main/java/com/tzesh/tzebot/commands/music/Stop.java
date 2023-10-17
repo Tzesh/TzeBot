@@ -4,7 +4,7 @@ import com.tzesh.tzebot.commands.music.abstracts.AbstractMusicCommand;
 import com.tzesh.tzebot.utils.EmbedMessageBuilder;
 import net.dv8tion.jda.api.events.message.GenericMessageEvent;
 
-import static com.tzesh.tzebot.core.LanguageManager.getMessage;
+import static com.tzesh.tzebot.core.language.LanguageManager.getMessage;
 
 /**
  * A class that represents the stop command
@@ -23,13 +23,13 @@ public class Stop<T extends GenericMessageEvent> extends AbstractMusicCommand<T>
 
         if (audioManager.isConnected()) {
             audioManager.closeAudioConnection();
-            sendMessage(EmbedMessageBuilder.createSuccessMessage("leave.success.setTitle", "", user, guildID));
+            sendMessage(EmbedMessageBuilder.createSuccessMessage("leave.success.setTitle", "", user, this.guildChannel));
         }
 
         musicManager.scheduler.getQueue().clear();
         musicManager.player.stopTrack();
         musicManager.player.setPaused(false);
-        sendMessage(EmbedMessageBuilder.createSuccessMessage("stop.success.setTitle", "", user, guildID));
+        sendMessage(EmbedMessageBuilder.createSuccessMessage("stop.success.setTitle", "", user, this.guildChannel));
     }
 
     @Override

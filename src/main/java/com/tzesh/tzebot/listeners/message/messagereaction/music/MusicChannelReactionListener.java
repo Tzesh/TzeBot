@@ -3,7 +3,8 @@ package com.tzesh.tzebot.listeners.message.messagereaction.music;
 import com.sedmelluq.discord.lavaplayer.player.AudioPlayer;
 import com.tzesh.tzebot.commands.music.*;
 import com.tzesh.tzebot.commands.music.abstracts.AbstractMusicCommand;
-import com.tzesh.tzebot.core.CommandContextImpl;
+import com.tzesh.tzebot.core.channel.abstracts.GuildChannel;
+import com.tzesh.tzebot.core.command.CommandContextImpl;
 import com.tzesh.tzebot.core.inventory.Inventory;
 import com.tzesh.tzebot.listeners.message.messagereaction.GenericMessageReactionEventListener;
 import com.tzesh.tzebot.core.music.audio.GuildMusicManager;
@@ -26,6 +27,7 @@ public class MusicChannelReactionListener extends GenericMessageReactionEventLis
     private final MessageReactionAddEvent event;
     private final Long guildID;
     private final Long channelID;
+    private final GuildChannel guildChannel;
     private final int currentVolume;
     private final UnicodeEmoji unicodeEmoji;
     private final List<String> args;
@@ -39,13 +41,14 @@ public class MusicChannelReactionListener extends GenericMessageReactionEventLis
         this.event = event;
         this.guildID = event.getGuild().getIdLong();
         this.channelID = event.getChannel().getIdLong();
-        this.currentVolume = Inventory.VOLUMES.computeIfAbsent(guildID, (id) -> 50);
+        this.guildChannel = Inventory.get(guildID);
+        this.currentVolume = guildChannel.getVolume();
         this.audioManager = event.getGuild().getAudioManager();
         this.guildMusicManager = PlayerManager.getInstance().getGuildMusicManager(event.getGuild());
         this.audioPlayer = guildMusicManager.player;
         this.unicodeEmoji = event.getEmoji().asUnicode();
         this.args = initializeArgs(unicodeEmoji);
-        this.commandContext = new CommandContextImpl<>(event, args);
+        this.commandContext = new CommandContextImpl<>(event, args, guildChannel);
         this.command = initializeCommand(unicodeEmoji);
     }
 
@@ -89,10 +92,10 @@ public class MusicChannelReactionListener extends GenericMessageReactionEventLis
 
     @Override
     protected boolean canHandle(MessageReactionAddEvent event) {
-        boolean isBot = event.getUser().isBot();
-        boolean isChannel = Inventory.EMOJI_CONTROLLED_MUSIC_CHANNELS.containsKey(guildID) && Inventory.EMOJI_CONTROLLED_MUSIC_CHANNELS.get(guildID).containsKey(channelID);
-        boolean isCommand = command != null;
-        boolean isUserInSameChannel = Objects.requireNonNull(Objects.requireNonNull(event.getMember()).getVoiceState()).getChannel() == audioManager.getConnectedChannel();
+        final boolean isBot = Objects.requireNonNull(event.getUser()).isBot();
+        final boolean isChannel = guildChannel.doesMusicChannelExist() && channelID.equals(guildChannel.getBoundedMusicChannelID());
+        final boolean isCommand = command != null;
+        final boolean isUserInSameChannel = Objects.requireNonNull(Objects.requireNonNull(event.getMember()).getVoiceState()).getChannel() == audioManager.getConnectedChannel();
 
         return !isBot && isChannel && isCommand && isUserInSameChannel;
     }
@@ -100,8 +103,8 @@ public class MusicChannelReactionListener extends GenericMessageReactionEventLis
     @Override
     protected void handle(MessageReactionAddEvent event) {
         boolean isUserInChannel = event.getMember().getVoiceState().getChannel() != null;
-        removeReaction();
 
+        removeReaction();
         if (!isUserInChannel) return;
 
         this.command.setBounded();

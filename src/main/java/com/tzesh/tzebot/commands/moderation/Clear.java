@@ -2,7 +2,7 @@ package com.tzesh.tzebot.commands.moderation;
 
 import com.tzesh.tzebot.commands.abstracts.AbstractCommand;
 import com.tzesh.tzebot.commands.abstracts.Command;
-import com.tzesh.tzebot.core.LanguageManager;
+import com.tzesh.tzebot.core.language.LanguageManager;
 import com.tzesh.tzebot.utils.InputControlHelper;
 import com.tzesh.tzebot.utils.EmbedMessageBuilder;
 import net.dv8tion.jda.api.Permission;
@@ -49,15 +49,15 @@ public class Clear extends AbstractCommand<MessageReceivedEvent> {
             // send success message
             sendMessage(
                     EmbedMessageBuilder.createCustomSuccessMessage(
-                            LanguageManager.getMessage("general.icon.success", guildID) + amount + " " + LanguageManager.getMessage("clear.successful.setTitle", guildID),
+                            LanguageManager.getMessage("general.icon.success", this.guildChannel.getLanguage()) + amount + " " + LanguageManager.getMessage("clear.successful.setTitle", this.guildChannel.getLanguage()),
                             "",
                             user,
-                            guildID
+                            guildChannel
                     )
             );
         } catch (IllegalArgumentException exception) {
             // send error message
-            sendMessage(EmbedMessageBuilder.createErrorMessage("clear.older.setTitle", "clear.older.setDescription", user, guildID));
+            sendMessage(EmbedMessageBuilder.createErrorMessage("clear.older.setTitle", "clear.older.setDescription", user, this.guildChannel));
         }
     }
 

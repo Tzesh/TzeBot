@@ -1,8 +1,10 @@
-package com.tzesh.tzebot.core;
+package com.tzesh.tzebot.core.language;
 
 import com.google.common.base.Strings;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.tzesh.tzebot.core.channel.abstracts.GuildChannel;
+import com.tzesh.tzebot.core.inventory.Inventory;
 import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,11 +15,10 @@ import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.text.Normalizer;
 import java.util.HashMap;
 import java.util.Map;
 
-import static com.tzesh.tzebot.core.inventory.Inventory.LANGUAGES;
+import static com.tzesh.tzebot.core.common.CommonConstants.DEFAULT_LANGUAGE;
 
 /**
  * This is a class responsible for managing the language of the bot
@@ -66,27 +67,24 @@ public class LanguageManager {
         getMessages();
     }
 
-    public static String getMessage(String key, long guildID) {
+    public static String getMessage(String key, GuildChannel channel) {
+        return getMessage(key, channel.getLanguage());
+    }
+
+    public static String getMessage(String key, String language) {
         if (Strings.isNullOrEmpty(key)) return "";
-        String shortening = LANGUAGES.computeIfAbsent(guildID, (id) -> "en_en");
-        if (shortening.equals("en_en")) {
-            return localizer.get(key).get("en_en");
-        } else if (shortening.equals("tr_tr")) {
-            return localizer.get(key).get("tr_tr");
-        } else {
-            return "Error_Message_Not_Found";
-        }
+
+        String result = localizer.get(key).get(language);
+
+        if (Strings.isNullOrEmpty(result)) return "An error occurred during getting message key: " + key + " language: " + language;
+        return localizer.get(key).get(language);
+    }
+
+    public static String getMessage(String key, long guildID) {
+        return getMessage(key, Inventory.get(guildID));
     }
 
     public static String getMessage(String key) {
-        return localizer.get(key).get("en_en");
-    }
-
-    public static String normalizer(String abnormal) {
-        abnormal = Normalizer.normalize(abnormal, Normalizer.Form.NFD);
-        abnormal = abnormal.replaceAll("[^\\p{ASCII}]", "");
-        abnormal = abnormal.replaceAll("\\p{M}", "");
-        abnormal = abnormal.toLowerCase();
-        return abnormal;
+        return localizer.get(key).get(DEFAULT_LANGUAGE);
     }
 }

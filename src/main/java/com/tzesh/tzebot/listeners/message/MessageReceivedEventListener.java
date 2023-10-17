@@ -1,16 +1,11 @@
 package com.tzesh.tzebot.listeners.message;
 
-import com.tzesh.tzebot.core.CommandManager;
-import com.tzesh.tzebot.core.config.ConfigurationManager;
+import com.tzesh.tzebot.core.channel.abstracts.GuildChannel;
+import com.tzesh.tzebot.core.command.CommandManager;
+import com.tzesh.tzebot.core.inventory.Inventory;
 import com.tzesh.tzebot.listeners.abstracts.AbstractEventListener;
 import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
-
-import java.util.HashMap;
-
-import static com.tzesh.tzebot.core.common.CommonConstants.DEFAULT_PREFIX;
-import static com.tzesh.tzebot.core.inventory.Inventory.EMOJI_CONTROLLED_MUSIC_CHANNELS;
-import static com.tzesh.tzebot.core.inventory.Inventory.PREFIXES;
 
 /**
  * A method for handling message reactions to commands
@@ -22,18 +17,12 @@ public class MessageReceivedEventListener extends AbstractEventListener<MessageR
     protected void handle(MessageReceivedEvent event) {
         // get guild id and prefix
         final long guildId = event.getGuild().getIdLong();
-        final String prefix = PREFIXES.computeIfAbsent(guildId, (id) -> DEFAULT_PREFIX);
 
-        // check if this is a music channel message
-        HashMap<Long, Long> IDs = EMOJI_CONTROLLED_MUSIC_CHANNELS.computeIfAbsent(event.getGuild().getIdLong(), (id) -> null);
-        if (IDs != null && IDs.containsKey(event.getChannel().getIdLong())) {
-            // handle music channel message
-            new CommandManager(guildId, prefix).handleCommand(event);
-            return;
-        }
+        // get command guild channel
+        final GuildChannel guildChannel = Inventory.get(guildId);
 
-        // handle command
-        new CommandManager(guildId, prefix).handleCommand(event);
+        // get command manager and handle command
+        new CommandManager(guildChannel).handleCommand(event);
     }
 
     @Override
@@ -47,17 +36,19 @@ public class MessageReceivedEventListener extends AbstractEventListener<MessageR
             return false;
         }
 
+        // get guild id and prefix
+        final long guildId = event.getGuild().getIdLong();
+
+        // get command guild channel
+         final GuildChannel guildChannel = Inventory.get(guildId);
+
         // check if this is a music channel message
-        HashMap<Long, Long> IDs = EMOJI_CONTROLLED_MUSIC_CHANNELS.computeIfAbsent(event.getGuild().getIdLong(), (id) -> null);
-        if (IDs != null && IDs.containsKey(event.getChannel().getIdLong())) {
+        if (guildChannel.doesMusicChannelExist() && guildChannel.getBoundedMusicChannelID().equals(event.getChannel().getIdLong())) {
             return true;
         }
         // check if this is a command
         else {
-            final long guildId = event.getGuild().getIdLong();
-            String pre = PREFIXES.computeIfAbsent(guildId, (id) -> ConfigurationManager.getEnvKey("pre"));
-
-            return raw.startsWith(pre);
+            return raw.startsWith(guildChannel.getPrefix());
         }
     }
 }

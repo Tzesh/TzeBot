@@ -4,6 +4,7 @@ import com.sedmelluq.discord.lavaplayer.player.AudioPlayer;
 import com.sedmelluq.discord.lavaplayer.track.AudioPlaylist;
 import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
 import com.sedmelluq.discord.lavaplayer.track.AudioTrackInfo;
+import com.tzesh.tzebot.core.channel.abstracts.GuildChannel;
 import com.tzesh.tzebot.core.music.enums.MusicEmoteUnicodes;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Message;
@@ -15,7 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.BlockingQueue;
 
-import static com.tzesh.tzebot.core.LanguageManager.getMessage;
+import static com.tzesh.tzebot.core.language.LanguageManager.getMessage;
 import static com.tzesh.tzebot.utils.FormatHelper.formatTime;
 import static com.tzesh.tzebot.utils.FormatHelper.formatURL;
 
@@ -29,66 +30,66 @@ public class EmbedMessageBuilder {
     private static final int gray = 0xcccccc;
     private static final int green = 0x00ff00;
 
-    public static MessageEmbed createSuccessMessage(String titleKey, String descriptionKey, String iconKey, User user, long guildID) {
-        return createCustomMessage(green, titleKey, descriptionKey, iconKey, user, guildID);
+    public static MessageEmbed createSuccessMessage(String titleKey, String descriptionKey, String iconKey, User user, GuildChannel guildChannel) {
+        return createCustomMessage(green, titleKey, descriptionKey, iconKey, user, guildChannel);
     }
 
-    public static MessageEmbed createSuccessMessage(String titleKey, String descriptionKey, User user, long guildID) {
-        return createCustomMessage(red, titleKey, descriptionKey, "general.icon.success", user, guildID);
+    public static MessageEmbed createSuccessMessage(String titleKey, String descriptionKey, User user, GuildChannel guildChannel) {
+        return createCustomMessage(red, titleKey, descriptionKey, "general.icon.success", user, guildChannel);
     }
 
-    public static MessageEmbed createErrorMessage(String titleKey, String descriptionKey, User user, long guildID) {
-        return createCustomMessage(red, titleKey, descriptionKey, "general.icon.error", user, guildID);
+    public static MessageEmbed createErrorMessage(String titleKey, String descriptionKey, User user, GuildChannel guildChannel) {
+        return createCustomMessage(red, titleKey, descriptionKey, "general.icon.error", user, guildChannel);
     }
 
-    public static MessageEmbed createCustomSuccessMessage(String title, String description, User user, long guildID) {
-        return createCustomMessageWithoutReadyMessage(green, title, description, "general.icon.success", user, guildID);
+    public static MessageEmbed createCustomSuccessMessage(String title, String description, User user, GuildChannel guildChannel) {
+        return createCustomMessageWithoutReadyMessage(green, title, description, "general.icon.success", user, guildChannel);
     }
 
-    public static MessageEmbed createCustomMessage(int color, String titleKey, String descriptionKey, String iconKey, User user, long guildID) {
+    public static MessageEmbed createCustomMessage(int color, String titleKey, String descriptionKey, String iconKey, User user, GuildChannel guildChannel) {
         EmbedBuilder builder = new EmbedBuilder()
                 .setColor(color)
-                .setTitle(getMessage(iconKey, guildID) + getMessage(titleKey, guildID))
-                .setDescription(getMessage(descriptionKey, guildID))
-                .setFooter(getMessage("general.bythecommand", guildID) + user.getName(), user.getAvatarUrl())
+                .setTitle(getMessage(iconKey, guildChannel) + getMessage(titleKey, guildChannel))
+                .setDescription(getMessage(descriptionKey, guildChannel))
+                .setFooter(getMessage("general.bythecommand", guildChannel) + user.getName(), user.getAvatarUrl())
                 .setTimestamp(Instant.now());
 
         return builder.build();
     }
 
-    public static MessageEmbed createCustomMessageWithoutReadyMessage(int color, String title, String description, String iconKey, User user, long guildID) {
+    public static MessageEmbed createCustomMessageWithoutReadyMessage(int color, String title, String description, String iconKey, User user, GuildChannel guildChannel) {
         EmbedBuilder builder = new EmbedBuilder()
                 .setColor(color)
-                .setTitle(getMessage(iconKey, guildID) + title)
+                .setTitle(getMessage(iconKey, guildChannel) + title)
                 .setDescription(description)
-                .setFooter(getMessage("general.bythecommand", guildID) + user.getName(), user.getAvatarUrl())
+                .setFooter(getMessage("general.bythecommand", guildChannel) + user.getName(), user.getAvatarUrl())
                 .setTimestamp(Instant.now());
 
         return builder.build();
     }
 
-    public static MessageEmbed createMusicChannelEmbeddedMessage(long guildID) {
+    public static MessageEmbed createMusicChannelEmbeddedMessage(GuildChannel guildChannel) {
         EmbedBuilder builder = new EmbedBuilder()
                 .setColor(gray)
-                .setTitle(getMessage("music.icon", guildID) + " " + getMessage("channel.setTitle", guildID))
-                .setDescription(getMessage("channel.firstMessage", guildID))
-                .addField(getMessage("general.icon.nowplaying", guildID), getMessage("channel.pauseresume", guildID), true)
-                .addField(getMessage("general.icon.stop", guildID), getMessage("stop.gethelp", guildID), true)
-                .addField(getMessage("general.icon.skip", guildID), getMessage("skip.gethelp", guildID), true)
-                .addField(getMessage("general.icon.loop", guildID), getMessage("loop.gethelp", guildID), true)
-                .addField(getMessage("general.icon.shuffle", guildID), getMessage("shuffle.gethelp", guildID), true)
-                .addField(getMessage("general.icon.next", guildID), getMessage("channel.next", guildID), true)
-                .addField(getMessage("general.icon.previous", guildID), getMessage("channel.previous", guildID), true)
-                .addField(getMessage("general.icon.volumedown", guildID), getMessage("channel.volumedown", guildID), true)
-                .addField(getMessage("general.icon.volume", guildID), getMessage("channel.volume", guildID), true)
+                .setTitle(getMessage("music.icon", guildChannel) + " " + getMessage("channel.setTitle", guildChannel))
+                .setDescription(getMessage("channel.firstMessage", guildChannel))
+                .addField(getMessage("general.icon.nowplaying", guildChannel), getMessage("channel.pauseresume", guildChannel), true)
+                .addField(getMessage("general.icon.stop", guildChannel), getMessage("stop.gethelp", guildChannel), true)
+                .addField(getMessage("general.icon.skip", guildChannel), getMessage("skip.gethelp", guildChannel), true)
+                .addField(getMessage("general.icon.loop", guildChannel), getMessage("loop.gethelp", guildChannel), true)
+                .addField(getMessage("general.icon.shuffle", guildChannel), getMessage("shuffle.gethelp", guildChannel), true)
+                .addField(getMessage("general.icon.next", guildChannel), getMessage("channel.next", guildChannel), true)
+                .addField(getMessage("general.icon.previous", guildChannel), getMessage("channel.previous", guildChannel), true)
+                .addField(getMessage("general.icon.volumedown", guildChannel), getMessage("channel.volumedown", guildChannel), true)
+                .addField(getMessage("general.icon.volume", guildChannel), getMessage("channel.volume", guildChannel), true)
                 .addBlankField(true)
-                .addField(getMessage("general.icon.queue", guildID), getMessage("channel.queuenp", guildID), true)
+                .addField(getMessage("general.icon.queue", guildChannel), getMessage("channel.queuenp", guildChannel), true)
                 .addBlankField(true)
-                .setFooter(getMessage("channel.setFooter", guildID));
+                .setFooter(getMessage("channel.setFooter", guildChannel));
         return builder.build();
     }
 
-    public static MessageEmbed createNowPlayingEmbeddedMessage(AudioPlayer player, User user, long guildID) {
+    public static MessageEmbed createNowPlayingEmbeddedMessage(AudioPlayer player, User user, GuildChannel guildChannel) {
         AudioTrackInfo info = player.getPlayingTrack().getInfo();
 
         EmbedBuilder builder = new EmbedBuilder()
@@ -100,19 +101,19 @@ public class EmbedMessageBuilder {
                         formatTime(player.getPlayingTrack().getPosition()),
                         formatTime(player.getPlayingTrack().getDuration())))
                 .setTimestamp(Instant.now())
-                .setFooter(getMessage("general.bythecommand", guildID) + user.getName(), user.getAvatarUrl());
+                .setFooter(getMessage("general.bythecommand", guildChannel) + user.getName(), user.getAvatarUrl());
 
         return builder.build();
     }
 
-    public static MessageEmbed createQueueEmbeddedMessage(BlockingQueue<AudioTrack> queue, User user, long guildID) {
+    public static MessageEmbed createQueueEmbeddedMessage(BlockingQueue<AudioTrack> queue, User user, GuildChannel guildChannel) {
         int trackCount = queue.size();
         List<AudioTrack> tracks = new ArrayList<>(queue);
 
         EmbedBuilder builder = new EmbedBuilder()
-                .setTitle(getMessage("general.icon.queue", guildID) + getMessage("queue.setTitle", guildID) + queue.size() + ")")
+                .setTitle(getMessage("general.icon.queue", guildChannel) + getMessage("queue.setTitle", guildChannel) + queue.size() + ")")
                 .setTimestamp(Instant.now())
-                .setFooter(getMessage("general.bythecommand", guildID) + user.getName(), user.getAvatarUrl());
+                .setFooter(getMessage("general.bythecommand", guildChannel) + user.getName(), user.getAvatarUrl());
 
         for (int i = 0; i < trackCount; i++) {
             AudioTrack track = tracks.get(i);
@@ -128,25 +129,25 @@ public class EmbedMessageBuilder {
         return builder.build();
     }
 
-    public static MessageEmbed addedToNowPlaying(AudioTrackInfo info, User user, long guildID) {
+    public static MessageEmbed addedToNowPlaying(AudioTrackInfo info, User user, GuildChannel guildChannel) {
         EmbedBuilder success = new EmbedBuilder()
                 .setColor(0x00ff00)
                 .setAuthor(info.author)
-                .setTitle(getMessage("general.icon.play", guildID) + getMessage("play.success.setTitle", guildID) + info.title, info.uri)
-                .setFooter(getMessage("general.bythecommand", guildID) + user.getName(), user.getAvatarUrl())
+                .setTitle(getMessage("general.icon.play", guildChannel) + getMessage("play.success.setTitle", guildChannel) + info.title, info.uri)
+                .setFooter(getMessage("general.bythecommand", guildChannel) + user.getName(), user.getAvatarUrl())
                 .setImage(formatURL("https://img.youtube.com/vi/" + info.uri, false) + "/0.jpg")
                 .setTimestamp(Instant.now());
 
         return success.build();
     }
 
-    public static MessageEmbed addedToQueue(AudioPlaylist audioPlaylist, User user, long guildID) {
+    public static MessageEmbed addedToQueue(AudioPlaylist audioPlaylist, User user, GuildChannel guildChannel) {
         AudioTrack firstTrack = audioPlaylist.getSelectedTrack();
         EmbedBuilder success = new EmbedBuilder()
                 .setColor(0x00ff00)
-                .setTitle(getMessage("play.playlist.setTitle1", guildID) + firstTrack.getInfo().title + getMessage("play.playlist.setTitle2", guildID) + audioPlaylist.getName() + ")")
+                .setTitle(getMessage("play.playlist.setTitle1", guildChannel) + firstTrack.getInfo().title + getMessage("play.playlist.setTitle2", guildChannel) + audioPlaylist.getName() + ")")
                 .setDescription(getMessage("play.playlist.size") + ": " + audioPlaylist.getTracks().size())
-                .setFooter(getMessage("general.bythecommand", guildID) + user.getName(), user.getAvatarUrl())
+                .setFooter(getMessage("general.bythecommand", guildChannel) + user.getName(), user.getAvatarUrl())
                 .setTimestamp(Instant.now());
 
         return success.build();

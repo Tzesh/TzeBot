@@ -1,6 +1,8 @@
 package com.tzesh.tzebot.listeners.abstracts;
 
+import com.tzesh.tzebot.core.channel.abstracts.GuildChannel;
 import net.dv8tion.jda.api.events.Event;
+import net.dv8tion.jda.api.events.GenericEvent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

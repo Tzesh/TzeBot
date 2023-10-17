@@ -4,7 +4,7 @@ import com.tzesh.tzebot.commands.music.abstracts.AbstractMusicCommand;
 import com.tzesh.tzebot.utils.EmbedMessageBuilder;
 import net.dv8tion.jda.api.events.message.GenericMessageEvent;
 
-import static com.tzesh.tzebot.core.LanguageManager.getMessage;
+import static com.tzesh.tzebot.core.language.LanguageManager.getMessage;
 
 /**
  * A class to manage the leave command
@@ -27,11 +27,11 @@ public class Leave<T extends GenericMessageEvent> extends AbstractMusicCommand<T
         if (audioPlayer.getPlayingTrack() != null) {
             musicManager.stopAndClearQueue();
 
-            sendMessage(EmbedMessageBuilder.createSuccessMessage("stop.success.setTitle", "", user, guildID));
+            sendMessage(EmbedMessageBuilder.createSuccessMessage("stop.success.setTitle", "", user, this.guildChannel));
         }
 
         audioManager.closeAudioConnection();
-        sendMessage(EmbedMessageBuilder.createSuccessMessage("leave.success.setTitle", "", user, guildID));
+        sendMessage(EmbedMessageBuilder.createSuccessMessage("leave.success.setTitle", "", user, this.guildChannel));
     }
 
     @Override

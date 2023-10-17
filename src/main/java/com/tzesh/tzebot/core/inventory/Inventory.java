@@ -1,7 +1,12 @@
 package com.tzesh.tzebot.core.inventory;
 
+import com.tzesh.tzebot.core.channel.abstracts.GuildChannel;
+import com.tzesh.tzebot.core.inventory.strategy.LocalStoreStrategy;
+import com.tzesh.tzebot.core.inventory.strategy.abstracts.StoreStrategy;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.Map;
 
 /**
@@ -10,10 +15,25 @@ import java.util.Map;
  * @author tzesh
  */
 public class Inventory {
-    public static Map<Long, String> PREFIXES = new HashMap<>(); // All the prefixes of the servers default is .env's prefix setting
-    public static Map<Long, String> LANGUAGES = new HashMap<>(); // All the languages of the servers default is English
-    public static Map<Long, LinkedList<Long>> VOTE_ROLE_CHANNELS = new HashMap<>(); // Vote role commands, we don't want to lose messages and role data when we restart the bot.
-    public static Map<Long, HashMap<Long, Long>> EMOJI_CONTROLLED_MUSIC_CHANNELS = new HashMap<>(); // Music channels that are created and initialized.
-    public static Map<Long, Integer> VOLUMES = new HashMap<>(); // Volumes of the servers default is 50%
-    public static Map<Long, Long> INITIALIZED_MUSIC_CHANNELS = new HashMap<>(); // Music channels that are created but either initialized or not. It's important value for preventing some kind of abusing of channel creation.
+    public static StoreStrategy<Long, GuildChannel> inventoryStrategy = new LocalStoreStrategy();
+    public static Map<Long, GuildChannel> GUILD_CHANNELS = new HashMap<>();
+    private final static Logger LOGGER = LoggerFactory.getLogger(Inventory.class);
+
+    public static GuildChannel get(Long guildID) {
+        return inventoryStrategy.get(guildID);
+    }
+
+    public static void save(GuildChannel guildChannel) {
+        inventoryStrategy.save(guildChannel);
+    }
+
+    public static void remove(Long guildID) {
+        LOGGER.info("Removing guild channel with id: " + guildID);
+        inventoryStrategy.remove(get(guildID));
+    }
+
+    public static void setInventoryStrategy(StoreStrategy<Long, GuildChannel> inventoryStrategy) {
+        LOGGER.info("Setting inventory strategy to: " + inventoryStrategy.getClass().getSimpleName());
+        Inventory.inventoryStrategy = inventoryStrategy;
+    }
 }

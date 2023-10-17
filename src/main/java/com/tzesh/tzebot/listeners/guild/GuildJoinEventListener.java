@@ -1,5 +1,8 @@
 package com.tzesh.tzebot.listeners.guild;
 
+import com.tzesh.tzebot.core.channel.abstracts.GuildChannel;
+import com.tzesh.tzebot.core.channel.impl.GuildChannelImpl;
+import com.tzesh.tzebot.core.inventory.Inventory;
 import com.tzesh.tzebot.listeners.abstracts.AbstractEventListener;
 import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.channel.concrete.TextChannel;
@@ -12,8 +15,8 @@ import net.dv8tion.jda.api.events.guild.GuildJoinEvent;
 public class GuildJoinEventListener extends AbstractEventListener<GuildJoinEvent> {
     @Override
     protected boolean canHandle(GuildJoinEvent event) {
-        TextChannel defaultChannel = event.getGuild().getDefaultChannel().asTextChannel();
-        boolean doesBotHavePermission = event.getGuild().getSelfMember().hasPermission(defaultChannel, Permission.MESSAGE_SEND);
+        final TextChannel defaultChannel = event.getGuild().getDefaultChannel().asTextChannel();
+        final boolean doesBotHavePermission = event.getGuild().getSelfMember().hasPermission(defaultChannel, Permission.MESSAGE_SEND);
 
         return doesBotHavePermission;
     }

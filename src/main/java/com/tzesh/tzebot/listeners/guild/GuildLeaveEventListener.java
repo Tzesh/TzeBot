@@ -1,5 +1,6 @@
 package com.tzesh.tzebot.listeners.guild;
 
+import com.tzesh.tzebot.core.inventory.Inventory;
 import com.tzesh.tzebot.listeners.abstracts.AbstractEventListener;
 import net.dv8tion.jda.api.events.guild.GuildLeaveEvent;
 
@@ -20,12 +21,6 @@ public class GuildLeaveEventListener extends AbstractEventListener<GuildLeaveEve
         long guildID = event.getGuild().getIdLong();
 
         LOGGER.info("Left guild {}", event.getGuild().getName());
-
-        PREFIXES.remove(guildID);
-        LANGUAGES.remove(guildID);
-        EMOJI_CONTROLLED_MUSIC_CHANNELS.remove(guildID);
-        INITIALIZED_MUSIC_CHANNELS.remove(guildID);
-        VOTE_ROLE_CHANNELS.remove(guildID);
-        VOLUMES.remove(guildID);
+        Inventory.remove(guildID);
     }
 }

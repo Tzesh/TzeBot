@@ -1,6 +1,7 @@
 package com.tzesh.tzebot.utils;
 
-import com.tzesh.tzebot.core.CommandContextImpl;
+import com.tzesh.tzebot.core.channel.abstracts.GuildChannel;
+import com.tzesh.tzebot.core.command.CommandContextImpl;
 import com.tzesh.tzebot.core.inventory.Inventory;
 
 import java.net.MalformedURLException;
@@ -22,13 +23,10 @@ public class InputControlHelper {
     }
 
     public static boolean isMusicChannelPresent(CommandContextImpl commandContext) {
-        long guildID = commandContext.getGuild().getIdLong();
+        final long guildID = commandContext.getGuild().getIdLong();
+        final GuildChannel guildChannel = Inventory.get(guildID);
 
-        if (Inventory.INITIALIZED_MUSIC_CHANNELS.containsKey(guildID)) {
-            return commandContext.getGuild().getChannels().contains(commandContext.getGuild().getTextChannelById(Inventory.INITIALIZED_MUSIC_CHANNELS.get(guildID)));
-        }
-
-        return false;
+        return guildChannel.doesMusicChannelExist() && guildChannel.getMusicChannelMessageID() != null;
     }
 
     public static boolean isUrl(String input) {

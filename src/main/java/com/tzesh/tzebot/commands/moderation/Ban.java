@@ -2,7 +2,7 @@ package com.tzesh.tzebot.commands.moderation;
 
 import com.tzesh.tzebot.commands.abstracts.AbstractCommand;
 import com.tzesh.tzebot.commands.abstracts.Command;
-import com.tzesh.tzebot.core.LanguageManager;
+import com.tzesh.tzebot.core.language.LanguageManager;
 import com.tzesh.tzebot.utils.EmbedMessageBuilder;
 import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.Member;
@@ -46,10 +46,10 @@ public class Ban extends AbstractCommand<MessageReceivedEvent> {
         else banRequested.ban(1, TimeUnit.DAYS)
                 .reason(String.format(LanguageManager.getMessage("ban.banned.without"), member)).queue();
 
-        String successTitle = banRequested.getEffectiveName() + " " + LanguageManager.getMessage("ban.success.title", guildID);
-        String successDescription = args.size() == 1 ? LanguageManager.getMessage("ban.success.description1", guildID) : LanguageManager.getMessage("ban.success.description2", guildID) + reason;
+        String successTitle = banRequested.getEffectiveName() + " " + LanguageManager.getMessage("ban.success.title", this.guildChannel.getLanguage());
+        String successDescription = args.size() == 1 ? LanguageManager.getMessage("ban.success.description1", this.guildChannel.getLanguage()) : LanguageManager.getMessage("ban.success.description2", this.guildChannel.getLanguage()) + reason;
 
-        sendMessage(EmbedMessageBuilder.createCustomSuccessMessage(successTitle, successDescription, user, guildID));
+        sendMessage(EmbedMessageBuilder.createCustomSuccessMessage(successTitle, successDescription, user, this.guildChannel));
     }
 
     @Override

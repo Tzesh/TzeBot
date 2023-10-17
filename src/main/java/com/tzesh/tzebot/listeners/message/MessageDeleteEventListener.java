@@ -1,12 +1,9 @@
 package com.tzesh.tzebot.listeners.message;
 
+import com.tzesh.tzebot.core.channel.abstracts.GuildChannel;
+import com.tzesh.tzebot.core.inventory.Inventory;
 import com.tzesh.tzebot.listeners.abstracts.AbstractEventListener;
 import net.dv8tion.jda.api.events.message.MessageDeleteEvent;
-
-import java.util.HashMap;
-
-import static com.tzesh.tzebot.core.inventory.Inventory.EMOJI_CONTROLLED_MUSIC_CHANNELS;
-import static com.tzesh.tzebot.core.inventory.Inventory.VOTE_ROLE_CHANNELS;
 
 /**
  * A method to handle message deletion events
@@ -15,28 +12,42 @@ import static com.tzesh.tzebot.core.inventory.Inventory.VOTE_ROLE_CHANNELS;
 public class MessageDeleteEventListener extends AbstractEventListener<MessageDeleteEvent> {
     @Override
     protected void handle(MessageDeleteEvent event) {
+        // get guild id and prefix
+        final long guildId = event.getGuild().getIdLong();
+
+        // get command guild channel
+        final GuildChannel guildChannel = Inventory.get(guildId);
+
         // check if this is a vote message
-        if (VOTE_ROLE_CHANNELS.containsKey(event.getMessageIdLong())) {
-            VOTE_ROLE_CHANNELS.remove(event.getMessageIdLong());
+        if (guildChannel.doesVoteRoleChannelExist() && guildChannel.getVoteRoleMessageID().equals(event.getMessageIdLong())) {
+            guildChannel.setVoteRoleMessageID(null);
+            guildChannel.setVoteRoleIDs(null);
+            guildChannel.save();
             return;
         }
 
         // check is this is a music channel message
-        HashMap<Long, Long> IDs = EMOJI_CONTROLLED_MUSIC_CHANNELS.computeIfAbsent(event.getGuild().getIdLong(), (id) -> null);
-        if (IDs != null && IDs.containsValue(event.getMessageIdLong())) {
-            IDs.values().remove(event.getMessageIdLong());
+        if (guildChannel.doesMusicChannelExist() && guildChannel.getMusicChannelMessageID().equals(event.getMessageIdLong())) {
+            guildChannel.setMusicChannelMessageID(null);
+            guildChannel.setBoundedMusicChannelID(null);
+            guildChannel.save();
         }
     }
 
     @Override
     protected boolean canHandle(MessageDeleteEvent event) {
+        // get guild id and prefix
+        final long guildId = event.getGuild().getIdLong();
+
+        // get command guild channel
+        final GuildChannel guildChannel = Inventory.get(guildId);
+
         // check if this is a vote message
-        if (VOTE_ROLE_CHANNELS.containsKey(event.getMessageIdLong())) {
+        if (guildChannel.doesVoteRoleChannelExist() && guildChannel.getVoteRoleMessageID().equals(event.getMessageIdLong())) {
             return true;
         }
 
         // check is this is a music channel message
-        HashMap<Long, Long> IDs = EMOJI_CONTROLLED_MUSIC_CHANNELS.computeIfAbsent(event.getGuild().getIdLong(), (id) -> null);
-        return IDs != null && IDs.containsValue(event.getMessageIdLong());
+        return guildChannel.doesMusicChannelExist() && guildChannel.getMusicChannelMessageID() != null && guildChannel.getMusicChannelMessageID().equals(event.getMessageIdLong());
     }
 }

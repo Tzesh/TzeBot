@@ -1,5 +1,6 @@
 package com.tzesh.tzebot.listeners.session;
 
+import com.tzesh.tzebot.core.channel.abstracts.GuildChannel;
 import com.tzesh.tzebot.core.inventory.Inventory;
 import com.tzesh.tzebot.listeners.abstracts.AbstractEventListener;
 import com.tzesh.tzebot.utils.EmbedMessageBuilder;
@@ -7,9 +8,6 @@ import net.dv8tion.jda.api.entities.MessageEmbed;
 import net.dv8tion.jda.api.entities.channel.concrete.TextChannel;
 import net.dv8tion.jda.api.events.session.ReadyEvent;
 import net.dv8tion.jda.api.utils.messages.MessageEditData;
-
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * This is a simple event listener for ready events
@@ -30,26 +28,21 @@ public class ReadyEventListener extends AbstractEventListener<ReadyEvent> {
     }
 
     private void regenerateMusicChannels(ReadyEvent event) {
-        Inventory.INITIALIZED_MUSIC_CHANNELS.keySet().forEach(guildID -> {
-            Map<Long, Long> channelInformation = Inventory.EMOJI_CONTROLLED_MUSIC_CHANNELS.getOrDefault(guildID, new HashMap<>());
-            if (channelInformation.size() != 0) {
-                initializeMusicChannel(guildID, event, channelInformation);
+        Inventory.GUILD_CHANNELS.keySet().forEach(guildID -> {
+            GuildChannel guildChannel = Inventory.get(guildID);
+            if (guildChannel.doesMusicChannelExist()) {
+                initializeMusicChannel(event, guildChannel);
             }
         });
     }
 
-    private void initializeMusicChannel(Long guildID, ReadyEvent event, Map<Long, Long> channelInformation) {
-        channelInformation.forEach((channelID, messageID) -> {
-            TextChannel channel = event.getJDA().getTextChannelById(channelID);
-            MessageEmbed embedMessage = EmbedMessageBuilder.createMusicChannelEmbeddedMessage(channelID);
-            MessageEditData editData = MessageEditData.fromEmbeds(embedMessage);
+    private void initializeMusicChannel(ReadyEvent event, GuildChannel guildChannel) {
+        TextChannel channel = event.getJDA().getTextChannelById(guildChannel.getBoundedMusicChannelID());
+        MessageEmbed embedMessage = EmbedMessageBuilder.createMusicChannelEmbeddedMessage(guildChannel);
+        MessageEditData editData = MessageEditData.fromEmbeds(embedMessage);
 
-            if (channel != null) {
-                channel.editMessageById(messageID, editData).queue(EmbedMessageBuilder::initializeMusicChannelEmojiControls);
-            } else {
-                Inventory.EMOJI_CONTROLLED_MUSIC_CHANNELS.remove(guildID);
-                Inventory.INITIALIZED_MUSIC_CHANNELS.remove(guildID);
-            }
-        });
+        if (channel != null) {
+            channel.editMessageById(guildChannel.getMusicChannelMessageID(), editData).queue(EmbedMessageBuilder::initializeMusicChannelEmojiControls);
+        }
     }
 }

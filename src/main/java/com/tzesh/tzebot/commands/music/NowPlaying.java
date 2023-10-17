@@ -4,7 +4,7 @@ import com.tzesh.tzebot.commands.music.abstracts.AbstractMusicCommand;
 import com.tzesh.tzebot.utils.EmbedMessageBuilder;
 import net.dv8tion.jda.api.events.message.GenericMessageEvent;
 
-import static com.tzesh.tzebot.core.LanguageManager.getMessage;
+import static com.tzesh.tzebot.core.language.LanguageManager.getMessage;
 
 /**
  * A class to manage the now playing command
@@ -20,7 +20,7 @@ public class NowPlaying<T extends GenericMessageEvent> extends AbstractMusicComm
 
     @Override
     public void handleCommand() {
-        sendMessage(EmbedMessageBuilder.createNowPlayingEmbeddedMessage(audioPlayer, user, guildID));
+        sendMessage(EmbedMessageBuilder.createNowPlayingEmbeddedMessage(audioPlayer, user, this.guildChannel));
     }
 
     @Override

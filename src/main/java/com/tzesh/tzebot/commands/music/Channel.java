@@ -1,14 +1,12 @@
 package com.tzesh.tzebot.commands.music;
 
 import com.tzesh.tzebot.commands.music.abstracts.AbstractMusicCommand;
-import com.tzesh.tzebot.core.inventory.Inventory;
 import com.tzesh.tzebot.utils.EmbedMessageBuilder;
-import com.tzesh.tzebot.core.LanguageManager;
+import com.tzesh.tzebot.core.language.LanguageManager;
 import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.MessageEmbed;
 import net.dv8tion.jda.api.events.message.GenericMessageEvent;
 import net.dv8tion.jda.api.utils.messages.MessageCreateData;
-import java.util.HashMap;
 
 import static com.tzesh.tzebot.core.music.constants.MusicCommonConstants.BANNER_URL;
 import static com.tzesh.tzebot.utils.InputControlHelper.isMusicChannelPresent;
@@ -42,44 +40,46 @@ public class Channel<T extends GenericMessageEvent> extends AbstractMusicCommand
     public void handleCommand() {
         String arg = args.get(0);
 
-        if (arg.equalsIgnoreCase(LanguageManager.getMessage("channel.create", guildID))) {
+        if (arg.equalsIgnoreCase(LanguageManager.getMessage("channel.create", this.guildChannel.getLanguage()))) {
             if (isMusicChannelPresent(commandContext)) {
-                sendMessage(EmbedMessageBuilder.createErrorMessage("channel.already.setTitle", "channel.already.setDescription", user, guildID));
+                sendMessage(EmbedMessageBuilder.createErrorMessage("channel.already.setTitle", "channel.already.setDescription", user, this.guildChannel));
                 return;
             }
 
-            guild.createTextChannel(LanguageManager.getMessage("music.icon", guildID) + LanguageManager.getMessage("music.name", guildID))
-                    .setTopic(LanguageManager.getMessage("channel.setTopic", guildID))
+            guild.createTextChannel(LanguageManager.getMessage("music.icon", this.guildChannel.getLanguage()) + LanguageManager.getMessage("music.name", this.guildChannel.getLanguage()))
+                    .setTopic(LanguageManager.getMessage("channel.setTopic", this.guildChannel.getLanguage()))
                     .queue(textchannel -> {
-                        Inventory.INITIALIZED_MUSIC_CHANNELS.put(guildID, textchannel.getIdLong());
+                        this.guildChannel.setBoundedMusicChannelID(textchannel.getIdLong());
+                        this.guildChannel.save();
                     });
 
-            sendMessage(EmbedMessageBuilder.createSuccessMessage("channel.success.setTitle", "channel.success.setDescription", user, guildID));
+            sendMessage(EmbedMessageBuilder.createSuccessMessage("channel.success.setTitle", "channel.success.setDescription", user, this.guildChannel));
             return;
         }
 
-        if (arg.equalsIgnoreCase(LanguageManager.getMessage("channel.set", guildID))) {
-            if (channel.getIdLong() != Inventory.INITIALIZED_MUSIC_CHANNELS.get(guildID)) {
-                sendMessage(EmbedMessageBuilder.createErrorMessage("channel.wrongchannel.setTitle", "channel.wrongchannel.setDescription", user, guildID));
+        if (arg.equalsIgnoreCase(LanguageManager.getMessage("channel.set", this.guildChannel.getLanguage()))) {
+            if (channel.getIdLong() != this.guildChannel.getBoundedMusicChannelID()) {
+                sendMessage(EmbedMessageBuilder.createErrorMessage("channel.wrongchannel.setTitle", "channel.wrongchannel.setDescription", user, this.guildChannel));
                 return;
             }
+
             // delete the message
             message.delete().queue();
 
+            // send the banner
             channel.sendMessage(BANNER_URL).queue();
 
-            MessageEmbed musicChannelEmbedMessage = EmbedMessageBuilder.createMusicChannelEmbeddedMessage(guildID);
+            // send the embed message
+            MessageEmbed musicChannelEmbedMessage = EmbedMessageBuilder.createMusicChannelEmbeddedMessage(guildChannel);
             channel.sendMessage(MessageCreateData.fromEmbeds(musicChannelEmbedMessage)).queue(message -> {
                 EmbedMessageBuilder.initializeMusicChannelEmojiControls(message);
 
-                HashMap<Long, Long> IDs = new HashMap<>();
-                IDs.put(channel.getIdLong(), message.getIdLong());
-                Inventory.EMOJI_CONTROLLED_MUSIC_CHANNELS.put(guildID, IDs);
-                Inventory.INITIALIZED_MUSIC_CHANNELS.put(guildID, channel.getIdLong());
+                this.guildChannel.setMusicChannelMessageID(message.getIdLong());
+                this.guildChannel.save();
             });
         } else {
             sendMessage(
-                    EmbedMessageBuilder.createErrorMessage("channel.noargs.setTitle", "channel.noargs.setDescription", user, guildID)
+                    EmbedMessageBuilder.createErrorMessage("channel.noargs.setTitle", "channel.noargs.setDescription", user, this.guildChannel)
             );
         }
     }

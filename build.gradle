@@ -34,8 +34,9 @@ dependencies {
 
     implementation 'com.sedmelluq:lavaplayer:1.3.77'
     implementation 'net.dv8tion:JDA:5.0.0-beta.15'
+    implementation 'org.mongodb:mongodb-driver-sync:4.11.0'
 }
 
 compileJava.options.encoding = 'UTF-8'
 mainClassName = 'com.tzesh.tzebot.Main'
-version '4.01'
+version '5.00'

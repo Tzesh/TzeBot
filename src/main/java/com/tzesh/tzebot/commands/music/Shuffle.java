@@ -4,7 +4,7 @@ import com.tzesh.tzebot.commands.music.abstracts.AbstractMusicCommand;
 import com.tzesh.tzebot.utils.EmbedMessageBuilder;
 import net.dv8tion.jda.api.events.message.GenericMessageEvent;
 
-import static com.tzesh.tzebot.core.LanguageManager.getMessage;
+import static com.tzesh.tzebot.core.language.LanguageManager.getMessage;
 
 
 /**
@@ -23,7 +23,7 @@ public class Shuffle<T extends GenericMessageEvent> extends AbstractMusicCommand
     @Override
     public void handleCommand() {
         scheduler.shufflePlaylist();
-        sendMessage(EmbedMessageBuilder.createSuccessMessage("shuffle.success.setTitle", "", user, guildID));
+        sendMessage(EmbedMessageBuilder.createSuccessMessage("shuffle.success.setTitle", "", user, this.guildChannel));
     }
 
     @Override

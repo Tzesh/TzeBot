@@ -3,7 +3,7 @@ package com.tzesh.tzebot.commands.music;
 import com.tzesh.tzebot.commands.music.abstracts.AbstractMusicCommand;
 import net.dv8tion.jda.api.events.message.GenericMessageEvent;
 
-import static com.tzesh.tzebot.core.LanguageManager.getMessage;
+import static com.tzesh.tzebot.core.language.LanguageManager.getMessage;
 import static com.tzesh.tzebot.core.music.constants.MusicCommonConstants.FORWARD_AMOUNT;
 
 /**
@@ -18,13 +18,13 @@ public class Seek<T extends GenericMessageEvent> extends AbstractMusicCommand<T>
         addPreRequisite(isPlaying, "nowplaying.error.setTitle", "nowplaying.error.setDescription");
         if (!isPlaying) return;
 
-        boolean isArgsCorrect = args.size() == 1 && (args.get(0).equals(getMessage("seek.forward", guildID)) || args.get(0).equals(getMessage("seek.backward", guildID)));
+        boolean isArgsCorrect = args.size() == 1 && (args.get(0).equals(getMessage("seek.forward", this.guildChannel.getLanguage())) || args.get(0).equals(getMessage("seek.backward", this.guildChannel.getLanguage())));
         addPreRequisite(isArgsCorrect, "seek.error.setTitle", "seek.error.setDescription");
     }
 
     @Override
     public void handleCommand() {
-        boolean isForward = args.get(0).equals(getMessage("seek.forward", guildID));
+        boolean isForward = args.get(0).equals(getMessage("seek.forward", this.guildChannel.getLanguage()));
         int amount = isForward ? FORWARD_AMOUNT : -FORWARD_AMOUNT;
         scheduler.changePosition(amount);
     }

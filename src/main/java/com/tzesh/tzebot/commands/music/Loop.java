@@ -4,7 +4,7 @@ import com.tzesh.tzebot.commands.music.abstracts.AbstractMusicCommand;
 import com.tzesh.tzebot.utils.EmbedMessageBuilder;
 import net.dv8tion.jda.api.events.message.GenericMessageEvent;
 
-import static com.tzesh.tzebot.core.LanguageManager.getMessage;
+import static com.tzesh.tzebot.core.language.LanguageManager.getMessage;
 
 /**
  * A class to manage the loop command
@@ -23,7 +23,7 @@ public class Loop<T extends GenericMessageEvent> extends AbstractMusicCommand<T>
         boolean isRepeating = scheduler.isRepeating();
         scheduler.setRepeating(!isRepeating);
         String title = isRepeating ? "loop.success.off.setTitle" : "loop.success.on.setTitle";
-        sendMessage(EmbedMessageBuilder.createSuccessMessage(title, "", user, guildID));
+        sendMessage(EmbedMessageBuilder.createSuccessMessage(title, "", user, this.guildChannel));
     }
 
     @Override

@@ -3,8 +3,7 @@ package com.tzesh.tzebot.commands.moderation;
 import com.tzesh.tzebot.commands.abstracts.AbstractCommand;
 import com.tzesh.tzebot.core.config.ConfigurationManager;
 import com.tzesh.tzebot.commands.abstracts.Command;
-import com.tzesh.tzebot.core.LanguageManager;
-import com.tzesh.tzebot.core.inventory.Inventory;
+import com.tzesh.tzebot.core.language.LanguageManager;
 import com.tzesh.tzebot.utils.EmbedMessageBuilder;
 import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
@@ -30,10 +29,13 @@ public class Prefix extends AbstractCommand<MessageReceivedEvent> {
     @Override
     public void handleCommand() {
         final String newPrefix = args.get(0);
-        Inventory.PREFIXES.put(guildID, newPrefix);
-        String successTitle = LanguageManager.getMessage("prefix.success.setTitle", guildID) + "`" + newPrefix + "`";
 
-        sendMessage(EmbedMessageBuilder.createCustomSuccessMessage(successTitle, "", user, guildID));
+        this.guildChannel.setPrefix(newPrefix);
+        this.guildChannel.save();
+
+        String successTitle = LanguageManager.getMessage("prefix.success.setTitle", this.guildChannel.getLanguage()) + "`" + newPrefix + "`";
+
+        sendMessage(EmbedMessageBuilder.createCustomSuccessMessage(successTitle, "", user, this.guildChannel));
     }
 
     @Override

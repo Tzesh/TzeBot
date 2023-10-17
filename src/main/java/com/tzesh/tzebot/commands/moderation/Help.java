@@ -2,8 +2,9 @@ package com.tzesh.tzebot.commands.moderation;
 
 import com.tzesh.tzebot.commands.abstracts.AbstractCommand;
 import com.tzesh.tzebot.commands.abstracts.Command;
-import com.tzesh.tzebot.core.*;
+import com.tzesh.tzebot.core.command.CommandManager;
 import com.tzesh.tzebot.core.config.ConfigurationManager;
+import com.tzesh.tzebot.core.language.LanguageManager;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.utils.messages.MessageCreateData;
@@ -31,14 +32,14 @@ public class Help extends AbstractCommand<MessageReceivedEvent> {
 
         if (args.isEmpty()) {
             EmbedBuilder info = new EmbedBuilder()
-                    .setTitle(LanguageManager.getMessage("help.info.setTitle", guildID), "https://tzesh.github.io/TzeBot/")
-                    .setDescription(LanguageManager.getMessage("help.info.setDescription", guildID))
-                    .addField(LanguageManager.getMessage("help.info.setDescription1", guildID), "`" + prefix + LanguageManager.getMessage("help.name", guildID) + " " + LanguageManager.getMessage("moderation.name", guildID) + "`", true)
-                    .addField(LanguageManager.getMessage("help.info.setDescription2", guildID), "`" + prefix + LanguageManager.getMessage("help.name", guildID) + " " + LanguageManager.getMessage("music.name", guildID) + "`", true)
+                    .setTitle(LanguageManager.getMessage("help.info.setTitle", this.guildChannel.getLanguage()), "https://tzesh.github.io/TzeBot/")
+                    .setDescription(LanguageManager.getMessage("help.info.setDescription", this.guildChannel.getLanguage()))
+                    .addField(LanguageManager.getMessage("help.info.setDescription1", this.guildChannel.getLanguage()), "`" + prefix + LanguageManager.getMessage("help.name", this.guildChannel.getLanguage()) + " " + LanguageManager.getMessage("moderation.name", this.guildChannel.getLanguage()) + "`", true)
+                    .addField(LanguageManager.getMessage("help.info.setDescription2", this.guildChannel.getLanguage()), "`" + prefix + LanguageManager.getMessage("help.name", this.guildChannel.getLanguage()) + " " + LanguageManager.getMessage("music.name", this.guildChannel.getLanguage()) + "`", true)
                     .setImage("https://raw.githubusercontent.com/Tzesh/TzeBot/master/embed_logo.png")
                     .setColor(0x6699ff)
                     .setTimestamp(Instant.now())
-                    .setFooter(LanguageManager.getMessage("help.info.setFooter", guildID), selfMember.getUser().getAvatarUrl());
+                    .setFooter(LanguageManager.getMessage("help.info.setFooter", this.guildChannel.getLanguage()), selfMember.getUser().getAvatarUrl());
 
             channel.sendMessage(MessageCreateData.fromEmbeds(info.build())).queue();
             return;
@@ -46,56 +47,56 @@ public class Help extends AbstractCommand<MessageReceivedEvent> {
 
         String arg = args.get(0);
 
-        if (arg.equalsIgnoreCase(LanguageManager.getMessage("music.name", guildID))) {
+        if (arg.equalsIgnoreCase(LanguageManager.getMessage("music.name", this.guildChannel.getLanguage()))) {
             EmbedBuilder info = new EmbedBuilder();
-            info.setTitle(LanguageManager.getMessage("help.music.info.setTitle", guildID));
-            info.setDescription(LanguageManager.getMessage("help.music.info.setDescription", guildID));
-            info.addField(LanguageManager.getMessage("music.icon", guildID) + "`" + prefix + LanguageManager.getMessage("channel.name", guildID) + "`", LanguageManager.getMessage("channel.gethelp", guildID), true);
-            info.addField(LanguageManager.getMessage("general.icon.join", guildID) + "`" + prefix + LanguageManager.getMessage("join.name", guildID) + "`", LanguageManager.getMessage("join.gethelp", guildID), true);
-            info.addField(LanguageManager.getMessage("general.icon.leave", guildID) + "`" + prefix + LanguageManager.getMessage("leave.name", guildID) + "`", LanguageManager.getMessage("leave.gethelp", guildID), true);
-            info.addField(LanguageManager.getMessage("general.icon.play", guildID) + "`" + prefix + LanguageManager.getMessage("play.name", guildID) + "`", LanguageManager.getMessage("play.gethelp1", guildID) + ". " + LanguageManager.getMessage("play.gethelp2", guildID) + prefix + LanguageManager.getMessage("play.name", guildID) + LanguageManager.getMessage("play.gethelp3", guildID), true);
-            info.addField(LanguageManager.getMessage("general.icon.pause", guildID) + "`" + prefix + LanguageManager.getMessage("pause.name", guildID) + "`", LanguageManager.getMessage("pause.gethelp", guildID), true);
-            info.addField(LanguageManager.getMessage("general.icon.play", guildID) + "`" + prefix + LanguageManager.getMessage("resume.name", guildID) + "`", LanguageManager.getMessage("resume.gethelp", guildID), true);
-            info.addField(LanguageManager.getMessage("general.icon.stop", guildID) + "`" + prefix + LanguageManager.getMessage("stop.name", guildID) + "`", LanguageManager.getMessage("stop.gethelp", guildID), true);
-            info.addField(LanguageManager.getMessage("general.icon.skip", guildID) + "`" + prefix + LanguageManager.getMessage("skip.name", guildID) + "`", LanguageManager.getMessage("skip.gethelp", guildID), true);
-            info.addField(LanguageManager.getMessage("general.icon.volume", guildID) + "`" + prefix + LanguageManager.getMessage("volume.name", guildID) + "`", LanguageManager.getMessage("volume.gethelp", guildID), true);
-            info.addField(LanguageManager.getMessage("general.icon.loop", guildID) + "`" + prefix + LanguageManager.getMessage("loop.name", guildID) + "`", LanguageManager.getMessage("loop.gethelp", guildID), true);
-            info.addField(LanguageManager.getMessage("general.icon.nowplaying", guildID) + "`" + prefix + LanguageManager.getMessage("nowplaying.name", guildID) + "`", LanguageManager.getMessage("nowplaying.gethelp", guildID), true);
-            info.addField(LanguageManager.getMessage("general.icon.queue", guildID) + "`" + prefix + LanguageManager.getMessage("queue.name", guildID) + "`", LanguageManager.getMessage("queue.gethelp", guildID), true);
-            info.addField(LanguageManager.getMessage("general.icon.next", guildID) + "`" + prefix + LanguageManager.getMessage("seek.name", guildID) + "`" + LanguageManager.getMessage("general.icon.previous", guildID), LanguageManager.getMessage("seek.gethelp", guildID), true);
+            info.setTitle(LanguageManager.getMessage("help.music.info.setTitle", this.guildChannel.getLanguage()));
+            info.setDescription(LanguageManager.getMessage("help.music.info.setDescription", this.guildChannel.getLanguage()));
+            info.addField(LanguageManager.getMessage("music.icon", this.guildChannel.getLanguage()) + "`" + prefix + LanguageManager.getMessage("channel.name", this.guildChannel.getLanguage()) + "`", LanguageManager.getMessage("channel.gethelp", this.guildChannel.getLanguage()), true);
+            info.addField(LanguageManager.getMessage("general.icon.join", this.guildChannel.getLanguage()) + "`" + prefix + LanguageManager.getMessage("join.name", this.guildChannel.getLanguage()) + "`", LanguageManager.getMessage("join.gethelp", this.guildChannel.getLanguage()), true);
+            info.addField(LanguageManager.getMessage("general.icon.leave", this.guildChannel.getLanguage()) + "`" + prefix + LanguageManager.getMessage("leave.name", this.guildChannel.getLanguage()) + "`", LanguageManager.getMessage("leave.gethelp", this.guildChannel.getLanguage()), true);
+            info.addField(LanguageManager.getMessage("general.icon.play", this.guildChannel.getLanguage()) + "`" + prefix + LanguageManager.getMessage("play.name", this.guildChannel.getLanguage()) + "`", LanguageManager.getMessage("play.gethelp1", this.guildChannel.getLanguage()) + ". " + LanguageManager.getMessage("play.gethelp2", this.guildChannel.getLanguage()) + prefix + LanguageManager.getMessage("play.name", this.guildChannel.getLanguage()) + LanguageManager.getMessage("play.gethelp3", this.guildChannel.getLanguage()), true);
+            info.addField(LanguageManager.getMessage("general.icon.pause", this.guildChannel.getLanguage()) + "`" + prefix + LanguageManager.getMessage("pause.name", this.guildChannel.getLanguage()) + "`", LanguageManager.getMessage("pause.gethelp", this.guildChannel.getLanguage()), true);
+            info.addField(LanguageManager.getMessage("general.icon.play", this.guildChannel.getLanguage()) + "`" + prefix + LanguageManager.getMessage("resume.name", this.guildChannel.getLanguage()) + "`", LanguageManager.getMessage("resume.gethelp", this.guildChannel.getLanguage()), true);
+            info.addField(LanguageManager.getMessage("general.icon.stop", this.guildChannel.getLanguage()) + "`" + prefix + LanguageManager.getMessage("stop.name", this.guildChannel.getLanguage()) + "`", LanguageManager.getMessage("stop.gethelp", this.guildChannel.getLanguage()), true);
+            info.addField(LanguageManager.getMessage("general.icon.skip", this.guildChannel.getLanguage()) + "`" + prefix + LanguageManager.getMessage("skip.name", this.guildChannel.getLanguage()) + "`", LanguageManager.getMessage("skip.gethelp", this.guildChannel.getLanguage()), true);
+            info.addField(LanguageManager.getMessage("general.icon.volume", this.guildChannel.getLanguage()) + "`" + prefix + LanguageManager.getMessage("volume.name", this.guildChannel.getLanguage()) + "`", LanguageManager.getMessage("volume.gethelp", this.guildChannel.getLanguage()), true);
+            info.addField(LanguageManager.getMessage("general.icon.loop", this.guildChannel.getLanguage()) + "`" + prefix + LanguageManager.getMessage("loop.name", this.guildChannel.getLanguage()) + "`", LanguageManager.getMessage("loop.gethelp", this.guildChannel.getLanguage()), true);
+            info.addField(LanguageManager.getMessage("general.icon.nowplaying", this.guildChannel.getLanguage()) + "`" + prefix + LanguageManager.getMessage("nowplaying.name", this.guildChannel.getLanguage()) + "`", LanguageManager.getMessage("nowplaying.gethelp", this.guildChannel.getLanguage()), true);
+            info.addField(LanguageManager.getMessage("general.icon.queue", this.guildChannel.getLanguage()) + "`" + prefix + LanguageManager.getMessage("queue.name", this.guildChannel.getLanguage()) + "`", LanguageManager.getMessage("queue.gethelp", this.guildChannel.getLanguage()), true);
+            info.addField(LanguageManager.getMessage("general.icon.next", this.guildChannel.getLanguage()) + "`" + prefix + LanguageManager.getMessage("seek.name", this.guildChannel.getLanguage()) + "`" + LanguageManager.getMessage("general.icon.previous", this.guildChannel.getLanguage()), LanguageManager.getMessage("seek.gethelp", this.guildChannel.getLanguage()), true);
             info.setColor(0x6699ff);
             info.setTimestamp(Instant.now());
 
-            info.setFooter(LanguageManager.getMessage("help.info.setFooter", guildID), selfMember.getUser().getAvatarUrl());
+            info.setFooter(LanguageManager.getMessage("help.info.setFooter", this.guildChannel.getLanguage()), selfMember.getUser().getAvatarUrl());
             channel.sendMessage(MessageCreateData.fromEmbeds(info.build())).queue();
             return;
         }
 
-        if (arg.equalsIgnoreCase(LanguageManager.getMessage("moderation.name", guildID))) {
+        if (arg.equalsIgnoreCase(LanguageManager.getMessage("moderation.name", this.guildChannel.getLanguage()))) {
             EmbedBuilder info = new EmbedBuilder();
-            info.setTitle(LanguageManager.getMessage("help.moderation.info.setTitle", guildID));
-            info.setDescription(LanguageManager.getMessage("help.moderation.info.setDescription", guildID));
-            info.addField(LanguageManager.getMessage("general.icon.prefix", guildID) + "`" + prefix + LanguageManager.getMessage("prefix.name", guildID) + "`", LanguageManager.getMessage("prefix.gethelp1", guildID) + " " + LanguageManager.getMessage("prefix.gethelp2", guildID) + prefix + LanguageManager.getMessage("prefix.gethelp3", guildID), true);
-            info.addField(LanguageManager.getMessage("general.icon.clear", guildID) + "`" + prefix + LanguageManager.getMessage("clear.name", guildID) + "`", LanguageManager.getMessage("clear.gethelp", guildID), true);
-            info.addField(LanguageManager.getMessage("general.icon.ban", guildID) + "`" + prefix + LanguageManager.getMessage("ban.name", guildID) + "`", LanguageManager.getMessage("ban.description", guildID), true);
-            info.addField(LanguageManager.getMessage("general.icon.language", guildID) + "`" + prefix + LanguageManager.getMessage("language.name", guildID) + "`", LanguageManager.getMessage("language.gethelp", guildID), true);
-            info.addField(LanguageManager.getMessage("general.icon.vote", guildID) + "`" + prefix + LanguageManager.getMessage("vote.name", guildID) + "`", LanguageManager.getMessage("vote.gethelp", guildID), true);
-            info.addField(LanguageManager.getMessage("general.icon.vote", guildID) + "`" + prefix + LanguageManager.getMessage("voterole.name", guildID) + "`", LanguageManager.getMessage("voterole.gethelp", guildID), true);
+            info.setTitle(LanguageManager.getMessage("help.moderation.info.setTitle", this.guildChannel.getLanguage()));
+            info.setDescription(LanguageManager.getMessage("help.moderation.info.setDescription", this.guildChannel.getLanguage()));
+            info.addField(LanguageManager.getMessage("general.icon.prefix", this.guildChannel.getLanguage()) + "`" + prefix + LanguageManager.getMessage("prefix.name", this.guildChannel.getLanguage()) + "`", LanguageManager.getMessage("prefix.gethelp1", this.guildChannel.getLanguage()) + " " + LanguageManager.getMessage("prefix.gethelp2", this.guildChannel.getLanguage()) + prefix + LanguageManager.getMessage("prefix.gethelp3", this.guildChannel.getLanguage()), true);
+            info.addField(LanguageManager.getMessage("general.icon.clear", this.guildChannel.getLanguage()) + "`" + prefix + LanguageManager.getMessage("clear.name", this.guildChannel.getLanguage()) + "`", LanguageManager.getMessage("clear.gethelp", this.guildChannel.getLanguage()), true);
+            info.addField(LanguageManager.getMessage("general.icon.ban", this.guildChannel.getLanguage()) + "`" + prefix + LanguageManager.getMessage("ban.name", this.guildChannel.getLanguage()) + "`", LanguageManager.getMessage("ban.description", this.guildChannel.getLanguage()), true);
+            info.addField(LanguageManager.getMessage("general.icon.language", this.guildChannel.getLanguage()) + "`" + prefix + LanguageManager.getMessage("language.name", this.guildChannel.getLanguage()) + "`", LanguageManager.getMessage("language.gethelp", this.guildChannel.getLanguage()), true);
+            info.addField(LanguageManager.getMessage("general.icon.vote", this.guildChannel.getLanguage()) + "`" + prefix + LanguageManager.getMessage("vote.name", this.guildChannel.getLanguage()) + "`", LanguageManager.getMessage("vote.gethelp", this.guildChannel.getLanguage()), true);
+            info.addField(LanguageManager.getMessage("general.icon.vote", this.guildChannel.getLanguage()) + "`" + prefix + LanguageManager.getMessage("voterole.name", this.guildChannel.getLanguage()) + "`", LanguageManager.getMessage("voterole.gethelp", this.guildChannel.getLanguage()), true);
             info.setColor(0x6699ff);
             info.setTimestamp(Instant.now());
-            info.setFooter(LanguageManager.getMessage("help.info.setFooter", guildID), selfMember.getUser().getAvatarUrl());
+            info.setFooter(LanguageManager.getMessage("help.info.setFooter", this.guildChannel.getLanguage()), selfMember.getUser().getAvatarUrl());
 
             channel.sendMessage(MessageCreateData.fromEmbeds(info.build())).queue();
             return;
         }
 
-        Command command = manager.getCommand(arg, guildID);
+        Command command = manager.getCommand(arg);
 
         if (command == null) {
             EmbedBuilder error = new EmbedBuilder();
             error.setColor(0xff3923);
-            error.setTitle(LanguageManager.getMessage("general.icon.error", guildID) + LanguageManager.getMessage("general.404", guildID));
-            error.setDescription(LanguageManager.getMessage("general.404.description", guildID));
+            error.setTitle(LanguageManager.getMessage("general.icon.error", this.guildChannel.getLanguage()) + LanguageManager.getMessage("general.404", this.guildChannel.getLanguage()));
+            error.setDescription(LanguageManager.getMessage("general.404.description", this.guildChannel.getLanguage()));
             error.setTimestamp(Instant.now());
 
             channel.sendMessage(MessageCreateData.fromEmbeds(error.build())).queue();
@@ -104,7 +105,7 @@ public class Help extends AbstractCommand<MessageReceivedEvent> {
             help.setColor(0xffffff);
             help.setTitle(command.getName(guildID) + LanguageManager.getMessage("general.icon.question"));
             help.setDescription(command.getHelp(guildID));
-            help.setFooter(LanguageManager.getMessage("general.bythecommand", guildID) + selfMember.getUser().getName(), selfMember.getUser().getAvatarUrl());
+            help.setFooter(LanguageManager.getMessage("general.bythecommand", this.guildChannel.getLanguage()) + selfMember.getUser().getName(), selfMember.getUser().getAvatarUrl());
             help.setTimestamp(Instant.now());
 
             channel.sendMessage(MessageCreateData.fromEmbeds(help.build())).queue();

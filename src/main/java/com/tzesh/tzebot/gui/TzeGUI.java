@@ -10,8 +10,6 @@ import javax.swing.*;
 import java.awt.event.*;
 import java.io.PrintStream;
 
-import static com.tzesh.tzebot.core.inventory.Inventory.PREFIXES;
-
 /**
  * This is the GUI for TzeBot
  * @author tzesh
@@ -111,7 +109,7 @@ public class TzeGUI extends javax.swing.JFrame {
         if (ConfigurationManager.getEnvKey("shard") == null || ConfigurationManager.getEnvKey("shard").equals("")) {
             formattedTextFieldShard.setText("1");
         } else {
-            formattedTextFieldShard.setText(Integer.toString((PREFIXES.size() / 1500) + 1));
+            formattedTextFieldShard.setText(Integer.toString(1));
         }
 
         formattedTextFieldShard.addKeyListener(new KeyAdapter() {

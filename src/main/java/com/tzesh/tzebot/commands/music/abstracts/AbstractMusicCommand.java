@@ -4,8 +4,7 @@ import com.sedmelluq.discord.lavaplayer.player.AudioPlayer;
 import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
 import com.sedmelluq.discord.lavaplayer.track.AudioTrackInfo;
 import com.tzesh.tzebot.commands.abstracts.AbstractCommand;
-import com.tzesh.tzebot.core.CommandContextImpl;
-import com.tzesh.tzebot.core.inventory.Inventory;
+import com.tzesh.tzebot.core.command.CommandContextImpl;
 import com.tzesh.tzebot.core.music.constants.MusicCommonConstants;
 import com.tzesh.tzebot.core.music.audio.GuildMusicManager;
 import com.tzesh.tzebot.core.music.audio.PlayerManager;
@@ -19,8 +18,6 @@ import net.dv8tion.jda.api.utils.messages.MessageCreateData;
 
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.TimeUnit;
-
-import static com.tzesh.tzebot.core.music.constants.MusicCommonConstants.DEFAULT_VOLUME;
 
 /**
  * An abstract class for music commands
@@ -62,7 +59,7 @@ public abstract class AbstractMusicCommand<T extends GenericMessageEvent> extend
         this.audioPlayer = musicManager.player;
         this.scheduler = musicManager.scheduler;
         this.audioTrackInfo = audioPlayer.getPlayingTrack() != null ? audioPlayer.getPlayingTrack().getInfo() : null;
-        this.volume = Inventory.VOLUMES.computeIfAbsent(guildID, (id) -> DEFAULT_VOLUME);
+        this.volume = this.guildChannel.getVolume();
         this.queue = musicManager.scheduler.getQueue();
     }
 

@@ -7,7 +7,7 @@ import com.tzesh.tzebot.utils.EmbedMessageBuilder;
 import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.events.message.GenericMessageEvent;
 
-import static com.tzesh.tzebot.core.LanguageManager.getMessage;
+import static com.tzesh.tzebot.core.language.LanguageManager.getMessage;
 import static com.tzesh.tzebot.core.music.constants.MusicCommonConstants.DEFAULT_VOLUME;
 import static com.tzesh.tzebot.utils.InputControlHelper.isUrl;
 import static com.tzesh.tzebot.utils.InputControlHelper.isYouTubeUrl;
@@ -49,14 +49,14 @@ public class Play<T extends GenericMessageEvent> extends AbstractMusicCommand<T>
         if (!audioManager.isConnected()) {
             audioManager.openAudioConnection(voiceChannel);
             audioManager.setSelfDeafened(true);
-            audioPlayer.setVolume(volume);
+            audioPlayer.setVolume(volume > 0 ? volume : DEFAULT_VOLUME);
 
-            sendMessage(EmbedMessageBuilder.createSuccessMessage("join.success.setTitle", "", user, guildID));
+            sendMessage(EmbedMessageBuilder.createSuccessMessage("join.success.setTitle", "", user, this.guildChannel));
         }
 
         if (audioPlayer.isPaused()) audioPlayer.setPaused(false);
         if (audioPlayer.getVolume() == 0) audioPlayer.setVolume(DEFAULT_VOLUME);
-        playerManager.loadAndPlay(channel, searchResult, user, this.isBounded, guildID);
+        playerManager.loadAndPlay(channel, searchResult, user, this.isBounded, this.guildChannel);
     }
 
     @Override

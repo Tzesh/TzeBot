@@ -1,12 +1,12 @@
 package com.tzesh.tzebot.commands.music;
 
 import com.tzesh.tzebot.commands.music.abstracts.AbstractMusicCommand;
-import com.tzesh.tzebot.core.inventory.Inventory;
+import com.tzesh.tzebot.core.music.constants.MusicCommonConstants;
 import com.tzesh.tzebot.utils.EmbedMessageBuilder;
 import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.events.message.GenericMessageEvent;
 
-import static com.tzesh.tzebot.core.LanguageManager.getMessage;
+import static com.tzesh.tzebot.core.language.LanguageManager.getMessage;
 
 /**
  * A class to manage the join command
@@ -32,9 +32,9 @@ public class Join<T extends GenericMessageEvent> extends AbstractMusicCommand<T>
     public void handleCommand() {
         audioManager.openAudioConnection(voiceChannel);
         audioManager.setSelfDeafened(true);
-        audioPlayer.setVolume(volume);
+        audioPlayer.setVolume(volume > 0 ? volume : MusicCommonConstants.DEFAULT_VOLUME);
 
-        sendMessage(EmbedMessageBuilder.createSuccessMessage("join.success.setTitle", "", user, guildID));
+        sendMessage(EmbedMessageBuilder.createSuccessMessage("join.success.setTitle", "", user, this.guildChannel));
     }
 
     @Override
